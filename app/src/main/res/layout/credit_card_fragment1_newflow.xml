@@ -1,0 +1,197 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@color/white"
+    tools:context="com.bookeey.wallet.live.creditcardview.CreditCardFragment1">
+
+    <RelativeLayout
+        android:id="@+id/rl_card"
+        android:layout_width="match_parent"
+        android:layout_height="240dp"
+        android:layout_margin="@dimen/activity_vertical_margin"
+        android:background="@drawable/ic_card_bg_red"
+        android:padding="12dp">
+
+        <RelativeLayout
+
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            >
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="20dp"
+                android:id="@+id/img_credit_card_bookeey"
+                android:layout_alignParentLeft="true"
+                android:src="@drawable/bookeey_white_with_down_title"
+                />
+            <ImageView
+                android:layout_width="76dp"
+                android:layout_alignParentRight="true"
+                android:layout_height="76dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="20dp"
+                android:paddingBottom="20dp"
+                android:id="@+id/img_new_flow_login_door"
+                android:src="@drawable/login_door"
+                />
+
+
+        </RelativeLayout>
+
+
+
+
+
+
+
+
+
+
+        <LinearLayout
+            android:id="@+id/parent_loadmoney_and_pay_layout"
+            android:layout_width="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:id="@+id/load_money_layout"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="70dp"
+                    android:src="@drawable/load_wallet_grey"
+                    android:layout_height="70dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/mainmenu_load_wallet"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/pay_layout"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginLeft="40dp"
+                android:padding="5dp"
+                android:layout_height="wrap_content">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:src="@drawable/qr_code_grey"
+                    android:layout_height="70dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:text="@string/pay"
+                    android:textSize="12sp"
+                    android:textStyle="bold"
+                    android:layout_gravity="center"
+                    android:textColor="@color/white"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+
+
+
+
+
+
+        <LinearLayout
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:weightSum="2"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+
+
+            <LinearLayout
+                android:id="@+id/demo_layout"
+                android:layout_weight="1"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="6dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+
+                    android:id="@+id/goto_tour_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/login_tour"
+                    android:layout_gravity="center_horizontal"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <ImageView
+
+                    android:layout_width="20dp"
+                    android:layout_marginLeft="4dp"
+                    android:src="@drawable/go_tour_img_white"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_height="20dp">
+
+                </ImageView>
+
+
+            </LinearLayout>
+
+
+
+
+            <RelativeLayout
+                android:id="@+id/language_layout"
+                android:layout_width="@dimen/chip_width"
+                android:layout_height="@dimen/chip_height"
+                android:layout_marginTop="5dp"
+                android:layout_weight="1"
+                >
+
+                <ImageView
+                    android:id="@+id/coutry_flag_img"
+                    android:layout_width="74dp"
+                    android:layout_height="37dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentBottom="true"
+                    android:src="@drawable/kuwait" />
+
+                <TextView
+                    android:id="@+id/language_text"
+                    android:visibility="gone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"></TextView>
+            </RelativeLayout>
+
+
+        </LinearLayout>
+
+
+
+    </RelativeLayout>
+
+
+
+</LinearLayout>

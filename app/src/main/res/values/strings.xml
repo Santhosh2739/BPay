@@ -1,0 +1,1339 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Zxing Strings -->
+    <drawable name="white">#ffffff</drawable>
+    <drawable name="darkgrey">#606060</drawable>
+    <drawable name="grey">#778899</drawable>
+    <string name="zxing_url">http://code.google.com/p/zxing</string>
+    <string name="history_clear_one_history_text">Clear</string>
+    <string name="history_send">Send history</string>
+    <string name="history_clear_text">Clear history</string>
+    <string name="msg_unmount_usb">Sorry, the SD card is not accessible.</string>
+    <string name="button_ok">OK</string>
+    <string name="history_email_title">Barcode Scanner history</string>
+    <string name="title_section1">My Offers</string>
+    <string name="title_section2"></string>
+    <string name="title_section3"></string>
+    <string name="drawer_open">Open</string>
+    <string name="drawer_close">Close</string>
+
+
+    <string name="topup_country_title">Select Country</string>
+    <string name="spinner_initiation">Select Denomination</string>
+    <string name="sucess">Thank you for registering with Bookeey.</string>
+    <string name="not_approved_contact">Dear Customer, your bookeey wallet account is still under review. You will receive an email as soon as your wallet is activated. This may take upto 24 hrs. Please check your email for the activation email!</string>
+
+    <!--End-->
+    <!--Toast messages-->
+    <string name="wallet_balance_ooredoo_buy_text">Wallet Balance: </string>
+    <string name="askmerchant_toscan">Ask Merchant to scan the QR code</string>
+    <string name="buy_amt_to_pay">Amount to pay: </string>
+    <string name="select_your_image_title">Attach Image</string>
+    <string name="select_your_image">Get image from</string>
+    <string name="firstname_error">Enter firstname</string>
+    <string name="lastname_error">Enter \n lastname</string>
+
+    <string name="email_error">Enter email</string>
+
+
+    <string name="mobilenumber_error">Enter mobile number</string>
+    <string name="civilid_error">Enter civilid</string>
+    <string name="mobile_number_validation_msg">Please enter valid mobile number</string>
+    <string name="activation_toast_valid_newpin_msg">Please enter 7 digit password</string>
+    <string name="activation_toast_help_text">You have clicked help</string>
+    <string name="login_mobile_number_msg">Enter mobile number</string>
+    <string name="login_valid_mobile_number_msg">Enter valid mobile number</string>
+    <string name="login_valid_password_msg">Enter valid password</string>
+
+    <!-- END OF Toast messages-->
+    <string name="activation_pending">Your account is not yet approved</string>
+    <string name="activation_rejected">Your account is rejected</string>
+    <string name="activation_toast_newconfirmpin_msg">Enter confirm password</string>
+    <string name="app_name">BookeeyPay</string>
+
+    <string name="app_name_dummy">NewWallet</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+
+    <string name="customer_name">Name</string>
+    <string name="customer_number">XXXXXXXX</string>
+    <string name="customer_current_balc_amt">Balance</string>
+    <string name="recharge_wallet_txt">Recharge Wallet</string>
+    <string name="send_money_txt">Buy</string>
+    <string name="send_money_help">Help</string>
+    <string name="more_text">More</string>
+    <string name="poweredby_tv">Powered by</string>
+    <string name="send_money_others">Others</string>
+
+    //Mobile number validation starts
+    <string name="mob_validation_welcome">Welcome To</string>
+    <string name="mob_validation_langauge_type">Language Type</string>
+    <string name="mob_validation_english">English</string>
+    <string name="mob_validation_arabic">العربية</string>
+    <string name="mob_validation_valid_mobile_number">Enter Mobile Number</string>
+    <string name="mob_validation_submit_btn">submit</string>
+    <string name="mob_validation_help">Help</string>
+    //Toasts
+    <string name="mob_validation_enter_mobile_no">Enter Mobile Number</string>
+    <string name="mob_validation_enter_valid_mobile_no">Please enter valid mobile number</string>
+
+    //Mobile number validation ends
+
+    //contact starts
+    <string name="contact_us_title">CONTACT US</string>
+    <string name="contact_us_screen_office_adress">Corporate Office Address</string>
+    <string name="contact_us_screen_office_adress_detail">Sharq, Block 2, Ahmad Al Jaber street, Gravity Tower, 3rd Floor</string>
+    <string name="contact_us_screen_write_us">Write to us</string>
+    <string name="contact_us_screen_website"></string>
+    <string name="contact_us_screen_mail">customercare@bookeey.com</string>
+    <string name="contact_us_screen_customer_care">Customer Care</string>
+    <string name="contact_us_screen_mobile_number_whatsapp">22200001</string>
+    <string name="contact_us_screen_mobile_number">22200001</string>
+    <string name="contact_us_screen_connect_executive">Connect Executive</string>
+    <string name="international_country_code">+92</string>
+    <string name="international_mobile_no">3214074300</string>
+    //contact us ends
+
+    //check for update starts
+    <string name="check_for_update_title">CHECK FOR UPDATES</string>
+    <string name="check_up_to_date">Your app is now up to date</string>
+    <string name="check_not_up_to_date">Your app is not up to date</string>
+    <string name="current_version">Current Version is :</string>
+    <string name="update">Update</string>
+    <string name="check_close">close</string>
+    <string name="check_update_dialogue_title">Play Store Update</string>
+    <string name="check_update_dialogue_desc">Do you want to update to the latest version?</string>
+    //ends check for update
+
+
+    <string name="send_money_international_transfer_amt">Transfer Amount</string>
+    <string name="send_money_international_receiver_amt">Receivers Amount</string>
+    <string name="ooredoo_sendmoney_kd_amount">KD</string>
+    <string name="ooredoo_sendmoney_pkr_amount">PKR</string>
+    <string name="sendmoney_kd_edit_text">50</string>
+    <string name="not_approved_dear_text">Dear Customer,</string>
+    <string name="sendmoney_pkr_edit_text">16,000</string>
+    <string name="ooredoo_sendmoney_international_pin">PIN</string>
+    <string name="ooredoo_sendmoney_international_pin_value">xxxx</string>
+    <string name="send_money_international_exchangerate">Exchange Rate: KWD1 = PKR 350</string>
+    <string name="international_name">Name</string>
+
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+
+    <string name="transactions_txt">Topup/ Payment</string>
+    <string name="qrcode">QRCode</string>
+    <string name="chat_txt">Send Money</string>
+    <string name="undo">Hide</string>
+    <string name="transaction_history">Transaction History</string>
+    <string name="cancel">Cancel</string>
+    <string name="sub_heading1">What is Lorem Ipsum?</string>
+    <string name="sub_heading1_exp">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.</string>
+    <string name="sub_heading2">How Lorem Ipsum works?</string>
+    <string name="sub_heading2_exp">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.</string>
+
+    <string name="title_activity_sendmoney">Sendmoney</string>
+    <string name="title_activity_success_screen">Success_screen</string>
+
+
+    <string name="transaction">Transaction Is Successfull</string>
+    <string name="pay">PAY</string>
+    <string name="ooredoo_footer_text">Powered by</string>
+    <string name="ooredoo_success_screen_registation_success">Your request is under review, you will receive an Email notification within 24 hours.</string>
+    <string name="ooredoo_success_screen_registation_sms_success">Soon you will receive a mail regarding the wallet activation.</string>
+    <string name="ooredoo_success_screen_close_button">CLOSE</string>
+
+    <string name="activation_checkmark_tick">PIN Code has been successfully created</string>
+
+
+    <string name="local_radio">Local</string>
+    <string name="international_radio">International</string>
+
+    //Send money starts
+    <string name="send_money_title">SEND MONEY</string>
+    <string name="ooredoo_sendmoney_mobileno">Mobile</string>
+    <string name="ooredoo_sendmoney_amount">Amount</string>
+    <string name="ooredoo_sendmoney_pin">Password</string>
+    <string name="ooredoo_sendmoney_btn_proceed_text">Proceed</string>
+
+    //toasts
+    <string name="send_money_enter_mobile_number">Please enter mobile number</string>
+    <string name="send_money_enter_valid_mobile_number">Please enter valid mobile number</string>
+    <string name="send_money_enter_amount">Please enter amount</string>
+    <string name="send_money_amount_between">Please enter amount between</string>
+    <string name="send_money_amount_between_to">to</string>
+    <string name="send_money_enter_password">Please enter Password</string>
+    //end of sendmoney
+
+    <string name="international_code">+91 </string>
+    <string name="international_number">1234567890</string>
+    <string name="select_contact">Select Contact</string>
+    <string name="KD_convertion">1 KD = Rs100</string>
+
+    <string name="pin">PIN</string>
+
+
+    <string name="sendmoney_confirm_payment">Confirm Payment</string>
+    <string name="sendmoney_confirm_payment_status">Status</string>
+    <string name="sendmoney_confirm_payment_TxnId">Txn ID</string>
+    <string name="sendmoney_confirm_payment_TxnAmount">Txn Amount</string>
+    <string name="sendmoney_confirm_payment_Processingfee">Processing Fee</string>
+    <string name="sendmoney_confirm_payment_Totalamount">Total Amount</string>
+    <string name="sendmoney_confirm_payment_customerid">Customer ID</string>
+    <string name="sendmoney_confirm_payment_avl_balance">Avl.Balance</string>
+    <string name="sendmoney_confirm_payment_Txn_time">Txn Time</string>
+    <string name="ooredoo_sendmoney_confirmpayment_btn_str">confirm</string>
+    <string name="amount">Amount(KD)</string>
+    <string name="amount_1">Amount</string>
+
+    <string name="ooredoo_splash_screen_english_language_text">Register</string>
+    <string name="ooredoo_splash_screen_arabic_language_text">Arabic</string>
+    <string name="ooredoo_splash_screen_copyright_text">Copyright 2015 XenonPay</string>
+    <string name="result_text"></string>
+    <string name="register">Registration</string>
+    <string name="register_arabic">تسجيل</string>
+    <string name="ooredoo_splash_screen_taketour_text">take a tour</string>
+    <string name="loading">Processing</string>
+    <string name="pleasewait">Please Wait...            </string>
+
+    //registration starts
+
+    //choose image or take image
+    <string name="registration_camera">Camera</string>
+    <string name="registration_gallery">Gallery</string>
+    <string name="registration_attach_image">Attach Image</string>
+    <string name="registration_get_image_from">Get image from</string>
+    <string name="registartion_title">REGISTRATION</string>
+    <string name="registration_firstname">First Name</string>
+    <string name="registration_lastname">Last Name</string>
+    <string name="registration_civilid">Civil ID</string>
+    <string name="registration_email_id">Email ID</string>
+    <string name="registration_confirm_emial">Confirm Email ID</string>
+    <string name="registration_phone">Phone</string>
+    <string name="registration_mobile">Mobile</string>
+    <string name="capture_civil_form">Capture image of your civil ID Form</string>
+    <string name="registration_capture_front_text_str">FRONT</string>
+    <string name="registration_capture_back_text_str">BACK</string>
+
+    <string name="registration_capture_front_msg">Front side of civil id captured successfully</string>
+    <string name="registration_capture_back_msg">Back side of civil id captured successfully</string>
+
+    <string name="registration_checkmark_tick">Civil ID.JPEG Attached</string>
+    <string name="registration_checkbox">Accept Terms and Conditions</string>
+    <string name="btn_submit">submit</string>
+    <string name="registration_poweredby_tv">Powered by</string>
+    <string name="help">Help</string>
+    <string name="registration_help">Help</string>
+    <string name="view_t_c_str">VIEW T &amp; C</string>
+    <string name="registration_tag"></string>
+    <string name="registration_alert">Please be informed that your Civil ID image is mandatory as part of \"Know Your Customer\" process.</string>
+    <string name="registration_alert_ok">OK</string>
+
+
+    //Toasts
+    <string name="Please_enter_first_name">Please enter first name</string>
+    <string name="Please_enter_last_name">Please enter last name</string>
+    <string name="Please_enter_mail_id">Please enter mail id</string>
+    <string name="mail_id_valid_msg">Please enter valid mail</string>
+    <string name="confirm_mail_id_valid_msg">Please enter a valid email ID</string>
+    <string name="Please_enter_civil_id">Please enter civil id</string>
+    <string name="Please_enter_confirm_email_id">Please enter confirm email id</string>
+    <string name="maild_should_be_same">Email id and confirm email id should be same.</string>
+    <string name="Please_enter_valid_civil_id">Please enter valid civil id</string>
+    <string name="civilform_capturing_msg">Please capture front side of civilform</string>
+    <string name="civilform_back_capturing_msg">Please capture back side of civilform</string>
+    <string name="terms_conditions_msg">Please accept terms and conditions</string>
+
+    //ends registration
+
+    //Registration success
+    <string name="registration_success_title">Registration</string>
+    <string name="registration_success_desc1">Thank you for registering with Bookeey.</string>
+    <string name="registration_success_desc2">Dear Customer, Your Bookeey Wallet is not yet activated, it may take upto 24 hrs,
+you will receive SMS on the same number you registered with as soon as your wallet is activated, for any inquiries please send email to:
+customercare@bookeey.com\nThank you.</string>
+    <string name="registration_success_close_btn">Close</string>
+    //end of registartion success
+
+    / ACTION BAR
+    <string name="registration_str">REGISTRATION</string>
+    <string name="activation_str">CHANGE PASSWORD</string>
+    <string name="validation_str">VALIDATION</string>
+
+
+    <!--         //ACTIVATION SCREEN//    Starts Here   -->
+
+    <string name="activation_title">SET PASSWORD</string>
+
+    <string name="activation_confirm_new_hint">xxxx</string>
+    <string name="activation_confirm_new_str">Confirm New Password</string>
+    <!--    <string name="activation_confirm_new_str">Confirm New OTP</string>-->
+    <string name="activation_new_hint">xxxx</string>
+    <string name="activation_show_password">Show password</string>
+
+    <string name="activation_new_str">New Password</string>
+    <!--    <string name="activation_new_str">New OTP</string>-->
+    <!--    <string name="note">Enter the Password code as received in the Mail</string>-->
+    <!--    <string name="note">Enter password or the OTP received by SMS</string>-->
+    <string name="note">Enter OTP received by SMS</string>
+
+
+    <string name="call_center">Note: Please contact customer care@22200001 to get Password</string>
+    <string name="activation_pin_code_hint">xxxx</string>
+    <!--    <string name="activation_pin_code_str">Current Password</string>-->
+    <!--    <string name="activation_pin_code_str">Current OTP</string>-->
+    <string name="activation_pin_code_str">Enter OTP</string>
+
+    <string name="current_password_change_pin_screen">Current Password</string>
+    <string name="change_password_title_change_pin_screen">CHANGE PASSWORD</string>
+
+    <string name="mobile_number_str">Enter Mobile Number</string>
+
+
+    <string name="activation_toast_pin_msg">Please enter current password</string>
+    <string name="activation_toast_newpin_msg">Please enter new password</string>
+    <string name="activation_toast_confirmpin_msg">Please enter confirm password</string>
+    <string name="activation_toast_samepin_msg">New password and confirm new password are not same</string>
+    <string name="activation_checkbox">Show password</string>
+
+    <!--         //ACTIVATION SCREEN//    End Here   -->
+
+    //login starts
+    <string name="app_language">English</string>
+    <string name="login_title">LOGIN</string>
+    <string name="login_langauge_type">Language Type</string>
+    <string name="login_english">English</string>
+    <string name="login_arabic">العربية</string>
+    <string name="login_or">OR</string>
+    <string name="login_touchID">Use TouchID</string>
+    <string name="login_mob_no_str">Mobile</string>
+    <string name="login_forgot_password">forgot password</string>
+    <string name="login_help">Help</string>
+    <string name="login_password_msg">Enter password</string>
+    <!--    <string name="login_tour">Take a Tour</string>-->
+    <string name="login_tour">Tour</string>
+
+    <string name="login_pin_code_str">Enter PIN Code</string>
+    <string name="login_btn_login">Login</string>
+    <string name="forgot_pin_code">Forgot PIN Code</string>
+    <string name="login_pin_code_invalid_str">Please enter 4 digit pin</string>
+
+    <string name="login_pswd_ed_hint">Enter Password</string>
+    //login ends
+
+
+    //forgot password starts
+    <string name="forgot_password_title">Forgot Password</string>
+    <string name="forgot_password_desc1">To reset your Password, please click \'CONFIRM\'</string>
+    <string name="forgot_password_desc2">You will receive the new OTP by SMS on your mobile.</string>
+    <string name="forgot_close_btn">close</string>
+    <string name="forgot_confirm_btn">Confirm</string>
+    //forgot password ends
+
+
+    //menu items
+    <string name="menu_home">Home</string>
+    <string name="menu_manage_profile">Manage Profile</string>
+    <string name="menu_change_password">Change Password</string>
+    <!--    <string name="menu_change_password">Change OTP</string>-->
+    <string name="menu_transaction_istory">History</string>
+    <string name="change_mobile_no">Change Mobile no.</string>
+    <string name="menu_about_us">About Us</string>
+    <string name="menu_contact_us">Contact Us</string>
+    <string name="menu_check_for_updates">Check For Updates</string>
+    <string name="menu_exit_app">Exit App</string>
+    //ends menu items
+
+
+    //Main mneu items starts
+    <string name="mainmenu_load_wallet">LOAD WALLET</string>
+    <string name="mainmenu_pay">PAY</string>
+    <string name="mainmenu_send_money">SEND MONEY</string>
+    <string name="mainmenu_prepaid_cards">PREPAID CARDS</string>
+    <string name="mainmenu_mobile_billl">MOBILE BILL</string>
+    <string name="mainmenu_intl_top_up">INT\'L TOP UP</string>
+    <string name="mainmenu_invoice">INVOICE</string>
+    <string name="mainmenu_where_to_pay">WHERE TO PAY</string>
+    <string name="mainmenu_offers">OFFERS</string>
+    <string name="mainmenu_txn_history">HISTORY</string>
+    <string name="mainmenu_help">HELP</string>
+    //end Main mneu items starts
+
+
+    //fingerprint starts
+    <string name="finger_print_title">Authentication</string>
+    <string name="title_fingerprint">One-touch Sign In</string>
+    <string name="desc_fingerprint">Please place your fingertip on the scanner to verify your identity</string>
+    <string name="fingerprint_note">(Fingerprint sign in makes your app login much faster. Your device should have at least one fingerprint registered in device settings)</string>
+    <string name="title_activity_home">Fingerprint</string>
+    <string name="activity_home_desc">You have successfully logged in with fingerprint authentication</string>
+    <string name="activity_home_note">Close and re-open the app to see the fingerprint auth screen again</string>
+    //fingerprint ends
+
+
+    //virtual pepaid cards starts
+    <string name="virtual_prepaid_title">Virtual Prepaid Cards</string>
+    <string name="virtual_enter_password">Enter Password</string>
+    <string name="virtual_total_price">Total price=</string>
+    <string name="virtual_procedd_btn">Proceed</string>
+    //Toasts
+    <string name="virtual_prepaid_card_type">Please select card type</string>
+    <string name="virtual_prepaid_store_type">Please select store type</string>
+    <string name="virtual_prepaid_card_value">Please select card value</string>
+    <string name="virtual_prepaid_store">Please select store</string>
+    <string name="virtual_prepaid_password">Please enter Password</string>
+    //ends prepaid cards
+
+    <!--Virtual prepaid cards L1-->
+    <string name="virtual_prepaid_L1_title">Confirm Payment</string>
+    <string name="virtual_prepaid_L1_operator_name">Operator Name</string>
+    <string name="virtual_prepaid_L1_status">Status</string>
+    <string name="virtual_prepaid_L1_transfer_amount">Transfer Amount</string>
+    <string name="virtual_prepaid_L1_balance_after">Balance after</string>
+    <string name="virtual_prepaid_L1_customer_ID">Customer ID</string>
+    <string name="virtual_prepaid_L1_txn_ref_no">Txn Ref No</string>
+    <string name="virtual_prepaid_L1_txn_date">Txn Date</string>
+    <string name="virtual_prepaid_L1_txn_confirm_btn">Confirm</string>
+    <!--End of Virtual prepaid cards L1-->
+
+    <!--Virtual prepaid cards L2-->
+    <string name="virtual_prepaid_L2_title">Transfer Receipt</string>
+    <string name="virtual_prepaid_L2_operator_name">Operator Name</string>
+    <string name="virtual_prepaid_L2_status">Status</string>
+    <string name="virtual_prepaid_L2_serial_number">Serial Number</string>
+    <string name="virtual_prepaid_L2_txn_amount">Txn Amount</string>
+    <string name="virtual_prepaid_L2_recharge_code">Recharge Code</string>
+    <string name="virtual_prepaid_L2_txn_ref_no">Txn Ref No</string>
+    <string name="virtual_prepaid_L2_txn_date">Txn Date</string>
+    <string name="virtual_prepaid_L2_txn_close_btn">close</string>
+    <!--End of Virtual prepaid cards L2-->
+
+
+    <!--Mobile bill starts-->
+    <string name="mobile_bill_title">MOBILE BILL</string>
+    <string name="mobile_bill_L1_recharge">Recharge</string>
+    <string name="mobile_bill_L1_paybill">Pay Bill</string>
+    <string name="mobile_bill_L1_mobilenumber">Mobile Number</string>
+    <string name="mobile_bill_L1_enter_mobile_number">Enter mobile number</string>
+    <string name="mobile_bill_L1_amount">Amount</string>
+    <string name="mobile_bill_L1_enter_amount">Enter amount</string>
+    <string name="mobile_bill_L1_password">Password</string>
+    <string name="mobile_bill_L1_enter_password">Enter password</string>
+    <string name="mobile_bill_L1_proceed_btn">Proceed</string>
+    //toasts
+    <string name="mobile_bill_L1_toast_mobile_number">Please enter mobile number</string>
+    <string name="mobile_bill_L1_toast_valid_mobile__number">Please enter valid mobile number</string>
+    <string name="mobile_bill_L1_toast_amount">Please enter amount</string>
+    <string name="mobile_bill_L1_toast_select_amount">Please select amount</string>
+    <string name="mobile_bill_L1_toast_between">Please enter amount between</string>
+    <string name="mobile_bill_L1_toast_to">to</string>
+    <string name="mobile_bill_L1_toast_password">Please enter Password</string>
+
+    //Mobile bill L2 starts
+    <string name="mobile_bill_L2_title">Confirm Payment</string>
+    <string name="mobile_bill_L2_mobile_number">MobileNumber</string>
+    <string name="mobile_bill_L2_payment_ref">Payment Ref</string>
+    <string name="mobile_bill_L2_status">Status</string>
+    <string name="mobile_bill_L2_transfer_amount">Transfer Amount</string>
+    <string name="mobile_bill_L2_balance_after">Balance After</string>
+    <string name="mobile_bill_L2_customer_ID">Customer ID</string>
+    <string name="mobile_bill_L2_txn_ID">Transaction ID</string>
+    <string name="mobile_bill_L2_txn_date">Txn Date</string>
+    <string name="mobile_bill_L2_txn_confirm_btn">Confirm</string>
+
+    //mobile final starts
+    <string name="mobile_bill_final_transfer_receipt">Transfer Receipt</string>
+    <string name="mobile_bill_L2_txn_close_btn">close</string>
+
+    <!--Ends Mobile bill starts-->
+
+
+    <!--Int'l  recharge initial screen-->
+    <string name="intl_top_up_title">INT\'L TOP UP</string>
+    <string name="intl_mobile_number">Enter Mobile Number</string>
+    <string name="intl_next_btn">Proceed</string>
+    <string name="intl_top_up_select_country">Please enter country</string>
+    <string name="intl_top_up_enter_mobile_number">Please enter mobile number</string>
+    <string name="intl_top_up_warning_text">Destination Country\'s operator TAXes may apply!</string>
+    //int'l screen 2
+    <string name="intl_enter_password">Enter password</string>
+    <string name="intl_proceed_btn">Proceed</string>
+    //toasts
+    <string name="intl_select_denomination">Please select the denomination</string>
+    <string name="intl_password">Please enter Password</string>
+
+    //Intl top up L1 starts
+    <string name="intl_L1_confirm_payment">Confirm Payment</string>
+    <string name="intl_L1_receipient_mobile">Recipient Mobile</string>
+    <string name="intl_L1_local_currency">Transfer Amount in Local currency</string>
+    <string name="intl_L1_chargerd_amount">Charged Amount in (KWD)</string>
+    <string name="intl_L1_customer_ID">Customer ID</string>
+    <string name="intl_L1_tranasaction_ID">Transaction ID</string>
+    <string name="intl_L1_txn_time">Txn Time</string>
+    <string name="intl_L1_confirm_btn">Confirm</string>
+
+    //Intl top up L2 starts
+    <string name="intl_L2_receipt">Int\'l Receipt</string>
+    <string name="intl_L2_status">Status</string>
+    <string name="intl_L2_balance_after">Balance After</string>
+    <string name="intl_L2_transaction_ID">Transaction ID</string>
+    <string name="intl_L2_close_btn">Close</string>
+
+    <!--End of Int'l recharge-->
+
+    <!--Invoice page starts-->
+    <string name="invoice_title">INVOICE</string>
+    <string name="invoice_details_title">Invoice Details</string>
+    <string name="invoice_merchant_name">Merchant Name</string>
+    <string name="invoice_customer_name">Customer Name</string>
+    <string name="invoice_customer_emailID">Customer emailID</string>
+    <string name="invoice_number">Invoice No</string>
+    <string name="invoice_date">Invoice Date</string>
+    <string name="invoice_amount">Invoice Amt</string>
+    <string name="invoice_password">Password</string>
+    <string name="invoice_description">Description :</string>
+    <string name="invoice_reject_btn">Reject</string>
+    <string name="invoice_hold_btn">Hold</string>
+    <string name="invoice_pay_btn">Pay Now</string>
+    <string name="invoice_load_money_btn">Load Money</string>
+    <string name="invoice_offer_id">Offer Description</string>
+    <string name="invoice_discount_per_amount">Discount</string>
+    <string name="invoice_discount_amount">Discount Amt</string>
+    <string name="invoice_total_amount">Amount To Pay</string>
+
+    //toasts
+    <string name="invoice_enter_password">Please enter password</string>
+    <string name="invoice_enter_amount">Please enter amount</string>
+    <string name="invoice_enter_valid_amount">Please enter valid amount</string>
+
+    //Invoice L2 page starts
+    <string name="invoice_L2_title">Invoice successfull</string>
+    <string name="invoice_L2_status">Status</string>
+    <string name="invoice_L2_customer_name">Merchant Name</string>
+    <string name="invoice_L2_invoice_number">Invoice No</string>
+    <string name="invoice_L2_amount_paid">Amount paid</string>
+    <string name="invoice_L2_ok_btn">Ok</string>
+
+    //invoie reject reason dialogue
+    <string name="invoice_reason_title">MENTION YOUR REASON</string>
+    <string name="invoice_reason_optional_title">(Optional field)</string>
+
+    <string name="invoice_reason_mention_to">Please mention your reason to reject...                                                                           </string>
+    <string name="invoice_reason_submit_btn">submit</string>
+    <!--End of Invoice page-->
+
+
+    <!--Where to pay page starts-->
+    <string name="where_to_pay_all">All</string>
+    <string name="where_to_pay_automotive">Automotive</string>
+    <string name="where_to_pay_electronics">Electronics &amp; Computers</string>
+    <string name="where_to_pay_food">Food &amp; Beverage</string>
+    <string name="where_to_pay_fashion">Fashion</string>
+    <string name="where_to_pay_games">Games &amp; Toys</string>
+    <string name="where_to_pay_groceries_hypermarket">Groceries &amp; Hypermarkets</string>
+    <string name="where_to_pay_trasportation">Transportation</string>
+    <string name="where_to_pay_health">Health &amp; Beauty</string>
+    <!--    <string name="where_to_pay_hotels">Hotels &amp; Accommodations</string>-->
+    <string name="where_to_pay_hotels">Hotels</string>
+
+    <string name="where_to_pay_medical">Medical Care</string>
+    <string name="where_to_pay_retail">Retail</string>
+    <string name="where_to_pay_service">Services</string>
+    <string name="where_to_pay_branches_title">BRANCHES</string>
+    <string name="where_to_pay_merchant_location_title">MERCHANT LOCATION</string>
+    <string name="where_to_pay_get_direction_btn">GET DIRECTION</string>
+
+    <!--End of where to pay page starts-->
+
+    <!--Offers to pay page starts-->
+    <string name="offers_title">OFFERS</string>
+
+    //New offers screen
+    <string name="new_offers">New Offers:</string>
+    <string name="active_offers">Active Offers:</string>
+    <string name="new_offers_desc">New Offers!</string>
+    <string name="new_offers_hurry_up"> Hurry up. Tap each for details.</string>
+
+    //individual screen
+    <string name="individual_offers_tap_each">Tap each offer for detail.</string>
+
+    //show offres
+    <string name="show_offers_save">Save</string>
+    <string name="show_offers_ignore">Ignore</string>
+
+    //redeem
+    <string name="offers_redeem">Redeem</string>
+    <string name="offers_redeem_delete">Delete</string>
+    <string name="offers_redeem_close">Close</string>
+
+    //offers QR code page
+    <string name="offers_qrcode_title">REDEMPTION</string>
+    <string name="offers_qrcode_scanned_at">GET THE QR SCANNED AT</string>
+    <string name="offers_qrcode_for_redemption">FOR REDEMPTION</string>
+    <string name="offers_qrcode_close">Close</string>
+    <!--end of offers  pay page starts-->
+
+
+    <string name="orredoo_pay_screen_tab_payinshop_tab_amount_txt">Amount</string>
+    <string name="orredoo_pay_screen_tab_payinshop_tab_amount_number_txt">KD 00.000</string>
+    <string name="orredoo_pay_screen_tab_payinshop_tab_PIN_txt">PIN</string>
+    <string name="orredoo_pay_screen_tab_payinshop_tab_PIN_xxx_txt">xxxx</string>
+    <string name="orredoo_pay_screen_button">CONFIRM PAYMENT</string>
+    <string name="orredoo_pay_screen_tab_payinonline_tab_amount_txt">Amount(KD)</string>
+
+
+    //Transaction history first page starts
+    <string name="txn_history_filter">All</string>
+    <string name="txn_history_loadwallet">Load Wallet</string>
+    <string name="txn_history_pay2mercahnt">Pay To Merchant</string>
+    <string name="txn_history_sendp2p">Send - P2P</string>
+    <string name="txn_history_receivep2p">Receive - P2P</string>
+    <string name="txn_history_prepaidcards">Prepaid Cards</string>
+    <string name="txn_history_mobilebill">Mobile Bill</string>
+    <string name="txn_history_recharge">INTL Recharge</string>
+    <string name="txn_history_invoice">Invoice</string>
+    <string name="txn_history_ecommerce">E-Commerce</string>
+    //Transaction history first page ends
+
+    //Tranasaction Details starts
+    <string name="txn_history_title">Transaction History</string>
+    <string name="txn_history_screen_title_txt">Transaction Details</string>
+    <string name="txn_history_mobilenumber_txt">Recipient Number</string>
+    <string name="txn_history_receiptentName_txt">Recipient Name</string>
+    <string name="txn_history_tranasaction_type_txt">Txn Type</string>
+    <string name="txn_history_status_txt">Status</string>
+    <string name="txn_history_txn_id_txt">Transaction ID</string>
+    <string name="txn_history_payment_amount_txt">Payment Amount</string>
+    <string name="txn_history_customerid_txt">Customer ID</string>
+    <string name="txn_history_balance_after_txt">Balance After</string>
+    <string name="txn_history_processingfee_txt">Processing fee</string>
+    <string name="txn_history_success_close_btn">Close</string>
+    <string name="txn_history_amount_txt">Total Amount</string>
+    <string name="txn_history_after_balance_txt">After Balance</string>
+    <string name="txn_history_time_txt">Txn Time</string>
+    <string name="txn_history_load_type">Load Type</string>
+    <string name="txn_history_offer_ID">Offer ID</string>
+    <string name="txn_history_discount">Discount</string>
+    <string name="txn_history_amount_due">Amount Due</string>
+    <string name="txn_history_amount_paid">Amount Paid</string>
+    <string name="txn_history_branch_txt">Branch</string>
+
+
+    //inside java side setting values
+    <string name="txn_failure">FAILURE</string>
+    <string name="txn_txn_under_process">TXN UNDER PROCESS</string>
+    <string name="txn_operator_name">Operator Name</string>
+    <string name="txn_topup_amount_kwd">Topup Amount(KWD)</string>
+    <string name="txn_amount">Txn Amount</string>
+    <string name="txn_serial_number">Serial Number</string>
+    <string name="txn_recharge_code">Recharge Code</string>
+    <string name="txn_ref_no">Txn Ref No</string>
+    <string name="txn_recharge_141">To recharge dial :  *141*RechargeCode#</string>
+    <string name="txn_recharge_111">To recharge dial : *111*RechargeCode#</string>
+    <string name="txn_recharge_500">To recharge dial : *500*RechargeCode#</string>
+    <string name="txn_hold">HOLD</string>
+    <string name="txn_success">SUCCESS</string>
+    <string name="txn_rejected">REJECTED</string>
+    <string name="txn_failed">FAILED</string>
+    <string name="txn_mercahnt_name">Merchant name</string>
+    <string name="txn_cancelled_merchant">Cancelled by Merchant</string>
+    <string name="txn_sender_number">Sender Number</string>
+    <string name="txn_sender_name">Sender Name</string>
+    <string name="txn_amount_kwd">Txn Amt(KWD)</string>
+    <string name="txn_initiated">Initiated></string>
+    <string name="txn_tup">TUP</string>
+    <string name="txn_product">Product</string>
+    <string name="txn_topup_local_currency">Topup Amount \n (in Local Currency)</string>
+
+    <string name="txn_offer_id">Offer Description</string>
+    <string name="txn_inv_amount">Inv Amount</string>
+    <string name="txn_amount_paid">Amount Paid</string>
+    <string name="txn_amount_pay">Amount To Pay</string>
+    <string name="txn_discount_amt">Discount Amt</string>
+
+    //end of java strings
+
+    <string name="ooredoo_transcationfailed_paymentdeclined_header_tv">Transfer Declined</string>
+    <string name="ooredoo_transcationfailed_reasondeclined1_tv">Reason of Decline Reason of Decline Reason of Decline</string>
+    <string name="ooredoo_transcationfailed_reasondeclined3_tv">Reason of Decline</string>
+    <string name="ooredoo_transcationfailed_reasondeclined_information_tv">Sorry you Payment request is declined. Please check the detailes below</string>
+    <string name="ooredoo_transcationfailed_status_tv">Status</string>
+    <string name="ooredoo_transcationfailed_txnamount_tv">Txn Amount</string>
+    <string name="ooredoo_transcationfailed_txtid_tv">Txn ID</string>
+    <string name="ooredoo_transcationfailed_totalamount_tv">Total Amount</string>
+    <string name="ooredoo_transcationfailed_customerid_tv">Customer ID</string>
+    <string name="ooredoo_transcationfailed_help_button">Help</string>
+
+    <string name="title_billpayment">Payment Successful</string>
+    <string name="mobilenumber">Mobile Number</string>
+    <string name="status">Status</string>
+    <string name="tnxid">Tnx ID</string>
+    <string name="paymentamt">Payment Amount</string>
+    <string name="new_wallet_balance">New Wallet Balance</string>
+    <string name="mobileno">Mobile</string>
+    <string name="close">CLOSE</string>
+    <string name="edit">EDIT</string>
+
+
+    <string name="success">Success</string>
+    <string name="success_line1">Here is the message,that all</string>
+    <string name="success_line2">what you have done is correct.</string>
+    <string name="success_line3">see you soon!!!</string>
+
+
+    <!--send_money_confirm_paymnet-->
+    <string name="ooredoo_sendmoney_confirmpayment_confirmpayment_tv">Confirm Payment</string>
+    <string name="ooredoo_sendmoney_confirmpayment_mobileno_tv">Mobile Number</string>
+    <string name="ooredoo_sendmoney_confirmpayment_status_tv">Status</string>
+    <string name="ooredoo_sendmoney_confirmpayment_transferamount_tv">Transfer Amount</string>
+    <string name="ooredoo_sendmoney_confirmpayment_exchangerate_tv">Exchange Rate</string>
+    <string name="ooredoo_sendmoney_confirmpayment_afterwallet_tv">After Balance</string>
+    <string name="ooredoo_sendmoney_confirmpayment_wallentbalance_tv">Balance After</string>
+    <string name="ooredoo_sendmoney_confirmpayment_processingfee_tv">Processing Fee</string>
+    <string name="ooredoo_sendmoney_confirmpayment_totalamount_txt">Txn Amount</string>
+    <string name="ooredoo_sendmoney_confirmpayment_customerid_tv">Customer ID</string>
+    <string name="ooredoo_sendmoney_confirmpayment_txnid_tv">Transaction ID</string>
+    <string name="ooredoo_sendmoney_confirmpayment_txntime_tv">Txn Time</string>
+    <string name="ooredoo_sendmoney_confirmpayment_confirm_button">Confirm</string>
+    <string name="ooredoo_sendmoney_confirmpayment_footer_poweredby_tv">Powered by</string>
+    <string name="ooredoo_sendmoney_close_btn">close</string>
+    <string name="ooredoo_sendmoney_transfer_receipt">Transfer Receipt</string>
+
+    <!--End of send_money_confirm_paymnet-->
+
+
+    //error dialogue device change
+    <string name="error_device_change_title">CHANGE DEVICE</string>
+    <string name="error_device_change_desc">Do you want to change your device?</string>
+    <string name="error_device_confirm_btn">Confirm</string>
+    //end of error dialogue device change
+
+
+    <!--devchange and mobile_number-->
+
+    <string name="devchange_title">Change Device</string>
+    <string name="devchange_mob_no">Mobile Number</string>
+    <string name="devchange_password">Password</string>
+
+    <string name="devchange_civil_id_et">Civil ID</string>
+    <string name="devchange_old_device_number_et">Old device number</string>
+    <string name="devchange_old_pin_et">Old PIN</string>
+    <string name="devchange_submit_btn">submit</string>
+
+    //toasts
+    <string name="devchange_mobile_number">Please enter mobile number</string>
+    <string name="devchange_valid_mobile_number">Please enter valid mobile number</string>
+    <string name="devchange_civilID">Please enter civil ID</string>
+    <string name="devchange_valid_civilID">Please enter valid civil ID</string>
+    <string name="devchange_enter_password">Please enter password</string>
+
+    <!--ends devchange and mobile_number-->
+
+
+    //error dialogue mobile change
+    <string name="error_mobile_change_title">CHANGE MOBILE NUMBER</string>
+    <string name="error_mobile_change_desc">Do you want to change your mobile number?</string>
+    <string name="error_mobile_confirm_btn">Confirm</string>
+    //end of error dialogue mobile change
+
+
+    //change mobile number
+    <string name="mobchange_title">CHANGE MOBILE NUMBER</string>
+    <string name="mobchange_password">Password</string>
+    <string name="mobchange_civil_id_et">Civil ID</string>
+    <string name="mobchange_submit_btn">submit</string>
+
+    <string name="mobchange_old_mobile_number_et">Current mobile number</string>
+    <string name="mobchange_new_mobile_number_et">New mobile number</string>
+    <string name="mobchange_old_pin_et">Old PIN</string>
+    //toasts
+    <string name="mobchange_old_mobile_number">Please enter old mobile number</string>
+    <string name="mobchange_valid_old_mobile_number">Please enter a valid mobile number</string>
+    <string name="mobchange_enter_password">Please enter password</string>
+    <string name="mobchange_civilID">Please enter civil ID</string>
+    <string name="mobchange_valid_civilID">Please enter valid civil ID</string>
+    <string name="mobchange_new_mobile_number">Please enter new mobile number</string>
+    <string name="mobchange_valid_new_mobile_number">Please enter a valid mobile number</string>
+
+    //end of change mobile number
+
+
+    //Not yet approved page starts
+    <string name="not_yet_approved_title">Registration</string>
+    <string name="not_yet_approved_desc">Dear Customer, Your Bookeey Wallet is not yet activated, it may take upto 24 hrs, you will receive an SMS as soon as your wallet is activated,for any inquiries Please send email to customercare@bookeey.com ; Thank you.</string>
+    <string name="not_yet_approved_colse_btn">Close</string>
+    //Ends Not yet approved page starts
+
+
+    //Rejected page starts
+    <string name="rejected_wallet_title">Registration</string>
+    <string name="rejected_wallet_desc">Dear Customer, Your Bookeey wallet is rejected. Please modify your info by providing correct data. for any inquiries Please send email to customercare@bookeey.com </string>
+    <string name="rejected_wallet_desc2">Thank You.</string>
+    <string name="rejected_wallet_edit_btn">Edit</string>
+    <string name="rejected_wallet_close_btn">Close</string>
+    //Ends rejected page starts
+
+
+    <string name="ooredoo_sendmoney_confirmpayment_receiveramount_tv">Receive Amount</string>
+
+
+    <string name="buy_amount_tv">Pay build amount</string>
+    <string name="validpin">Please enter valid pin</string>
+
+    <!--Manage Profile details view-->
+    <string name="customer_current_balctv">BALANCE</string>
+    <string name="manage_profile_title">MANAGE PROFILE</string>
+    <string name="mobile">Mobile Number</string>
+    <string name="fname">First Name</string>
+    <string name="lname">Last Name</string>
+    <string name="civil_id">Civil ID</string>
+    <string name="email">Email ID</string>
+    <string name="profile_btn">Close</string>
+    <string name="save_btn">Update</string>
+    <string name="customerid">Customer ID</string>
+    <string name="wallet_balnce">Wallet Balance</string>
+    <!--End of Manage Profile details view-->
+
+
+    <!--LOAD MONEY-->
+    <string name="main_menu_profile_offers_fragment_load_money_str">LOAD MONEY</string>
+    <string name="jit_insufficient_bal">Insufficient balance in your wallet</string>
+    <string name="jit_only_one_card_can_be_used_str">\nNote: Only one card can be used with in 7 days</string>
+    <string name="jit_total_amount_str">Total Amount</string>
+    <string name="jit_transaction_amount_str">Transaction Amount</string>
+    <string name="jit_processing_fee_str">Processing fee</string>
+    <string name="load_money_your_wallet_balance_str">Your wallet balance</string>
+    <string name="jit_amount_to_be_loaded_str">Amount to be loaded</string>
+    <string name="load_money_you_can_load_upto_str">You can load upto</string>
+    <string name="load_money_yoc_can_load_minimum_str">Minimum amount to load</string>
+    <string name="load_money_enter_amount_to_load_hint_str">Amount</string>
+    <string name="load_money_cancel_btn">cancel</string>
+    <string name="load_money_proceed_btn">proceed</string>
+    <!--ENDS LOAD MONEY-->
+
+
+    //P2M starts
+    <string name="p2m_enter_billed_amount">enter billed amount</string>
+    <string name="p2m_amount">amount</string>
+    <string name="p2m_password">Enter Password</string>
+    <string name="p2m_cancel">Cancel</string>
+    <string name="p2m_pay">pay</string>
+    //toasts
+    <string name="p2m_please_enter_amount">Please enter the amount</string>
+    <string name="p2m_sufficient_balance">Your account doesn\'t have sufficient balance</string>
+
+    //ends P2M
+
+    //show QRCode page starts
+    <string name="show_qr_code_title">PAY</string>
+    <string name="qr_code_wallet_balance">Wallet Balance:</string>
+    <string name="qr_code_ask_merchant_scan">Ask Merchant to scan the QR code</string>
+    <string name="qr_code_amount_pay">Amount to pay:</string>
+    <string name="qr_code_close_btn">close</string>
+
+    //General errors
+    <string name="failure_general_server_error">Failure general server</string>
+    <string name="failure_network_error">Failure network error</string>
+    <string name="services_are_down">Services are down</string>
+    <string name="session_expired">Session expired</string>
+
+    //end of General server error
+
+
+    <!--  Terms and conditions -->
+    <string name="terms_and_conditions_title">Terms &amp; Conditions</string>
+    <string name="terms_conditions_definition">Definitions. These Terms and Conditions (the \"Terms\") apply when you register to \"Bookeey\" Mobile Wallet Service.</string>
+    <string name="terms_conditions_line2">In these Terms, \"you\" and \"your\" refer to the account holder, and \"we,\" \"us\" and \"our,\" refer to Xenon Prepaid Electronic Payment Company WLL (\"Xenon Prepaid Card\").</string>
+    <string name="terms_conditions_line3">\"Platform Provider\" means the third party mobile payment enabler that supports or provides the Mobile Wallet Service to Xenon Prepaid Card \"BOOKEEY\" for your ultimate use.</string>
+    <string name="terms_conditions_line4">A Mobile Wallet Service (\"Mobile Wallet\") means the digital wallet platform operated by the Platform Provider that allows you to add eligible amount to an application using your mobile device,
+        permitting you to make: (i) payments at merchant point-of-sale terminals or readers that accept payments using a mobile Card (in lieu of you presenting your physical Card);
+        and (ii) in-app or other digital commerce payments at participating merchants. </string>
+    <string name="terms_conditions_a_tag">a)</string>
+    <string name="terms_conditions_b_tag">b)</string>
+    <string name="terms_conditions_c_tag">c)</string>
+    <string name="terms_conditions_d_tag">d)</string>
+    <string name="terms_conditions_e_tag">e)</string>
+    <string name="terms_conditions_f_tag">f)</string>
+    <string name="terms_conditions_g_tag">g)</string>
+    <string name="terms_conditions_h_tag">h)</string>
+    <string name="terms_conditions_i_tag">i)</string>
+    <string name="terms_conditions_j_tag">j)</string>
+    <string name="terms_conditions_k_tag">k)</string>
+    <string name="terms_conditions_l_tag">l)</string>
+    <string name="terms_conditions_m_tag">m)</string>
+    <string name="terms_conditions_n_tag">n)</string>
+    <string name="terms_conditions_o_tag">o)</string>
+    <string name="terms_conditions_a"> Your BOOKEEY account number is activated (provisioned) with a digital number. Once added, you may use your mobile device to make payments only where the Mobile Wallet is accepted.
+        BOOKEEY is not a provider of the Mobile Wallet Service and we are not responsible nor shall be held liable for any failure or inability to perform a transaction using Mobile Wallet.
+        We are responsible only for supplying information securely to the Platform Provider to allow usage of BOOKEEY in Mobile Wallet. </string>
+    <string name="terms_conditions_b"> Account Eligibility. Active BOOKEEY accounts in good standing, as determined by BOOKEEY in its sole discretion, are eligible to be added to Mobile Wallet.
+        If your BOOKEEY or any associated BOOKEEY account becomes delinquent or is otherwise no longer in good standing,
+        Xenon Prepaid Card may remove your BOOKEEY account from the Mobile Wallet Service without any liability on BOOKEY or Xenon Prepaid Card. </string>
+    <string name="terms_conditions_c"> Relationship to Existing Agreements.
+        You agree that when you register for BOOKEEY Mobile Wallet, your BOOKEEY account and underlying accounts will remain subject to the terms and conditions of all existing agreements with BOOKEEY,
+        including, but not limited to, Agreement and Disclosure Statement, Electronic Funds Transfer Disclosure, and \"BOOKEEY\"s Fee Schedule (as amended, \"BOOKEEY Agreements\"). </string>
+    <string name="terms_conditions_d"> We currently do not impose a fee for using your Cards through the Mobile Wallet Service, but we reserve the right to do so in the future.
+        You acknowledge that certain message and data rates may apply from your wireless service providers and/or carriers which might impact your use of the Mobile Wallet Service.
+        For example, your mobile service carrier or provider may impose data usage or text charges for your use of the Mobile Wallet Service, including downloading the required software,
+        receiving or sending text messages, or other use of your mobile device when using the software or other products and services provided by Mobile Wallet.
+        You agree that you are responsible for all such fees and restrictions, and that we may contact you via your mobile device, via e-mail or automatically dialled calls or texts,
+        for any purpose regarding your BOOKEEY accounts, including but not limited to account servicing and collection. </string>
+    <string name="terms_conditions_e"> Protection of Your Privacy and Security. Once you have ACTIVATED your BOOKEEY Mobile Wallet Service,
+        BOOKEEY is responsible for securely transmitting your information to the Platform Provider through secure channels. You agree that we may share your information with the Platform Provider, a payment network,
+        and other third parties in order to provide the services you have requested, to make information
+        available to you about your BOOKEEY transactions, and to improve our ability to offer these services.
+        We do not control the privacy and security of your information that may be held by the Platform Provider and that is governed by the privacy policy given to you by the Platform Provider.
+        You agree not to leave your mobile device unattended while logged in to the Mobile Wallet Service and to log off immediately at the end of each session by you.
+        You agree not to provide your password or other access information to any other person. If you believe that someone may have unauthorized access to your mobile device,
+        you agree to immediately cancel your access to the Mobile Wallet Service associated with the mobile device. You agree to provide us with immediate notice in the event you suspect any unauthorized access to any of your BOOKEEY accounts.
+        BOOKEEY and Xenon Prepaid Card shall not be responsible or held liable for any damages, losses or any liability incurred by you as arising from any leakage, loss of information, cancellation or suspension of services.
+        You agree to comply with all applicable laws, rules, and regulations in connection with your BOOKEEY WALLET ACCOUNT and the use of the Mobile Wallet Service. Subject to the BOOKEEY Agreements governing use of the BOOKEEY you add to Mobile Wallet,
+        you are responsible for all transactions made using your BOOKEEY Mobile Wallet You agree to take reasonable precautions to ensure that BOOKEEY, security, and integrity of your account and transactions when using the Mobile Wallet Service,
+        including any security features and procedures the Platform Provider and your mobile device may offer to protect against unauthorized use of any of your BOOKEEY wallet. </string>
+    <string name="terms_conditions_f"> We may make individually identifying information available only in the following circumstances: when ordered by a court or other legal body or when it is lawfully permitted or required;
+        when we have agreed to provide information to vendors and partners to make products and services available to our members; or when you have requested or consented to the disclosure of information.
+        If we disclose information to outside vendors, we will require that they use it only to provide previously agreed to services to our members. </string>
+    <string name="terms_conditions_g"> Account Ownership/Accurate Information. You represent that you are the legal owner of the accounts and other financial information which may be accessed via the Mobile Wallet Service.
+        You represent that all information you provide in connection with Mobile Wallet is accurate, current, and complete, and that you have the right to provide the information to us for the purpose of operating Mobile Wallet. </string>
+    <string name="terms_conditions_h"> Changes in Terms and Conditions. We may, in our sole discretion, change the Terms and modify or cancel the Mobile Wallet Service or your eligibility to use your BOOKEEY Mobile Wallet at any time, without notice.
+        You cannot change the Terms of Mobile Wallet Service.To cancel service, you may remove your BOOKEEY Mobile Wallet.</string>
+    <string name="terms_conditions_i"> Disclaimers, Limitation of Liability, and Indemnification. YOU UNDERSTAND AND AGREE THAT YOUR USE OF MOBILE WALLET SERVICE IS AT YOUR SOLE RISK.
+        ANY MATERIAL DOWNLOADED OR OTHERWISE OBTAINED THROUGH THE USE OF THE MOBILE WALLET SERVICE IS OBTAINED AT YOUR OWN DISCRETION AND RISK, AND BOOKEEY, ITS SHAREHOLDERS,
+        EMPLOYEES, DIRECTORS, AGENTS, AFFILIATES, ADVISORS, REPRESENTATIVES AND SUPPLIERS, ARE NOT RESPONSIBLE FOR ANY DAMAGE TO YOUR MOBILE DEVICE OR LOSS OF DATA OR FOR ANY LOSSES OR DAMAGES OF ANY TYPE AND NATURE THAT RESULTS FROM THE DOWNLOAD OF ANY SUCH MATERIAL,
+        WHETHER DUE TO ANY COMPUTER VIRUS, BUG, MALFUNCTION, TO ANY REASON WHETHER ATTRIBUTABLE TO BOOKEEY OR NOT OR OTHERWISE. BOOKEEY MAKES NO REPRESENTATION OR WARRANTY AS TO THE COMPLETENESS, ACCURACY, RELIABILITY, OR CURRENCY OF ANY INFORMATION OR DATA THAT YOU OBTAIN THROUGH THE USE OF MOBILE WALLET.
+        You will indemnify, defend, and hold BOOKEEY harmless (and our shareholders, employees, directors, agents, affiliates, advisors and representatives) from and against any and all claims, costs, losses, or damages (including reasonable attorney fees) arising out of any claim, action, or other proceeding
+        instituted by a person or entity that arises out of or relates to: (a) any actual or alleged breach of your representations, warranties, or obligations set forth in the Terms, including any violation of our policies; (b) your wrongful or improper use of the Mobile Wallet Service, including wilful misconduct or fraud;
+        (c) your violation of any third-party right, including without limitation any right of privacy, publicity rights, or intellectual property rights; or (d) your violation of any law, rule, or regulation of the United States or any other country.
+        BOOKEEY reserves the right to refuse any transaction for any reason permitted by law. </string>
+    <string name="terms_conditions_j"> Third Party Agreements. The Terms only address the terms and conditions that apply to your use of your BOOKEEY mobile wallet.
+        The Platform Provider, your wireless carrier, and other third party websites or services integrated in the Mobile Wallet Service have their own Third Party Agreements,and you are subject to those Third Party Agreements when you give them your personal information,
+        use their services, or visit their respective sites. BOOKEEY is not responsible for the security, accuracy, legality, appropriateness, or any other aspect of the content or function of the Platform Providerâ€™s or any third partyâ€™s products or services.  </string>
+    <string name="terms_conditions_k"> Merchant Relationship and Disclaimers. Merchants may present to you certain discounts, rebates or other benefits within the Mobile Wallet Service. Such offers are subject to certain terms and conditions and may change at any time without notice to you.
+        We will not be liable for any loss or damage as a result of any interaction between you and a merchant with respect to such offers. Subject to applicable law and the BOOKEEY Agreements, all matters, including delivery of goods and services, returns, and warranties, are solely between you and the applicable merchants.
+        You acknowledge that we do not endorse or warrant the merchants that are accessible through the Mobile Wallet or the offers that they provide. </string>
+    <string name="terms_conditions_l"> Miscellaneous. BOOKEEY"/'"s failure to enforce any provision of these Terms or any additional terms shall not be deemed a waiver of such provisions nor of its right to enforce such provision.
+        If any part of the Terms is found void and unenforceable, it will not affect the validity of the balance of the Terms which shall remain valid and enforceable. To remove your BOOKEEY Mobile Wallet,
+        follow the instructions of the service provider. </string>
+    <string name="terms_conditions_m"> Contacting BOOKEEY Regarding Mobile Wallet Service:  Xenon Prepaid Card WLL. Visit xenon4pay.com mobile wallet/terms to obtain a copy of the Mobile Wallet Service Terms and Conditions. By electronically accepting this agreement, I acknowledge that I have read, understand, and agree to the BOOKEEY Mobile Wallet Service Terms and Conditions contained herein.</string>
+    <string name="terms_conditions_n"> Confidentiality. You agree to keep and maintain the confidentiality of the Terms and any other information provided by is during the course of your account eligibility. </string>
+    <string name="terms_conditions_o"> Governing Law and Court. The Terms are governed by the laws of the State of Kuwait and the courts of the State of Kuwait shall be competent to resolve any dispute arising from the Terms. </string>
+
+
+    <!--loadmoney succees view-->
+    <string name="loadmoney_success_title_txt">Load Money</string>
+    <string name="loadmoney_success_paymentID_txt">Payment ID</string>
+    <string name="loadmoney_success_post_date_txt">Post Date</string>
+    <string name="loadmoney_success_result_code_txt">Result Code</string>
+    <string name="loadmoney_success_transaction_id_txt">Transaction ID</string>
+    <string name="loadmoney_success_auth_txt">Auth</string>
+    <string name="loadmoney_success_track_id_txt">Track ID</string>
+    <string name="loadmoney_success_ref_no_txt">Ref No</string>
+    <string name="loadmoney_success_close_btn">close</string>
+
+    <!--About US-->
+    <string name="about_us_title">ABOUT US</string>
+    <string name="about_us_content1">Xenon4pay is a mobile wallet service provider, founded in 2016, for payment and retail solutions. Our aim is to make carrying money and making payments much easier while keeping it secure and convenient.</string>
+    <string name="about_us_content2">We design and deliver mobile wallet applications that connect businesses &#8211; no matter what industry &#8211; to their customers in realtime.</string>
+    <string name="about_us_content3">We are working towards building a complete ecosystem where mobile wallet users can use their smartphone for paying all the bills whether in outlets or online or even transfer from wallet to wallet, making it safer and more convenient.</string>
+    <string name="about_us_close">close</string>
+
+
+    <!-- Help -->
+    <!--bookey faq's-->
+    <string name="help_title">Help</string>
+    <string name="bookey_fq1">1. What is Bookeey? Why should I use it?</string>
+    <string name="bookey_fa1">Bookeey is a Mobile Wallet App. It is the quickest, most convenient, and safest mobile wallet for Shopping, Mobile recharge, Money transfers, Bill Payments and lot more. Use Bookeey for a cashless, hassle-free experience while shopping, dining and out&amp;around!</string>
+    <string name="bookey_fq2">2. How does Bookeey wallet work?</string>
+    <string name="bookey_fa2">Bookeey wallet is secure pseudo wallet which allows you to top up wallet via online Payment gateway and currently allows you to make payments in partner shops, send money to other Bookeey wallet users, purchase virtual prepaid cards such as iTunes, PlayStation, etc., send international airtime, view and save merchant offers, and much more to come! \n &#160; \n Currently Bookeey wallet supports amount in KD.</string>
+    <string name="bookey_fq3">3. How can I create a Bookeey account?</string>
+    <string name="bookey_fa3">First download Bookeey wallet app from your respective mobile device app store.\n &#160; \n
+    To register fill in the requested info and attach front and back images of your Civil ID card.\n &#160; \n
+    Make sure to correctly enter your email address because all our communications with you will be by email!\n &#160; \n
+    Submit the info and wait till Bookeey activates your accounts, this may take upto 24 hrs. \n &#160; \n
+    When account is activated you will receive an OTP (One Time Password) by email to the email address you registered with. \n &#160; \n
+    Login to the App using this OTP and change your password.</string>
+    <string name="bookey_fq4">4. Why I have to scan my Civil ID?</string>
+    <string name="bookey_fa4">Bookeey as a financial service complies with the mandatory KYC process followed by the Kuwaiti Banks; however, your information is safe with us since it is encrypted and kept in a secured database for official use if &amp; when needed.</string>
+    <string name="bookey_fq5">5. I registered but did not receive my Password?</string>
+    <string name="bookey_fa5">Since the information provided will be checked manually by our staff to ensure proper KYC process, it may take up to 24 hours for you to receive your password on your registered email address, please call us on 22023232 if you did not receive the email after 24 hours.</string>
+    <string name="bookey_fq6">6. Where would I use my password?</string>
+    <string name="bookey_fa6">You will use your password to login to the "BookeeyWallet" App and login to your website portal.</string>
+    <string name="bookey_fq7">7. What is the password policy?</string>
+    <string name="bookey_fa7">For enhanced security, we made the password 7 characters which should include at least one numeric, one letter, and one special character.</string>
+    <string name="bookey_fq8">8. What if I forgot my password?</string>
+    <string name="bookey_fa8">Don\'t worry! you can reset your password by clicking on "forgot password" on the login page. after con-firming to reset the password, you will receive an OTP (One Time Password) by email on the email ad-dress you registered with, login using this password and change it to your own password.</string>
+    <string name="bookey_fq9">9. How to change my Password?</string>
+    <string name="bookey_fa9">You can change your Password from the menu available at the top right corner of the App : change Password option</string>
+    <string name="bookey_fq10">10. What is TPIN?</string>
+    <string name="bookey_fa10">TPIN is a 4 digit Transaction PIN. you will need it to complete transactions higher than 5KD.</string>
+    <string name="bookey_fq11">11. Why I need TPIN &amp; Password?</string>
+    <string name="bookey_fa11">Password is used for login to the App, for extra in-App security we introduced TPIN for transactions over 5 KD.</string>
+    <string name="bookey_fq12">12. How to add money to the wallet?</string>
+    <string name="bookey_fa12">Login to the Bookeey wallet and click on \'Load Wallet\'. You will be redirected to a secured \'Payment Gateway\' page. Use any debit card issued by any Bank in State of Kuwait and load you wallet. Since this is a secure gateway provided by KNET, your Bank details cannot be viewed by Bookeey. You can confirm the same with your own bank as well.</string>
+
+
+    <string name="bookey_fq13">13. Is there any registration fee?</string>
+    <string name="bookey_fa13">It\'s absolutely free! And No hidden charges! You can become a BookeeyWallet user for free, there is also no additional costs to load wallet, pay , money transfer &amp; Bill payments.</string>
+    <string name="bookey_fq14">14. Is my account information safe?</string>
+    <string name="bookey_fa14">Don\'t worry! All information transmitted between you and Bookeey is done through a secured channel in an encrypted form. Bookeey will never release any of your details to anyone.</string>
+    <string name="bookey_fq15">15. How quickly does the top up get to the phone?</string>
+    <string name="bookey_fa15">It\'s just a matter of few seconds! That\'s why it is the "fastest" way to mobile freedom.</string>
+
+    <string name="bookey_fq16">16. Top up unsuccessful! Where is my money?</string>
+    <string name="bookey_fa16">Here are some possible reasons:\n &#160; \n
+    1- You have just loaded your wallet but did not submit the request properly.\n &#160; \n
+
+2- You did not enter the KnetOTP on time so the Load request failed.\n &#160; \n
+
+3- There was a delay from Knet end and thus Bookeey is unable to confirm your load.\n &#160; \n
+
+4- internet Connectivity issues due to which top-up was stalled.\n &#160; \n
+
+        No problem! We are here for you. We will communicate with KNET on behalf of you to refund the money back to the same bank account you have used for funding the Top-up, afterall KNET tracks all the Load transactions.
+    </string>
+    <string name="bookey_fq17">17. I want to load wallet and the KNET page is asking for the OTP (one time pass), what is this?</string>
+    <string name="bookey_fa17">The KnetOTP was introduced by Knet as additional security for online transactions. when submitting an order online thru KNET gateways, you will receive a SMS from KnetOTP on the mobile no. registered with your Bank . the SMS will include a 6 digits code OTP. Use this code within 4 minutes otherwise this code will expire and you should re-submit your request.\n &#160; \n
+    Check your messages on your phone to get the KnetOTP. If not received check with your bank to update your mobile no.</string>
+    <string name="bookey_fq18">18. I am waiting! How much time will you take to solve my query?</string>
+    <string name="bookey_fa18">Call our helpdesk on 22023232 and we will assist you.</string>
+    <string name="bookey_fq19">19. I have a feedback for you! How can I reach you?</string>
+    <string name="bookey_fa19">Your suggestions are extremely valuable; please communicate with us via: customercare@bookeey.com</string>
+
+    <string name="bookey_fq20">20. My money has been debited from bank account! Where has it gone?</string>
+    <string name="bookey_fa20">Don\'t worry. Please wait for another 10 minutes.\n &#160; \n
+    If your wallet balance was not updated after 10 min, please call our helpdesk on 22023232.</string>
+    <string name="bookey_fq21">21. While doing a recharge on Bookeey I received an error, why?</string>
+    <string name="bookey_fa21">You may get errors if: \n &#160; \n
+    1- Entered a wrong mobile plan type or entered wrong bill details \n &#160; \n
+
+2- Trying to recharge with wrong denominations \n &#160; \n
+
+3- The service is temporarily unavailable on App \n &#160; \n
+    In such cases, We suggest you to double check the details you have entered and try again!</string>
+    <string name="bookey_fq22">22. I mistakenly recharged on wrong number! Can I get my money back?</string>
+    <string name="bookey_fa22">That’s sad! Unfortunately, recharge once successful cannot be reversed. We request you to get in touch with your mobile operator for help.</string>
+    <string name="bookey_fq23">23. I recharged and received successful message on App but did not receive the recharge credit?</string>
+    <string name="bookey_fa23">Just wait few more minutes, if still did not get your recharge credit, call your operator and present the recharge code you received on the transaction details.</string>
+    <string name="bookey_fq24">24. Is it necessary to add money to the wallet?</string>
+    <string name="bookey_fa24">There is no minimum balance required to keep the wallet active, however If you want to make any transactions on the BookeeyWallet App you should load your wallet because BookeeyWallet is a prepaid service.</string>
+    <string name="bookey_fq25">25. How can I check my wallet balance?</string>
+    <string name="bookey_fa25">Just to the right side of upper blue strip, current balance is shown.</string>
+    <string name="bookey_fq26">26. Is it secure to Load Bookeey wallet?</string>
+    <string name="bookey_fa26">It\'s absolutely secure! KNET is our payment gateway partner. All the transactions are executed safely over a secured page and no personal information regarding your payment is ever accessible to any employee or third party.</string>
+    <string name="bookey_fq27">27. I was redirected to KNET page! What is a payment gateway?</string>
+    <string name="bookey_fa27">It\'s completely safe &amp; secure. Payment gateway is an online payment service provided by KNET for online portals to provide you a secured internet based payment options.</string>
+    <string name="bookey_fq28">28. What happens to my balance if I don’t use my wallet for some time?</string>
+    <string name="bookey_fa28">Your money is safe with us! Your wallet will not be inactive or dormant, use your balance whenever you want!</string>
+    <string name="bookey_fq29">29. How do I change my device but continue with the same mobile number?</string>
+    <string name="bookey_fa29">Please install BookeeyWallet app on your new device and enter your mobile number. \n &#160; \n
+        When system detects that a new device trying to login to existing mobile wallet will prompt to confirm “change device”, after confirmation you should enter current Password and Civil ID no. for the system to authenticate your data. Afterall your balance is tied to the mobile no. and no one should be able to use another device to access your wallet!</string>
+    <string name="bookey_fq30">30. Do I have a web portal access to view my transactions history?</string>
+    <string name="bookey_fa30">You need to use your Bookeey wallet login credentials to access your Bookeey account online. Your mobile no is your username and password is the same password you use to login to the App. Visit our website: www.bookeey.com and click on customer login on the top right corner to access your portal.</string>
+    <string name="bookey_fq31">31. Can I have multiple wallets?</string>
+    <string name="bookey_fa31">It is not possible to have multiple wallets. During registration it is not possible to use same Civil ID for registering another mobile no., it you need multiple wallets for family members you can register their mobile numbers using their own Civil IDs.</string>
+    <string name="faq_close">Close</string>
+
+    <!--end help texts-->
+
+    <string name="catogories_food_bevarage">Food &amp; Beverage</string>
+
+
+    <string name="catogories_fashion">Fashion</string>
+    <string name="catogories_retail">Retail</string>
+    <string name="catogories_medicalcare">Medical care</string>
+    <string name="catogories_health_beauty">Health &amp; beauty</string>
+    <string name="catogories_hotels_accomidations">Hotels &amp; accommodations</string>
+    <string name="catogories_transportation">Transportation</string>
+    <string name="catogories_groceries_hypermarkets">Groceries &amp; hypermarkets</string>
+    <string name="catogories_electronics_computers">Electronics &amp; Computers</string>
+    <string name="catogories_games_toys">Games &amp; Toys</string>
+    <string name="catogories_services">Services</string>
+    <string name="title_activity_change_pin">ChangePinActivity</string>
+    <string name="facebook_app_id">1830800950491598</string>
+
+    <!--<string name="facebook_app_id">1830800950491598</string>-->
+    <string name="fb_login_protocol_scheme">fb[1830800950491598]</string>
+    <string name="use_password">Use password</string>
+
+
+    //fingerprint
+    <string name="sign_in">Sign in</string>
+    <string name="ok">Ok</string>
+    <string name="finger_cancel">Cancel</string>
+    <string name="password">Password</string>
+    <string name="fingerprint_description">Confirm fingerprint to continue</string>
+    <string name="fingerprint_hint">Touch sensor</string>
+    <string name="password_description">Enter your password to continue</string>
+    <string name="purchase">Purchase</string>
+    <string name="fingerprint_not_recognized">Fingerprint not recognized. Try again</string>
+    <string name="fingerprint_success">Fingerprint recognized</string>
+    <string name="new_fingerprint_enrolled_description">A new fingerprint was added to this device, so your password is required.</string>
+    <string name="use_fingerprint_in_future">Use fingerprint in the future</string>
+    <string name="use_fingerprint_to_authenticate_title">Use fingerprint to authenticate</string>
+    <string name="use_fingerprint_to_authenticate_key">Use fingerprint to authenticate key</string>
+    <string name="Your_Profile_has_been_updated">Your Profile has been updated successfully</string>
+
+    //Server Error messages
+
+    //View profile error message starts
+    <string name="Please_call_to_customer_care_to_unlock">Please Call 22200001 customer care to unlock wallet account.</string>
+    //View profile error message ends
+
+    //Login error messages starts
+    <!--    <string name="Please_call_to_customer_care_to_unlock">Please call to customer care to unlock wallet account</string>-->
+
+    <string name="Invalid_Password_and_you_have_5_attempts">Invalid Password and you have 5 attempts remaining to lock wallet account</string>
+    <string name="Invalid_Password_and_you_have_4_attempts">Invalid Password and you have 4 attempts remaining to lock wallet account</string>
+    <string name="Invalid_Password_and_you_have_3_attempts">Invalid Password and you have 3 attempts remaining to lock wallet account</string>
+    <string name="Invalid_Password_and_you_have_2_attempts">Invalid Password and you have 2 attempts remaining to lock wallet account</string>
+    <string name="Invalid_Password_and_you_have_1_attempts">Invalid Password and you have 1 attempts remaining to lock wallet account</string>
+    <string name="P2P_Sender_Insufficient_balance">P2P Sender Insufficient balance</string>
+    //Login error messages ends
+
+    //P2P error messages starts
+    <string name="Invalid_Password">Invalid Password</string>
+    <string name="Invalid_tpin">Invalid tpin</string>
+    <string name="Problem_in_processing">Problem in processing</string>
+    <string name="Receiver_Monthly_Txn_Limits_Exceeding">Receiver Monthly Txn Limits Exceeding</string>
+    <string name="Sender_Monthly_Txn_Limits_Exceeding">Sender Monthly Txn Limits Exceeding</string>
+    <string name="Receiver_Daily_Txn_Count_Exceeding">Receiver Daily Txn Count Exceeding</string>
+    <string name="Sender_Daily_Txn_Count_Exceeding">Sender Daily Txn Count Exceeding</string>
+    <string name="Receiver_Daily_Txn_Limits_Exceeding">Receiver Daily Txn Limits Exceeding</string>
+    <string name="Sender_Daily_Txn_Limits_Exceeding">Sender Daily Txn Limits Exceeding</string>
+    <string name="Receiver_Txn_Amount_Min_Max">Receiver Txn Amount Min &amp; Max</string>
+    <string name="Sender_Txn_Amount_Min_Max">Sender Txn Amount Min &amp; Max</string>
+    <string name="Daily_Monthly_Limits_Not_Available">Daily &amp; Monthly Limits Not Available</string>
+    <string name="sender_receiver_not_same">Sender &amp; Receiver should not be same</string>
+    <string name="Number_is_InActive">Number is InActive</string>
+    <string name="number_not_registered">Number not Registered</string>
+    <string name="Mobile_Not_Register">Mobile Not Register</string>
+    //P2P error messages ends
+
+    //Load money error messages starts
+    <string name="Please_Enter_minimum_Amount">Please Enter minimum Amount</string>
+    <string name="Maximum_Amount_exeeded">Maximum Amount exeeded</string>
+    <string name="Daily_txn_value_exceeded">Daily txn value exceeded</string>
+    <string name="Daily_txn_Limit_count_exceeded">Daily txn Limit count exceeded</string>
+    <string name="Monthly_txn_value_exceeded">Monthly txn value exceeded</string>
+    <string name="Tpin_cannot_be_empty">Tpin cannot be empty</string>
+    //Load money error messages ends
+
+
+    //P2M error messages starts
+
+    <string name="Daily_Txn_Count_Exceeding">Daily Txn Count Exceeding</string>
+    <string name="Monthly_Txn_Limits_Exceeding">Monthly Txn Limits Exceeding</string>
+    <string name="Amount_is_greater_than_accepted_daily_transaction_limit">Amount is greater than accepted daily transaction limit</string>
+    <string name="Amount_is_greater_or_lesser_than_daily_transaction_limit">Amount is greater or lesser than daily transaction limit</string>
+    <string name="No_data_found">No data found</string>
+    <string name="Account_not_active">Account not active</string>
+    <string name="Insufficient_balance">Insufficient balance</string>
+    <string name="Customer_Auth_Failed">Customer Auth Failed</string>
+    <string name="Invalid_token">Invalid token</string>
+    <string name="Duplicate_Barcode_data">Duplicate Barcode data</string>
+    <string name="You_have_no_invoices">You have no invoices</string>
+    //P2M error messages ends
+
+    //Invoice error messages starts
+    //L1
+    <string name="Monthly_Recharge_Limits_Exceeding">Monthly Recharge Limits Exceeding</string>
+
+    //L2
+    <string name="Daily_Recharge_Limits_Exceeding">Daily Recharge Limits Exceeding</string>
+    <string name="Invoice_Amount_Min_Max">Invoice Amount Min &amp; Max</string>
+    <string name="wrong_tpin_please_enter_correct_tpin">wrong tpin please enter correct tpin</string>
+    <string name="Customer_Details_are_not_available">Customer Details are not available</string>
+    <string name="Cards_are_not_available">Cards are not available</string>
+    //Invoice error messages Ends
+
+    //Prepaidcards error messages starts
+    <string name="Denominations_are_not_available">Denominations are not available for this store please change the Store and try again</string>
+    <string name="Service_Temporarily_Unavailable">Service Temporarily Unavailable</string>
+    <string name="Recharge_Amount_Min_Max">Recharge Amount Min &amp; Max</string>
+    <string name="Customer_Was_not_Register">Customer Was not Register</string>
+    <string name="Duplicate_Transaction">Duplicate Transaction</string>
+    <string name="There_was_no_transaction_Found_with_the_transaction">There was no transaction Found with the transaction</string>
+    <string name="Operator_Services_are_not_available">Operator Services are not available</string>
+    //Prepaidcards error messages ends
+
+
+    //Mobile bill error messages starts
+    <string name="Denomination_Not_available">Denomination Not available</string>
+    <string name="Problem_in_Saving_the_Data">Problem in Saving the Data</string>
+    <string name="Problem_in_Server_Response">Problem in Server Response</string>
+    <string name="Customer_was_Inactive">Customer was Inactive</string>
+    <string name="Transaction_Details_are_notavailable">Transaction Details are notavailable</string>
+    <string name="mobile_bill_failed">FAILED</string>
+    <string name="Data_Entry_Error_Please_Check">Data Entry Error!Please Check</string>
+    //Mobile bill error messages ends
+
+
+    //International recharge error messages starts
+    <string name="FAILED">FAILED</string>
+    <string name="Service_are_currently_down_Please_try_again">Service are currently down. Please try again</string>
+    <string name="Problem_occurs_while_validating_Please_try_again">Problem occurs while validating. Please try again</string>
+    <string name="No_offers_available">No offers available</string>
+    //International recharge error messages ends
+
+
+    //Offers error message starts
+    <string name="Received_Password_entered_wrong">Received Password entered wrong</string>
+    //Offers error message starts
+
+
+    //Change PIN starts
+    <string name="bpoitns">BPoints</string>
+    //Change PIN ends
+
+
+    <string name="bpoitns_earned">Bpoints Earned</string>
+    <string name="bpoitns_cashback">BPoints Cashback</string>
+    <string name="social_media_accounts">Social media channels </string>
+    <string name="cashback_amount">Cashback Amount</string>
+
+    <string name="bpoints_balance">Bpoints Balance</string>
+    <string name="bpoints_before_redemption">Bpoints before redemption</string>
+    <string name="bpoints_after_redemption">Bpoints after redemption</string>
+    <string name="before_balance">Before balance</string>
+    <string name="reset_password_succesfully_done">Reset Password Successfully done</string>
+
+    <string name="reset_otp_receive_msg">You will receive the new OTP by SMS on your mobile.</string>
+    <string name="login_newflow_from_splash_change_mobile_no">CHANGE MOBILE NO</string>
+
+    <string name="mobile_bill_L1_toast_newflow_name">Please enter name</string>
+
+    <string name="no_cards_available_choose_another">No cards available, Please choose another card</string>
+    <string name="mobile_bill_L1_submit_btn">SUBMIT</string>
+
+    <string name="mobile_bill_L1_customer_info_header">Customer Information</string>
+
+
+    //NewFlow
+    <string name="mobile_bill_L1_name">Sender Name</string>
+    <string name="mobile_bill_L1_enter_name">Enter Sender Name</string>
+    <string name="mobile_bill_L1_email">Email</string>
+
+    <string name="mobile_bill_L1_enter_email">Enter EmailID</string>
+    <string name="mobile_bill_L1_paynow_btn">PAY NOW</string>
+
+    <string name="mobile_bill_L1_sender_mobilenumber">Sender Mobile Number</string>
+
+
+    <string name="mobile_bill_L1_enter_sender_mobile_number">Enter sender mobile number</string>
+    <string name="knet_gateway">KNET</string>
+
+    <string name="register_newflow">Signup</string>
+    <string name="registration_required_newflow">Registration required</string>
+
+    <string name="do_you_want_to_register_newflow">Do you want to register?</string>
+    <string name="no_newflow">No</string>
+    <string name="yes_newflow">Yes</string>
+    <string name="already_registered_newflow">Already registered, please login</string>
+    <string name="please_register_to_gain_all_feature">   Please Register or Login to gain all features</string>
+    <string name="invalid_service_mobile_no"> Invalid Service Mobile Number </string>
+    <string name="tts_no_engines">There were no Text to Speech Engines located in the device</string>
+
+    <string name="select_card_type">Select Card Type</string>
+
+
+    <string name="select_store_type">Select Store Type</string>
+    <string name="select_card_value">Select Card Value</string>
+    <string name="total_price">Total Price</string>
+    <string name="enter_country_name">Enter Country Name</string>
+    <string name="select_denomination">Select Denomination</string>
+    <string name="amount_for_intl_topup">Amount</string>
+    <string name="select_amount">--Select Amount--</string>
+    <string name="demo">Demo</string>
+    <string name="tour">Tour</string>
+    <string name="transaction_details">Transaction Details</string>
+
+
+    <!-- MX -->
+    <string name="branch_address">Shuwaikh (Chevrolet),Kuwait</string>
+    <string name="transaction_amount">Transaction Amount</string>
+    <string name="cust_id">Cust ID</string>
+    <string name="proceed">Proceed</string>
+    <string name="time_l1">Time </string>
+    <string name="accept">Accept</string>
+    <string name="reject">Reject</string>
+    <string name="amount_with_out_star">Amount </string>
+    <string name="cust_mobile_no">Cust Mobile No</string>
+    <string name="transaction_id">Transaction ID</string>
+    <string name="cancelled_by_merchant">Cancelled by merchant</string>
+    <string name="wallet_payment_receipt">Wallet payment receipt  </string>
+    <string name="total_paymnet">Total Payment</string>
+    <string name="transaction_success">Transaction success</string>
+    <string name="date">Date</string>
+    <string name="total_amount">Total Amount</string>
+    <string name="thank_you_for_using_bookeey_wallet">Thank you for using Bookeey Wallet</string>
+    <string name="powered_by">Powered by</string>
+    <string name="rejected_reason">Rejected reason</string>
+
+
+    //Rejected reasons
+    <string name="invalid_data">Invalid Data</string>
+    <string name="not_clear_id">Not clear ID</string>
+    <string name="invalid_name">Invalid Name</string>
+    <string name="invalid_email_address">Invalid email Address</string>
+    <string name="not_proper_response">Not proper Response</string>
+    <string name="civil_id_image_not_available">Civil  ID image not available</string>
+    <string name="other">Other</string>
+    <string name="card_header">NFN CARD</string>
+
+
+    //Credit card views
+
+
+    <string name="card_number_sample">XXXX XXXX XXXX XXXX</string>
+    <string name="card_validity_label">VALID UPTO</string>
+    <string name="card_validity_sample">MM/YY</string>
+    <string name="card_name_sample">CARD HOLDER</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="card_holders_name">Card Holder\'s Name</string>
+    <string name="card_number">Card Number</string>
+    <string name="card_validity">Expires</string>
+    <string name="card_cvv">CVV/CVC Number</string>
+    <string name="to_use_this_feature">To use this feature,</string>
+
+
+    <string name="please_sign_in_or_register">Please Signin or Register</string>
+    <string-array name="merchnat_main_slider_item">
+        <item>Food &amp; Beverage</item>
+        <item>Fashion</item>
+        <item>Retail</item>
+        <item>Medical care</item>
+        <item>Health &amp; beauty</item>
+        <item>Hotels &amp; accommodations</item>
+        <item>Transportation</item>
+        <item>Groceries &amp; hypermarkets</item>
+        <item>Electronics &amp; Computers</item>
+        <item>Games &amp; Toys</item>
+        <item>Services</item>
+    </string-array>
+
+
+
+    <string name="invite_friends">Invite Friends</string>
+
+    <!-- Static QR -->
+    <string name="confirm_to_pay">Confirm To Pay</string>
+    <string name="payment_amount">Payment Amount</string>
+    <string name="transaction_time">Transaction Time</string>
+    <string name="paid_to_merchant">Paid To Merchant</string>
+    <string name="scan_qr">Scan QR</string>
+    <string name="generate_qr"> Generate QR</string>
+    <string name="confirm">Confirm</string>
+
+    <string name="scan_qr_help">Scan merchant\'s QR</string>
+    <string name="generate_qr_help">Merchant will scan your QR</string>
+    <string name="cancel_transaction">Cancel Transaction</string>
+
+
+    <string name="scan_qr_help_content">If merchant has Bookeey QR, customer can scan it to pay the billed amount</string>
+    <string name="generate_qr_help_content">Generate payment QR from wallet App &amp; ask the merchant to scan it using Bookeey Merchant App</string>
+
+</resources>

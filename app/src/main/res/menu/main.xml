@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/empty_refresh"
+        android:orderInCategory="1"
+        android:visible="true"
+        android:theme="@style/ActionButtonStyle"
+        android:icon="@drawable/actionbar_refresh"
+        android:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/empty"
+        android:visible="true"
+        android:theme="@style/ActionButtonStyle"
+        android:icon="@drawable/menu_hamburger_new"
+        android:orderInCategory="2"
+        android:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/last_loggedin_date"
+                android:icon="@drawable/last_login"
+                android:title=""
+                app:showAsAction="ifRoom" />
+            <!--  <item
+                  android:id="@+id/last_loggedin_time"
+                  android:title=""
+                  app:showAsAction="ifRoom" />-->
+
+            <item
+            android:id="@+id/action_home_profile"
+            android:icon="@drawable/homemenuicon"
+            android:showAsAction="ifRoom"
+            android:title="@string/menu_home" />
+            <item
+                android:id="@+id/action_bpoints_profile"
+                android:icon="@drawable/reward_icon"
+                android:showAsAction="ifRoom"
+                android:title="@string/bpoitns" />
+            <item
+                android:id="@+id/action_manage_profile"
+                android:icon="@drawable/manage_profile"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_manage_profile" />
+            <item
+                android:id="@+id/action_change_pin"
+                android:icon="@drawable/changepin"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_change_password" />
+            <!--<item
+                android:id="@+id/action_change_tpin"
+                android:icon="@drawable/change_tpin"
+                android:showAsAction="ifRoom"
+                android:title="Change TPIN" />
+-->
+            <item
+                android:id="@+id/action_change_sim"
+                android:icon="@drawable/sim_change"
+                android:showAsAction="ifRoom"
+                android:title="@string/change_mobile_no"/>
+
+            <item
+                android:id="@+id/action_txn_history"
+                android:icon="@drawable/transaction_history"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_transaction_istory" />
+            <item
+                android:id="@+id/action_about_us"
+                android:icon="@drawable/about_us"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_about_us" />
+
+            <item
+                android:id="@+id/action_contact_us"
+                android:icon="@drawable/contact_us"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_contact_us" />
+            <item
+                android:id="@+id/action_check_for_update"
+                android:icon="@drawable/check_for_updates_icon"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_check_for_updates" />
+            <item
+                android:id="@+id/action_invite_friends"
+                android:icon="@drawable/invite_friends"
+                android:showAsAction="ifRoom"
+                android:visible="false"
+                android:title="@string/invite_friends" />
+            <item
+                android:id="@+id/action_exit_app"
+                android:icon="@drawable/exit_app"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_exit_app" />
+
+        </menu>
+
+    </item>
+
+</menu>

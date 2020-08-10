@@ -1,0 +1,119 @@
+<LinearLayout  xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_marginBottom="0dp"
+        android:layout_height="wrap_content"
+        android:background="@drawable/notification_view_background"
+        android:gravity="center_vertical"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:weightSum="3"
+            android:layout_margin="4dp"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_weight="0.5"
+                android:src="@drawable/bookeey_grey_title_down"
+                android:layout_height="50dp">
+
+            </ImageView>
+
+            <ImageView
+
+                android:layout_width="40dp"
+                android:layout_weight="1"
+                android:layout_gravity="left"
+                android:layout_height="40dp">
+
+            </ImageView>
+
+            <ImageView
+
+                android:layout_width="40dp"
+                android:layout_weight="1"
+                android:layout_gravity="left"
+                android:layout_height="40dp">
+
+            </ImageView>
+
+            <ImageView
+                android:layout_marginTop="20dp"
+                android:id="@+id/btn_close"
+                android:layout_width="24dp"
+                android:layout_weight="1"
+                android:layout_gravity="left"
+                android:src="@drawable/close"
+                android:layout_height="24dp">
+
+            </ImageView>
+
+        </LinearLayout>
+
+
+        <ScrollView
+            android:id="@+id/push_notification_message_sl"
+            android:layout_width="wrap_content"
+            android:fadeScrollbars="false"
+            android:paddingBottom="20dp"
+            android:paddingTop="20dp"
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/push_notification_message_ll"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+          />
+
+        </ScrollView>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.6"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/notification_background"
+            android:orientation="horizontal"
+            android:visibility="gone">
+
+            <Button
+                android:id="@+id/ok_alert_btn_rejected"
+                android:layout_width="0dp"
+                android:background="@drawable/notification_background"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                android:padding="15dp"
+                android:text="@string/rejected_wallet_close_btn"
+                android:textAllCaps="true"
+                android:textColor="@drawable/alert_button_text_selector"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="0.04dp"
+                android:layout_height="match_parent"
+                android:background="@color/light_gray" />
+
+            <Button
+                android:background="@drawable/notification_background"
+                android:id="@+id/ok_alert_btn_edit"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.3"
+                android:gravity="center"
+                android:visibility="gone"
+                android:padding="15dp"
+                android:text="@string/rejected_wallet_edit_btn"
+                android:textAllCaps="true"
+                android:textColor="@drawable/alert_button_text_selector"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+

@@ -1,0 +1,53 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/row_layout"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:paddingTop="4dp"
+    android:paddingBottom="4dp"
+    android:background="@drawable/offers_background"
+    android:layout_height="wrap_content">
+
+
+
+    <LinearLayout
+
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:weightSum="5.5"
+        android:background="@color/white"
+        android:layout_gravity="bottom"
+        android:orientation="horizontal"
+
+        >
+
+        <ImageView
+            android:layout_margin="4dp"
+            android:id="@+id/picture_icon"
+            android:layout_gravity="center"
+            android:layout_width="80dp"
+            android:layout_height="80dp">
+        </ImageView>
+
+        <TextView
+            android:id="@+id/merchant_title_name"
+            android:layout_weight="3.5"
+            android:layout_width="0dp"
+            android:layout_marginLeft="20dp"
+            android:text="Merchant Name"
+            android:textStyle="bold"
+            android:textSize="16sp"
+            android:textColor="@color/blue"
+            android:gravity="center_vertical"
+            android:layout_height="match_parent">
+
+        </TextView>
+
+
+
+
+    </LinearLayout>
+
+
+</FrameLayout>

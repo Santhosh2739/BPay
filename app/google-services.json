@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "905970718814",
+    "firebase_url": "https://bookeeywallet.firebaseio.com",
+    "project_id": "bookeeywallet",
+    "storage_bucket": "bookeeywallet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:905970718814:android:be270c965dbe85db",
+        "android_client_info": {
+          "package_name": "com.bookeey.wallet.live"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "905970718814-2ntipmpdgrjjojrmkd87edphfj53ar9m.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "905970718814-2ntipmpdgrjjojrmkd87edphfj53ar9m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDj0k5w4MnRlIt2yzlLfxkMiQ5BzzAd2qM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

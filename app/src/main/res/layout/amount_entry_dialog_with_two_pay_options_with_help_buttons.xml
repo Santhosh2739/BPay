@@ -1,0 +1,234 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/otp_main"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="#FFFFFF"
+    android:orientation="vertical">
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@color/gold"
+        android:gravity="center">
+
+
+        <TextView
+            android:id="@+id/otp_edit_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:gravity="center"
+            android:paddingBottom="12dp"
+            android:paddingTop="12dp"
+            android:text="@string/p2m_enter_billed_amount"
+            android:textAllCaps="true"
+            android:textColor="#fff"
+            android:textSize="20sp" />
+
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/otp_inner_relative_layout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:orientation="vertical">
+
+
+        <EditText
+            android:id="@+id/ypc_getAmoint_getAmount"
+            android:layout_width="200dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/border_edittext"
+            android:digits="0123456789."
+            android:gravity="center"
+            android:hint="@string/p2m_amount"
+            android:textColor="@color/blue"
+            android:inputType="numberDecimal|numberSigned|text"
+            android:padding="10dp"
+            android:singleLine="true" />
+
+        <EditText
+            android:id="@+id/pay_via_qrcode_pin_edt"
+            android:layout_width="200dip"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="30dp"
+            android:background="@drawable/border_edittext"
+            android:gravity="center"
+            android:hint="@string/p2m_password"
+            android:inputType="textPassword"
+            android:maxLength="10"
+            android:textColor="@color/blue"
+            android:padding="10dp"
+            android:singleLine="true"
+            android:visibility="gone" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/otp_inner_relative_layout"
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_weight="1"
+        android:layout_marginRight="10dp"
+        android:layout_marginLeft="10dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/pay_qrcode_generatel_btn_new"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:background="@drawable/registration_btn_submit_bg"
+            android:text="@string/scan_qr"
+            android:textSize="16sp"
+            android:textColor="#fff" />
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="3"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/scan_qr_help"
+                    android:textColor="#000000"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:textSize="16sp"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/scanQR_help"
+                android:src="@drawable/help_red"
+                android:layout_width="20dp"
+                android:layout_gravity="top"
+                android:layout_height="20dp">
+
+            </ImageView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/pay_qrcode_pay_btn_new"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1.5"
+            android:textSize="16sp"
+            android:background="@drawable/registration_btn_submit_bg"
+            android:text="@string/generate_qr"
+            android:textColor="#fff" />
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="3"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/generate_qr_help"
+                    android:textColor="#000000"
+                    android:textSize="14sp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/generateQR_help"
+                android:src="@drawable/help_red"
+                android:layout_width="20dp"
+                android:layout_gravity="top"
+                android:layout_height="20dp">
+
+            </ImageView>
+        </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center"
+            android:layout_height="wrap_content">
+            <Button
+                android:id="@+id/pay_qrcode_cancel_btn_new"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.5"
+                android:textSize="16sp"
+                android:background="@drawable/registration_btn_submit_bg"
+                android:text="@string/cancel"
+                android:textColor="#fff" />
+
+
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:textColor="#000000"
+                android:layout_marginLeft="6dp"
+                android:layout_weight="3"
+                android:layout_gravity="center"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:text="@string/cancel_transaction"
+                    android:textColor="#000000"
+                    android:textSize="16sp"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </TextView>
+
+            </LinearLayout>
+
+            <ImageView
+                android:src="@drawable/help"
+                android:layout_width="22dp"
+                android:visibility="invisible"
+                android:layout_gravity="top"
+                android:layout_height="22dp">
+
+            </ImageView>
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_weight="10"
+    android:background="@color/white"
+    android:layout_height="match_parent">
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/light_blue" />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:paddingTop="20dp"
+        android:layout_weight="2"
+        android:id="@+id/virtual_denomination_image"/>
+
+
+
+<ListView
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="8"
+    android:layout_margin="10dp"
+    android:dividerHeight="2dp"
+    android:divider="@color/light_blue"
+    android:id="@+id/denomination_list"
+    android:numColumns="3"></ListView>
+</LinearLayout>

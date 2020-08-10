@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/empty_refresh"
+        android:orderInCategory="101"
+        android:icon="@drawable/actionbar_refresh"
+        android:showAsAction="ifRoom" />
+    <item
+        android:id="@+id/empty"
+        android:icon="@drawable/menu_hamburger_new"
+        android:orderInCategory="101"
+        android:showAsAction="always">
+
+        <menu>
+
+            <item
+                android:id="@+id/action_home_profile"
+                android:icon="@drawable/homemenuicon"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_home" />
+
+            <item
+                android:id="@+id/action_txn_history"
+                android:icon="@drawable/transaction_history"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_transaction_istory" />
+
+            <item
+                android:id="@+id/action_about_us"
+                android:icon="@drawable/about_us"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_about_us" />
+
+            <item
+                android:id="@+id/action_contact_us"
+                android:icon="@drawable/contact_us"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_contact_us" />
+            <item
+                android:id="@+id/action_check_for_update"
+                android:icon="@drawable/check_for_updates_icon"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_check_for_updates" />
+            <item
+                android:id="@+id/action_exit_app"
+                android:icon="@drawable/exit_app"
+                android:showAsAction="ifRoom"
+                android:title="@string/menu_exit_app" />
+
+        </menu>
+
+    </item>
+
+</menu>

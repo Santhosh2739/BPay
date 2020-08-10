@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:background="#F4F6F6"
+    android:weightSum="11.5"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="5"
+        android:background="#dcdcdc"
+        android:layout_height="0dp">
+        <ImageView
+            android:id="@+id/show_offer_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+
+        </ImageView>
+
+</LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="4"
+        android:background="@drawable/offer_details_shadow_background"
+        android:weightSum="5"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:padding="10dp"
+        android:orientation="vertical"
+        android:layout_height="0dp">
+
+        <TextView
+            android:id="@+id/tv_offer_name"
+            android:layout_marginTop="20dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1.5"
+            android:layout_height="0dp"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:text="Offer Name">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_offer_description"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_weight="2"
+            android:layout_height="0dp"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:text="Offer description">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_offer_validity"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_width="match_parent"
+            android:layout_weight="1.5"
+            android:layout_height="0dp"
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            android:text="Offer validity">
+        </TextView>
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1.5"
+        android:padding="30dp"
+        android:layout_height="0dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:textSize="14dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text="Offer terms and conditions">
+
+        </TextView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_weight="1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="4dp"
+        android:layout_height="0dp">
+
+        <ImageView
+            android:background="@drawable/new_logo_virtual_grey"
+            android:id="@+id/merchant_logo"
+            android:layout_width="50dp"
+            android:layout_height="50dp">
+        </ImageView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

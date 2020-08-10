@@ -1,0 +1,622 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <!--<include
+        layout="@layout/header"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.5" />-->
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/gold" />
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1.2"
+        android:padding="7dp"
+        android:background="@color/gold"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="0.8"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/sendmoney_confirm_nameTextooredo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:layout_weight="0.4"
+                android:paddingLeft="12dp"
+                android:text="@string/customer_name"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/sendmoney_confirm_wallet_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="left|center"
+                android:layout_weight="0.6"
+                android:paddingLeft="12dp"
+                android:layout_marginTop="10dp"
+                android:text="@string/customer_number"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:layout_weight="0.4"
+            android:gravity="center"
+            android:visibility="invisible"
+            android:orientation="horizontal">
+            <FrameLayout
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+                <ImageView
+                    android:id="@+id/sendmoney_conformation_image"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/default_image" />
+
+                <ImageView
+                    android:id="@+id/overlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@drawable/profile_frame_inner" />
+            </FrameLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="0.8"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.4"
+                android:gravity="left"
+                android:paddingLeft="24dp"
+                android:text="@string/customer_current_balctv"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff" />
+
+            <TextView
+                android:id="@+id/sendmoney_confirm_balance_id"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="0.4"
+                android:gravity="left"
+                android:paddingLeft="25dp"
+                android:text="@string/customer_current_balc_amt"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#fff"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </LinearLayout>
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="0dp"
+    android:layout_weight="0.4"
+    android:orientation="vertical"
+    android:id="@+id/linearlayout"></LinearLayout>
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.6"
+        android:visibility="gone"
+        android:src="@drawable/tickk"
+        android:id="@+id/send_money_final_tickmark_img"/>
+
+    <TextView
+        android:id="@+id/ooredoo_sendmoney_confirmpayment_confirmpayment_txt"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.7"
+        android:gravity="center"
+        android:text="@string/ooredoo_sendmoney_confirmpayment_confirmpayment_tv"
+        android:textColor="@color/black"
+        android:textSize="18sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"
+        android:orientation="vertical" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5.5">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_mobileno_left0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:paddingLeft="10dp"
+                    android:text="@string/ooredoo_sendmoney_confirmpayment_mobileno_tv"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_mobileno_vertical0_view"
+                    android:layout_width="0.1dp"
+                    android:layout_height="25dp"
+                    android:background="#000" />
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_mobileno_value_right0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
+                    android:layout_weight="0.4"
+                    android:gravity="start|center"
+                    android:paddingLeft="10dp"
+                    android:text=""
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ooredoo_sendmoney_confirmpayment_mobileno_horizantal0_view"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_status_left0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:layout_weight="0.3"
+                    android:paddingLeft="10dp"
+                    android:text="@string/ooredoo_sendmoney_confirmpayment_status_tv"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_status_vertcal0_view"
+                    android:layout_width="0.1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/black"></View>
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_status_value_right0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="start|center"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ooredoo_sendmoney_confirmpayment_status_value_horizantal0_view"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_transferamount_left0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:paddingLeft="10dp"
+                    android:text="@string/ooredoo_sendmoney_confirmpayment_transferamount_tv"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_transferamount_vertical0_view"
+                    android:layout_width="0.1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/black"></View>
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_transferamount_value_right0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="start|center"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ooredoo_sendmoney_confirmpayment_transferamount_value_horizantal0_view"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"></View>
+
+            <LinearLayout
+                android:id="@+id/ooredoo_sendmoney_confirmpayment_exchangerate_linear"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_exchangerate_left0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:paddingLeft="10dp"
+                    android:text="@string/ooredoo_sendmoney_confirmpayment_exchangerate_tv"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_exchangerate_vertical0_view"
+                    android:layout_width="0.1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/black"></View>
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_exchangerate_value_right0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="start|center"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ooredoo_sendmoney_confirmpayment_exchangerate_horizantal0_view"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"></View>
+
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_processingfee_left0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:paddingLeft="10dp"
+                    android:text="@string/ooredoo_sendmoney_confirmpayment_processingfee_tv"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_processingfee_vertical0_view"
+                    android:layout_width="0.1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/black"></View>
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_processingfee_value_right0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="start|center"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ooredoo_sendmoney_confirmpayment_processingfee_value_horizantal0_view"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"></View>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_totalamount_left0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:paddingLeft="10dp"
+                    android:text="@string/ooredoo_sendmoney_confirmpayment_totalamount_txt"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_totalamount_vertical0_view"
+                    android:layout_width="0.1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/black"></View>
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_totalamount_value_right0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="start|center"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ooredoo_sendmoney_confirmpayment_totalamount_value_horizantal0_view"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"></View>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_wallentbalance_left0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:paddingLeft="10dp"
+                    android:text="@string/ooredoo_sendmoney_confirmpayment_wallentbalance_tv"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_wallentbalance_vertical0_view"
+                    android:layout_width="0.1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/black"></View>
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_wallentbalance_value_right0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="start|center"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ooredoo_sendmoney_confirmpayment_wallentbalance_horizantal0_view"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_customerid_left0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:paddingLeft="10dp"
+                    android:text="@string/ooredoo_sendmoney_confirmpayment_customerid_tv"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_customerid_vertical0_view"
+                    android:layout_width="0.1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/black"></View>
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_customerid_value_right0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="start|center"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ooredoo_sendmoney_confirmpayment_customerid_value_horizantal0_view"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_txnid_left0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:paddingLeft="10dp"
+                    android:text="@string/ooredoo_sendmoney_confirmpayment_txnid_tv"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_txnid_vertical0_view"
+                    android:layout_width="0.1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/black"></View>
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_txnid_value_right0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="start|center"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ooredoo_sendmoney_confirmpayment_txnid_value_horizantal0_view"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"></View>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_marginTop="5dp"
+                android:layout_weight="0.5"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_txntime_left0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.3"
+                    android:layout_gravity="left"
+                    android:gravity="left|center"
+                    android:paddingLeft="10dp"
+                    android:text="@string/ooredoo_sendmoney_confirmpayment_txntime_tv"
+                    android:textColor="@color/black"
+                    android:textSize="16sp" />
+
+                <View
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_txntime_vertical0_view"
+                    android:layout_width="0.1dp"
+                    android:layout_height="25dp"
+                    android:background="@color/black"></View>
+
+                <TextView
+                    android:id="@+id/ooredoo_sendmoney_confirmpayment_txntime_value_right0_tv"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.4"
+                    android:gravity="start|center"
+                    android:paddingLeft="10dp"
+                    android:textColor="@color/blue"
+                    android:textSize="16sp" />
+            </LinearLayout>
+
+            <View
+                android:id="@+id/ooredoo_sendmoney_confirmpayment_txntime_value_horizantal0_view"
+                android:layout_width="match_parent"
+                android:layout_height="0.1dp"
+                android:background="@color/black"></View>
+        </LinearLayout>
+    </ScrollView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.25"></LinearLayout>
+
+    <Button
+        android:id="@+id/ooredoo_sendmoney_confirmpayment_confirm_button"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.8"
+        android:layout_marginLeft="80dp"
+        android:layout_marginRight="80dp"
+        android:background="@drawable/registration_btn_submit_bg"
+        android:text="@string/ooredoo_sendmoney_confirmpayment_confirm_button"
+        android:textAllCaps="true"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3"></LinearLayout>
+
+    <!--<View
+        android:layout_width="match_parent"
+        android:layout_height="0.1dp"
+        android:background="@color/black"></View>-->
+
+    <!-- <include
+         layout="@layout/footer"
+         android:layout_width="match_parent"
+         android:layout_height="0dp"
+         android:layout_weight="0.5" />-->
+
+</LinearLayout>
