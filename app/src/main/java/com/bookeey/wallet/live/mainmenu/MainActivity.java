@@ -3099,11 +3099,16 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 //@end
                 try {
                     String qr_code_data = data.getStringExtra("SCAN_RESULT");
-
+                    String merchantId = "";
+                    Log.i("SCAN data ", qr_code_data);
+                    if(qr_code_data != null && !qr_code_data.isEmpty()){
+                        String[] params = qr_code_data.split("/");
+                        merchantId = params[params.length-1];
+                    }
 
                     PayToMerchantRequest payToMerchantRequest = new PayToMerchantRequest();
                     payToMerchantRequest.setAmount(Double.parseDouble(amount_str));
-                    payToMerchantRequest.setMerchantId(qr_code_data);
+                    payToMerchantRequest.setMerchantId(merchantId);
 
                     String timezone = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse().getG_servertime();
                     Calendar cal = null;
