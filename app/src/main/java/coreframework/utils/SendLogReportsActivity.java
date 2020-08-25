@@ -37,7 +37,7 @@ public class SendLogReportsActivity extends Activity implements View.OnClickList
         intent.putExtra(Intent.EXTRA_EMAIL, new String[]{"bitak@xenon4pay.com","tech2@bookeey.com"});
         intent.putExtra(Intent.EXTRA_SUBJECT, "Error reported from BookeeyWallet");
         intent.putExtra(Intent.EXTRA_TEXT, "Log file attached." + logs); // do this so some email clients don't complain about empty body.
-        startActivity(intent);
+        startActivityForResult(intent,1);
     }
 
     private void showConfirmation() {
@@ -48,7 +48,7 @@ public class SendLogReportsActivity extends Activity implements View.OnClickList
         alertDialog.setButton(AlertDialog.BUTTON_POSITIVE, "Report", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 sendLogFile();
-                SendLogReportsActivity.this.finish();
+            //    SendLogReportsActivity.this.finish();
 
             }
         });
@@ -64,6 +64,12 @@ public class SendLogReportsActivity extends Activity implements View.OnClickList
     @Override
     public void onBackPressed() {
         android.os.Process.killProcess(android.os.Process.myPid());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        finish();
     }
 }
 
