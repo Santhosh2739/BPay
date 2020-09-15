@@ -1305,7 +1305,7 @@ customercare@bookeey.com </string>
 
     <string name="scan_qr_help_content">بحال توفر الرمز عند التاجر، قم بمسح الرمز لدفع المبلغ المستحق</string>
     <string name="generate_qr_help_content">قم بإنشاء الرمز الخاص بالدفع من خلال تطبيقك واطلب من التاجر مسح الرمز باستخدام تطبيق بوكي الخاص بالتجار</string>
-
+    <string name="update_app_dialogue_desc">يبدو أنك تستخدم إصدارًا أقدم من Bookeey. قم بالتحديث الآن للحصول على أداء أفضل وأحدث الميزات.</string>
 
 
 </resources>

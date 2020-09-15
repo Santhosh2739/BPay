@@ -3506,12 +3506,12 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                         }
                     });
 
-                    alertDialog.setNegativeButton(getResources().getString(R.string.no_newflow), new DialogInterface.OnClickListener() {
+/*                    alertDialog.setNegativeButton(getResources().getString(R.string.no_newflow), new DialogInterface.OnClickListener() {
                         public void onClick(DialogInterface dialog, int which) {
 
                             dialog.dismiss();
                         }
-                    });
+                    });*/
 
 
                     alertDialog.setCancelable(false);

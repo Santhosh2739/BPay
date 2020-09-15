@@ -103,6 +103,7 @@
     <string name="check_close">close</string>
     <string name="check_update_dialogue_title">Play Store Update</string>
     <string name="check_update_dialogue_desc">Do you want to update to the latest version?</string>
+    <string name="update_app_dialogue_desc">Looks like you\'re using older version of Bookeey. Update now for better performance and latest features.</string>
     //ends check for update
 
 

@@ -19,7 +19,7 @@
         android:layout_below="@+id/update_version_title"
         android:gravity="center"
         android:padding="30dp"
-        android:text="@string/check_update_dialogue_desc"
+        android:text="@string/update_app_dialogue_desc"
         android:textColor="#000"
         android:textSize="18sp" />
 

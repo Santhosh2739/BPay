@@ -100,10 +100,10 @@ public enum TransType {
 
     //DEMO URLS July 12 2020
 
-    //ADDRESS_BASE("https://demo.bookeey.com/mno/"),
-    //LOADMONEY_REQUEST("https://demo.bookeey.com/portal/proceed"),
-    //LOADMONEY_CHECK_REQUEST("https://demo.bookeey.com/portal/rechargelimits"),
-    //NEW_ADDRESS_BASE("https://demo.bookeey.com/"),
+//    ADDRESS_BASE("https://demo.bookeey.com/mno/"),
+//    LOADMONEY_REQUEST("https://demo.bookeey.com/portal/proceed"),
+//    LOADMONEY_CHECK_REQUEST("https://demo.bookeey.com/portal/rechargelimits"),
+//    NEW_ADDRESS_BASE("https://demo.bookeey.com/"),
 
 
 //    PRODUCTION URLS July 12 2020
