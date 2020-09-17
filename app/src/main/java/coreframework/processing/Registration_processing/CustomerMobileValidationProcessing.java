@@ -126,11 +126,11 @@ public class CustomerMobileValidationProcessing implements UserInterfaceBackgrou
 
                 showRegistrationAlertDialogue(activity);
 
-            } else if (response.getG_status() == 206) {
+            } else if (response.getG_status() == 209) {
                 Intent intent = new Intent(activity, ErrorDialog_DeviceIdChange.class);
                 activity.startActivity(intent);
                 activity.finish();
-            } else if (response.getG_status() == 209) {
+            } else if (response.getG_status() == 206) {
                 Intent intent = new Intent(activity, ErrorDialog_MobileNumberChange.class);
                 activity.startActivity(intent);
                 activity.finish();
