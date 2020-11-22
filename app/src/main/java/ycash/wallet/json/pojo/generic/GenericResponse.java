@@ -15,7 +15,7 @@ public class GenericResponse implements TransTypeInterface{
 	private String g_response_trans_type;
     private String knetUrl;
 	private boolean speakstatus;
-
+	private String module;
 	public int getNotificationCount() {
 		return notificationCount;
 	}
@@ -76,4 +76,13 @@ public class GenericResponse implements TransTypeInterface{
     public void setKnetUrl(String knetUrl) {
         this.knetUrl = knetUrl;
     }
+
+	public String getModule() {
+		return module;
+	}
+
+	public void setModule(String module) {
+		this.module = module;
+	}
+
 }

@@ -141,7 +141,7 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
 
         if (success) {
 
-
+            CustomSharedPreferences.saveStringData(activity, response.getModule(), CustomSharedPreferences.SP_KEY.MODULE);
             if (response.getG_status() == 1) {
 
                 try {

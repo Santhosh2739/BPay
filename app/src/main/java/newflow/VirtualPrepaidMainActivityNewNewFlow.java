@@ -83,7 +83,7 @@ public class VirtualPrepaidMainActivityNewNewFlow extends GenericActivity {
     Button virtual_prepaid_proceed_button;
     StringBuffer sBuffer = null;
     StringBuffer storeBuffer = null;
-
+    String moduleName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -114,7 +114,12 @@ public class VirtualPrepaidMainActivityNewNewFlow extends GenericActivity {
                 ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
         mActionBar.setCustomView(mCustomView, params);
         TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.merchant_category_screen_title_text);
-        mTitleTextView.setText(getResources().getString(R.string.virtual_prepaid_title));
+        moduleName = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MODULE);
+        if(moduleName.equalsIgnoreCase("utility bills")) {
+            mTitleTextView.setText(getResources().getString(R.string.mainmenu_utility_bills));
+        } else {
+            mTitleTextView.setText(getResources().getString(R.string.virtual_prepaid_title));
+        }
         ImageView home_up_back = (ImageView) mCustomView.findViewById(R.id.home_up_back);
         home_up_back.setOnClickListener(new View.OnClickListener() {
             @Override

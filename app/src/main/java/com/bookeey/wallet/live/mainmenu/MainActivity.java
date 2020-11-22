@@ -241,7 +241,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
 
     //For NFC logic
     private boolean session_expired = false;
-
+    String moduleName = "";
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -255,7 +255,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         //requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main_new_framelayout);
 
-
+        moduleName = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MODULE);
         // Obtain the Firebase Analytics instance.
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
@@ -450,7 +450,11 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         recharge_paybill = BitmapFactory.decodeResource(this.getResources(), R.drawable.topupchanged);
         mobilebill = BitmapFactory.decodeResource(this.getResources(), R.drawable.mobilebillnew);
 
-        prepaid_cards = BitmapFactory.decodeResource(this.getResources(), R.drawable.pre_paidcard);
+        if(moduleName.equalsIgnoreCase("utility bills")) {
+            prepaid_cards = BitmapFactory.decodeResource(this.getResources(), R.drawable.pre_paidcard);
+        } else {
+            prepaid_cards = BitmapFactory.decodeResource(this.getResources(), R.drawable.pre_paidcard);
+        }
         my_offers = BitmapFactory.decodeResource(this.getResources(), R.drawable.offer);
 
         help = BitmapFactory.decodeResource(this.getResources(), R.drawable.help);
@@ -800,7 +804,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                         startActivity(intent);
                         break;
                     case 1:
-                        prepaidCardList();
+                        utilityBillsList();
                         break;
                     case 2:
                         mobileBill();
@@ -1190,7 +1194,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         } else if (result_message.indexOf("prepaid") != -1 || result_message.indexOf("virtual") != -1 || result_message.indexOf("cards") != -1 || result_message.indexOf("chords") != -1) {
             speak("Opening Prepaid virtual cards");
             killSomeTime();
-            prepaidCardList();
+            utilityBillsList();
 
         } else if (result_message.indexOf("mobile") != -1 || result_message.indexOf("bill") != -1 || result_message.indexOf("bil") != -1) {
             speak("Opening Mobile Bill");
@@ -1552,7 +1556,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         }, 2 * 60 * 1000);*/
     }
 
-    private void prepaidCardList() {
+    private void utilityBillsList() {
         CoreApplication application = (CoreApplication) getApplication();
         CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication) application).getCustomerLoginRequestReponse();
         MobileBillOperatorsRequest mobileBillOperatorsRequest = new MobileBillOperatorsRequest();
@@ -2513,6 +2517,12 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     toast.show();
                     return;
                 }
+                if(tpin.length()==0 && amount > limits.getTpinLimit()){
+                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_password_validate), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                    toast.show();
+                    return;
+                }
 
                 promptsView.dismiss();
 
@@ -3109,6 +3119,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     PayToMerchantRequest payToMerchantRequest = new PayToMerchantRequest();
                     payToMerchantRequest.setAmount(Double.parseDouble(amount_str));
                     payToMerchantRequest.setMerchantId(merchantId);
+                    payToMerchantRequest.setTpin(tpin);
 
                     String timezone = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse().getG_servertime();
                     Calendar cal = null;
@@ -3223,7 +3234,11 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
 
 
             items.add(new Item(sendmoney, getResources().getString(R.string.mainmenu_send_money)));
-            items.add(new Item(prepaid_cards, getResources().getString(R.string.mainmenu_prepaid_cards)));
+            if(moduleName.equalsIgnoreCase("utility bills")) {
+                items.add(new Item(prepaid_cards, getResources().getString(R.string.mainmenu_utility_bills)));
+            } else {
+                items.add(new Item(prepaid_cards, getResources().getString(R.string.mainmenu_prepaid_cards)));
+            }
             items.add(new Item(mobilebill, getResources().getString(R.string.mainmenu_mobile_billl)));
             items.add(new Item(recharge_paybill, getResources().getString(R.string.mainmenu_intl_top_up)));
             items.add(new Item(invoice, getResources().getString(R.string.mainmenu_invoice)));
@@ -3492,7 +3507,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 double live_version = Double.parseDouble(latestVersion);
                 double local_version = Double.parseDouble(versionname);
 
-                if (local_version < live_version) {
+                if (local_version != live_version) {
                     LayoutInflater li = LayoutInflater.from(MainActivity.this);
                     View promptsView = li.inflate(R.layout.custom_update_playstore_dialog, null);
                     final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);

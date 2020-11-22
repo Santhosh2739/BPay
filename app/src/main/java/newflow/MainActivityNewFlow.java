@@ -211,7 +211,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
     String selectedLanguage = null;
 
-
+    String moduleName = "";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -225,7 +225,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         }*/
         //requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main_newflow);
-
+        moduleName = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MODULE);
 
         TextView tv_login_newflow = (TextView)findViewById(R.id.tv_login_newflow);
         TextView tv_signup_newflow = (TextView)findViewById(R.id.tv_signup_newflow);
@@ -575,7 +575,11 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         recharge_paybill = BitmapFactory.decodeResource(this.getResources(), R.drawable.topupchanged);
         mobilebill = BitmapFactory.decodeResource(this.getResources(), R.drawable.mobilebillnew);
 
-        prepaid_cards = BitmapFactory.decodeResource(this.getResources(), R.drawable.pre_paidcard);
+        if(moduleName.equalsIgnoreCase("utility bills")) {
+            prepaid_cards = BitmapFactory.decodeResource(this.getResources(), R.drawable.pre_paidcard);
+        } else {
+            prepaid_cards = BitmapFactory.decodeResource(this.getResources(), R.drawable.pre_paidcard);
+        }
         my_offers = BitmapFactory.decodeResource(this.getResources(), R.drawable.offer);
 
         help = BitmapFactory.decodeResource(this.getResources(), R.drawable.help);
@@ -914,7 +918,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
                     case 1:
 //                        Toast.makeText(MainActivityNewFlow.this, "Need to implement", Toast.LENGTH_SHORT).show();
 
-                        prepaidCardList();
+                        utilityCardList();
                         break;
                     case 2:
                         mobileBill();
@@ -1430,7 +1434,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         }, 2 * 60 * 1000);*/
     }
 
-    private void prepaidCardList() {
+    private void utilityCardList() {
         CoreApplication application = (CoreApplication) getApplication();
         CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication) application).getCustomerLoginRequestReponse();
         MobileBillOperatorsRequest mobileBillOperatorsRequest = new MobileBillOperatorsRequest();
@@ -2508,7 +2512,11 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
 
             items.add(new Item(sendmoney, getResources().getString(R.string.mainmenu_send_money)));
-            items.add(new Item(prepaid_cards, getResources().getString(R.string.mainmenu_prepaid_cards)));
+            if(moduleName.equalsIgnoreCase("utility bills")) {
+                items.add(new Item(prepaid_cards, getResources().getString(R.string.mainmenu_utility_bills)));
+            } else {
+                items.add(new Item(prepaid_cards, getResources().getString(R.string.mainmenu_prepaid_cards)));
+            }
             items.add(new Item(mobilebill, getResources().getString(R.string.mainmenu_mobile_billl)));
             items.add(new Item(recharge_paybill, getResources().getString(R.string.mainmenu_intl_top_up)));
             items.add(new Item(invoice, getResources().getString(R.string.mainmenu_invoice)));
