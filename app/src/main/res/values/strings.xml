@@ -353,6 +353,7 @@ customercare@bookeey.com\nThank you.</string>
     <string name="mainmenu_pay">PAY</string>
     <string name="mainmenu_send_money">SEND MONEY</string>
     <string name="mainmenu_prepaid_cards">PREPAID CARDS</string>
+    <string name="mainmenu_utility_bills">UTILITY BILLS</string>
     <string name="mainmenu_mobile_billl">MOBILE BILL</string>
     <string name="mainmenu_intl_top_up">INT\'L TOP UP</string>
     <string name="mainmenu_invoice">INVOICE</string>
@@ -817,13 +818,14 @@ customercare@bookeey.com\nThank you.</string>
 
     //P2M starts
     <string name="p2m_enter_billed_amount">enter billed amount</string>
-    <string name="p2m_amount">amount</string>
+    <string name="p2m_amount">Amount</string>
     <string name="p2m_password">Enter Password</string>
     <string name="p2m_cancel">Cancel</string>
     <string name="p2m_pay">pay</string>
     //toasts
     <string name="p2m_please_enter_amount">Please enter the amount</string>
     <string name="p2m_sufficient_balance">Your account doesn\'t have sufficient balance</string>
+    <string name="p2m_password_validate">Please enter password to continue</string>
 
     //ends P2M
 

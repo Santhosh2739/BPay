@@ -393,6 +393,7 @@ customercare@bookeey.com
     <string name="mainmenu_pay">ادفع</string>
     <string name="mainmenu_send_money">إرسال الأموال</string>
     <string name="mainmenu_prepaid_cards">بطاقات مسبقة الدفع </string>
+    <string name="mainmenu_utility_bills">فواتير المياه والكهرباء</string>
     <string name="mainmenu_mobile_billl">فاتورة الجوال</string>
     <string name="mainmenu_intl_top_up">الشحن الدولي</string>
     <string name="mainmenu_invoice">الفاتورة</string>
@@ -864,6 +865,8 @@ customercare@bookeey.com
     //toasts
     <string name="p2m_please_enter_amount">الرجاء ادخال المبلغ</string>
     <string name="p2m_sufficient_balance">ليس لديك الرصيد الكافي</string>
+    <string name="p2m_password_validate">الرجاء إدخال كلمة المرور للمتابعة</string>
+
     //ends P2M
 
 
