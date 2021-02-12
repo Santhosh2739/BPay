@@ -208,8 +208,8 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
                 return true;
 
             case R.id.action_check_for_update:
-                //checkforupdate();
-                Toast.makeText(getApplicationContext(), "Disabled.", Toast.LENGTH_LONG).show();
+                checkforupdate();
+               // Toast.makeText(getApplicationContext(), "Disabled.", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_invite_friends:
 
