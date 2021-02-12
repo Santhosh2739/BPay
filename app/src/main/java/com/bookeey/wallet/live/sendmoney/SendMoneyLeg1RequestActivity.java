@@ -428,12 +428,23 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
                 cursor.moveToFirst();
 
                 String number = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
-                //contactName.setText(name);
-                String str = number.replaceAll("\\+965", "");
+                String str = number.replaceAll(" ", "").trim();
                 str = str.replaceAll("-", "");
-                str = str.replaceAll(" ", "");
-                send_money_to_mobile_recepient_mobile_no_edit.setText(str.trim());
+                if (str.length() == 8) {
+                    send_money_to_mobile_recepient_mobile_no_edit.setText(str);
+                } else if (str.startsWith("+965")) {
+                    str = str.replaceAll("\\+965", "");
+                    send_money_to_mobile_recepient_mobile_no_edit.setText(str);
+                } else {
+                    int start = str.length() - 8;
+                    str = str.substring(start);
+                    send_money_to_mobile_recepient_mobile_no_edit.setText(str);
+                }
+//                //contactName.setText(name);
+//                String str = number.replaceAll("\\+965", "");
+//                str = str.replaceAll("-", "");
+//                str = str.replaceAll(" ", "");
+//                send_money_to_mobile_recepient_mobile_no_edit.setText(str.trim());
                 //contactEmail.setText(email);
             }
         }

@@ -3506,7 +3506,8 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             if (latestVersion != null && !latestVersion.isEmpty()) {
                 double live_version = Double.parseDouble(latestVersion);
                 double local_version = Double.parseDouble(versionname);
-
+                Log.e("live_version",""+live_version);
+                Log.e("local_version",""+local_version);
                 if (local_version < live_version) {
                     LayoutInflater li = LayoutInflater.from(MainActivity.this);
                     View promptsView = li.inflate(R.layout.custom_update_playstore_dialog, null);

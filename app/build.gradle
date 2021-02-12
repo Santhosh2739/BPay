@@ -27,8 +27,8 @@ android {
         applicationId 'com.bookeey.wallet.live'
         minSdkVersion 19
         targetSdkVersion 30
-        versionCode 91
-        versionName "9.1"
+        versionCode 92
+        versionName "90.2"
         multiDexEnabled true
 
 
