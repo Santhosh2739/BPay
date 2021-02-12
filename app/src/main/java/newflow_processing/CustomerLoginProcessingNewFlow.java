@@ -109,7 +109,7 @@ public class CustomerLoginProcessingNewFlow implements UserInterfaceBackgroundPr
                     //FOR BPOINTS
                     JSONObject loginResponseJo = new JSONObject(network_response);
                     Double bpoints = loginResponseJo.getDouble("bpoints");
-
+                    Log.e("loginResponseJo : ",""+loginResponseJo.toString());
                     Log.e("Bpoits : ",""+String.valueOf(bpoints));
 
 

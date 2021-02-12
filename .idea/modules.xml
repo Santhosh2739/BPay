@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BookeeyPay.iml" filepath="$PROJECT_DIR$/.idea/modules/BookeeyPay.iml" group="BookeeyPay" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/app.iml" group="BookeeyPay/app" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/BookeeyPay.iml" filepath="$PROJECT_DIR$/.idea/modules/BookeeyPay.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/BookeeyPay.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/BookeeyPay.app.iml" />
     </modules>
   </component>
 </project>

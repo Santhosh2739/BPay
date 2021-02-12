@@ -431,8 +431,8 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
 
                 //contactName.setText(name);
                 String str = number.replaceAll("\\+965", "");
-                str.replaceAll("-", "");
-                str.replaceAll(" ", "");
+                str = str.replaceAll("-", "");
+                str = str.replaceAll(" ", "");
                 send_money_to_mobile_recepient_mobile_no_edit.setText(str.trim());
                 //contactEmail.setText(email);
             }

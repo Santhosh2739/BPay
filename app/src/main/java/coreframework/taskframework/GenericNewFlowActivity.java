@@ -20,6 +20,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.bookeey.wallet.live.BuildConfig;
 import com.bookeey.wallet.live.CheckForUpdatesActivity;
@@ -206,6 +207,7 @@ public class GenericNewFlowActivity extends FragmentActivity implements YPCHeadl
 
             case R.id.action_check_for_update:
                 checkforupdate();
+               // Toast.makeText(getApplicationContext(), "Disabled.", Toast.LENGTH_LONG).show();
                 return true;
 
 //            case R.id.action_invite_friends:
