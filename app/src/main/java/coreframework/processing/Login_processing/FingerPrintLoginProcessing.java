@@ -6,11 +6,13 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.widget.Toast;
 
 import com.bookeey.wallet.live.R;
 import com.bookeey.wallet.live.application.CoreApplication;
+import com.bookeey.wallet.live.changes.ErrorDialog_DeviceIdChange;
 import com.bookeey.wallet.live.mainmenu.MainActivity;
 import com.bookeey.wallet.live.registration.OoredooActivation;
 import com.google.gson.Gson;
@@ -78,6 +80,7 @@ public class FingerPrintLoginProcessing implements UserInterfaceBackgroundProces
         buffer.append(TransType.BIO_LOGIN_CUSTOMER_REQUEST.getURL());
         buffer.append("?d=" + URLUTF8Encoder.encode(new Gson().toJson(loginRequest)));
         String serverURL = buffer.toString();
+        Log.e("Request", serverURL);
         return serverURL;
     }
 
@@ -86,6 +89,7 @@ public class FingerPrintLoginProcessing implements UserInterfaceBackgroundProces
         if (msg.arg1 == ServerConnection.OPERATION_SUCCESS) {
             String network_response = ((String) msg.obj).trim();
             response = new Gson().fromJson(network_response, GenericResponse.class);
+            Log.e("network_response", network_response);
             if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.BIO_LOGIN_CUSTOMER_RESPONSE.name()) && response.getG_status() == 0) {
                 this.success = true;
                 response.setSpeakstatus(response.isSpeakstatus());
@@ -101,6 +105,8 @@ public class FingerPrintLoginProcessing implements UserInterfaceBackgroundProces
                 application.setSpeakstatus(application.isSpeakstatus());
                 CustomSharedPreferences.saveStringData(application, application.getCustomerLoginRequestReponse().getCustFirstName(), CustomSharedPreferences.SP_KEY.NAME);
             } else if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.BIO_LOGIN_CUSTOMER_RESPONSE.name()) && response.getG_status() == 211) {
+                this.success = true;
+            } else if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.BIO_LOGIN_CUSTOMER_RESPONSE.name()) && response.getG_status() == 209) {
                 this.success = true;
             } else if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.BIO_LOGIN_CUSTOMER_RESPONSE.name()) && (response.getG_status() != 0 && response.getG_status() != 211)) {
                 error_text_header = response.getG_status_description();
@@ -139,6 +145,14 @@ public class FingerPrintLoginProcessing implements UserInterfaceBackgroundProces
                 Intent intent = new Intent(activity, OoredooActivation.class);
                 activity.startActivity(intent);
                 activity.finish();
+            } else if (response.getG_status() == 209) {
+                Intent intent = new Intent(activity, ErrorDialog_DeviceIdChange.class);
+                activity.startActivity(intent);
+                activity.finish();
+            } else {
+                Toast toast = Toast.makeText(activity, response.getG_status_description(), Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                toast.show();
             }
         } else {
             switch (error_text_header) {

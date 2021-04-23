@@ -100,18 +100,18 @@ public enum TransType {
 
     //DEMO URLS July 12 2020
 
-//    ADDRESS_BASE("https://demo.bookeey.com/mno/"),
-//    LOADMONEY_REQUEST("https://demo.bookeey.com/portal/proceed"),
-//    LOADMONEY_CHECK_REQUEST("https://demo.bookeey.com/portal/rechargelimits"),
-//    NEW_ADDRESS_BASE("https://demo.bookeey.com/"),
+    ADDRESS_BASE("https://demo.bookeey.com/mno/"),
+    LOADMONEY_REQUEST("https://demo.bookeey.com/portal/proceed"),
+    LOADMONEY_CHECK_REQUEST("https://demo.bookeey.com/portal/rechargelimits"),
+    NEW_ADDRESS_BASE("https://demo.bookeey.com/"),
 
 
 //    PRODUCTION URLS July 12 2020
-
-    ADDRESS_BASE("https://api.bookeey.com/mno/"),
-    LOADMONEY_REQUEST("https://www.bookeey.com/portal/proceed"),
-    LOADMONEY_CHECK_REQUEST("https://www.bookeey.com/portal/rechargelimits"),
-    NEW_ADDRESS_BASE("https://www.bookeey.com/"),
+//
+//    ADDRESS_BASE("https://api.bookeey.com/mno/"),
+//    LOADMONEY_REQUEST("https://www.bookeey.com/portal/proceed"),
+//    LOADMONEY_CHECK_REQUEST("https://www.bookeey.com/portal/rechargelimits"),
+//    NEW_ADDRESS_BASE("https://www.bookeey.com/"),
 
 
     //--------------------------------------------Merchant URLS START--------------------------------------------------
@@ -419,11 +419,11 @@ public enum TransType {
 
     private String server_controller_mapping;
 
-    private TransType() {
+    TransType() {
         this.server_controller_mapping = null;
     }
 
-    private TransType(String url) {
+    TransType(String url) {
         this.server_controller_mapping = url;
     }
 

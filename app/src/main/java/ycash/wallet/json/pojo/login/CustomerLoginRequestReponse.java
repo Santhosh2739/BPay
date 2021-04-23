@@ -160,6 +160,27 @@ public class CustomerLoginRequestReponse extends GenericResponse {
         return dueInvoiceCount;
     }
 
+    @Override
+    public String toString() {
+        return "CustomerLoginRequestReponse{" +
+                "enc_key='" + enc_key + '\'' +
+                ", mac_key='" + mac_key + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", custFirstName='" + custFirstName + '\'' +
+                ", transferLimits=" + transferLimits +
+                ", walletBalance=" + walletBalance +
+                ", oauth_2_0_client_token='" + oauth_2_0_client_token + '\'' +
+                ", uniqueCustomerId='" + uniqueCustomerId + '\'' +
+                ", custLastName='" + custLastName + '\'' +
+                ", filteredLimits=" + filteredLimits +
+                ", g_servertime='" + g_servertime + '\'' +
+                ", lastSuccessLoginTime=" + lastSuccessLoginTime +
+                ", domesticRechargeVersion='" + domesticRechargeVersion + '\'' +
+                ", dueInvoiceCount=" + dueInvoiceCount +
+                ", bannerDetails=" + bannerDetails +
+                '}';
+    }
+
     public void setDueInvoiceCount(int dueInvoiceCount) {
         this.dueInvoiceCount = dueInvoiceCount;
     }

@@ -9,8 +9,18 @@ public class TransactionLimitResponse extends GenericResponse {
 	private Double minValuePerTransaction;
 	private Double maxValuePerTransaction;
 	private Double tpinLimit;
-	
-//	public TransactionLimitResponse(String tranType, String subTranType, Integer minValuePerTransaction,
+
+	@Override
+	public String toString() {
+		return "TransactionLimitResponse{" +
+				"tranType='" + tranType + '\'' +
+				", subTranType='" + subTranType + '\'' +
+				", minValuePerTransaction=" + minValuePerTransaction +
+				", maxValuePerTransaction=" + maxValuePerTransaction +
+				", tpinLimit=" + tpinLimit +
+				'}';
+	}
+	//	public TransactionLimitResponse(String tranType, String subTranType, Integer minValuePerTransaction,
 //			Integer maxValuePerTransaction) {
 //		super();
 //		this.tranType = tranType;
