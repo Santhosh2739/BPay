@@ -506,7 +506,8 @@ customercare@bookeey.com\nThank you.</string>
     <string name="invoice_total_amount">Amount To Pay</string>
 
     //toasts
-    <string name="invoice_enter_password">Please enter password</string>
+    <string name="invoice_enter_password">Enter password</string>
+    <string name="invoice_enter_password_biometric">Enter password or Biometric</string>
     <string name="invoice_enter_amount">Please enter amount</string>
     <string name="invoice_enter_valid_amount">Please enter valid amount</string>
 
@@ -1338,5 +1339,10 @@ customercare@bookeey.com\nThank you.</string>
 
     <string name="scan_qr_help_content">If merchant has Bookeey QR, customer can scan it to pay the billed amount</string>
     <string name="generate_qr_help_content">Generate payment QR from wallet App &amp; ask the merchant to scan it using Bookeey Merchant App</string>
+    <string name="registration_confirm_password">Confirm password</string>
+    <string name="registration_password">Password</string>
+    <string name="alert">Alert</string>
+    <string name="please_enable_biometric_for_access">Please enable biometric for access</string>
+    <string name="enable_biometric">Enable/Disable Biometric</string>
 
 </resources>

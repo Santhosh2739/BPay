@@ -161,6 +161,11 @@ public class LoginActivity extends FragmentActivity implements YPCHeadlessCallba
             login_ok_text.setVisibility(View.INVISIBLE);
             login_finger_print_layout.setVisibility(View.INVISIBLE);
         }
+        String pin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
+        if (pin == null || pin.isEmpty()) {
+            login_ok_text.setVisibility(View.INVISIBLE);
+            login_finger_print_layout.setVisibility(View.INVISIBLE);
+        }
         goto_tour_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -865,7 +870,10 @@ public class LoginActivity extends FragmentActivity implements YPCHeadlessCallba
             // then show the confirmation message.
             //  tryEncrypt();
             CustomerLoginRequest clr = new CustomerLoginRequest();
-            clr.setLogin_pin("");
+            String pwd = CustomSharedPreferences.getStringData(getApplication(), CustomSharedPreferences.SP_KEY.TEST_PIN);
+            clr.setLogin_pin(pwd);
+
+
             String deviceID = ((CoreApplication) getApplication()).getThisDeviceUniqueAndroidId();
             String mobile_number = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
             clr.setMobileNumber(mobile_number);

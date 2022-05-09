@@ -32,6 +32,8 @@ public class CustomerRegistrationRequest extends GenericRequest {
 	private Blob civilIDImageFront;
 	private Blob civilIDImageBack;
 	private String pin;
+	private String password;
+	private String confirmPassword;
 	//private String walletUser;
 //	public String getWalletUser() {
 //		return walletUser;
@@ -195,4 +197,45 @@ public class CustomerRegistrationRequest extends GenericRequest {
 		Civil_ID_Image_Back = civil_ID_Image_Back;
 	}
 
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getConfirmPassword() {
+		return confirmPassword;
+	}
+
+	public void setConfirmPassword(String confirmPassword) {
+		this.confirmPassword = confirmPassword;
+	}
+
+	@Override
+	public String toString() {
+		return "CustomerRegistrationRequest{" +
+				"agentId='" + agentId + '\'' +
+				", originatingCountry='" + originatingCountry + '\'' +
+				", civilID='" + civilID + '\'' +
+				", customer_Civil_Id_Expiry_Date='" + customer_Civil_Id_Expiry_Date + '\'' +
+				", firstName='" + firstName + '\'' +
+				", lastName='" + lastName + '\'' +
+				", mobileNumber='" + mobileNumber + '\'' +
+				", emailID='" + emailID + '\'' +
+				", customerCivilIDCopy=" + customerCivilIDCopy +
+				", language='" + language + '\'' +
+				", msisdn='" + msisdn + '\'' +
+				", deviceIdNumber='" + deviceIdNumber + '\'' +
+				", civilIDImageFront=" + civilIDImageFront +
+				", civilIDImageBack=" + civilIDImageBack +
+				", pin='" + pin + '\'' +
+				", password='" + password + '\'' +
+				", confirmPassword='" + confirmPassword + '\'' +
+				", nationality='" + nationality + '\'' +
+				", gender='" + gender + '\'' +
+				", walletTypeDesc='" + walletTypeDesc + '\'' +
+				'}';
+	}
 }

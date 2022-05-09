@@ -22,6 +22,9 @@ import android.preference.PreferenceManager;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.view.inputmethod.InputMethodManager;
 
+import com.bookeey.wallet.live.invoice.InvoiceL1Activity;
+import com.bookeey.wallet.live.mainmenu.MainActivity;
+
 import dagger.Module;
 import dagger.Provides;
 import newflow.LoginActivityFromGuestMainMenu;
@@ -33,7 +36,7 @@ import newflow.LoginActivityNewFlow;
  */
 @Module(
         library = true,
-        injects = {LoginActivity.class, LoginActivityFromSplashNewFlow.class, LoginActivityNewFlow.class, LoginActivityFromGuestMainMenu.class}
+        injects = {MainActivity.class, InvoiceL1Activity.class, LoginActivity.class, LoginActivityFromSplashNewFlow.class, LoginActivityNewFlow.class, LoginActivityFromGuestMainMenu.class}
 )
 public class FingerprintModule {
 

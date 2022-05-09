@@ -22,6 +22,8 @@ public class CustomSharedPreferences {
         PIN,
         APP_STATUS,
         NAME,
+        BIOMETRIC,
+        FACEID,
         AUTH_TOKEN,
         LAST_LOGGED_IN_STATUS,
         IMAGE,

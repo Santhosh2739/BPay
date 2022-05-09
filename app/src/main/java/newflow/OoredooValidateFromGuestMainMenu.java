@@ -114,6 +114,13 @@ public class OoredooValidateFromGuestMainMenu extends FragmentActivity implement
                     toast.show();
                     return;
                 }
+
+                String newMobi = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
+                String mob = mobile_number_validation_edit.getText().toString().trim();
+                if(!mob.equals(newMobi)) {
+                    CustomSharedPreferences.saveBooleanData(getApplicationContext(), false, CustomSharedPreferences.SP_KEY.BIOMETRIC);
+                    CustomSharedPreferences.saveStringData(getApplicationContext(), null, CustomSharedPreferences.SP_KEY.PIN);
+                }
                 mobileNumberValidation(mobile_number_validation_edit.getText().toString().trim());
             }
         });

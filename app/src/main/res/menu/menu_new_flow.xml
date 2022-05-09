@@ -42,6 +42,7 @@
                 android:icon="@drawable/check_for_updates_icon"
                 android:showAsAction="ifRoom"
                 android:title="@string/menu_check_for_updates" />
+
             <item
                 android:id="@+id/action_exit_app"
                 android:icon="@drawable/exit_app"

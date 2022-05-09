@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Message;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
@@ -71,6 +72,7 @@ public class CustomerMobileValidationProcessing implements UserInterfaceBackgrou
         if (msg.arg1 == ServerConnection.OPERATION_SUCCESS) {
             String network_response = ((String) msg.obj).trim();
             response = new Gson().fromJson(network_response, GenericResponse.class);
+            Log.e("Bio Device", "-" + response);
             if (network_response != null & !network_response.isEmpty()) {
                 if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.CHECK_BY_MOBILE_NUMBER_RESPONSE.name())) {
                     this.response_json = network_response;

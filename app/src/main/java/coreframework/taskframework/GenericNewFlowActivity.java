@@ -20,7 +20,6 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.bookeey.wallet.live.BuildConfig;
 import com.bookeey.wallet.live.CheckForUpdatesActivity;
@@ -35,13 +34,13 @@ import com.bookeey.wallet.live.changes.ChangePinActivity;
 import com.bookeey.wallet.live.changes.ChangeTPinActivity;
 import com.bookeey.wallet.live.changes.ErrorDialog_MobileNumberChange;
 import com.bookeey.wallet.live.txnhistory.About_Us_Activity;
-import com.bookeey.wallet.live.txnhistory.TransactionHistoryActivity;
 import com.google.gson.Gson;
 
 import java.util.Date;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
+import coreframework.processing.BiometricProcessing;
 import coreframework.processing.ViewProfileProcessing;
 import coreframework.processing.logout.LogoutProcessing;
 import coreframework.utils.HandleUncaughtException;
@@ -49,6 +48,7 @@ import coreframework.utils.PriceFormatter;
 import coreframework.utils.TimeUtils;
 import coreframework.utils.URLUTF8Encoder;
 import newflow.TransactionHistoryActivityNewFlow;
+import ycash.wallet.json.pojo.generic.BioMetricRequest;
 import ycash.wallet.json.pojo.generic.GenericRequest;
 import ycash.wallet.json.pojo.generic.TransType;
 import ycash.wallet.json.pojo.login.CustomerLoginRequestReponse;

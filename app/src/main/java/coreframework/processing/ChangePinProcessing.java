@@ -59,6 +59,7 @@ public class ChangePinProcessing implements UserInterfaceBackgroundProcessing {
             if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.CHANGEPIN_RESPONSE.name()) && response.getG_status() == 0) {
                 CustomSharedPreferences.saveIntData(application, CustomSharedPreferences.APP_STATUS_ACTIVATED, CustomSharedPreferences.SP_KEY.APP_STATUS);
                 _temp_response = network_response;
+                CustomSharedPreferences.saveStringData(this.application.getBaseContext(), request.getNewPin(), CustomSharedPreferences.SP_KEY.PIN);
                 this.success = true;
             } else if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.CHANGEPIN_RESPONSE.name()) && response.getG_status() != 0) {
                 error_text_header = response.getG_errorDescription();
@@ -85,6 +86,7 @@ public class ChangePinProcessing implements UserInterfaceBackgroundProcessing {
             Toast toast = Toast.makeText(activity, "Your password has been changed successfully", Toast.LENGTH_LONG);
             toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
             toast.show();
+
             activity.finish();
         } else {
             if (error_text_header.equalsIgnoreCase("Session expired")) {

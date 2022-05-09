@@ -1,21 +1,36 @@
 package com.bookeey.wallet.live.invoice;
 
+import static coreframework.database.CustomSharedPreferences.SP_KEY.MOBILE_NUMBER;
+
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyPermanentlyInvalidatedException;
+import android.security.keystore.KeyProperties;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.InputFilter;
 import android.util.Base64;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.inputmethod.InputMethodManager;
@@ -28,6 +43,7 @@ import android.widget.Toast;
 
 import com.bookeey.wallet.live.R;
 import com.bookeey.wallet.live.application.CoreApplication;
+import com.bookeey.wallet.live.login.FingerprintAuthenticationDialogFragmentInvoice;
 import com.bookeey.wallet.live.login.LoginActivity;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -36,10 +52,24 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.inject.Inject;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
@@ -51,6 +81,7 @@ import coreframework.taskframework.ProgressDialogFrag;
 import coreframework.taskframework.YPCHeadlessCallback;
 import coreframework.utils.PriceFormatter;
 import coreframework.utils.URLUTF8Encoder;
+import newflow.LoginActivityFromSplashNewFlow;
 import ycash.wallet.json.pojo.generic.GenericResponse;
 import ycash.wallet.json.pojo.generic.TransType;
 import ycash.wallet.json.pojo.invoicePojo.InvoiceDetailsPojo;
@@ -60,19 +91,16 @@ import ycash.wallet.json.pojo.loadmoney.PaymentForm;
 import ycash.wallet.json.pojo.loadmoney.WalletLimits;
 import ycash.wallet.json.pojo.login.CustomerLoginRequestReponse;
 import ycash.wallet.json.pojo.translimit.TransactionLimitResponse;
-
-import static coreframework.database.CustomSharedPreferences.SP_KEY.MOBILE_NUMBER;
-
 /**
  * Created by 10037 on 23-Sep-17.
  */
-
 public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCallback {
+    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
+    private static final String KEY_NAME = "my_key";
     Button invoice_paynow_btn, invoice_hold_btn, invoice_reject_btn;
     EditText invoice_mer_name_edit, invoice_inv_no_edit,
             invoice_inv_date_edit, invoice_inv_amount_edit, invoice_desc_edit, invoice_tpin_edit,
             invoice_cust_name_edit, invoice_cust_email_edit,
-
     invoice_inv_offerID_edit,
             invoice_inv_discount_per_edit,
             invoice_inv_discount_amt_edit,
@@ -80,41 +108,44 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
     View invoice_tpin_horizantal_view, description_view,
             ooredoo_sendmoney_confirmpayment_cust_name_horizantal0_view,
             ooredoo_sendmoney_confirmpayment_cust_email_horizantal0_view,
-
     ooredoo_sendmoney_confirmpayment_offerID_horizantal0_view2,
             ooredoo_sendmoney_confirmpayment_discount_per_horizantal0_view2,
             ooredoo_sendmoney_confirmpayment_discount_amt_horizantal0_view2,
             ooredoo_sendmoney_confirmpayment_total_amount_horizantal0_view2;
-    private String response_det_str = null;
     WalletLimits walletLimits;
     ProgressDialog progress;
     LinearLayout invoice_group_btn_layout, invoice_inv_tpin_linear, description_linear,
             ooredoo_sendmoney_confirmpayment_cust_name_layout,
             ooredoo_sendmoney_confirmpayment_cust_email_layout,
-
     ooredoo_sendmoney_confirmpayment_offerID_linear,
             ooredoo_sendmoney_confirmpayment_discount_per_linear,
             ooredoo_sendmoney_confirmpayment_discount_amt_linear,
             ooredoo_sendmoney_confirmpayment_total_amount_linear;
-    private boolean isMerchantRequest = false;
     double walletBalance, amount, invoice_amount = 0.0;
     CoreApplication application = null;
     TransactionLimitResponse limits = null;
+    boolean biometricVerified = false;
     long offerID = 0;
+    @Inject
+    FingerprintManagerCompat mFingerprintManager;
+    @Inject
+    FingerprintAuthenticationDialogFragmentInvoice mFragment;
+    @Inject
+    SharedPreferences mSharedPreferences;
+    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
+    private String response_det_str = null;
+    private boolean isMerchantRequest = false;
     private FirebaseAnalytics firebaseAnalytics;
+    private KeyStore mKeyStore;
+    private Cipher mCipher;
 
-
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.invoice_details_page1);
-
-
         // Obtain the Firebase Analytics instance.
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
-
-
         invoice_mer_name_edit = (EditText) findViewById(R.id.invoice_mer_name_edit);
         invoice_inv_no_edit = (EditText) findViewById(R.id.invoice_inv_no_edit);
         invoice_inv_date_edit = (EditText) findViewById(R.id.invoice_inv_date_edit);
@@ -128,36 +159,28 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         invoice_tpin_edit = (EditText) findViewById(R.id.invoice_tpin_edit);
         invoice_inv_tpin_linear = (LinearLayout) findViewById(R.id.invoice_inv_tpin_linear);
         invoice_tpin_horizantal_view = (View) findViewById(R.id.invoice_tpin_horizantal_view);
-
         //invoice discount enhancement
         ooredoo_sendmoney_confirmpayment_offerID_linear = (LinearLayout) findViewById(R.id.ooredoo_sendmoney_confirmpayment_offerID_linear);
         ooredoo_sendmoney_confirmpayment_discount_per_linear = (LinearLayout) findViewById(R.id.ooredoo_sendmoney_confirmpayment_discount_per_linear);
         ooredoo_sendmoney_confirmpayment_discount_amt_linear = (LinearLayout) findViewById(R.id.ooredoo_sendmoney_confirmpayment_discount_amt_linear);
         ooredoo_sendmoney_confirmpayment_total_amount_linear = (LinearLayout) findViewById(R.id.ooredoo_sendmoney_confirmpayment_total_amount_linear);
-
         ooredoo_sendmoney_confirmpayment_offerID_horizantal0_view2 = (View) findViewById(R.id.ooredoo_sendmoney_confirmpayment_offerID_horizantal0_view2);
         ooredoo_sendmoney_confirmpayment_discount_per_horizantal0_view2 = (View) findViewById(R.id.ooredoo_sendmoney_confirmpayment_discount_per_horizantal0_view2);
         ooredoo_sendmoney_confirmpayment_discount_amt_horizantal0_view2 = (View) findViewById(R.id.ooredoo_sendmoney_confirmpayment_discount_amt_horizantal0_view2);
         ooredoo_sendmoney_confirmpayment_total_amount_horizantal0_view2 = (View) findViewById(R.id.ooredoo_sendmoney_confirmpayment_total_amount_horizantal0_view2);
-
         invoice_inv_discount_amt_edit = (EditText) findViewById(R.id.invoice_inv_discount_amt_edit);
         invoice_inv_total_amount_edit = (EditText) findViewById(R.id.invoice_inv_total_amount_edit);
-
         ooredoo_sendmoney_confirmpayment_cust_name_horizantal0_view = (View) findViewById(R.id.ooredoo_sendmoney_confirmpayment_cust_name_horizantal0_view);
         ooredoo_sendmoney_confirmpayment_cust_email_horizantal0_view = (View) findViewById(R.id.ooredoo_sendmoney_confirmpayment_cust_email_horizantal0_view);
-
         invoice_cust_name_edit = (EditText) findViewById(R.id.invoice_cust_name_edit);
         invoice_cust_email_edit = (EditText) findViewById(R.id.invoice_cust_email_edit);
         invoice_inv_offerID_edit = (EditText) findViewById(R.id.invoice_inv_offerID_edit);
         invoice_inv_discount_per_edit = (EditText) findViewById(R.id.invoice_inv_discount_per_edit);
-
         ooredoo_sendmoney_confirmpayment_cust_name_layout = (LinearLayout) findViewById(R.id.ooredoo_sendmoney_confirmpayment_cust_name_layout);
         ooredoo_sendmoney_confirmpayment_cust_email_layout = (LinearLayout) findViewById(R.id.ooredoo_sendmoney_confirmpayment_cust_email_layout);
-
         description_linear = (LinearLayout) findViewById(R.id.description_linear);
         description_view = (View) findViewById(R.id.description_view);
         invoice_paynow_btn.setText(getResources().getString(R.string.invoice_pay_btn));
-
         invoice_mer_name_edit.setEnabled(false);
         invoice_inv_no_edit.setEnabled(false);
         invoice_inv_date_edit.setEnabled(false);
@@ -167,7 +190,6 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         invoice_inv_discount_per_edit.setEnabled(false);
         invoice_inv_discount_amt_edit.setEnabled(false);
         invoice_inv_total_amount_edit.setEnabled(false);
-
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.invoice_mer_name_edit)).getWindowToken(), 0);
         imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.invoice_inv_no_edit)).getWindowToken(), 0);
@@ -177,8 +199,15 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.invoice_cust_email_edit)).getWindowToken(), 0);
         imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.invoice_mer_name_edit)).getWindowToken(), 0);
         imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.invoice_mer_name_edit)).getWindowToken(), 0);
-
-
+        invoice_tpin_edit.setOnTouchListener((view, motionEvent) -> {
+            final int DRAWABLE_RIGHT = 2;
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if (motionEvent.getRawX() >= (invoice_tpin_edit.getRight() - invoice_tpin_edit.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    verifyBiometric();
+                }
+            }
+            return false;
+        });
         ActionBar mActionBar = getActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
         getActionBar().setLogo(R.drawable.bookeey_latest_icon);
@@ -186,8 +215,6 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         LayoutInflater mInflater = LayoutInflater.from(this);
         View mCustomView = mInflater.inflate(R.layout.map_specialactionbar, null);
         mActionBar.setDisplayShowCustomEnabled(true);
-
-
         ActionBar.LayoutParams params = new
                 ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
                 ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
@@ -201,9 +228,10 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 onBackPressed();
             }
         });
-
+        ((CoreApplication) getApplication()).inject(this);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.USE_FINGERPRINT},
+                FINGERPRINT_PERMISSION_REQUEST_CODE);
         ImageView image_person = (ImageView) findViewById(R.id.invoice_user_image);
-
         progress = new ProgressDialog(InvoiceL1Activity.this, R.style.MyTheme2);
         progress.setCanceledOnTouchOutside(false);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -213,7 +241,6 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         if (inv_limits_response.getFilteredLimits().get("ECOMMERCE").getTpinLimit() != 0) {
             limits = inv_limits_response.getFilteredLimits().get("ECOMMERCE");
         }
-
         if (!response_det_str.isEmpty()) {
             InvoiceDetailsPojo response = new Gson().fromJson(response_det_str, InvoiceDetailsPojo.class);
             try {
@@ -224,56 +251,38 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 invoice_inv_no_edit.setText(response2.getInvNo());
                 invoice_inv_date_edit.setText(response2.getInvoiceDate());
                 invoice_inv_amount_edit.setText(String.valueOf(response.getTotalAmt()));
-
                 if (response_det_str.contains("customerName")) {
-
                     if (response2.getCustomerName() != "") {
                         ooredoo_sendmoney_confirmpayment_cust_name_layout.setVisibility(View.VISIBLE);
                         ooredoo_sendmoney_confirmpayment_cust_name_horizantal0_view.setVisibility(View.VISIBLE);
-
                         invoice_cust_name_edit.setText(response2.getCustomerName());
-
                     } else {
                         ooredoo_sendmoney_confirmpayment_cust_name_layout.setVisibility(View.GONE);
                         ooredoo_sendmoney_confirmpayment_cust_name_horizantal0_view.setVisibility(View.GONE);
-
                     }
-
                 }
-
-
                 if (response2.getArabicCustomerName() != null) {
-
                     try {
                         Charset charset = Charset.forName("ISO-8859-6");
                         CharsetDecoder decoder = charset.newDecoder();
                         ByteBuffer buf = ByteBuffer.wrap(response2.getArabicCustomerName());
                         CharBuffer cbuf = decoder.decode(buf);
-
                         CharSequence customer_name = java.nio.CharBuffer.wrap(cbuf);
-
                         invoice_cust_name_edit.setText(customer_name);
-
                     } catch (Exception e) {
-
                         Log.e("Invoice CustName Ex:", "" + e.getMessage());
-
                     }
                 }
-
-
                 if (response_det_str.contains("customerEmailId")) {
                     if (response2.getCustomerEmailId() != "") {
                         ooredoo_sendmoney_confirmpayment_cust_email_layout.setVisibility(View.VISIBLE);
                         ooredoo_sendmoney_confirmpayment_cust_email_horizantal0_view.setVisibility(View.VISIBLE);
                         invoice_cust_email_edit.setText(response2.getCustomerEmailId());
-
                     } else {
                         ooredoo_sendmoney_confirmpayment_cust_email_layout.setVisibility(View.GONE);
                         ooredoo_sendmoney_confirmpayment_cust_email_horizantal0_view.setVisibility(View.GONE);
                     }
                 }
-
                 //For discount
                 if (response_det_str.contains("offerDescription")) {
                     if (!response.getOfferDescription().isEmpty()) {
@@ -285,7 +294,6 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                         ooredoo_sendmoney_confirmpayment_offerID_horizantal0_view2.setVisibility(View.GONE);
                     }
                 }
-
                 //For discount
                 if (response_det_str.contains("offerId")) {
                     if (response.getOfferId() != 0)
@@ -322,38 +330,26 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                         ooredoo_sendmoney_confirmpayment_total_amount_horizantal0_view2.setVisibility(View.GONE);
                     }
                 }
-
                 if (response2.getDescription() != null && !response2.getDescription().isEmpty()) {
                     description_linear.setVisibility(View.VISIBLE);
                     description_view.setVisibility(View.VISIBLE);
                     invoice_desc_edit.setText(response2.getDescription());
-
-
                 } else {
                     description_linear.setVisibility(View.GONE);
                     description_view.setVisibility(View.GONE);
                 }
-
-
-                if (response2.getArabicDescription() != null){
+                if (response2.getArabicDescription() != null) {
                     try {
                         Charset charset = Charset.forName("ISO-8859-6");
                         CharsetDecoder decoder = charset.newDecoder();
                         ByteBuffer buf = ByteBuffer.wrap(response2.getArabicDescription());
                         CharBuffer cbuf = decoder.decode(buf);
                         CharSequence description = java.nio.CharBuffer.wrap(cbuf);
-
                         invoice_desc_edit.setText(description);
-
                     } catch (Exception e) {
-
                         Log.e("Invoice Descr Ex:", "" + e.getMessage());
-
-
                     }
-            }
-
-
+                }
                 this.isMerchantRequest = response2.isMerchantRequest();
                 amount = Double.parseDouble(invoice_inv_amount_edit.getText().toString().trim());
                 if (amount > limits.getTpinLimit()) {
@@ -368,13 +364,10 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 e.printStackTrace();
             }
         }
-
-
         CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse();
         walletBalance = Double.parseDouble(PriceFormatter.format(customerLoginRequestReponse.getWalletBalance(), 3, 3));
         //amount = Double.parseDouble(invoice_inv_amount_edit.getText().toString().trim());
         invoice_amount = Double.parseDouble(PriceFormatter.format(amount, 3, 3));
-
         String image = CustomSharedPreferences.getStringData(getBaseContext(), CustomSharedPreferences.SP_KEY.IMAGE);
         if (image.length() != 0) {
             image_person.setImageBitmap(stringToBitmap(image));
@@ -390,7 +383,6 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         invoice_reject_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
 //                Intent i = new Intent(InvoiceL1Activity.this, InvoiceReasonDialogue.class);
 //                i.putExtra("MerchantName", invoice_mer_name_edit.getText().toString());
 //                i.putExtra("InvoiceNo", invoice_inv_no_edit.getText().toString());
@@ -403,10 +395,8 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 String date = invoice_inv_date_edit.getText().toString();
                 String amount = invoice_inv_amount_edit.getText().toString();
 //                i.putExtra("OfferID", offerID);
-
                 invoiceRejectRequest(merchantName, invoiceNo, date, amount, "", offerID, 1);
-              //  finish();
-
+                //  finish();
             }
         });
         invoice_hold_btn.setOnClickListener(new View.OnClickListener() {
@@ -419,68 +409,162 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
             @Override
             public void onClick(View v) {
                 if (invoice_inv_tpin_linear.getVisibility() == View.VISIBLE) {
-                    if (invoice_tpin_edit.getText().toString().length() == 0) {
+                    if(biometricVerified)
+                        invoicePayNowRequest(invoice_amount, 0, offerID);
+                    else if (invoice_tpin_edit.getText().toString().length() == 0) {
                         Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.invoice_enter_password), Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                         toast.show();
                         return;
                     }
                 }
-                invoicePayNowRequest(invoice_amount, 0, offerID);
-
-                /*if (walletBalance > invoice_amount) {
-                    invoicePayNowRequest(invoice_amount, 0);
-                } else {
-                    double remain_balance = walletBalance - invoice_amount;
-                    invoicePayNowRequest(invoice_amount, 0);
-                }*/
-                /*if ((invoice_mer_name_edit.getText().toString().length() == 0)) {
-                    Toast toast = Toast.makeText(getBaseContext(), "Please enter merchant name", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                    toast.show();
-                    return;
-                }
-                if ((invoice_inv_no_edit.getText().toString().length() != 0)) {
-                    Toast toast = Toast.makeText(getBaseContext(), "Please enter invoice number", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                    toast.show();
-                    return;
-                }
-                if (invoice_inv_date_edit.getText().toString().length() == 0) {
-                    Toast toast = Toast.makeText(getBaseContext(), "Please enter invoice date", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                    toast.show();
-                    return;
-
-                }
-                if (invoice_inv_amount_edit.getVisibility() == View.VISIBLE) {
-                    Toast toast = Toast.makeText(getBaseContext(), "Please enter amount", Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                    toast.show();
-                    return;
-                }*/
-                //DomesticL1Request();
+                else
+                    invoicePayNowRequest(invoice_amount, 0, offerID);
             }
         });
+    }
+
+    private void alertDialog() {
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.custom_alert_whatsapp, null);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(InvoiceL1Activity.this);
+        alertDialog.setView(promptsView);
+        alertDialog.show();
+    }
+
+    public void onPurchased(boolean withFingerprint, String password) {
+        //if (!withFingerprint) invoice_tpin_edit.setText(password);
+       // invoicePayNowRequest(invoice_amount, 0, offerID);
+        boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
+        if(!bio)
+            alertDialog();
+        else {
+            biometricVerified = true;
+            invoice_tpin_edit.setHint("");
+            invoice_tpin_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.biometric_verified, 0);
+            Toast.makeText(getBaseContext(), getResources().getString(R.string.fingerprint_success), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    private void verifyBiometric() {
+        try {
+            boolean isFingerprintAvailable = false;
+            if (!mFragment.isAdded()) {
+                boolean isFingerprintPermissionGranted = ActivityCompat.checkSelfPermission(
+                        InvoiceL1Activity.this, Manifest.permission.USE_FINGERPRINT)
+                        == PackageManager.PERMISSION_GRANTED;
+                if (mFingerprintManager != null) {
+                    isFingerprintAvailable = mFingerprintManager.isHardwareDetected()
+                            && mFingerprintManager.hasEnrolledFingerprints();
+                }
+                if (!isFingerprintPermissionGranted || !isFingerprintAvailable) {
+                    // The user either rejected permission to read their fingerprint, we're on
+                    // a device that doesn't support it, or the user doesn't have any
+                    // fingerprints enrolled.
+                    // Let them authenticate with a password
+                    mFragment.setStage(
+                            FingerprintAuthenticationDialogFragmentInvoice.Stage.PASSWORD);
+                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+                } else if (initCipher()) {
+                    // Set up the crypto object for later. The object will be authenticated by use
+                    // of the fingerprint.
+                    // Show the fingerprint dialog. The user has the option to use the fingerprint with
+                    // crypto, or you can fall back to using a server-side verified password.
+                    mFragment.setCryptoObject(new FingerprintManagerCompat.CryptoObject(mCipher));
+                    boolean useFingerprintPreference = mSharedPreferences
+                            .getBoolean(getString(R.string.use_fingerprint_to_authenticate_key),
+                                    true);
+                    if (useFingerprintPreference) {
+                        mFragment.setStage(
+                                FingerprintAuthenticationDialogFragmentInvoice.Stage.FINGERPRINT);
+                    } else {
+                        mFragment.setStage(
+                                FingerprintAuthenticationDialogFragmentInvoice.Stage.PASSWORD);
+                    }
+                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+                } else {
+                    // This happens if the lock screen has been disabled or or a fingerprint got
+                    // enrolled. Thus show the dialog to authenticate with their password first
+                    // and ask the user if they want to authenticate with fingerprints in the
+                    // future
+                    mFragment.setCryptoObject(new FingerprintManagerCompat.CryptoObject(mCipher));
+                    mFragment.setStage(
+                            FingerprintAuthenticationDialogFragmentInvoice.Stage.NEW_FINGERPRINT_ENROLLED);
+                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(InvoiceL1Activity.this, " Fingerprint Sensor Exc: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private boolean initCipher() {
+        try {
+            if (mKeyStore == null) {
+                createKey();
+            }
+            mKeyStore.load(null);
+            SecretKey key = (SecretKey) mKeyStore.getKey(KEY_NAME, null);
+            mCipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
+                    + KeyProperties.BLOCK_MODE_CBC + "/"
+                    + KeyProperties.ENCRYPTION_PADDING_PKCS7);
+            mCipher.init(Cipher.ENCRYPT_MODE, key);
+            return true;
+        } catch (Exception e) {
+            if (e instanceof KeyPermanentlyInvalidatedException)
+                return false;
+            else if (e instanceof KeyStoreException | e instanceof CertificateException | e instanceof UnrecoverableKeyException | e instanceof IOException | e instanceof NoSuchAlgorithmException | e instanceof InvalidKeyException)
+                throw new RuntimeException("Failed to init Cipher", e);
+        }
+        /*catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
+                | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException e) {
+            throw new RuntimeException("Failed to init Cipher", e);
+        }*/
+        return false;
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public void createKey() {
+        // The enrolling flow for fingerprint. This is where you ask the user to set up fingerprint
+        // for your flow. Use of keys is necessary if you need to know if the set of
+        // enrolled fingerprints has changed.
+        try {
+            mKeyStore = KeyStore.getInstance("AndroidKeyStore");
+            mKeyStore.load(null);
+            // Set the alias of the entry in Android KeyStore where the key will appear
+            // and the constrains (purposes) in the constructor of the Builder
+            KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
+            keyGenerator.init(new KeyGenParameterSpec.Builder(KEY_NAME,
+                    KeyProperties.PURPOSE_ENCRYPT |
+                            KeyProperties.PURPOSE_DECRYPT)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                    // Require the user to authenticate with a fingerprint to authorize every use
+                    // of the key
+                    .setUserAuthenticationRequired(true)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                    .build());
+            keyGenerator.generateKey();
+        } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | KeyStoreException
+                | CertificateException | NoSuchProviderException | IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
         //Facebook
         AppEventsLogger logger = AppEventsLogger.newLogger(this);
         logger.logEvent("Invoice page - details of a specific invoice");
-
-
-
         //Firebase
         Bundle bundle = new Bundle();
         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, 17);
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Invoice page - details of a specific invoice");
         //Logs an app event.
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-        Log.e("Firebase "," Event 17 logged");
+        Log.e("Firebase ", " Event 17 logged");
     }
 
     private void invoicePayNowRequest(double invoice_amount, int i, long offerID) {
@@ -491,10 +575,13 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         invoicePaymentRequest.setAmount(invoice_amount);
         invoicePaymentRequest.setStatus(i);
         invoicePaymentRequest.setOfferId(offerID);
-        invoicePaymentRequest.setTpin(invoice_tpin_edit.getText().toString().trim());
+        if (biometricVerified) {
+            String pin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
+            invoicePaymentRequest.setTpin(pin);
+        } else
+            invoicePaymentRequest.setTpin(invoice_tpin_edit.getText().toString().trim());
         invoicePaymentRequest.setG_transType(TransType.INVOICE_PAYMENT_REQUEST.name());
         invoicePaymentRequest.setG_oauth_2_0_client_token(customerLoginRequestReponse.getOauth_2_0_client_token());
-
         String jsondata = new Gson().toJson(invoicePaymentRequest);
         StringBuffer buffer = new StringBuffer();
         buffer.append(TransType.INVOICE_PAYMENT_REQUEST.getURL());
@@ -504,7 +591,6 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
             public void handleMessage(Message msg) {
                 super.handleMessage(msg);
                 String response_json = null;
-
                 hideIfVisible();
                 if (msg.arg1 == ServerConnection.OPERATION_SUCCESS) {
                     String network_response = ((String) msg.obj).trim();
@@ -610,7 +696,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 }
             }
         };
-        new Thread(new ServerConnection(0, messageHandler, buffer.toString(),getApplicationContext())).start();
+        new Thread(new ServerConnection(0, messageHandler, buffer.toString(), getApplicationContext())).start();
         showIfNotVisible("");
     }
 
@@ -670,7 +756,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 }
             }
         };
-        new Thread(new ServerConnection(0, messageHandler, buffer.toString(),getApplicationContext())).start();
+        new Thread(new ServerConnection(0, messageHandler, buffer.toString(), getApplicationContext())).start();
         showIfNotVisible("");
     }
 
@@ -696,7 +782,6 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         final Dialog dialog_loadmoney = new Dialog(this);
         dialog_loadmoney.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog_loadmoney.setContentView(R.layout.loadmoney);
-
         final EditText amount_enter = (EditText) dialog_loadmoney.findViewById(R.id.ypc_p2m_amount_edit);
         Button proceed_btn = (Button) dialog_loadmoney.findViewById(R.id.pay_load_pay_btn_new);
         Button cancel_btn = (Button) dialog_loadmoney.findViewById(R.id.pay_load_cancel_btn_new);
@@ -705,7 +790,6 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         TextView you_can_load_minimum_Tv = (TextView) dialog_loadmoney.findViewById(R.id.you_can_load_minimum_Tv);
         final CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse();
         final TransactionLimitResponse limits = customerLoginRequestReponse.getFilteredLimits().get("PGRECHARGE");
-
         amount_enter.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5, 3, limits.getMaxValuePerTransaction().floatValue())});
         you_can_load_upto_Tv.setText(PriceFormatter.format(walletLimits.getLoadmoneyMaxPerTxn(), 3, 3));
         your_wallet_balance_Tv.setText(PriceFormatter.format(customerLoginRequestReponse.getWalletBalance(), 3, 3));
@@ -763,7 +847,6 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
     }
 
     private void invoiceRejectRequest(String name, String no, String date, String amount, String reason, long offerID, int status) {
-
         CoreApplication application = (CoreApplication) getApplication();
         CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication) application).getCustomerLoginRequestReponse();
         InvoicePaymentRequest invoicePaymentRequest = new InvoicePaymentRequest();
@@ -779,7 +862,6 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         progress.setCancelable(false);
         progress.setArguments(bundle);
         progress.show(getSupportFragmentManager(), "progress_dialog");
-
     }
 
     @Override

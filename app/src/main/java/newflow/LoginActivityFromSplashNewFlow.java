@@ -4,6 +4,8 @@ import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,14 +17,10 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.nfc.NdefMessage;
-import android.nfc.NdefRecord;
-import android.nfc.NfcAdapter;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.Parcelable;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
@@ -35,6 +33,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
@@ -49,21 +49,13 @@ import com.bookeey.wallet.live.application.CoreApplication;
 import com.bookeey.wallet.live.changes.MobChangeMobileNumber;
 import com.bookeey.wallet.live.login.FingerprintAuthenticationDialogFragmentNewFlowLoginFromSplash;
 import com.bookeey.wallet.live.login.ForgotPassword;
-import com.bookeey.wallet.live.login.LoginActivity;
-import com.bookeey.wallet.live.mainmenu.MainActivity;
-import com.bookeey.wallet.live.showpushnotificationmessage.ShowPushNotificationMessageDialogActivity;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
-import org.json.JSONArray;
-import org.json.JSONObject;
+
 import java.io.IOException;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.security.InvalidAlgorithmParameterException;
 import java.security.InvalidKeyException;
 import java.security.KeyStore;
@@ -72,7 +64,6 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.UnrecoverableKeyException;
 import java.security.cert.CertificateException;
-import java.util.ArrayList;
 import java.util.Locale;
 
 import javax.crypto.Cipher;
@@ -82,7 +73,6 @@ import javax.inject.Inject;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.processing.GetPushNotificationMessageProcessing;
-import coreframework.processing.Login_processing.CustomerAutoLoginProcessingFromNFC;
 import coreframework.processing.Login_processing.CustomerLoginProcessing;
 import coreframework.processing.Login_processing.FingerPrintLoginProcessing;
 import coreframework.taskframework.ProgressDialogFrag;
@@ -91,18 +81,25 @@ import coreframework.utils.HandleUncaughtException;
 import coreframework.utils.LocaleHelper;
 import ycash.wallet.json.pojo.activationresponse.ActivationResponsePojo;
 import ycash.wallet.json.pojo.getpushnotificationmessage.GetPushNotificationMessageRequest;
-import ycash.wallet.json.pojo.getpushnotificationmessage.PushNotificationDetailsPojo;
 import ycash.wallet.json.pojo.login.CustomerLoginRequest;
-
 public class LoginActivityFromSplashNewFlow extends FragmentActivity implements YPCHeadlessCallback {
-    TextView forgotpassword_text, forgotpassword_help_text,change_mobile_no_tv;
-    ImageView imageView;
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     public static final String PROPERTY_REG_ID = "registration_id";
+    public static final String KEY_SHOW_PUSH_NOTIFICATION_MESSAGE = "KEY_SHOW_PUSH_NOTIFICATION_MESSAGE";
+    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
     private static final String PROPERTY_APP_VERSION = "appVersion";
-    private GoogleCloudMessaging gcm = null;
     private final static String TAG = "DEVICE_ID";
+    //Finger print authentication
+    private static final String TAG2 = LoginActivityFromSplashNewFlow.class.getSimpleName();
+    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
+    private static final String SECRET_MESSAGE = "Very secret message";
+    /**
+     * Alias for our key in the Android Key Store
+     */
+    private static final String KEY_NAME = "my_key";
+    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
     private static String SENDER_ID = "367248879471"; //google api project number
+    TextView forgotpassword_text, forgotpassword_help_text, change_mobile_no_tv;
+    ImageView imageView;
     //private static String SENDER_ID = "905970718814"; //NEW google api project number
     //private  static  String SENDER_ID="861276600463";
     //    ScheduledExecutorService scheduleTaskExecutor = null;
@@ -111,33 +108,27 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
     LinearLayout language_layout, login_finger_print_layout;
     ImageView coutry_flag_img;
     TextView language_text, fingerprint_text, login_ok_text, goto_tour_text;
-    //Finger print authentication
-    private static final String TAG2 = LoginActivityFromSplashNewFlow.class.getSimpleName();
-
-    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
-    private static final String SECRET_MESSAGE = "Very secret message";
-    /**
-     * Alias for our key in the Android Key Store
-     */
-    private static final String KEY_NAME = "my_key";
-
-    public static final String KEY_SHOW_PUSH_NOTIFICATION_MESSAGE = "KEY_SHOW_PUSH_NOTIFICATION_MESSAGE";
-
-    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
-
-    private KeyStore mKeyStore;
-    private Cipher mCipher;
-
     @Inject
     FingerprintManagerCompat mFingerprintManager;
     @Inject
     FingerprintAuthenticationDialogFragmentNewFlowLoginFromSplash mFragment;
     @Inject
     SharedPreferences mSharedPreferences;
+    private GoogleCloudMessaging gcm = null;
+    private KeyStore mKeyStore;
+    private Cipher mCipher;
+
+    private static int getAppVersion(Context context) {
+        try {
+            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
+            return packageInfo.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            throw new RuntimeException("Could not get package name: " + e);
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_newflow_from_splash);
 //        showMenu(false);
@@ -152,10 +143,14 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
         if (selectedLanguage != null && !selectedLanguage.isEmpty()) {
             LocaleHelper.setLocale(LoginActivityFromSplashNewFlow.this, selectedLanguage);
         }
-
         //to visible the finger print icon for higher versions like android M and above
-
+        //String pin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            login_ok_text.setVisibility(View.INVISIBLE);
+            login_finger_print_layout.setVisibility(View.INVISIBLE);
+        }
+        String pin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
+        if (pin == null || pin.isEmpty()) {
             login_ok_text.setVisibility(View.INVISIBLE);
             login_finger_print_layout.setVisibility(View.INVISIBLE);
         }
@@ -186,8 +181,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
         mTitleTextView.setPadding(-80, 0, 0, 0);
         mTitleTextView.setText("LOGIN");
         getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));*/
-
-
         ActionBar mActionBar = getActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
         getActionBar().setLogo(R.drawable.bookeey_latest_icon);
@@ -201,45 +194,30 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
         mActionBar.setCustomView(mCustomView, params);
         TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.merchant_category_screen_title_text);
         mTitleTextView.setText(getResources().getString(R.string.login_title));
-
-
 //        //Showing Notification count
         TextView count_text_top = (TextView) mCustomView.findViewById(R.id.count_text_top);
-        String notification_count  = CustomSharedPreferences.getStringData(getApplicationContext(),CustomSharedPreferences.SP_KEY.NOTIFICATION_MSG_COUNT);
+        String notification_count = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.NOTIFICATION_MSG_COUNT);
         count_text_top.setText(notification_count);
-
-        if(notification_count.length()>0) {
-            count_text_top.setText(""+notification_count);
-        }else{
+        if (notification_count.length() > 0) {
+            count_text_top.setText("" + notification_count);
+        } else {
             count_text_top.setText("0");
         }
-
 //        blinkNotificationCountView();
-
-
-
-
-
 //        ImageView home_up_back = (ImageView) mCustomView.findViewById(R.id.home_up_back);
 //        home_up_back.setVisibility(View.GONE);
         ((TextView) findViewById(R.id.login_version_name)).setText("Version is : " + BuildConfig.VERSION_NAME);
         forgotpassword_text = (TextView) findViewById(R.id.forgotpassword_text);
         forgotpassword_help_text = (TextView) findViewById(R.id.forgotpassword_help_text);
-        change_mobile_no_tv  = (TextView) findViewById(R.id.change_mobile_no_tv);
-
+        change_mobile_no_tv = (TextView) findViewById(R.id.change_mobile_no_tv);
         final TextView login_user_id = (TextView) findViewById(R.id.login_user_id);
         final EditText login_password = (EditText) findViewById(R.id.login_password);
-
 //        login_password.setText("1234");
-
-
         imageView = (ImageView) findViewById(R.id.ooredoo_header_logo);
-
         //fingerprint
         ((CoreApplication) getApplication()).inject(this);
         ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.USE_FINGERPRINT},
                 FINGERPRINT_PERMISSION_REQUEST_CODE);
-
         //language selection
         if (language_text.getText().toString().equals("English")) {
             language_text.setText(getResources().getString(R.string.login_arabic));
@@ -258,7 +236,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                     CustomSharedPreferences.saveStringData(getApplicationContext(), "en", CustomSharedPreferences.SP_KEY.LANGUAGE);
                     LocaleHelper.setLocale(LoginActivityFromSplashNewFlow.this, "en");
                     refresh(LoginActivityFromSplashNewFlow.this, "en");
-
                 } else {
                     selectedLanguage = "ar";
                     language_text.setText(getResources().getString(R.string.login_english));
@@ -343,13 +320,10 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
 //                    CustomSharedPreferences.saveGCMRegId(LoginActivity.this, "" + regid, CustomSharedPreferences.SP_KEY.GCM_REG_ID);
                 CustomerLoginRequest clr = new CustomerLoginRequest();
                 clr.setLogin_pin(password);
-                CustomSharedPreferences.saveStringData(getApplicationContext(), password, CustomSharedPreferences.SP_KEY.PIN);
+
                 String deviceID = ((CoreApplication) getApplication()).getThisDeviceUniqueAndroidId();
-
                 Log.e("deviceID", "->" + deviceID);
                 Log.e("deviceID", "->" + deviceID);
-
-
                 String mobile_number = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
                 clr.setMobileNumber(mobile_number);
                 clr.setDeviceIdNumber(deviceID);
@@ -385,7 +359,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                 LoginActivityFromSplashNewFlow.this.finish();
             }
         });
-
         forgotpassword_help_text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -393,24 +366,16 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                 startActivity(intent);
             }
         });
-
-
         //Sep 18
         change_mobile_no_tv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent= new Intent(getBaseContext(), MobChangeMobileNumber.class);
+                Intent intent = new Intent(getBaseContext(), MobChangeMobileNumber.class);
                 startActivity(intent);
-
             }
         });
-
-
         //Touch ID Exception Jan 20
         Thread.setDefaultUncaughtExceptionHandler(new HandleUncaughtException(this));
-
-
-
         //Fetch and Show push notification message from server
 //        if(getIntent().getBooleanExtra(KEY_SHOW_PUSH_NOTIFICATION_MESSAGE,false)){
 //
@@ -419,28 +384,17 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
 //
 //
 //        }
-
-
-        FrameLayout notification_count_frame_layout= (FrameLayout)mCustomView. findViewById(R.id.notification_count_frame_layout);
-
-
+        FrameLayout notification_count_frame_layout = (FrameLayout) mCustomView.findViewById(R.id.notification_count_frame_layout);
 //        BadgeView badge = new BadgeView(this, push_notification_message_bell);
 //        badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
 //        badge.setBackgroundResource(R.drawable.bookeey_small);
 //        badge.setText("1");
 //        badge.show();
-
-
         notification_count_frame_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-
-
                 //Fetch pushnotification message from server
                 GetPushNotificationMessageRequest pushNotificationMessageRequest = new GetPushNotificationMessageRequest();
-
                 CoreApplication application = (CoreApplication) getApplication();
                 String uiProcessorReference = application.addUserInterfaceProcessor(new GetPushNotificationMessageProcessing(pushNotificationMessageRequest, application, true));
                 ProgressDialogFrag progress = new ProgressDialogFrag();
@@ -550,34 +504,33 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                 }
 
 */
-
-
             }
         });
     }
 
-    private void blinkNotificationCountView(){
+    private void blinkNotificationCountView() {
         final Handler handler = new Handler();
         new Thread(new Runnable() {
             @Override
             public void run() {
                 int timeToBlink = 1000;    //in milissegunds
-                try{Thread.sleep(timeToBlink);}catch (Exception e) {}
+                try {
+                    Thread.sleep(timeToBlink);
+                } catch (Exception e) {
+                }
                 handler.post(new Runnable() {
                     @Override
                     public void run() {
                         LayoutInflater mInflater = LayoutInflater.from(LoginActivityFromSplashNewFlow.this);
                         View mCustomView = mInflater.inflate(R.layout.custom_action_bar_with_notifications_bell, null);
-                         FrameLayout notification_count_frame_layout= (FrameLayout)mCustomView. findViewById(R.id.notification_count_frame_layout);
-
+                        FrameLayout notification_count_frame_layout = (FrameLayout) mCustomView.findViewById(R.id.notification_count_frame_layout);
                         //Showing Notification count
                         TextView count_text_top = (TextView) mCustomView.findViewById(R.id.count_text_top);
-                        String notification_count  = CustomSharedPreferences.getStringData(getApplicationContext(),CustomSharedPreferences.SP_KEY.NOTIFICATION_MSG_COUNT);
+                        String notification_count = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.NOTIFICATION_MSG_COUNT);
                         count_text_top.setText(notification_count);
-
-                        if(notification_count_frame_layout.getVisibility() == View.VISIBLE){
+                        if (notification_count_frame_layout.getVisibility() == View.VISIBLE) {
                             notification_count_frame_layout.setVisibility(View.INVISIBLE);
-                        }else{
+                        } else {
                             notification_count_frame_layout.setVisibility(View.VISIBLE);
                         }
                         blinkNotificationCountView();
@@ -586,53 +539,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
             }
         }).start();
     }
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        AppEventsLogger logger = AppEventsLogger.newLogger(this);
-        logger.logEvent("LoginInvoked");
-
-        Log.e("Login Invoked", "Login Invoked");
-
-
-//        try {
-//            PackageInfo info = getPackageManager().getPackageInfo(
-//                    getPackageName(),
-//                    PackageManager.GET_SIGNATURES);
-//            for (Signature signature : info.signatures) {
-//                MessageDigest messageDigest = MessageDigest.getInstance("SHA");
-//                messageDigest.update(signature.toByteArray());
-//                Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
-//                Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
-//            }
-//        }
-//        catch (PackageManager.NameNotFoundException e) {
-//
-//        }
-//        catch (NoSuchAlgorithmException e) {
-//
-//        }
-
-
-
-
-
-//        //NFC
-//        // Check to see that the Activity started due to an Android Beam
-//        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
-//
-//            Toast.makeText(LoginActivityFromSplashNewFlow.this,"NFC Found",Toast.LENGTH_LONG).show();
-//
-//            processNFCData(getIntent());
-//        }
-
-
-
-    }
-
 //    private void processNFCData( Intent inputIntent ) {
 //
 //        Log.i("LoginSplashNewFlow", "processNFCData");
@@ -703,16 +609,47 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
 //    }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        AppEventsLogger logger = AppEventsLogger.newLogger(this);
+        logger.logEvent("LoginInvoked");
+        Log.e("Login Invoked", "Login Invoked");
+//        try {
+//            PackageInfo info = getPackageManager().getPackageInfo(
+//                    getPackageName(),
+//                    PackageManager.GET_SIGNATURES);
+//            for (Signature signature : info.signatures) {
+//                MessageDigest messageDigest = MessageDigest.getInstance("SHA");
+//                messageDigest.update(signature.toByteArray());
+//                Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
+//                Log.d("KeyHash:", Base64.encodeToString(messageDigest.digest(), Base64.DEFAULT));
+//            }
+//        }
+//        catch (PackageManager.NameNotFoundException e) {
+//
+//        }
+//        catch (NoSuchAlgorithmException e) {
+//
+//        }
+//        //NFC
+//        // Check to see that the Activity started due to an Android Beam
+//        if (NfcAdapter.ACTION_NDEF_DISCOVERED.equals(getIntent().getAction())) {
+//
+//            Toast.makeText(LoginActivityFromSplashNewFlow.this,"NFC Found",Toast.LENGTH_LONG).show();
+//
+//            processNFCData(getIntent());
+//        }
+    }
+
+    @Override
     public void onBackPressed() {
         super.onBackPressed();
-
         Intent intent = new Intent(Intent.ACTION_MAIN);
         intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         intent.addCategory(Intent.CATEGORY_HOME);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         startActivity(intent);
         finish();
-
         System.exit(0);
     }
 
@@ -720,51 +657,38 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] state) {
         boolean isFingerprintPermissionGranted = state[0] == PackageManager.PERMISSION_GRANTED;
-
         final ImageView fingerprint_img = (ImageView) findViewById(R.id.fingerprint_img);
-
-        LinearLayout login_finger_print_layout = (LinearLayout)findViewById(R.id.login_finger_print_layout);
-
-         TextView     login_ok_text = (TextView)findViewById(R.id.login_ok_text);
-
+        LinearLayout login_finger_print_layout = (LinearLayout) findViewById(R.id.login_finger_print_layout);
+        TextView login_ok_text = (TextView) findViewById(R.id.login_ok_text);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M)
             if (isFingerprintPermissionGranted) {
                 try {
                     if (mFingerprintManager != null) {
                         if (!mFingerprintManager.isHardwareDetected()) {
-
 //                            Toast.makeText(this, "Your Device does not have a Fingerprint Sensor", Toast.LENGTH_LONG).show();
-
 //                            Jan 20 Touch ID Crash
                             login_finger_print_layout.setVisibility(View.INVISIBLE);
                             login_ok_text.setVisibility(View.INVISIBLE);
-
-
                         } else if (!mFingerprintManager.hasEnrolledFingerprints()) {
                             // This happens when no fingerprints are registered.
-
                             //Sara
 //                            Toast.makeText(this,
 //                                    "Go to 'Settings -> Security -> Fingerprint' and register at least one fingerprint",
 //                                    Toast.LENGTH_LONG).show();
-
                         } else {
                             // Everything is ready for fingerprint authentication - create our key
                             createKey();
                         }
                     } else {
 //                        Toast.makeText(this, "Your Device does not have a Fingerprint Sensor", Toast.LENGTH_LONG).show();
-
 //                        Jan 20 Touch ID Crash
                         login_finger_print_layout.setVisibility(View.INVISIBLE);
                         login_ok_text.setVisibility(View.INVISIBLE);
-
                     }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
-
         fingerprint_img.setEnabled(true);
         fingerprint_text.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -778,10 +702,8 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                 try {
                     boolean isFingerprintAvailable = false;
                     if (!mFragment.isAdded()) {
-
                         //findViewById(R.id.confirmation_message).setVisibility(View.GONE);
                         //findViewById(R.id.encrypted_message).setVisibility(View.GONE);
-
                         boolean isFingerprintPermissionGranted = ActivityCompat.checkSelfPermission(
                                 LoginActivityFromSplashNewFlow.this, Manifest.permission.USE_FINGERPRINT)
                                 == PackageManager.PERMISSION_GRANTED;
@@ -789,7 +711,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                             isFingerprintAvailable = mFingerprintManager.isHardwareDetected()
                                     && mFingerprintManager.hasEnrolledFingerprints();
                         }
-
                         if (!isFingerprintPermissionGranted || !isFingerprintAvailable) {
                             // The user either rejected permission to read their fingerprint, we're on
                             // a device that doesn't support it, or the user doesn't have any
@@ -798,11 +719,9 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                             mFragment.setStage(
                                     FingerprintAuthenticationDialogFragmentNewFlowLoginFromSplash.Stage.PASSWORD);
                             mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
-
                         } else if (initCipher()) {
                             // Set up the crypto object for later. The object will be authenticated by use
                             // of the fingerprint.
-
                             // Show the fingerprint dialog. The user has the option to use the fingerprint with
                             // crypto, or you can fall back to using a server-side verified password.
                             mFragment.setCryptoObject(new FingerprintManagerCompat.CryptoObject(mCipher));
@@ -817,7 +736,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                                         FingerprintAuthenticationDialogFragmentNewFlowLoginFromSplash.Stage.PASSWORD);
                             }
                             mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
-
                         } else {
                             // This happens if the lock screen has been disabled or or a fingerprint got
                             // enrolled. Thus show the dialog to authenticate with their password first
@@ -830,10 +748,7 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                         }
                     }
                 } catch (Exception e) {
-
-
-                    Toast.makeText(LoginActivityFromSplashNewFlow.this, " Fingerprint Sensor Exc: "+e.getMessage(), Toast.LENGTH_LONG).show();
-
+                    Toast.makeText(LoginActivityFromSplashNewFlow.this, " Fingerprint Sensor Exc: " + e.getMessage(), Toast.LENGTH_LONG).show();
                     e.printStackTrace();
                 }
             }
@@ -848,7 +763,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
             }
             mKeyStore.load(null);
             SecretKey key = (SecretKey) mKeyStore.getKey(KEY_NAME, null);
-
             mCipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
                     + KeyProperties.BLOCK_MODE_CBC + "/"
                     + KeyProperties.ENCRYPTION_PADDING_PKCS7);
@@ -859,14 +773,12 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                 return false;
             else if (e instanceof KeyStoreException | e instanceof CertificateException | e instanceof UnrecoverableKeyException | e instanceof IOException | e instanceof NoSuchAlgorithmException | e instanceof InvalidKeyException)
                 throw new RuntimeException("Failed to init Cipher", e);
-
         }
         /*catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
                 | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException e) {
             throw new RuntimeException("Failed to init Cipher", e);
         }*/
         return false;
-
     }
 
     @TargetApi(Build.VERSION_CODES.M)
@@ -877,7 +789,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
         try {
             mKeyStore = KeyStore.getInstance("AndroidKeyStore");
             mKeyStore.load(null);
-
             // Set the alias of the entry in Android KeyStore where the key will appear
             // and the constrains (purposes) in the constructor of the Builder
             KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
@@ -894,30 +805,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
         } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | KeyStoreException
                 | CertificateException | NoSuchProviderException | IOException e) {
             throw new RuntimeException(e);
-        }
-    }
-
-    private void refresh(LoginActivityFromSplashNewFlow loginActivity, String selectedLanguage) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            Locale locale = new Locale(selectedLanguage);
-            Locale.setDefault(locale);
-            Resources resources = loginActivity.getResources();
-            Configuration configuration = resources.getConfiguration();
-            configuration.locale = locale;
-            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-            Intent refresh = new Intent(this, LoginActivityFromSplashNewFlow.class);
-            startActivity(refresh);
-            finish();
-        } else {
-            Locale locale = new Locale(selectedLanguage);
-            Locale.setDefault(locale);
-            Resources resources = loginActivity.getResources();
-            Configuration configuration = resources.getConfiguration();
-            configuration.locale = locale;
-            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
-            Intent refresh = new Intent(this, LoginActivityFromSplashNewFlow.class);
-            startActivity(refresh);
-            finish();
         }
     }
 
@@ -968,6 +855,30 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
         unregisterReceiver(myReceiver);
         super.onStop();
     }*/
+
+    private void refresh(LoginActivityFromSplashNewFlow loginActivity, String selectedLanguage) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+            Locale locale = new Locale(selectedLanguage);
+            Locale.setDefault(locale);
+            Resources resources = loginActivity.getResources();
+            Configuration configuration = resources.getConfiguration();
+            configuration.locale = locale;
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+            Intent refresh = new Intent(this, LoginActivityFromSplashNewFlow.class);
+            startActivity(refresh);
+            finish();
+        } else {
+            Locale locale = new Locale(selectedLanguage);
+            Locale.setDefault(locale);
+            Resources resources = loginActivity.getResources();
+            Configuration configuration = resources.getConfiguration();
+            configuration.locale = locale;
+            resources.updateConfiguration(configuration, resources.getDisplayMetrics());
+            Intent refresh = new Intent(this, LoginActivityFromSplashNewFlow.class);
+            startActivity(refresh);
+            finish();
+        }
+    }
 
     @Override
     public void onProgressUpdate(int progress) {
@@ -1077,7 +988,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                 progress.setArguments(bundle);
                 progress.show(getFragmentManager(), "progress_dialog");*/
             }
-
         }.execute(null, null, null);
     }
 
@@ -1105,15 +1015,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
         return getSharedPreferences(LoginActivityFromSplashNewFlow.class.getSimpleName(), Context.MODE_PRIVATE);
     }
 
-    private static int getAppVersion(Context context) {
-        try {
-            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return packageInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            throw new RuntimeException("Could not get package name: " + e);
-        }
-    }
-
     private void storeRegistrationId(Context context, String regId) {
         final SharedPreferences prefs = getGCMPreferences(context);
         int appVersion = getAppVersion(context);
@@ -1136,16 +1037,50 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
             return false;
         }
         return true;
+    }
 
-
+    private void alertDialog() {
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.custom_alert_whatsapp, null);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(LoginActivityFromSplashNewFlow.this);
+        alertDialog.setView(promptsView);
+        alertDialog.show();
     }
 
     public void onPurchased(boolean withFingerprint, String password) {
-        if (withFingerprint) {
-            // If the user has authenticated with fingerprint, verify that using cryptography and
+        CustomerLoginRequest clr = new CustomerLoginRequest();
+        boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
+        if(!bio) {
+            alertDialog();
+        } else {
+            String pin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
+            clr.setLogin_pin(pin);
+            String deviceID = ((CoreApplication) getApplication()).getThisDeviceUniqueAndroidId();
+            Log.e("deviceID", "->" + deviceID);
+            String mobile_number = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
+            clr.setMobileNumber(mobile_number);
+            clr.setDeviceIdNumber(deviceID);
+            if (selectedLanguage.equals("en")) {
+                clr.setLanguage("english");
+            } else if (selectedLanguage.equals("ar")) {
+                clr.setLanguage("arabic");
+            } else {
+                clr.setLanguage("english");
+            }
+            CoreApplication application = (CoreApplication) getApplication();
+            String uiProcessorReference = application.addUserInterfaceProcessor(new CustomerLoginProcessing(clr, true, application));
+            ProgressDialogFrag progress = new ProgressDialogFrag();
+            Bundle bundle = new Bundle();
+            bundle.putString("uuid", uiProcessorReference);
+            progress.setCancelable(true);
+            progress.setArguments(bundle);
+            progress.show(getSupportFragmentManager(), "progress_dialog");
+        }
+
+         /*  if(withFingerprint){
+               // If the user has authenticated with fingerprint, verify that using cryptography and
             // then show the confirmation message.
             //  tryEncrypt();
-            CustomerLoginRequest clr = new CustomerLoginRequest();
             clr.setLogin_pin("");
             String deviceID = ((CoreApplication) getApplication()).getThisDeviceUniqueAndroidId();
             String mobile_number = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
@@ -1169,7 +1104,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
         } else {
             // Authentication happened with backup password. Just show the confirmation message.
             //showConfirmation(null);
-            CustomerLoginRequest clr = new CustomerLoginRequest();
             clr.setLogin_pin(password);
             String deviceID = ((CoreApplication) getApplication()).getThisDeviceUniqueAndroidId();
             String mobile_number = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
@@ -1190,7 +1124,7 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
             progress.setCancelable(true);
             progress.setArguments(bundle);
             progress.show(getSupportFragmentManager(), "progress_dialog");
-        }
+        }*/
     }
 
 

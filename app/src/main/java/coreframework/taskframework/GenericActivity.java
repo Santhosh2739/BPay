@@ -1,21 +1,18 @@
 package coreframework.taskframework;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.os.Looper;
-import android.os.Message;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
@@ -29,56 +26,73 @@ import android.widget.Toast;
 
 import com.bookeey.wallet.live.BuildConfig;
 import com.bookeey.wallet.live.CheckForUpdatesActivity;
+import com.bookeey.wallet.live.Contact_Us_Activity;
+import com.bookeey.wallet.live.R;
 import com.bookeey.wallet.live.Splash;
+import com.bookeey.wallet.live.application.CoreApplication;
 import com.bookeey.wallet.live.application.DownloadResultReceiver;
+import com.bookeey.wallet.live.application.SyncService;
 import com.bookeey.wallet.live.changes.ChangePinActivity;
 import com.bookeey.wallet.live.changes.ChangeTPinActivity;
 import com.bookeey.wallet.live.changes.ErrorDialog_MobileNumberChange;
-import com.bookeey.wallet.live.login.LoginActivity;
+import com.bookeey.wallet.live.txnhistory.About_Us_Activity;
+import com.bookeey.wallet.live.txnhistory.TransactionHistoryActivity;
 import com.google.gson.Gson;
+
+import java.util.Date;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
+import coreframework.processing.BiometricProcessing;
 import coreframework.processing.ViewProfileProcessing;
 import coreframework.processing.logout.LogoutProcessing;
 import coreframework.utils.HandleUncaughtException;
 import coreframework.utils.PriceFormatter;
 import coreframework.utils.TimeUtils;
 import coreframework.utils.URLUTF8Encoder;
-
-import com.bookeey.wallet.live.Contact_Us_Activity;
-import com.bookeey.wallet.live.R;
-import com.bookeey.wallet.live.application.CoreApplication;
-import com.bookeey.wallet.live.application.SyncService;
-import com.bookeey.wallet.live.txnhistory.About_Us_Activity;
-import com.bookeey.wallet.live.txnhistory.TransactionHistoryActivity;
-
-
-import java.util.Date;
-
+import ycash.wallet.json.pojo.generic.BioMetricRequest;
 import ycash.wallet.json.pojo.generic.GenericRequest;
 import ycash.wallet.json.pojo.generic.TransType;
 import ycash.wallet.json.pojo.login.CustomerLoginRequestReponse;
 import ycash.wallet.json.pojo.txnhistory.TransactionHistoryResponse;
-
-
 /**
  * Created by mohit on 02-06-2015.
  */
 public class GenericActivity extends FragmentActivity implements YPCHeadlessCallback {
-
-
     public static final String Tag = GenericActivity.class.getSimpleName();
-
-
-    private boolean isUndoBarEnabled = false;
+    private final boolean isUndoBarEnabled = false;
+    private final DownloadResultReceiver mReceiver = null;
+    private final String inMenuTitle = "Set to In";
+    private final String outMenuTitle = "Set to Out";
+    private final boolean flag = false;
+    //    private Handler disconnectHandler = new Handler(Looper.myLooper()) {
+//        public void handleMessage(Message msg) {
+//        }
+//    };
+    private final Runnable disconnectCallback = new Runnable() {
+        @Override
+        public void run() {
+            try {
+                Log.e("Generic Kill1", "Called");
+                CoreApplication application = (CoreApplication) getApplication();
+                application.setIsUserLoggedIn(false);
+                finishAffinity();
+                // Wipe your valuable data here
+//            System.exit(0);
+            } catch (Exception e) {
+                Log.e("GenericPlain Kill1Ex ", "Called " + e.getMessage());
+                CoreApplication application = (CoreApplication) getApplication();
+                application.setIsUserLoggedIn(false);
+            }
+        }
+    };
     private InfoUpdateReceiver infoUpdateReceiver = null;
     private Menu optionsMenu;
-    private DownloadResultReceiver mReceiver = null;
     private Menu menu;
-    private String inMenuTitle = "Set to In";
-    private String outMenuTitle = "Set to Out";
-    private boolean flag = false;
+    private boolean closeActivityOnAlertDialoguesExecution = false;
+    private boolean showMenu = true;
+    private Handler disconnectHandler = null;
+    private HandlerThread mHandlerThread = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,18 +102,15 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
         mActionBar.setDisplayUseLogoEnabled(false);
         getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         //getActionBar().setIcon(R.drawable.back_update);
-
         LayoutInflater mInflater = LayoutInflater.from(this);
         View mCustomView = mInflater.inflate(R.layout.actionbar, null);
-        TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
+        TextView mTitleTextView = mCustomView.findViewById(R.id.title_text);
         mActionBar.setCustomView(mCustomView);
         mActionBar.setDisplayShowCustomEnabled(true);
         infoUpdateReceiver = new InfoUpdateReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(infoUpdateReceiver, new IntentFilter("custom-event-profile-update"));
         Thread.setDefaultUncaughtExceptionHandler(new HandleUncaughtException(this));
-
     }
-
 
     @Override
     protected void onDestroy() {
@@ -115,15 +126,8 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
         this.closeActivityOnAlertDialoguesExecution = closeActivityOnAlertDialoguesExecution;
     }
 
-    private boolean closeActivityOnAlertDialoguesExecution = false;
-
-
-    private boolean showMenu = true;
-
     public void showMenu(boolean show) {
         showMenu = show;
-
-
     }
 
     @Override
@@ -132,31 +136,6 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
             this.optionsMenu = menu;
             MenuInflater inflater = getMenuInflater();
             inflater.inflate(R.menu.main, menu);
-
-            /*menu.add("Add Contacts");
-            menu.getItem(0).setIcon(R.drawable.dot2);
-            menu.add("Home");
-            menu.getItem(0).setIcon(R.drawable.homemenuicon);
-*/
-
-            /*for (int i = 0; i < optionsMenu.size(); i++) {
-
-
-                final MenuItem item = optionsMenu.getItem(i);
-                if (item.getItemId() == R.id.empty) {
-                    View itemChooser = item.getActionView();
-                    if (itemChooser != null) {
-                        itemChooser.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View v) {
-                                Toast.makeText(getApplicationContext(), "ttt" + item.getItemId(), Toast.LENGTH_LONG).show();
-                                onOptionsItemSelected(item);
-
-                            }
-                        });
-                    }
-                }
-            }*/
             return true;
         } else {
             return false;
@@ -174,12 +153,11 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
             case R.id.action_change_pin:
                 changePassword();
                 return true;
-
             case R.id.action_change_sim:
                 Intent intent = new Intent(GenericActivity.this, ErrorDialog_MobileNumberChange.class);
                 startActivity(intent);
 //                finish();
-            return true;
+                return true;
 
             /*case R.id.action_change_tpin:
                 changeTPin();
@@ -193,7 +171,6 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
                 Intent serviceIntent = new Intent(this, SyncService.class);
                 serviceIntent.putExtra("type", SyncService.TYPE_USER_LOGGED_IN_STATUS);
                 startService(serviceIntent);
-
                 ((CoreApplication) getApplication()).setTransactionHistoryResponse(new TransactionHistoryResponse());
                 Intent i = new Intent(GenericActivity.this, TransactionHistoryActivity.class);
                 startActivity(i);
@@ -206,42 +183,45 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
                 Intent in = new Intent(GenericActivity.this, Contact_Us_Activity.class);
                 startActivity(in);
                 return true;
-
+            case R.id.action_biometric:
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    //Fingerprint API only available on from Android 6.0 (M)
+                    FingerprintManager fingerprintManager = (FingerprintManager) getApplicationContext().getSystemService(Context.FINGERPRINT_SERVICE);
+                    if (!fingerprintManager.hasEnrolledFingerprints()) {
+                        Toast.makeText(getApplicationContext(), "Finger Print not registered", Toast.LENGTH_LONG).show();
+                    } else {
+                        // Everything is ready for fingerprint authentication
+                        enableBiometric();
+                    }
+                }
+                // Toast.makeText(getApplicationContext(), "Disabled.", Toast.LENGTH_LONG).show();
+                return true;
             case R.id.action_check_for_update:
                 checkforupdate();
-               // Toast.makeText(getApplicationContext(), "Disabled.", Toast.LENGTH_LONG).show();
+                // Toast.makeText(getApplicationContext(), "Disabled.", Toast.LENGTH_LONG).show();
                 return true;
             case R.id.action_invite_friends:
-
-
 //                CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse();
-
 //                Intent sendIntent = new Intent();
 //                sendIntent.setAction(Intent.ACTION_SEND);
 //                sendIntent.putExtra(Intent.EXTRA_TEXT,
 //                        "Hey check out BookeeyPay at: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID+"\n\nReferal Code: "+customerLoginRequestReponse.getUniqueCustomerId());
 //                sendIntent.setType("text/plain");
 //                startActivity(sendIntent);
-
                 CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse();
-
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.putExtra(Intent.EXTRA_TEXT,
-                        "Hey check out BookeeyPay at: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID+"\n\nReferrer Mobile No: "+customerLoginRequestReponse.getMobileNumber());
+                        "Hey check out BookeeyPay at: https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "\n\nReferrer Mobile No: " + customerLoginRequestReponse.getMobileNumber());
                 sendIntent.setType("text/plain");
                 startActivity(sendIntent);
-
-
                 return true;
-
             case R.id.action_exit_app:
                 performSecureLogOff();
                 //this.finish();
                 return true;
             case R.id.empty_refresh:
                 setRefreshActionButtonState(true);
-
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -261,32 +241,46 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
     }
 
     private void updateMenuItems(Menu menu) {
+/*
+        boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
+        if (bio)
+            action_biometric.setTitle(R.string.disable_biometric);
+        else
+            action_biometric.setTitle(R.string.enable_biometric);
+*/
         MenuItem date = menu.findItem(R.id.last_loggedin_date);
         CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse();
         long last_login_time = customerLoginRequestReponse.getLastSuccessLoginTime();
         String loggedin_status = TimeUtils.getDisplayableDateWithSeconds(((CoreApplication) getApplication()).getCustomerLoginRequestReponse().getG_servertime(), new Date(last_login_time));
-
         if (loggedin_status != null) {
             date.setTitle(loggedin_status);
         } else {
             date.setTitle("");
         }
-
-
         //FOR BPOINTS
         MenuItem bPoints = menu.findItem(R.id.action_bpoints_profile);
-        String bPointsSaved  = CustomSharedPreferences.getStringData(getApplicationContext(),CustomSharedPreferences.SP_KEY.BPOINTS);
-
-        if(((CoreApplication) getApplication()).getBpoints()!=null){
-
-            bPoints.setTitle(getString(R.string.bpoitns)+" : "+ ((CoreApplication) getApplication()).getBpoints());
-
-        }else{
-
-            bPoints.setTitle(getString(R.string.bpoitns)+" : "+"0.00");
-
+        String bPointsSaved = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.BPOINTS);
+        if (((CoreApplication) getApplication()).getBpoints() != null) {
+            bPoints.setTitle(getString(R.string.bpoitns) + " : " + ((CoreApplication) getApplication()).getBpoints());
+        } else {
+            bPoints.setTitle(getString(R.string.bpoitns) + " : " + "0.00");
         }
+    }
 
+    private void enableBiometric() {
+        boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
+        BioMetricRequest bioMetricRequest = new BioMetricRequest();
+        bioMetricRequest.setG_oauth_2_0_client_token(((CoreApplication) getApplication()).getCustomerLoginRequestReponse().getOauth_2_0_client_token());
+        bioMetricRequest.setG_transType(TransType.BIO_REQUEST.name());
+        bioMetricRequest.setBiometric(!bio);
+        CoreApplication application = (CoreApplication) getApplication();
+        String uiProcessorReference = application.addUserInterfaceProcessor(new BiometricProcessing(bioMetricRequest, application, false));
+        ProgressDialogFrag progress = new ProgressDialogFrag();
+        Bundle bundle = new Bundle();
+        bundle.putString("uuid", uiProcessorReference);
+        progress.setCancelable(true);
+        progress.setArguments(bundle);
+        progress.show(getSupportFragmentManager(), "progress_dialog");
     }
 
     public void setRefreshActionButtonState(final boolean refreshing) {
@@ -306,27 +300,20 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
                 } else {
                     refreshItem.setActionView(null);
                 }
-
             }
         }
     }
 
     public void refreshUserInfo(boolean requestRefresh) {
-
         Intent intent = new Intent(Intent.ACTION_SYNC, null, this, SyncService.class);
         intent.putExtra("receiver", mReceiver);
         intent.putExtra("type", SyncService.TYPE_USER_LOGGED_IN_STATUS);
-
         startService(intent);
-
-
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
 //            startForegroundService(intent);
 //        } else {
 //            startForegroundService(intent);
 //        }
-
-
     }
 
     public final void updateUserInfo(Handler handler) {
@@ -336,7 +323,7 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
         StringBuffer buffer = new StringBuffer();
         buffer.append(TransType.USER_INFO_REQUEST.getURL());
         buffer.append("?d=" + URLUTF8Encoder.encode(new Gson().toJson(genericRequest)));
-        new Thread(new ServerConnection(-1, handler, buffer.toString(),getApplicationContext())).start();
+        new Thread(new ServerConnection(-1, handler, buffer.toString(), getApplicationContext())).start();
     }
 
     private void changePassword() {
@@ -364,35 +351,19 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
             startActivity(i);*/
             return;
         } else {
-
             //Implemented for Creditcard view Feb11
-
-            if(  ((TextView) findViewById(customerName))!=null && ((TextView) findViewById(walletId)) !=null &&     ((TextView) findViewById(balanceId))!=null) {
-
+            if (findViewById(customerName) != null && findViewById(walletId) != null && findViewById(balanceId) != null) {
                 ((TextView) findViewById(customerName)).setText(customerLoginRequestReponse.getCustFirstName() + " " + customerLoginRequestReponse.getCustLastName());
-
                 ((TextView) findViewById(walletId)).setText(customerLoginRequestReponse.getMobileNumber());
-
-
                 if (customerLoginRequestReponse.getWalletBalance() != null) {
                     ((TextView) findViewById(balanceId)).setText("KWD " + PriceFormatter.format(customerLoginRequestReponse.getWalletBalance(), 3, 3));
-
 //                ((TextView) findViewById(balanceId)).setText("" + PriceFormatter.format(customerLoginRequestReponse.getWalletBalance(), 3, 3));
                 }
-
             }
         }
     }
 
-    public class InfoUpdateReceiver extends BroadcastReceiver {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            handleProfileUpdate();
-        }
-    }
-
     public void handleProfileUpdate() {
-
     }
 
     void checkforupdate() {
@@ -400,11 +371,10 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
         } catch (Exception e) {
-            Log.e("TAG1", "" + e.toString());
+            Log.e("TAG1", "" + e);
         }
         int versionCode = BuildConfig.VERSION_CODE;
         String version = BuildConfig.VERSION_NAME;
-
         Intent intent = new Intent(getBaseContext(), CheckForUpdatesActivity.class);
         intent.putExtra("VersionName", version);
         intent.putExtra("VersionCode", versionCode);
@@ -424,162 +394,26 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
 
     @Override
     public void onProgressUpdate(int progress) {
-
     }
 
     @Override
     public void onProgressComplete() {
-
     }
 
-
-//    //Session Expiry code
-
-//    METHOD 1
-//    public CoreApplication getApp() {
-//        return (CoreApplication) this.getApplication();
-//    }
-//
-//    @Override
-//    public void onUserInteraction() {
-//        super.onUserInteraction();
-//        getApp().touch();
-//        Log.d("TAG", "User interaction to " + this.toString());
-//    }
-
-
-//    METHOD 2
-
-//    public static final long DISCONNECT_TIMEOUT = 5000;
-
-//    public static final long DISCONNECT_TIMEOUT = 5*60*1000;
-
-
-    private Handler disconnectHandler = null;
-
-    private HandlerThread mHandlerThread = null;
-
-    public void startHandlerThread(){
+    public void startHandlerThread() {
         mHandlerThread = new HandlerThread("HandlerThread");
         mHandlerThread.start();
         disconnectHandler = new Handler(mHandlerThread.getLooper());
     }
 
-//    private Handler disconnectHandler = new Handler(Looper.myLooper()) {
-//        public void handleMessage(Message msg) {
-//        }
-//    };
-
-    private Runnable disconnectCallback = new Runnable() {
-        @Override
-        public void run() {
-
-//            AlertDialog.Builder alertDialog = new AlertDialog.Builder(
-//                    GenericActivity.this);
-//            alertDialog.setCancelable(false);
-//            alertDialog.setTitle("Alert");
-//            alertDialog
-//                    .setMessage("Session Timeout, Hit ok to go to previous screen.");
-//            alertDialog.setNegativeButton("OK",
-//                    new DialogInterface.OnClickListener() {
-//
-//                        public void onClick(DialogInterface dialog, int which) {
-//
-////                            Intent intent = new Intent(GenericActivity.this,
-////                                    Splash.class);
-////                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK
-////                                    | Intent.FLAG_ACTIVITY_CLEAR_TOP);
-////                            startActivity(intent);
-//
-////                            performSecureLogOff();
-//
-//
-//                            CoreApplication application = (CoreApplication) getApplication();
-//                            application.setIsUserLoggedIn(false);
-//                            Intent intent = new Intent(GenericActivity.this,Splash.class);
-//                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                            startActivity(intent);
-//                            finish();
-//
-//
-//                            dialog.cancel();
-//                        }
-//                    });
-//
-//            alertDialog.show();
-
-
-            try {
-
-                Log.e("Generic Kill1", "Called");
-
-                CoreApplication application = (CoreApplication) getApplication();
-                application.setIsUserLoggedIn(false);
-
-
-
-                finishAffinity();
-
-                // Wipe your valuable data here
-//            System.exit(0);
-
-
-
-
-            }catch(Exception e){
-
-                Log.e("GenericPlain Kill1Ex ", "Called "+e.getMessage());
-
-                CoreApplication application = (CoreApplication) getApplication();
-                application.setIsUserLoggedIn(false);
-
-
-
-//                Intent intent = new Intent(GenericActivity.this, Splash.class);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-
-
-//                Intent intent = new Intent(Intent.ACTION_MAIN);
-//                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                intent.addCategory(Intent.CATEGORY_HOME);
-//                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
-//                finish();
-
-
-
-
-//                performSecureLogOff();
-//                System.exit(0);
-
-
-            }
-
-
-
-
-        }
-    };
-
     public void resetDisconnectTimer() {
-
-
         try {
             startHandlerThread();
-
             disconnectHandler.removeCallbacks(disconnectCallback);
             disconnectHandler.postDelayed(disconnectCallback, Splash.DISCONNECT_TIMEOUT);
-
-
-
-        }catch(Exception e){
-            Log.e("Generic ExcepresetKill","Called");
+        } catch (Exception e) {
+            Log.e("Generic ExcepresetKill", "Called");
         }
-
-
     }
 
     public void stopDisconnectTimer() {
@@ -588,36 +422,31 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
 
     @Override
     public void onUserInteraction() {
-        Log.e("Gene onUserInteraction","Called");
+        Log.e("Gene onUserInteraction", "Called");
         resetDisconnectTimer();
     }
 
     @Override
     public void onResume() {
         super.onResume();
-
-        Log.e("Generic resumeKill","Called");
-
+        Log.e("Generic resumeKill", "Called");
         resetDisconnectTimer();
-
-
-
         //For static QR balance refesh & Removal of 'Refresh' icon
         refreshUserInfo(true);
-
-
     }
 
     @Override
     public void onStop() {
         super.onStop();
-
-        Log.e("Generic Stop","Called");
-
+        Log.e("Generic Stop", "Called");
         //Timer not running after going to background...don't stop it...let it continue
 //        stopDisconnectTimer();
     }
 
-
-
+    public class InfoUpdateReceiver extends BroadcastReceiver {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            handleProfileUpdate();
+        }
+    }
 }

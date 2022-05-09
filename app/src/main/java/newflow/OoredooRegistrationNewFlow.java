@@ -67,7 +67,7 @@ public class OoredooRegistrationNewFlow extends GenericActivity implements YPCHe
     private static final int PICK_FROM_GALLERY_BACK = 3;
 
     EditText registration_firstname_edit, registration_lastname_edit, registration_email_id_edit,
-            registration_mobile_edit, registration_civilid_edit, registration_security_answer_edit;
+            registration_mobile_edit, registration_confirm_password_edit,registration_password_edit, registration_civilid_edit, registration_security_answer_edit;
 
 //    EditText registration_confirm_email_id_edit;
 
@@ -176,11 +176,15 @@ public class OoredooRegistrationNewFlow extends GenericActivity implements YPCHe
         imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.registration_email_id_edit)).getWindowToken(), 0);
         imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.registration_confirm_email_id_edit)).getWindowToken(), 0);
         imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.registration_mobile_edit)).getWindowToken(), 0);
+        imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.registration_confirm_password_edit)).getWindowToken(), 0);
+        imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.registration_password_edit)).getWindowToken(), 0);
         registration_firstname_edit = (EditText) findViewById(R.id.registration_firstname_edit);
         registration_lastname_edit = (EditText) findViewById(R.id.registration_lastname_edit);
         registration_email_id_edit = (EditText) findViewById(R.id.registration_email_id_edit);
         registration_mobile_edit = (EditText) findViewById(R.id.registration_mobile_edit);
         registration_civilid_edit = (EditText) findViewById(R.id.registration_civilid_edit);
+        registration_confirm_password_edit = (EditText) findViewById(R.id.registration_confirm_password_edit);
+        registration_password_edit = (EditText) findViewById(R.id.registration_password_edit);
 
         registration_referred_by_edit = (EditText)findViewById(R.id.registration_referred_by_edit);
 
@@ -345,7 +349,19 @@ public class OoredooRegistrationNewFlow extends GenericActivity implements YPCHe
                     return;
                 }
 
+                if (registration_password_edit.getText().toString().length() == 0) {
+                    Toast toast = Toast.makeText(OoredooRegistrationNewFlow.this, getResources().getString(R.string.mobile_bill_L1_toast_password), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                    toast.show();
+                    return;
+                }
 
+                if (registration_confirm_password_edit.getText().toString().length() == 0) {
+                    Toast toast = Toast.makeText(OoredooRegistrationNewFlow.this, getResources().getString(R.string.mobile_bill_L1_toast_password), Toast.LENGTH_SHORT);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                    toast.show();
+                    return;
+                }
 
                 if (front_civil_id_data == null) {
                     Toast toast = Toast.makeText(OoredooRegistrationNewFlow.this, getResources().getString(R.string.civilform_capturing_msg), Toast.LENGTH_SHORT);
@@ -389,6 +405,8 @@ public class OoredooRegistrationNewFlow extends GenericActivity implements YPCHe
                 registration_email_id_edit.setError(null);
 //                registration_confirm_email_id_edit.setError(null);
                 registration_mobile_edit.setError(null);
+                registration_confirm_password_edit.setError(null);
+                registration_password_edit.setError(null);
                 ooreddoo_registration_png_attachment.setVisibility(View.VISIBLE);
                 registration();
             }
@@ -883,6 +901,8 @@ public class OoredooRegistrationNewFlow extends GenericActivity implements YPCHe
         String email_id = registration_email_id_edit.getText().toString();
 //        String confirm_mail = registration_confirm_email_id_edit.getText().toString();
         String civil_id = registration_civilid_edit.getText().toString();
+        String password = registration_password_edit.getText().toString();
+        String cPassword = registration_confirm_password_edit.getText().toString();
         mobile_number = registration_mobile_edit.getText().toString();
         CustomSharedPreferences.saveStringData(OoredooRegistrationNewFlow.this, mobile_number, CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
 
@@ -899,6 +919,8 @@ public class OoredooRegistrationNewFlow extends GenericActivity implements YPCHe
         crr.setCivil_ID_Image_Back(back_civil_id_data);
         crr.setLanguage("English");
         crr.setDeviceIdNumber(deviceID);
+        crr.setPassword(password);
+        crr.setConfirmPassword(cPassword);
 //        crr.setNationality(scandetails.getNationality());
 //        crr.setGender(scandetails.getGender());
 

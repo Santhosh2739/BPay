@@ -8,110 +8,20 @@ package ycash.wallet.json.pojo.generic;
  */
 public enum TransType {
 
-
-    /*------------------------------------LOCAL SERVER--------------------------------------------*/
-    //Please comment 79 to 147 lines of code in ServerConnection.class(for secure connection)
-//    ADDRESS_BASE("http://192.168.8.178:8089/mno/"),
-//    LOADMONEY_REQUEST("http://192.168.8.178:8089/portal/proceed"),
-//    LOADMONEY_CHECK_REQUEST("http://192.168.8.178:8089/portal/rechargelimits"),
-
-
-    //Bookeey network 1
-    //Please comment 79 to 147 lines of code in ServerConnection.class(for secure connection)
-//    ADDRESS_BASE("http://192.168.8.178:8089/mno/"),
-//    LOADMONEY_REQUEST("http://192.168.8.178:8089/portal/proceed"),
-//    LOADMONEY_CHECK_REQUEST("http://192.168.8.178:8089/portal/rechargelimits"),
-
-
-    //Bookeey network 2
-    //Please comment 79 to 147 lines of code in ServerConnection.class(for secure connection)
-//    ADDRESS_BASE("http://192.168.8.137:8089/mno/"),
-//    LOADMONEY_REQUEST("http://192.168.8.137:8089/portal/proceed"),
-//    LOADMONEY_CHECK_REQUEST("http://192.168.8.137:8089/portal/rechargelimits"),
-
-
-//Mobile network
-    //Please comment 79 to 147 lines of code in ServerConnection.class(for secure connection)
-//    ADDRESS_BASE("http://192.168.43.188:8089/mno/"),
-//    LOADMONEY_REQUEST("http://192.168.43.188:8089/portal/proceed"),
-//    LOADMONEY_CHECK_REQUEST("http://192.168.43.188:8089/portal/rechargelimits"),
-
-
-    //Some promotional video Sep 09
-
-    //Please comment 79 to 147 lines of code in ServerConnection.class(for secure connection)
-//    ADDRESS_BASE("http://192.168.8.140:8089/mno/"),
-//    LOADMONEY_REQUEST("http://192.168.8.140:8089/mno/portal/proceed"),
-//    LOADMONEY_CHECK_REQUEST("http://192.168.8.140:8089/mno/portal/rechargelimits"),
-
-
-//    Juny 04
-    //Please comment 79 to 147 lines of code in ServerConnection.class(for secure connection)
-//    ADDRESS_BASE("http://192.168.200.245:8089/mno/"),
-//    LOADMONEY_REQUEST("http://192.168.200.245:8089/portal/proceed"),
-//    LOADMONEY_CHECK_REQUEST("http://192.168.200.245:8089/portal/rechargelimits"),
-
-
-
-
-
-    /*-----------------------------------DEMO SERVER----------------------------------------------*/
-    //Please comment 79 to 147 lines of code in ServerConnection.class(for secure connection)
-
-    //LOCAL
-
-//    ADDRESS_BASE("http://83.96.116.3:8089/mno/"),
-//    ADDRESS_BASE("http://192.168.2.27:8089/mno/"),
-
-//    ADDRESS_BASE("http://192.168.43.188:8089/mno/"),
-
-//    ADDRESS_BASE("http://192.168.2.24:8089/mno/"),
-
-    //Demo
-
-//    ADDRESS_BASE("http://83.96.116.3:8089/mno"),
-//        ADDRESS_BASE("http://83.96.116.3:8089/mno/"),
-
-
-//    //New flow LOCAL
-//    NEW_ADDRESS_BASE("http:///83.96.116.3:8089/"),
-//NEW_ADDRESS_BASE("http://192.168.2.27:8089/"),
-//NEW_ADDRESS_BASE("http://192.168.43.188:8089/"),
-//    NEW_ADDRESS_BASE("http://192.168.2.24:8089/"),
-
-
-
-
-    /*-----------------------------------UAT TEST SERVER------------------------------------------*/
-    //Please comment 79 to 147 lines of code in ServerConnection.class(for secure connection)
-   /*ADDRESS_BASE("http://103.195.186.249/mno/"),
-   LOADMONEY_REQUEST("http://103.195.186.249/portal/proceed"),
-   LOADMONEY_CHECK_REQUEST("http://103.195.186.249/portal/rechargelimits"),*/
-
-
-    /*-------------------------------------PUBLIC SERVER------------------------------------------*/
-    //Please UN_COMMENT 79 to 147 lines of code in ServerConnection.class(for secure connection)
-//     ADDRESS_BASE("https://www.bookeey.com/mno/"),
-//     LOADMONEY_REQUEST("https://www.bookeey.com/portal/proceed"),
-//     LOADMONEY_CHECK_REQUEST("https://www.bookeey.com/portal/rechargelimits"),
-    //New flow
-//    NEW_ADDRESS_BASE("https://www.bookeey.com/"),
-
-
     //DEMO URLS July 12 2020
 
     ADDRESS_BASE("https://demo.bookeey.com/mno/"),
+    // ADDRESS_BASE("https://www.bookeey.com/mno/"),
     LOADMONEY_REQUEST("https://demo.bookeey.com/portal/proceed"),
     LOADMONEY_CHECK_REQUEST("https://demo.bookeey.com/portal/rechargelimits"),
     NEW_ADDRESS_BASE("https://demo.bookeey.com/"),
 
 
 //    PRODUCTION URLS July 12 2020
-//
 //    ADDRESS_BASE("https://api.bookeey.com/mno/"),
-//    LOADMONEY_REQUEST("https://www.bookeey.com/portal/proceed"),
-//    LOADMONEY_CHECK_REQUEST("https://www.bookeey.com/portal/rechargelimits"),
-//    NEW_ADDRESS_BASE("https://www.bookeey.com/"),
+   // LOADMONEY_REQUEST("https://www.bookeey.com/portal/proceed"),
+   // LOADMONEY_CHECK_REQUEST("https://www.bookeey.com/portal/rechargelimits"),
+    //NEW_ADDRESS_BASE("https://www.bookeey.com/"),
 
 
     //--------------------------------------------Merchant URLS START--------------------------------------------------
@@ -148,7 +58,7 @@ public enum TransType {
     USER_INFO_REQUEST(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
     LOGOUT_CUSTOMER(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
     VIEW_PROFILE_REQUEST(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
-
+    BIO_REQUEST(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
     P2M_BARCODEGEN_VALIDATION_REQUEST(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
 
     //Forgot password device change
@@ -258,6 +168,7 @@ public enum TransType {
     OFFER_ACTIVECOUNT_RESPONSE,
     LOADMONEY_RESPONSE,
     CHANGEPIN_RESPONSE,
+    BIO_RESPONSE,
     PREPAID_CONFIRM_RESPONSE,
     PREPAID_CATEGORYLIST_RESPONSE,
     ECOMMERCE_TRAN_RESPONSE,

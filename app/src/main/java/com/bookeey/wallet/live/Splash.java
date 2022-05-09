@@ -219,7 +219,7 @@ public class Splash extends FragmentActivity implements YPCHeadlessCallback {
                 CustomerMobileNumberRequest clr = new CustomerMobileNumberRequest();
                 String deviceID = ((CoreApplication) getApplication()).getThisDeviceUniqueAndroidId();
                 clr.setDeviceId(deviceID);
-
+                //CustomSharedPreferences.saveStringData(getApplicationContext(), "", CustomSharedPreferences.SP_KEY.PIN);
                 CoreApplication application = (CoreApplication) getApplication();
                 String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application,false,false,false));
                 ProgressDialogFrag progress = new ProgressDialogFrag();

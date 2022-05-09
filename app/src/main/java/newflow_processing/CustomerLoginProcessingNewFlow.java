@@ -74,7 +74,7 @@ public class CustomerLoginProcessingNewFlow implements UserInterfaceBackgroundPr
         loginRequest.setLat(Double.toString(0.00d));//TODO:
         loginRequest.setLon(Double.toString(0.00d));//TODO:
         String gcmid = CustomSharedPreferences.getGCMRegId(application, CustomSharedPreferences.SP_KEY.GCM_REG_ID);
-        CustomSharedPreferences.saveStringData(application, loginRequest.getLogin_pin(), CustomSharedPreferences.SP_KEY.TEST_PIN);
+
         loginRequest.setGcmRegistrationId(gcmid);
         loginRequest.setWalletApplicationVersion(Double.toString(appVersionDouble));
         loginRequest.setDeviceOsVersionDetails1(deviceVersion);
@@ -88,6 +88,7 @@ public class CustomerLoginProcessingNewFlow implements UserInterfaceBackgroundPr
         String serverURL = buffer.toString();
         Log.e("LoginNewFlow","URL: "+serverURL);
         return serverURL;
+
     }
 
     @Override

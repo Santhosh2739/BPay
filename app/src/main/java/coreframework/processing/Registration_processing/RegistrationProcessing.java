@@ -9,6 +9,7 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.bookeey.wallet.live.R;
+import com.bookeey.wallet.live.login.LoginActivity;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 
@@ -60,6 +61,7 @@ public class RegistrationProcessing implements UserInterfaceBackgroundProcessing
 
 
         Log.e("Register request data: ", "" + new Gson().toJson(this.request));
+        Log.e("Register request data: ", this.request.toString());
 
         StringBuffer buffer = new StringBuffer();
         buffer.append(TransType.REGISTER.getURL());
@@ -113,11 +115,7 @@ public class RegistrationProcessing implements UserInterfaceBackgroundProcessing
     @Override
     public void performUserInterfaceAndDismiss(Activity activity, ProgressDialogFrag dialogueFragment) {
         if (success) {
-
-
-
-
-            Intent intent = new Intent(activity, RegistrationSuccess.class);
+            Intent intent = new Intent(activity, LoginActivity.class);
             activity.startActivity(intent);
             activity.finish();
             dialogueFragment.dismiss();

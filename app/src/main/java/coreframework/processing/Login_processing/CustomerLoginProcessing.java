@@ -129,7 +129,7 @@ public class CustomerLoginProcessing implements UserInterfaceBackgroundProcessin
 //                "domesticRechargeVersion":"1","speakstatus":false,"bannerDetails":["test"],"bpoints":13.500,"g_status":0,
 //                    "g_status_description":"Success","g_errorDescription":"","g_response_trans_type":"LOGIN_CUSTOMER_RESPONSE","g_servertime":"GMT+0300","dueInvoiceCount":0}
 
-            if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.LOGIN_CUSTOMER_RESPONSE.name()) && response.getG_status() == 0) {
+            if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.LOGIN_CUSTOMER_RESPONSE.name()) && (response.getG_status() == 0 || response.getG_status() == 211)) {
                 this.success = true;
                 response.setSpeakstatus(response.isSpeakstatus());
                 CustomSharedPreferences.saveIntData(this.application.getBaseContext(), CustomSharedPreferences.APP_STATUS_LOGGEDIN, CustomSharedPreferences.SP_KEY.APP_STATUS);
@@ -193,7 +193,7 @@ public class CustomerLoginProcessing implements UserInterfaceBackgroundProcessin
     public void performUserInterfaceAndDismiss(Activity activity, ProgressDialogFrag dialogueFragment) {
         dialogueFragment.dismiss();
         if (success) {
-            if (response.getG_status() == 0) {
+            if (response.getG_status() == 0 || response.getG_status() == 211) {
                 Intent intent = new Intent(activity, MainActivity.class);
                 intent.putExtra("voice", response.isSpeakstatus());
 //                intent.putExtra(MainActivity.KEY_FROM_LOGIN, true);
@@ -202,11 +202,11 @@ public class CustomerLoginProcessing implements UserInterfaceBackgroundProcessin
                 intent.putExtra("invoice_count", application.getCustomerLoginRequestReponse().getDueInvoiceCount());
                 activity.startActivity(intent);
                 activity.finish();
-            } else if (response.getG_status() == 211) {
+            } /*else if (response.getG_status() == 211) {
                 Intent intent = new Intent(activity, OoredooActivation.class);
                 activity.startActivity(intent);
                 activity.finish();
-            }else if (response.getG_status() == 209) {
+            }*/else if (response.getG_status() == 209) {
                 Intent intent = new Intent(activity, ErrorDialog_DeviceIdChange.class);
                 activity.startActivity(intent);
                 activity.finish();

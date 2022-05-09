@@ -74,8 +74,13 @@
             android:hint="@string/p2m_password"
             android:inputType="textPassword"
             android:maxLength="10"
+            android:textColorHint="@color/red"
             android:textColor="@color/blue"
-            android:padding="10dp"
+            android:drawableEnd="@drawable/fingerprint_icon"
+            android:paddingLeft="10dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="10dp"
+            android:paddingRight="8dp"
             android:singleLine="true"
             android:visibility="gone" />
     </LinearLayout>
