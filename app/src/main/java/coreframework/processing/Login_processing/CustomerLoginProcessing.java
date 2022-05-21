@@ -1,10 +1,13 @@
 package coreframework.processing.Login_processing;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Build;
+import android.os.Bundle;
 import android.os.Message;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,6 +23,7 @@ import com.google.gson.Gson;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
+import coreframework.processing.BiometricProcessing;
 import coreframework.taskframework.ProgressDialogFrag;
 import coreframework.taskframework.UserInterfaceBackgroundProcessing;
 import coreframework.utils.URLUTF8Encoder;
@@ -30,6 +34,7 @@ import org.json.JSONObject;
 
 import java.math.BigDecimal;
 
+import ycash.wallet.json.pojo.generic.BioMetricRequest;
 import ycash.wallet.json.pojo.generic.GenericResponse;
 import ycash.wallet.json.pojo.generic.TransType;
 import ycash.wallet.json.pojo.login.CustomerLoginRequest;
@@ -164,6 +169,7 @@ public class CustomerLoginProcessing implements UserInterfaceBackgroundProcessin
                 application.setBannerDetails(application.getCustomerLoginRequestReponse().getBannerDetails());
                 application.setSpeakstatus(application.isSpeakstatus());
                 CustomSharedPreferences.saveStringData(application, application.getCustomerLoginRequestReponse().getCustFirstName(), CustomSharedPreferences.SP_KEY.NAME);
+
             } else if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.LOGIN_CUSTOMER_RESPONSE.name()) && response.getG_status() == 211) {
                 this.success = true;
             } else if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.LOGIN_CUSTOMER_RESPONSE.name()) && response.getG_status() == 209) {

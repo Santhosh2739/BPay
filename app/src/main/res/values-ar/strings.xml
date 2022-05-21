@@ -1315,5 +1315,6 @@ customercare@bookeey.com </string>
     <string name="please_enable_biometric_for_access">Please enable biometric for access</string>
     <string name="enable_biometric">تمكين / تعطيل المقاييس الحيوية</string>
     <string name="invoice_enter_password_biometric">أدخل كلمة المرور أو المقاييس الحيوية</string>
+    <string name="enable_biometric_for_access">هل تريد تمكين البيومترية للوصول؟</string>
 
 </resources>

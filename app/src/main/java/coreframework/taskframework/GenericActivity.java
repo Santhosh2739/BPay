@@ -184,14 +184,17 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
                 startActivity(in);
                 return true;
             case R.id.action_biometric:
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    //Fingerprint API only available on from Android 6.0 (M)
-                    FingerprintManager fingerprintManager = (FingerprintManager) getApplicationContext().getSystemService(Context.FINGERPRINT_SERVICE);
-                    if (!fingerprintManager.hasEnrolledFingerprints()) {
-                        Toast.makeText(getApplicationContext(), "Finger Print not registered", Toast.LENGTH_LONG).show();
-                    } else {
-                        // Everything is ready for fingerprint authentication
-                        enableBiometric();
+                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                if(!guest) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        //Fingerprint API only available on from Android 6.0 (M)
+                        FingerprintManager fingerprintManager = (FingerprintManager) getApplicationContext().getSystemService(Context.FINGERPRINT_SERVICE);
+                        if (!fingerprintManager.hasEnrolledFingerprints()) {
+                            Toast.makeText(getApplicationContext(), "Finger Print not registered", Toast.LENGTH_LONG).show();
+                        } else {
+                            // Everything is ready for fingerprint authentication
+                            enableBiometric();
+                        }
                     }
                 }
                 // Toast.makeText(getApplicationContext(), "Disabled.", Toast.LENGTH_LONG).show();
@@ -241,13 +244,18 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
     }
 
     private void updateMenuItems(Menu menu) {
-/*
-        boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
+
+       /* boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
         if (bio)
             action_biometric.setTitle(R.string.disable_biometric);
         else
-            action_biometric.setTitle(R.string.enable_biometric);
-*/
+            action_biometric.setTitle(R.string.enable_biometric);*/
+
+        boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+        if(guest) {
+            MenuItem bio = menu.findItem(R.id.action_biometric);
+            bio.setVisible(false);
+        }
         MenuItem date = menu.findItem(R.id.last_loggedin_date);
         CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse();
         long last_login_time = customerLoginRequestReponse.getLastSuccessLoginTime();

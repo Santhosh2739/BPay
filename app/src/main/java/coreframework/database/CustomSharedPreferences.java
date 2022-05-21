@@ -20,6 +20,8 @@ public class CustomSharedPreferences {
         MOBILE_NUMBER,
         DEVICE_ID,
         PIN,
+        FIRST_LOGIN,
+        GUEST_LOGIN,
         APP_STATUS,
         NAME,
         BIOMETRIC,

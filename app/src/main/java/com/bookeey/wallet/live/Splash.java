@@ -1,6 +1,5 @@
 package com.bookeey.wallet.live;
 
-import android.app.Activity;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
@@ -14,24 +13,7 @@ import android.support.v4.app.FragmentActivity;
 import android.util.Base64;
 import android.util.Log;
 
-import coreframework.database.CustomSharedPreferences;
-import coreframework.processing.DeviceIdChangeProcessing;
-import coreframework.processing.GetPushNotificationMessageProcessing;
-import coreframework.taskframework.GenericActivity;
-import coreframework.taskframework.ProgressDialogFrag;
-import coreframework.taskframework.YPCHeadlessCallback;
-import coreframework.utils.LocaleHelper;
-import newflow.MainActivityNewFlow;
-import newflow_processing.DeviceIDSplashCheckProcessingNewFlow;
-import ycash.wallet.json.pojo.changes.UpdateCustDeviceIdRequest;
-import ycash.wallet.json.pojo.getpushnotificationmessage.GetPushNotificationMessageRequest;
-import ycash.wallet.json.pojo.registration.CustomerMobileNumberRequest;
-
 import com.bookeey.wallet.live.application.CoreApplication;
-import com.bookeey.wallet.live.creditcard.CreditCardFormActivity;
-import com.bookeey.wallet.live.mainmenu.MainActivity;
-import com.bookeey.wallet.live.registration.GreetingsActivity;
-import com.bookeey.wallet.live.registration.OoredooActivation;
 import com.facebook.FacebookSdk;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.analytics.HitBuilders;
@@ -43,61 +25,52 @@ import com.google.firebase.auth.FirebaseUser;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import coreframework.database.CustomSharedPreferences;
+import coreframework.taskframework.ProgressDialogFrag;
+import coreframework.taskframework.YPCHeadlessCallback;
+import coreframework.utils.LocaleHelper;
+import newflow_processing.DeviceIDSplashCheckProcessingNewFlow;
+import ycash.wallet.json.pojo.registration.CustomerMobileNumberRequest;
 public class Splash extends FragmentActivity implements YPCHeadlessCallback {
-
+    public static final long DISCONNECT_TIMEOUT = 60 * 60 * 1000;
+    public static final String KEY_SHOW_PUSH_NOTIFICATION_MESSAGE = "KEY_SHOW_PUSH_NOTIFICATION_MESSAGE";
     private static final String LAUNCH_FROM_URL = "com.bookeey.wallet.live.launchfrombrowser";
     String selectedLanguage = null;
-
-    public static final long DISCONNECT_TIMEOUT = 60*60*1000;
-
 //    public static final long DISCONNECT_TIMEOUT = 5*1000;
-
     //for FCM push notifications
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
-
-
     private FirebaseAnalytics firebaseAnalytics;
-
     private Tracker mTracker = null;
-
-    public static final String KEY_SHOW_PUSH_NOTIFICATION_MESSAGE = "KEY_SHOW_PUSH_NOTIFICATION_MESSAGE";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bookeey_splash_screen_new);
-
         //Facebook
         FacebookSdk.sdkInitialize(getApplicationContext());
-
         // Obtain the Firebase Analytics instance.
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
-
-        NotificationManager notificationManager = (NotificationManager)getSystemService(Context.NOTIFICATION_SERVICE);
+        NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.cancelAll();
-
-
         selectedLanguage = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.LANGUAGE);
-
 //        if (selectedLanguage != null && !selectedLanguage.isEmpty()) {
 //            LocaleHelper.setLocale(Splash.this, selectedLanguage);
 //        }
-
-        if (selectedLanguage != null && selectedLanguage.length()==0) {
-
-            CustomSharedPreferences.saveStringData(getApplicationContext(),"en",CustomSharedPreferences.SP_KEY.LANGUAGE);
-
+        if (selectedLanguage != null && selectedLanguage.length() == 0) {
+            CustomSharedPreferences.saveStringData(getApplicationContext(), "en", CustomSharedPreferences.SP_KEY.LANGUAGE);
             LocaleHelper.setLocale(Splash.this, "en");
-        }else{
+        } else {
             //Setting language
             selectedLanguage = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.LANGUAGE);
             if (selectedLanguage != null && !selectedLanguage.isEmpty()) {
                 LocaleHelper.setLocale(Splash.this, selectedLanguage);
             }
-
         }
 
+        int first_login = CustomSharedPreferences.getIntData(getApplicationContext(), CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
+        if(first_login == -1)
+            CustomSharedPreferences.saveIntData(getApplicationContext(), 1 ,CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
 
         //for FCM push notifications
         mAuth = FirebaseAuth.getInstance();
@@ -125,16 +98,11 @@ public class Splash extends FragmentActivity implements YPCHeadlessCallback {
                 Log.e("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
         } catch (PackageManager.NameNotFoundException e) {
-
         } catch (NoSuchAlgorithmException e) {
-
         }
         getActionBar().hide();
         /*FacebookSdk.sdkInitialize(getApplicationContext());
         AppEventsLogger.activateApp(this);*/
-
-
-
 //        if(LAUNCH_FROM_URL!=null){
 //
 //            Intent intent = getIntent();
@@ -149,9 +117,6 @@ public class Splash extends FragmentActivity implements YPCHeadlessCallback {
 //            }
 //
 //        }
-
-
-
         //convert intent to URI android
         Intent test = new Intent("com.bookeey.wallet.live.launchfrombrowser");
         test.addCategory(Intent.CATEGORY_DEFAULT);
@@ -191,47 +156,31 @@ public class Splash extends FragmentActivity implements YPCHeadlessCallback {
                     startActivity(in);
                     finish();
                 }*/
-
-
                 //OldFlow
 //                Intent intent = new Intent(getBaseContext(), GreetingsActivity.class);
 //                startActivity(intent);
 //                finish();
-
-
-
                 //NewFlowJuly23
-
 //                Intent intent = new Intent(getBaseContext(), MainActivityNewFlow.class);
 //                startActivity(intent);
 //                finish();
-
                 //For Test Jan 06
 //                Intent intent = new Intent(getBaseContext(), CreditCardFormActivity.class);
 //                startActivity(intent);
 //                finish();
-
-
-                String gcm_id =  CustomSharedPreferences.getGCMRegId(getApplicationContext(),CustomSharedPreferences.SP_KEY.GCM_REG_ID);
-
-
-
+                String gcm_id = CustomSharedPreferences.getGCMRegId(getApplicationContext(), CustomSharedPreferences.SP_KEY.GCM_REG_ID);
                 CustomerMobileNumberRequest clr = new CustomerMobileNumberRequest();
                 String deviceID = ((CoreApplication) getApplication()).getThisDeviceUniqueAndroidId();
                 clr.setDeviceId(deviceID);
                 //CustomSharedPreferences.saveStringData(getApplicationContext(), "", CustomSharedPreferences.SP_KEY.PIN);
                 CoreApplication application = (CoreApplication) getApplication();
-                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application,false,false,false));
+                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application, false, false, false));
                 ProgressDialogFrag progress = new ProgressDialogFrag();
                 Bundle bundle_req = new Bundle();
                 bundle_req.putString("uuid", uiProcessorReference);
                 progress.setCancelable(true);
                 progress.setArguments(bundle_req);
                 progress.show(getSupportFragmentManager(), "progress_dialog");
-
-
-
-
 //                GetPushNotificationMessageRequest pushNotificationMessageRequest = new GetPushNotificationMessageRequest();
 //
 //                CoreApplication application = (CoreApplication) getApplication();
@@ -242,13 +191,8 @@ public class Splash extends FragmentActivity implements YPCHeadlessCallback {
 //                progress.setCancelable(true);
 //                progress.setArguments(bundle);
 //                progress.show(getSupportFragmentManager(), "progress_dialog");
-
-
-
             }
         }, 500);
-
-
         // Obtain the shared Tracker instance.
         CoreApplication application = (CoreApplication) getApplication();
         mTracker = application.getDefaultTracker();
@@ -257,34 +201,24 @@ public class Splash extends FragmentActivity implements YPCHeadlessCallback {
     @Override
     protected void onResume() {
         super.onResume();
-
         //Facebook
         AppEventsLogger logger = AppEventsLogger.newLogger(this);
         logger.logEvent("App launch splash page");
-
-
         //Firebase
         Bundle bundle = new Bundle();
         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, 1);
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "App launch splash page");
         //Logs an app event.
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-        Log.e("Firebase"," Event 1 logged");
-
-
+        Log.e("Firebase", " Event 1 logged");
         //Google Analytics
-
         Log.i("Splash GA", "App launch splash page");
         mTracker.setScreenName("App launch splash page");
         mTracker.send(new HitBuilders.ScreenViewBuilder().build());
-
         mTracker.send(new HitBuilders.EventBuilder()
                 .setCategory("Action")
                 .setAction("App launch splash page")
                 .build());
-
-
-
     }
 
     @Override
@@ -303,11 +237,9 @@ public class Splash extends FragmentActivity implements YPCHeadlessCallback {
 
     @Override
     public void onProgressUpdate(int progress) {
-
     }
 
     @Override
     public void onProgressComplete() {
-
     }
 }

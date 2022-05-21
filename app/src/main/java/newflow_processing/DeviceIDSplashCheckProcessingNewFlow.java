@@ -118,6 +118,7 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
     @Override
     public void performUserInterfaceAndDismiss(Activity activity, ProgressDialogFrag dialogueFragment) {
         _activity = activity;
+        CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
         dialogueFragment.dismiss();
         if (success) {
             CustomSharedPreferences.saveStringData(activity, response.getModule(), CustomSharedPreferences.SP_KEY.MODULE);
@@ -159,6 +160,8 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
 //                Toast toast = Toast.makeText(activity, "Please register to login", Toast.LENGTH_SHORT);
 //                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
 //                toast.show();
+                CustomSharedPreferences.saveBooleanData(activity, true, CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                CustomSharedPreferences.saveIntData(activity, 1, CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
 
                 if (guestSignUp && isFromMainNewFlow) {
                     CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC);

@@ -25,6 +25,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader;
 import android.graphics.drawable.ColorDrawable;
+import android.hardware.fingerprint.FingerprintManager;
 import android.location.Location;
 import android.net.Uri;
 import android.nfc.NdefMessage;
@@ -143,6 +144,7 @@ import coreframework.barcodeclient.BarCodeTimeParser;
 import coreframework.barcodeclient.BcodeHeaderEncoder;
 import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
+import coreframework.processing.BiometricProcessing;
 import coreframework.processing.GetPushNotificationMessageProcessing;
 import coreframework.processing.LoadMoneyProcessing;
 import coreframework.processing.Login_processing.CustomerAutoLoginProcessingFromNFC;
@@ -165,7 +167,9 @@ import coreframework.utils.URLUTF8Encoder;
 import merchant.DecodedQrPojo;
 import merchant.DisplayAmountToMerchantActivityDummy;
 import merchant.PayToMerchantStaticQRCodeInitProcessing;
+import newflow.LoginActivityFromSplashNewFlow;
 import wheretopaynew.MerchantListCatogorieyActivityNewUIActivity;
+import ycash.wallet.json.pojo.generic.BioMetricRequest;
 import ycash.wallet.json.pojo.generic.GenericRequest;
 import ycash.wallet.json.pojo.generic.GenericResponse;
 import ycash.wallet.json.pojo.generic.TransType;
@@ -571,6 +575,17 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
 //            }
 //        });
         refresh();
+
+        int first_login = CustomSharedPreferences.getIntData(getApplicationContext(), CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
+        boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+        if(first_login == 1 && !guest) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                FingerprintManager fingerprintManager = (FingerprintManager) getApplicationContext().getSystemService(Context.FINGERPRINT_SERVICE);
+                if (fingerprintManager.hasEnrolledFingerprints()) {
+                    showBiometricenablealert();
+                }
+            }
+        }
 
         /*if (application.getInvoices_count() > 0) {
             isSound = customerLoginRequestReponse.isSpeakstatus();
@@ -1052,6 +1067,47 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
 //
 //        viewPager.setAdapter(new ViewPagerAdapter(fm));
     }
+
+
+        public void showBiometricenablealert() {
+            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+            dialog.setCancelable(false);
+            dialog.setMessage(getString(R.string.enable_biometric_for_access));
+            dialog.setPositiveButton(getString(R.string.yes_newflow), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    enableBiometric(true);
+                    dialog.dismiss();
+                }
+            });
+            dialog.setNegativeButton(getString(R.string.no_newflow), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int id) {
+                    enableBiometric(false);
+                    dialog.dismiss();
+                }
+            });
+            final AlertDialog alert = dialog.create();
+            alert.show();
+        }
+
+
+    private void enableBiometric(boolean bio) {
+        CustomSharedPreferences.saveIntData(getApplicationContext(), 0, CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
+        BioMetricRequest bioMetricRequest = new BioMetricRequest();
+        bioMetricRequest.setG_oauth_2_0_client_token(((CoreApplication) getApplication()).getCustomerLoginRequestReponse().getOauth_2_0_client_token());
+        bioMetricRequest.setG_transType(TransType.BIO_REQUEST.name());
+        bioMetricRequest.setBiometric(bio);
+        CoreApplication application = (CoreApplication) getApplication();
+        String uiProcessorReference = application.addUserInterfaceProcessor(new BiometricProcessing(bioMetricRequest, application, false));
+        ProgressDialogFrag progress = new ProgressDialogFrag();
+        Bundle bundle = new Bundle();
+        bundle.putString("uuid", uiProcessorReference);
+        progress.setCancelable(true);
+        progress.setArguments(bundle);
+        progress.show(getSupportFragmentManager(), "progress_dialog");
+    }
+
 
     private void initializeSpeechRecognizer() {
         if (SpeechRecognizer.isRecognitionAvailable(this)) {

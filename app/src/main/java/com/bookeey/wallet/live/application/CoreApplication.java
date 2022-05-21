@@ -596,8 +596,8 @@ public class CoreApplication extends Application {
     public String getThisDeviceUniqueAndroidId() {
         String android_id = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         android_id = android_id.length() % 2 == 1 ? android_id + "FA0A1" : android_id;
-        //android_id="0000000000022919";
-       // android_id="00000000000229191";
+       // android_id="0000000000022919";
+        //android_id="00000000000229191";
         Log.e("deviceID Core: ", "" + android_id);
         CustomSharedPreferences.saveStringData(getApplicationContext(), android_id, CustomSharedPreferences.SP_KEY.DEVICE_ID);
         return android_id;

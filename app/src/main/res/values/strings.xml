@@ -1343,6 +1343,7 @@ customercare@bookeey.com\nThank you.</string>
     <string name="registration_password">Password</string>
     <string name="alert">Alert</string>
     <string name="please_enable_biometric_for_access">Please enable biometric for access</string>
+    <string name="enable_biometric_for_access">Do you want to enable biometric for access?</string>
     <string name="enable_biometric">Enable/Disable Biometric</string>
 
 </resources>

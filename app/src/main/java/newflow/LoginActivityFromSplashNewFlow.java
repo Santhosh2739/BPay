@@ -150,7 +150,11 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
             login_finger_print_layout.setVisibility(View.INVISIBLE);
         }
         String pin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
-        if (pin == null || pin.isEmpty()) {
+        int first_login = CustomSharedPreferences.getIntData(getApplicationContext(), CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
+        boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+        Log.e("first_login", first_login + "" + guest + "" + pin);
+
+        if (first_login == 1 || pin.equals("") || guest) {
             login_ok_text.setVisibility(View.INVISIBLE);
             login_finger_print_layout.setVisibility(View.INVISIBLE);
         }
