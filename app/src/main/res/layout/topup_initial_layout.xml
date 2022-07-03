@@ -320,11 +320,13 @@
             android:gravity="center"
             android:hint="@string/intl_enter_password"
             android:inputType="textPassword"
+            android:drawableRight="@drawable/fingerprint_icon"
             android:maxLength="10"
             android:paddingLeft="10dp"
+            android:paddingRight="8dp"
             android:textColor="@color/blue"
             android:textSize="18sp"
-            android:visibility="invisible" />
+            android:visibility="visible" />
     </LinearLayout>
 
     <LinearLayout

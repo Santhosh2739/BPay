@@ -219,6 +219,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     public boolean should_call_session_time_out_from_onResume = true;
     boolean biometricVerified = false;
     boolean staticQR = false;
+    Dialog promptsViewPassword;
     TextToSpeech tts;
     Intent intent;
     GridView gridView;
@@ -254,76 +255,8 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     boolean isScrolled = true;
     String versionname;
     String moduleName = "";
-    /*@Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1 && resultCode == RESULT_OK) {
-            File mImageCaptureUri = new File(Environment.getExternalStorageDirectory() + File.separator + "img.jpg");
-            try {
-                cropCapturedImage(Uri.fromFile(mImageCaptureUri));
-            } catch (ActivityNotFoundException aNFE) {
-                String errorMessage = "Sorry - your device doesn't support the crop action!";
-                Toast toast = Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        }
-        if (requestCode == 2 && resultCode == RESULT_OK && data != null && data.getData() != null) {
+    int verifyBio = 0;
 
-            if (resultCode != RESULT_CANCELED) {
-                if (requestCode == PICK_FROM_GALLERY) {
-                    //imageView.setImageBitmap(photo);
-                    Uri uri = data.getData();
-                    Bitmap bitmap = null;
-                    try {
-                        bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-                        Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-                        BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.MIRROR, Shader.TileMode.MIRROR);
-                        Paint paint = new Paint();
-                        paint.setShader(shader);
-                        Canvas c = new Canvas(circleBitmap);
-                        c.drawCircle(circleBitmap.getWidth() / 2, circleBitmap.getHeight() / 2, circleBitmap.getWidth() / 2, paint);
-                        image_person.setImageBitmap(circleBitmap);
-                        bitmapToString(circleBitmap);
-                    } catch (IOException ieo) {
-                        Toast.makeText(getResources(), "can't able to select the image", Toast.LENGTH_LONG).show();
-                        return;
-                    }
-                }
-            }
-            *//*Uri uri = data.getData();
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), uri);
-            } catch (IOException ieo) {
-                Toast.makeText(getApplicationContext(), "can't able to select the image", Toast.LENGTH_LONG).show();
-                return;
-            }
-            Bitmap circleBitmap = Bitmap.createBitmap(bitmap.getWidth(), bitmap.getHeight(), Bitmap.Config.ARGB_8888);
-            BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.MIRROR, Shader.TileMode.MIRROR);
-            Paint paint = new Paint();
-            paint.setShader(shader);
-            Canvas c = new Canvas(circleBitmap);
-            c.drawCircle(circleBitmap.getWidth() / 2, circleBitmap.getHeight() / 2, circleBitmap.getWidth() / 2, paint);
-            image_person.setImageBitmap(circleBitmap);
-            bitmapToString(circleBitmap);*//*
-        }
-        if (requestCode == 0 && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            if (extras != null) {
-                Bitmap imageBitmap = (Bitmap) extras.get("data");
-                Bitmap circleBitmap = Bitmap.createBitmap(imageBitmap.getWidth(), imageBitmap.getHeight(), Bitmap.Config.ARGB_8888);
-                BitmapShader shader = new BitmapShader(imageBitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
-                Paint paint = new Paint();
-                paint.setShader(shader);
-                paint.setAntiAlias(true);
-                Canvas c = new Canvas(circleBitmap);
-                c.drawCircle(imageBitmap.getWidth() / 2, imageBitmap.getHeight() / 2, imageBitmap.getWidth() / 2, paint);
-                image_person.setImageBitmap(circleBitmap);
-                bitmapToString(circleBitmap);
-            } else
-                Toast.makeText(getApplicationContext(), "cancel", Toast.LENGTH_LONG).show();
-        }
-    }*/
     EditText pay_via_qrcode_pin_edt, pay_via_qrcode_pin_edt_QR, pay_via_qrcode_pin_edt_two;
     String selectedLanguage = null;
     //ImageView more_img1;
@@ -989,83 +922,8 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 progress.setCancelable(true);
                 progress.setArguments(bundle);
                 progress.show(getSupportFragmentManager(), "progress_dialog");
-                //For Test
-                /*
-
-                try {
-//                    PushNotificationDetailsPojo responsePojo = new Gson().fromJson(response_json, PushNotificationDetailsPojo.class);
-
-
-                    ArrayList<String> push_messages_al =  new ArrayList<String>();
-                    push_messages_al.add("Welocome to Bookeey, you have very nice offer at Knife Chicken");
-                    push_messages_al.add("Welocome to Bookeey, you have very nice offer at Lulu Hypermarket");
-
-                    JSONObject finalJsonObject = new JSONObject();
-
-                    JSONArray pushMessageObjectJsonArray =  new JSONArray();
-
-                    for (int i=0;i< push_messages_al.size();i++) {
-
-
-
-                        JSONObject pushMessageJsonObject =  new JSONObject();
-
-                        Charset charset = Charset.forName("ISO-8859-6");
-                        CharsetDecoder decoder = charset.newDecoder();
-                        ByteBuffer buf = ByteBuffer.wrap(push_messages_al.get(i).getBytes());
-                        CharBuffer cbuf = decoder.decode(buf);
-                        CharSequence pushNotificationMessage = java.nio.CharBuffer.wrap(cbuf);
-
-                        pushMessageJsonObject.put("message", pushNotificationMessage);
-
-
-                        pushMessageJsonObject.put("time", "30m ago");
-
-                        pushMessageObjectJsonArray.put(pushMessageJsonObject);
-
-
-
-                    }
-
-                    finalJsonObject.put("list",pushMessageObjectJsonArray);
-
-//                    Charset charset = Charset.forName("ISO-8859-6");
-//                    CharsetDecoder decoder = charset.newDecoder();
-//                    ByteBuffer buf = ByteBuffer.wrap(finalJsonObject.toString().getBytes());
-//                    CharBuffer cbuf = decoder.decode(buf);
-//                    CharSequence pushNotificationMessage = java.nio.CharBuffer.wrap(cbuf);
-
-//                    Toast toast = Toast.makeText(LoginActivityFromSplashNewFlow.this, finalJsonObject.toString(), Toast.LENGTH_SHORT);
-//                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-//                    toast.show();
-
-
-                    Intent intent = new Intent(MainActivity.this, ShowPushNotificationMessageDialogActivity.class);
-                    intent.putExtra(ShowPushNotificationMessageDialogActivity.KEY_PUSH_NOTIFICATION_MESSAGES,finalJsonObject.toString());
-                    startActivity(intent);
-
-
-
-                } catch (Exception e) {
-
-                    Log.e("Push Notifica Msg Ex:", "" + e.getMessage());
-
-                    Toast toast = Toast.makeText(MainActivity.this, "System Error! "+e.getMessage(), Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                    toast.show();
-
-
-
-                }
-*/
             }
         });
-        //Creditcard view pager view
-//        ViewPager viewPager = findViewById(R.id.view_pager);
-//
-//        FragmentManager fm = getSupportFragmentManager();
-//
-//        viewPager.setAdapter(new ViewPagerAdapter(fm));
     }
 
 
@@ -1076,7 +934,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             dialog.setPositiveButton(getString(R.string.yes_newflow), new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
-                    enableBiometric(true);
+                    showTermsAndConditions();
                     dialog.dismiss();
                 }
             });
@@ -1090,6 +948,23 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             final AlertDialog alert = dialog.create();
             alert.show();
         }
+
+    public void showTermsAndConditions() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+        dialog.setCancelable(false);
+        dialog.setTitle(R.string.terms_and_conditions_title);
+        dialog.setMessage(getString(R.string.terms_conditions_biometric));
+        dialog.setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                verifyBio = 1;
+                verifyBiometric();
+                dialog.dismiss();
+            }
+        });
+        final AlertDialog alert = dialog.create();
+        alert.show();
+    }
 
 
     private void enableBiometric(boolean bio) {
@@ -1161,66 +1036,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         Toast.makeText(MainActivity.this, result_message, Toast.LENGTH_LONG).show();
         Toast.makeText(MainActivity.this, result_message, Toast.LENGTH_LONG).show();
 
-
-        /*
-
-//       if (result_message.indexOf("pay") != -1||result_message.indexOf("p") != -1||result_message.matches(".*\\d.*")){
-        if (result_message.matches(".*\\d.*")) {
-//            speak("Opening Pay screen, please enter amount.");
-
-
-            Pattern p = Pattern.compile("\\d+");
-            Matcher m = p.matcher(result_message);
-            while (m.find()) {
-
-//               Toast.makeText(MainActivity.this,"->"+m.group(),Toast.LENGTH_LONG).show();
-
-
-                if(result_message.contains("pills")||result_message.contains("film")||result_message.contains("fails")||result_message.contains("fields")) {
-
-                    Log.e("processResult m.group()", "" + m.group());
-                    double amount = Double.parseDouble(m.group());
-                    Log.e("processResult int", "" + amount);
-                    double fills_amout = amount/1000;
-                    payViaQrCodeProcess(Double.toString(fills_amout));
-
-                    Log.e("processResult fills", "" + Double.toString(fills_amout));
-
-                }else{
-
-                    Log.e("processResult else", "" + m.group());
-
-                    int amount = Integer.parseInt(m.group());
-
-                    if (amount <= 15) {
-                        payViaQrCodeProcess(m.group());
-                    } else {
-                        speak("Please say amount less than 16");
-
-                        try {
-                            Thread.sleep(2000);
-                        } catch (Exception e) {
-
-                        }
-
-                        pressMic();
-                    }
-
-                }
-
-            }
-
-        }else {
-            speak("Please say again");
-            try {
-                Thread.sleep(2000);
-            }catch(Exception e){
-
-            }
-
-            pressMic();
-        }
-*/
         if (result_message.indexOf("load") != -1 || result_message.indexOf("wallet") != -1) {
             speak("Opening load money screen");
             loadMoneyCheck();
@@ -1300,14 +1115,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     }
 
     public void showVoiceIntroLayout() {
-//        try {
-//            Thread.sleep(2000);
-//        }catch(Exception e){
-//
-//        }
-//        Intent intent = new Intent(getBaseContext(), VoiceCommndsDialogActivity.class);
-//        startActivity(intent);
-//        overridePendingTransition(R.anim.alert_dialog_anim_from_bottom,R.anim.alert_dialog_anim_from_top);
         final LinearLayout main_menu_whole_layout = findViewById(R.id.main_menu_whole_layout);
         final LinearLayout voice_command_layout = findViewById(R.id.voice_command_layout);
         ImageView close_button = findViewById(R.id.close_button);
@@ -2020,7 +1827,8 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
                 }
-                if (amount_double > limits.getTpinLimit()) {
+                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                if (amount_double > limits.getTpinLimit() && !guest) {
                     pay_via_qrcode_pin_edt.setVisibility(View.VISIBLE);
                 } else {
                     pay_via_qrcode_pin_edt.setVisibility(View.GONE);
@@ -2038,10 +1846,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             @Override
             public void onClick(View v) {
                 amount_str = amountField.getText().toString().trim();
-                //if (biometricVerified)
-               //     tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
-               // else
-                    tpin = pay_via_qrcode_pin_edt.getText().toString().trim();
+                tpin = pay_via_qrcode_pin_edt.getText().toString().trim();
                 if (amount_str.length() == 0) {
                     Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_please_enter_amount), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
@@ -2117,7 +1922,8 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
                 }
-                if (amount_double > limits.getTpinLimit()) {
+                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                if (amount_double > limits.getTpinLimit() && !guest) {
                     pay_via_qrcode_pin_edt.setVisibility(View.VISIBLE);
                 } else {
                     pay_via_qrcode_pin_edt.setVisibility(View.GONE);
@@ -2195,6 +2001,47 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         alert.show();
     }
 
+    public void ShowEnterPassword(int value) {
+        promptsViewPassword = new Dialog(this);
+        promptsViewPassword.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        promptsViewPassword.setContentView(R.layout.enter_password);
+        final EditText pin = promptsViewPassword.findViewById(R.id.pay_via_qrcode_pin_edt);
+        final Button pay_qrcode_cancel_btn_new = promptsViewPassword.findViewById(R.id.pay_qrcode_cancel_btn_new);
+        final Button verify_password_btn_new = promptsViewPassword.findViewById(R.id.verify_password_btn_new);
+        pin.setOnTouchListener((view, motionEvent) -> {
+            final int DRAWABLE_RIGHT = 2;
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if (motionEvent.getRawX() >= (pin.getRight() - pin.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    verifyBio = value;
+                    verifyBiometric();
+
+                }
+            }
+            return false;
+        });
+        pay_qrcode_cancel_btn_new.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                promptsViewPassword.dismiss();
+            }
+        });
+        verify_password_btn_new.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(pin.getText().toString().equals("")){
+                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_password_validate), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                    toast.show();
+                    return;
+                }
+                tpin = pin.getText().toString().trim();
+                payViaQrCodeProcess();
+                promptsViewPassword.dismiss();
+            }
+        });
+        promptsViewPassword.show();
+    }
+
     public void showAmountEntryPayDialogueWithTwoPayOptions() {
         final Dialog promptsView = new Dialog(this);
         promptsView.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -2210,42 +2057,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         final Button pay_qrcode_cancel_btn_new = promptsView.findViewById(R.id.pay_qrcode_cancel_btn_new);
         final ImageView scanQR_help = promptsView.findViewById(R.id.scanQR_help);
         final ImageView generateQR_help = promptsView.findViewById(R.id.generateQR_help);
-        pay_via_qrcode_pin_edt_two.setOnTouchListener((view, motionEvent) -> {
-            final int DRAWABLE_RIGHT = 2;
-            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                if (motionEvent.getRawX() >= (pay_via_qrcode_pin_edt_two.getRight() - pay_via_qrcode_pin_edt_two.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                    verifyBiometric();
-                }
-            }
-            return false;
-        });
-        amountField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
 
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                amount = amountField.getText().toString();
-                Double amount_double = 0.000;
-                try {
-                    amount_double = Double.parseDouble(amount);
-                } catch (Exception e) {
-                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_please_enter_amount), Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                    toast.show();
-                }
-                if (amount_double > limits.getTpinLimit()) {
-                    pay_via_qrcode_pin_edt_two.setVisibility(View.VISIBLE);
-                } else {
-                    pay_via_qrcode_pin_edt_two.setVisibility(View.GONE);
-                }
-            }
-        });
         pay_qrcode_cancel_btn_new.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -2256,18 +2068,21 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         pay_qrcode_pay_btn_new.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                amount_str = amountField.getText().toString().trim();
-                if (biometricVerified)
-                    tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
-                else
-                    tpin = pay_via_qrcode_pin_edt_two.getText().toString().trim();
+                amount = amount_str = amountField.getText().toString().trim();
+                Double amount = 0.000;
                 if (amount_str.length() == 0) {
                     Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_please_enter_amount), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
                     return;
                 }
-                Double amount = Double.parseDouble(amount_str);
+                try {
+                    amount = Double.parseDouble(amount_str);
+                } catch (Exception e) {
+                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_please_enter_amount), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                    toast.show();
+                }
                 if (amount == 0) {
                     Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_please_enter_amount), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
@@ -2280,7 +2095,12 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     toast.show();
                     return;
                 }
-                payViaQrCodeProcess();
+                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                if (amount > limits.getTpinLimit() && !guest) {
+                    ShowEnterPassword(2);
+                } else {
+                    payViaQrCodeProcess();
+                }
                 promptsView.dismiss();
             }
         });
@@ -2289,10 +2109,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             @Override
             public void onClick(View v) {
                 amount_str = amountField.getText().toString().trim();
-                if (biometricVerified)
-                    tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
-                else
-                    tpin = pay_via_qrcode_pin_edt.getText().toString().trim();
+
                 if (amount_str.length() == 0) {
                     Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_please_enter_amount), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
@@ -2312,19 +2129,33 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     toast.show();
                     return;
                 }
-                if (tpin.length() == 0 && amount > limits.getTpinLimit()) {
+                /*if (amount > limits.getTpinLimit()) {
                     Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_password_validate), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
                     return;
-                }
-                promptsView.dismiss();
-                int height = getScreenWidth();
-                int width = getScreenHeight();
-                Intent intent;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    boolean isEnabled = checkCameraPermissionLatest();
-                    if (isEnabled) {
+                }*/
+
+                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                if (amount > limits.getTpinLimit() && !guest) {
+                    ShowEnterPassword(3);
+                } else {
+                   // promptsView.dismiss();
+                    int height = getScreenWidth();
+                    int width = getScreenHeight();
+                    Intent intent;
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                        boolean isEnabled = checkCameraPermissionLatest();
+                        if (isEnabled) {
+                            intent = new Intent(getBaseContext(), CaptureActivity.class);
+                            intent.setAction("br.com.google.zxing.client.android.SCAN");
+                            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+                            intent.putExtra("CHARACTER_SET", "ISO-8859-1");
+                            intent.putExtra(Intents.Scan.WIDTH, width);
+                            intent.putExtra(Intents.Scan.HEIGHT, height);
+                            startActivityForResult(intent, STATIC_QR_CODE_REQUEST);
+                        }
+                    } else {
                         intent = new Intent(getBaseContext(), CaptureActivity.class);
                         intent.setAction("br.com.google.zxing.client.android.SCAN");
                         intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
@@ -2333,15 +2164,8 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                         intent.putExtra(Intents.Scan.HEIGHT, height);
                         startActivityForResult(intent, STATIC_QR_CODE_REQUEST);
                     }
-                } else {
-                    intent = new Intent(getBaseContext(), CaptureActivity.class);
-                    intent.setAction("br.com.google.zxing.client.android.SCAN");
-                    intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-                    intent.putExtra("CHARACTER_SET", "ISO-8859-1");
-                    intent.putExtra(Intents.Scan.WIDTH, width);
-                    intent.putExtra(Intents.Scan.HEIGHT, height);
-                    startActivityForResult(intent, STATIC_QR_CODE_REQUEST);
                 }
+                promptsView.dismiss();
             }
         });
         scanQR_help.setOnClickListener(new OnClickListener() {
@@ -2485,14 +2309,45 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     public void onPurchased(boolean withFingerprint, String password) {
         //if (!withFingerprint) invoice_tpin_edit.setText(password);
         // invoicePayNowRequest(invoice_amount, 0, offerID);
-        boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
-        if(!bio)
-            biometricDialog();
-        else {
-            biometricVerified = true;
-            pay_via_qrcode_pin_edt_two.setHint("");
-            pay_via_qrcode_pin_edt_two.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.biometric_verified, 0);
-            Toast.makeText(getBaseContext(), getResources().getString(R.string.fingerprint_success), Toast.LENGTH_SHORT).show();
+        if(verifyBio == 1){
+            enableBiometric(true);
+        } else {
+            boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
+            if (!bio) {
+                biometricDialog();
+            }
+            else if (verifyBio == 2)
+            {
+                tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
+                payViaQrCodeProcess();
+                promptsViewPassword.dismiss();
+            }
+            else if (verifyBio == 3){
+                promptsViewPassword.dismiss();
+                int height = getScreenWidth();
+                int width = getScreenHeight();
+                Intent intent;
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    boolean isEnabled = checkCameraPermissionLatest();
+                    if (isEnabled) {
+                        intent = new Intent(getBaseContext(), CaptureActivity.class);
+                        intent.setAction("br.com.google.zxing.client.android.SCAN");
+                        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+                        intent.putExtra("CHARACTER_SET", "ISO-8859-1");
+                        intent.putExtra(Intents.Scan.WIDTH, width);
+                        intent.putExtra(Intents.Scan.HEIGHT, height);
+                        startActivityForResult(intent, STATIC_QR_CODE_REQUEST);
+                    }
+                } else {
+                    intent = new Intent(getBaseContext(), CaptureActivity.class);
+                    intent.setAction("br.com.google.zxing.client.android.SCAN");
+                    intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+                    intent.putExtra("CHARACTER_SET", "ISO-8859-1");
+                    intent.putExtra(Intents.Scan.WIDTH, width);
+                    intent.putExtra(Intents.Scan.HEIGHT, height);
+                    startActivityForResult(intent, STATIC_QR_CODE_REQUEST);
+                }
+            }
         }
     }
 

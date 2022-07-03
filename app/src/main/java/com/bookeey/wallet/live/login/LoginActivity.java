@@ -162,7 +162,8 @@ public class LoginActivity extends FragmentActivity implements YPCHeadlessCallba
             login_finger_print_layout.setVisibility(View.INVISIBLE);
         }
         String pin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
-        if (pin == null || pin.isEmpty()) {
+        boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+        if (pin.isEmpty() || guest) {
             login_ok_text.setVisibility(View.INVISIBLE);
             login_finger_print_layout.setVisibility(View.INVISIBLE);
         }

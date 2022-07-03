@@ -461,7 +461,7 @@
                 android:layout_marginTop="10dp"
                 android:layout_weight="1.5"
                 android:orientation="horizontal"
-                android:visibility="visible">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="0dp"

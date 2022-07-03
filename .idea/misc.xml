@@ -32,7 +32,8 @@
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/denomination_text_view.xml" value="0.16802052159042324" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/devicechange_device_number.xml" value="0.16802052159042324" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/display_amount_to_merchant_dummy.xml" value="0.16802052159042324" />
-        <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/errordialog.xml" value="0.16802052159042324" />
+        <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/enter_password.xml" value="0.25" />
+        <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/errordialog.xml" value="0.5" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/errordialog_mobilechange.xml" value="0.16802052159042324" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/final_virtual_prepaid.xml" value="0.16794871794871793" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/fingerprint_dialog_backup.xml" value="0.16802052159042324" />
@@ -48,10 +49,16 @@
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/main_specialactionbar_new.xml" value="0.16794871794871793" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/mainmenu_newflow_alert.xml" value="0.16794871794871793" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/mainmenu_not_registered_alert.xml" value="0.16794871794871793" />
+        <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/map_specialactionbar.xml" value="0.16802052159042324" />
+        <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/mobilebill_leg1_activity.xml" value="0.25" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/mobilenumber_validation.xml" value="0.16794871794871793" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/registration.xml" value="0.33" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/registration_success_new.xml" value="0.33" />
+        <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/scan_type_alert.xml" value="0.33" />
+        <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/send_money_new.xml" value="0.16802052159042324" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/show_qr_code.xml" value="0.16794871794871793" />
+        <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/static_qr_code_enter_amount.xml" value="0.21" />
+        <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/topup_initial_layout.xml" value="0.21" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/transaction_display.xml" value="0.25" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/virtual_card_list.xml" value="0.16794871794871793" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/virtual_prepaid_activity_main.xml" value="0.16794871794871793" />
@@ -59,6 +66,7 @@
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/virtualprepaid_final_activity.xml" value="0.16794871794871793" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/virtualprepaid_leg1_activity.xml" value="0.16794871794871793" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/virutal_denomination_layout.xml" value="0.16794871794871793" />
+        <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/ypc_get_amount_new.xml" value="0.5" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/menu/main.xml" value="0.18" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/menu/menu_new_flow.xml" value="0.16794871794871793" />
       </map>

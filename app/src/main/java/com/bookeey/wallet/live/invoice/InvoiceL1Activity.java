@@ -352,7 +352,8 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 }
                 this.isMerchantRequest = response2.isMerchantRequest();
                 amount = Double.parseDouble(invoice_inv_amount_edit.getText().toString().trim());
-                if (amount > limits.getTpinLimit()) {
+                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                if (amount > limits.getTpinLimit() && !guest) {
                     invoice_inv_tpin_linear.setVisibility(View.VISIBLE);
                     invoice_tpin_horizantal_view.setVisibility(View.VISIBLE);
                     invoice_inv_amount_edit.requestFocus();

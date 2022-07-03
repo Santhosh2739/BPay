@@ -192,7 +192,8 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
                 try {
                     if (amount_without_kd != "") {
                         tpin_double = Double.parseDouble(amount_without_kd);
-                        if (tpin_double > limits.getTpinLimit()) {
+                        boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                        if (tpin_double > limits.getTpinLimit() && !guest) {
                             mobile_tpin_layout.setVisibility(View.VISIBLE);
                            /* Toast toast = Toast.makeText(getBaseContext(), "Please enter TPIN", Toast.LENGTH_SHORT);
                             toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);

@@ -327,8 +327,10 @@
                 android:ems="15"
                 android:gravity="center|start"
                 android:inputType="textPassword"
+                android:drawableRight="@drawable/fingerprint_icon"
                 android:maxLength="10"
                 android:paddingLeft="10dp"
+                android:paddingRight="10dp"
                 android:textColor="@color/blue"
                 android:textSize="18sp" />
         </LinearLayout>

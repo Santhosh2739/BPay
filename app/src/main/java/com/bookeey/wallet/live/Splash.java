@@ -67,7 +67,7 @@ public class Splash extends FragmentActivity implements YPCHeadlessCallback {
                 LocaleHelper.setLocale(Splash.this, selectedLanguage);
             }
         }
-
+        //CustomSharedPreferences.saveIntData(getApplicationContext(),-1, CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
         int first_login = CustomSharedPreferences.getIntData(getApplicationContext(), CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
         if(first_login == -1)
             CustomSharedPreferences.saveIntData(getApplicationContext(), 1 ,CustomSharedPreferences.SP_KEY.FIRST_LOGIN);

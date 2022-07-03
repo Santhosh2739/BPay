@@ -390,7 +390,9 @@
                 android:imeOptions="actionDone"
                 android:inputType="textPassword"
                 android:maxLength="10"
+                android:drawableEnd="@drawable/fingerprint_icon"
                 android:paddingLeft="10dp"
+                android:paddingRight="15dp"
                 android:textColor="@color/blue"
                 android:textSize="18sp"
                 android:visibility="visible" />

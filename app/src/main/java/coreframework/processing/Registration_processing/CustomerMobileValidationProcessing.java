@@ -102,6 +102,7 @@ public class CustomerMobileValidationProcessing implements UserInterfaceBackgrou
         dialogueFragment.dismiss();
         if (success) {
             if (response.getG_status() == 95) {
+                CustomSharedPreferences.saveBooleanData(activity, true, CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
                 CustomSharedPreferences.saveStringData(activity, activationRequestResponse.getName(), CustomSharedPreferences.SP_KEY.NAME);
                 CustomSharedPreferences.saveIntData(application, CustomSharedPreferences.APP_STATUS_ACTIVATED, CustomSharedPreferences.SP_KEY.APP_STATUS);
                 Intent intent = new Intent(activity, LoginActivity.class);

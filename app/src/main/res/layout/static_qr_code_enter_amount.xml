@@ -62,6 +62,7 @@
             android:background="@drawable/border_edittext"
             android:gravity="center"
             android:hint="@string/p2m_password"
+            android:drawableEnd="@drawable/fingerprint_icon"
             android:inputType="textPassword"
             android:maxLength="10"
             android:textColor="@color/blue"

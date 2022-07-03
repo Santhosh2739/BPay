@@ -854,6 +854,7 @@ customercare@bookeey.com\nThank you.</string>
     <string name="terms_conditions_line4">A Mobile Wallet Service (\"Mobile Wallet\") means the digital wallet platform operated by the Platform Provider that allows you to add eligible amount to an application using your mobile device,
         permitting you to make: (i) payments at merchant point-of-sale terminals or readers that accept payments using a mobile Card (in lieu of you presenting your physical Card);
         and (ii) in-app or other digital commerce payments at participating merchants. </string>
+    <string name="terms_conditions_biometric">By accepting these terms &amp; conditions you are allowed to use biometric features.</string>
     <string name="terms_conditions_a_tag">a)</string>
     <string name="terms_conditions_b_tag">b)</string>
     <string name="terms_conditions_c_tag">c)</string>
@@ -1345,5 +1346,7 @@ customercare@bookeey.com\nThank you.</string>
     <string name="please_enable_biometric_for_access">Please enable biometric for access</string>
     <string name="enable_biometric_for_access">Do you want to enable biometric for access?</string>
     <string name="enable_biometric">Enable/Disable Biometric</string>
+    <string name="verify_password">Verify Password/Biometric</string>
+    <string name="Verify">Verify Password</string>
 
 </resources>
