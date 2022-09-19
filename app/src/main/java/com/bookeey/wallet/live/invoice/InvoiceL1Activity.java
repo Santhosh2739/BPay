@@ -97,6 +97,7 @@ import ycash.wallet.json.pojo.translimit.TransactionLimitResponse;
 public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCallback {
     private static final String DIALOG_FRAGMENT_TAG = "myFragment";
     private static final String KEY_NAME = "my_key";
+
     Button invoice_paynow_btn, invoice_hold_btn, invoice_reject_btn;
     EditText invoice_mer_name_edit, invoice_inv_no_edit,
             invoice_inv_date_edit, invoice_inv_amount_edit, invoice_desc_edit, invoice_tpin_edit,
@@ -126,6 +127,9 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
     TransactionLimitResponse limits = null;
     boolean biometricVerified = false;
     long offerID = 0;
+    boolean IsBio = false;
+    Dialog promptsViewPassword;
+    String tpin;
     @Inject
     FingerprintManagerCompat mFingerprintManager;
     @Inject
@@ -199,7 +203,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.invoice_cust_email_edit)).getWindowToken(), 0);
         imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.invoice_mer_name_edit)).getWindowToken(), 0);
         imm.hideSoftInputFromInputMethod(((EditText) findViewById(R.id.invoice_mer_name_edit)).getWindowToken(), 0);
-        invoice_tpin_edit.setOnTouchListener((view, motionEvent) -> {
+        /*invoice_tpin_edit.setOnTouchListener((view, motionEvent) -> {
             final int DRAWABLE_RIGHT = 2;
             if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                 if (motionEvent.getRawX() >= (invoice_tpin_edit.getRight() - invoice_tpin_edit.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
@@ -207,7 +211,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 }
             }
             return false;
-        });
+        });*/
         ActionBar mActionBar = getActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
         getActionBar().setLogo(R.drawable.bookeey_latest_icon);
@@ -354,9 +358,10 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 amount = Double.parseDouble(invoice_inv_amount_edit.getText().toString().trim());
                 boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
                 if (amount > limits.getTpinLimit() && !guest) {
-                    invoice_inv_tpin_linear.setVisibility(View.VISIBLE);
-                    invoice_tpin_horizantal_view.setVisibility(View.VISIBLE);
-                    invoice_inv_amount_edit.requestFocus();
+                    //invoice_inv_tpin_linear.setVisibility(View.VISIBLE);
+                    //invoice_tpin_horizantal_view.setVisibility(View.VISIBLE);
+                    //invoice_inv_amount_edit.requestFocus();
+                    IsBio = true;
                 } else {
                     invoice_inv_tpin_linear.setVisibility(View.GONE);
                     invoice_tpin_horizantal_view.setVisibility(View.GONE);
@@ -409,20 +414,52 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         invoice_paynow_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (invoice_inv_tpin_linear.getVisibility() == View.VISIBLE) {
-                    if(biometricVerified)
-                        invoicePayNowRequest(invoice_amount, 0, offerID);
-                    else if (invoice_tpin_edit.getText().toString().length() == 0) {
-                        Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.invoice_enter_password), Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                        toast.show();
-                        return;
-                    }
+                if (IsBio) {
+                    ShowEnterPassword();
                 }
                 else
                     invoicePayNowRequest(invoice_amount, 0, offerID);
             }
         });
+    }
+
+    public void ShowEnterPassword() {
+        promptsViewPassword = new Dialog(this);
+        promptsViewPassword.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        promptsViewPassword.setContentView(R.layout.enter_password);
+        final EditText pin = promptsViewPassword.findViewById(R.id.pay_via_qrcode_pin_edt);
+        final Button pay_qrcode_cancel_btn_new = promptsViewPassword.findViewById(R.id.pay_qrcode_cancel_btn_new);
+        final Button verify_password_btn_new = promptsViewPassword.findViewById(R.id.verify_password_btn_new);
+        pin.setOnTouchListener((view, motionEvent) -> {
+            final int DRAWABLE_RIGHT = 2;
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if (motionEvent.getRawX() >= (pin.getRight() - pin.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    verifyBiometric();
+                }
+            }
+            return false;
+        });
+        pay_qrcode_cancel_btn_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                promptsViewPassword.dismiss();
+            }
+        });
+        verify_password_btn_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(pin.getText().toString().equals("")){
+                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_password_validate), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                    toast.show();
+                    return;
+                }
+                tpin = pin.getText().toString().trim();
+                invoicePayNowRequest(invoice_amount, 0, offerID);
+                promptsViewPassword.dismiss();
+            }
+        });
+        promptsViewPassword.show();
     }
 
     private void alertDialog() {
@@ -441,9 +478,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
             alertDialog();
         else {
             biometricVerified = true;
-            invoice_tpin_edit.setHint("");
-            invoice_tpin_edit.setCompoundDrawablesWithIntrinsicBounds(0, 0, R.drawable.biometric_verified, 0);
-            Toast.makeText(getBaseContext(), getResources().getString(R.string.fingerprint_success), Toast.LENGTH_SHORT).show();
+            invoicePayNowRequest(invoice_amount, 0, offerID);
         }
     }
 
@@ -580,7 +615,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
             String pin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
             invoicePaymentRequest.setTpin(pin);
         } else
-            invoicePaymentRequest.setTpin(invoice_tpin_edit.getText().toString().trim());
+            invoicePaymentRequest.setTpin(tpin);
         invoicePaymentRequest.setG_transType(TransType.INVOICE_PAYMENT_REQUEST.name());
         invoicePaymentRequest.setG_oauth_2_0_client_token(customerLoginRequestReponse.getOauth_2_0_client_token());
         String jsondata = new Gson().toJson(invoicePaymentRequest);

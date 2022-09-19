@@ -3,6 +3,23 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/amount_entry_dialog_with_two_pay_options.xml" value="0.21927083333333333" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/amount_entry_dialog_with_two_pay_options_with_help_buttons.xml" value="0.21927083333333333" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/custom_alert_whatsapp.xml" value="0.21927083333333333" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/enter_password.xml" value="0.4" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/fingerprint_dialog_container.xml" value="0.264" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/international_topup_final_receipt_layout.xml" value="0.21927083333333333" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/invoice_details_page1.xml" value="0.22395833333333334" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/map_specialactionbar.xml" value="0.21927083333333333" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/mobilebill_leg1_activity.xml" value="0.22395833333333334" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/mobilebill_leg2_activity.xml" value="0.22395833333333334" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/send_money_confirm_payment.xml" value="0.21927083333333333" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/send_money_new.xml" value="0.21927083333333333" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/show_qr_code.xml" value="0.21927083333333333" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/topup_initial_layout.xml" value="0.21927083333333333" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/virtual_prepaid_activity_main.xml" value="0.22395833333333334" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/virtualprepaid_leg1_activity.xml" value="0.22395833333333334" />
+        <entry key="..\:/Bookeey/BookeeyPay/app/src/main/res/layout/ypc_get_amount_new.xml" value="0.21927083333333333" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/actionbar.xml" value="0.16794871794871793" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/activity_credit_card_form.xml" value="0.16794871794871793" />
         <entry key="..\:/Users/Sindhu/Documents/Bookeey_Git/BookeeyPay/app/src/main/res/layout/activity_main.xml" value="0.16794871794871793" />
@@ -72,7 +89,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" project-jdk-name="1.8" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

@@ -24,6 +24,10 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.bookeey.wallet.live.invoice.InvoiceL1Activity;
 import com.bookeey.wallet.live.mainmenu.MainActivity;
+import com.bookeey.wallet.live.mobilebill.MobileBill_L1_Activity;
+import com.bookeey.wallet.live.prepaidcard.VirtualPrepaidMainActivityNew;
+import com.bookeey.wallet.live.recharge.TopUpInitialActivity;
+import com.bookeey.wallet.live.sendmoney.SendMoneyLeg1RequestActivity;
 
 import dagger.Module;
 import dagger.Provides;
@@ -36,7 +40,7 @@ import newflow.LoginActivityNewFlow;
  */
 @Module(
         library = true,
-        injects = {MainActivity.class, InvoiceL1Activity.class, LoginActivity.class, LoginActivityFromSplashNewFlow.class, LoginActivityNewFlow.class, LoginActivityFromGuestMainMenu.class}
+        injects = {MainActivity.class, InvoiceL1Activity.class, MobileBill_L1_Activity.class, VirtualPrepaidMainActivityNew.class, SendMoneyLeg1RequestActivity.class, TopUpInitialActivity.class, LoginActivity.class, LoginActivityFromSplashNewFlow.class, LoginActivityNewFlow.class, LoginActivityFromGuestMainMenu.class}
 )
 public class FingerprintModule {
 

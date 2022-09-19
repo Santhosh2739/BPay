@@ -131,9 +131,17 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
 //                            "g_response_trans_type":"DEVICEID_LOGIN_CHECK_RESPONSE","g_servertime":"GMT+0300"}
                     JSONObject responseJo = new JSONObject(networkResponse);
                     String newMobi = responseJo.getString("mobileNumber");
+                    Log.e("mobileNumber", "-" + newMobi);
                     String mob = CustomSharedPreferences.getStringData(activity, CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
-                        boolean bio = responseJo.getBoolean("biometric");
-                        Log.e("Bio Device", "-" + bio);
+                    boolean bio = false;
+                    try {
+                        bio = responseJo.getBoolean("biometric");
+                    } catch(Exception e){
+                        Toast toast = Toast.makeText(activity, e.getMessage(), Toast.LENGTH_LONG);
+                        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                        toast.show();
+                    }
+                    Log.e("Bio Device", "-" + bio);
                     if(mob == null || mob.isEmpty() || !mob.equals(newMobi)) {
                         CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC);
                         CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);

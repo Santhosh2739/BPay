@@ -61,9 +61,9 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"
             android:layout_weight="0.4"
-            android:visibility="invisible"
             android:gravity="center"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:visibility="invisible">
 
             <FrameLayout
                 android:layout_width="fill_parent"
@@ -470,10 +470,10 @@
                     android:layout_weight="0.4"
                     android:gravity="left|center"
                     android:paddingLeft="10dp"
-                    android:textStyle="bold"
                     android:text="@string/invoice_password"
                     android:textColor="@color/red"
-                    android:textSize="16sp" />
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
 
                 <View
                     android:layout_width="0.1dp"
@@ -497,9 +497,8 @@
                     android:maxLength="10"
                     android:paddingLeft="10dp"
                     android:paddingRight="8dp"
-                    android:textColorHint="@color/red"
-                    android:drawableRight="@drawable/fingerprint_icon"
                     android:textColor="@color/red"
+                    android:textColorHint="@color/red"
                     android:textSize="16sp" />
             </LinearLayout>
 
@@ -748,9 +747,9 @@
                     android:lines="5"
                     android:maxLines="5"
                     android:minLines="1"
-                    android:paddingBottom="7dp"
                     android:paddingLeft="10dp"
                     android:paddingTop="7dp"
+                    android:paddingBottom="7dp"
                     android:textColor="@color/dark_gray"
                     android:textSize="14sp" />
             </LinearLayout>

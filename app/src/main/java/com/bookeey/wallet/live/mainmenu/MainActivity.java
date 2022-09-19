@@ -3,7 +3,6 @@ package com.bookeey.wallet.live.mainmenu;
 import static coreframework.database.CustomSharedPreferences.SP_KEY.MOBILE_NUMBER;
 
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -21,10 +20,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Shader;
-import android.graphics.drawable.ColorDrawable;
 import android.hardware.fingerprint.FingerprintManager;
 import android.location.Location;
 import android.net.Uri;
@@ -36,20 +33,14 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
-import android.provider.MediaStore;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
-import android.speech.RecognitionListener;
-import android.speech.RecognizerIntent;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -66,7 +57,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
@@ -74,9 +64,7 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -86,8 +74,6 @@ import com.bookeey.wallet.live.Help;
 import com.bookeey.wallet.live.R;
 import com.bookeey.wallet.live.application.CoreApplication;
 import com.bookeey.wallet.live.application.SyncService;
-import com.bookeey.wallet.live.invoice.InvoiceL1Activity;
-import com.bookeey.wallet.live.login.FingerprintAuthenticationDialogFragmentInvoice;
 import com.bookeey.wallet.live.login.FingerprintAuthenticationDialogFragmentPayQR;
 import com.bookeey.wallet.live.login.LoginActivity;
 import com.bookeey.wallet.live.offers.NewOffersActivityAfterLogin;
@@ -110,7 +96,6 @@ import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
@@ -131,6 +116,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 import java.util.TimeZone;
 
 import javax.crypto.Cipher;
@@ -149,9 +135,7 @@ import coreframework.processing.GetPushNotificationMessageProcessing;
 import coreframework.processing.LoadMoneyProcessing;
 import coreframework.processing.Login_processing.CustomerAutoLoginProcessingFromNFC;
 import coreframework.processing.PayToMerchantValidationProcessing;
-import coreframework.processing.bweb_processing.BWebProcessing;
 import coreframework.processing.invoice_Processing.InvoiceProcessing;
-import coreframework.processing.invoice_Processing.InvoiceProcessingForSessionOut;
 import coreframework.processing.mobile.MobileBillProcessing;
 import coreframework.processing.prepaidcard.PrepaidCardProcessing;
 import coreframework.securityutils.SecurityUtils;
@@ -167,7 +151,6 @@ import coreframework.utils.URLUTF8Encoder;
 import merchant.DecodedQrPojo;
 import merchant.DisplayAmountToMerchantActivityDummy;
 import merchant.PayToMerchantStaticQRCodeInitProcessing;
-import newflow.LoginActivityFromSplashNewFlow;
 import wheretopaynew.MerchantListCatogorieyActivityNewUIActivity;
 import ycash.wallet.json.pojo.generic.BioMetricRequest;
 import ycash.wallet.json.pojo.generic.GenericRequest;
@@ -178,12 +161,14 @@ import ycash.wallet.json.pojo.loadmoney.PaymentForm;
 import ycash.wallet.json.pojo.loadmoney.WalletLimits;
 import ycash.wallet.json.pojo.login.CustomerLoginRequest;
 import ycash.wallet.json.pojo.login.CustomerLoginRequestReponse;
+import ycash.wallet.json.pojo.login.VerifyPasswordRequest;
 import ycash.wallet.json.pojo.mobilebilloperator.MobileBillOperatorsRequest;
 import ycash.wallet.json.pojo.paytomerchant.P2MBarcodeGenInitValidationRequest;
 import ycash.wallet.json.pojo.paytomerchant.PayToMerchantRequest;
 import ycash.wallet.json.pojo.translimit.TransactionLimitResponse;
 import ycash.wallet.json.pojo.txnhistory.TransactionHistoryResponse;
 import ycash.wallet.json.pojo.userinfo.UserInfoResponse;
+
 public class MainActivity extends GenericActivity implements YPCHeadlessCallback, TextToSpeech.OnInitListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
     //int i = 0;
@@ -196,6 +181,9 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     private static final int PICK_FROM_GALLERY = 2;
     //Voiece
     private static final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
+    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
+    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
+    private static final String KEY_NAME = "my_key";
     public static Context context;
     private final LocationListener mLocationListener = new LocationListener() {
         @Override
@@ -203,27 +191,18 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             //your code here
         }
     };
+    //For NFC logic
+    private final boolean session_expired = false;
+    public boolean should_call_session_time_out_from_onResume = true;
     @Inject
     FingerprintManagerCompat mFingerprintManager;
     @Inject
     FingerprintAuthenticationDialogFragmentPayQR mFragment;
     @Inject
     SharedPreferences mSharedPreferences;
-    private KeyStore mKeyStore;
-    private Cipher mCipher;
-    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
-    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
-    private static final String KEY_NAME = "my_key";
-    //For NFC logic
-    private final boolean session_expired = false;
-    public boolean should_call_session_time_out_from_onResume = true;
-    boolean biometricVerified = false;
-    boolean staticQR = false;
     Dialog promptsViewPassword;
     TextToSpeech tts;
     Intent intent;
-    GridView gridView;
-    ArrayList<Item> gridArray = new ArrayList<Item>();
     Bitmap load_wallet, invoice, pay, recharge_paybill, sendmoney, help, where_to_pay, my_offers, mobilebill, prepaid_cards, txn_history, store, testimage;
     TextView more_text;
     ExpandableHeightGridView mainmenu_gridview;
@@ -241,9 +220,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     CustomerLoginRequestReponse customerLoginRequestReponse = null;
     boolean onItemClicked = false, isSound = false;
     int i = 0;
-    ObjectAnimator textColorAnim, ImageColorAnim;
-    boolean mBlinking = true;
-    boolean notifyDataSetChangedCalled = false;
     int invoice_count = 0;
     Animation animBlink, animRight, animLeft;
     Button bookeey_mainmenu_loadwallet_btn, bookeey_mainmenu_pay_btn;
@@ -256,46 +232,15 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     String versionname;
     String moduleName = "";
     int verifyBio = 0;
-
-    EditText pay_via_qrcode_pin_edt, pay_via_qrcode_pin_edt_QR, pay_via_qrcode_pin_edt_two;
+    EditText pay_via_qrcode_pin_edt_two;
     String selectedLanguage = null;
-    //ImageView more_img1;
+    private KeyStore mKeyStore;
+    private Cipher mCipher;
     private UserInfoUpdateHandler userInfoUpdateHandler;
     private String amount_str = null;
     private DrawerLayout mDrawer = null;
-    private Uri mImageCaptureUri;
-    //Initializing the GoogleApiClient object
     private GoogleApiClient googleApiClient;
     private FirebaseAnalytics firebaseAnalytics;
-    private TextToSpeech tts_for_voice;
-    private SpeechRecognizer speechRecog;
-    private GenericRequest request;
-
-    public static void deleteCache(Context context) {
-        try {
-            File dir = context.getCacheDir();
-            deleteDir(dir);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static boolean deleteDir(File dir) {
-        if (dir != null && dir.isDirectory()) {
-            String[] children = dir.list();
-            for (int i = 0; i < children.length; i++) {
-                boolean success = deleteDir(new File(dir, children[i]));
-                if (!success) {
-                    return false;
-                }
-            }
-            return dir.delete();
-        } else if (dir != null && dir.isFile()) {
-            return dir.delete();
-        } else {
-            return false;
-        }
-    }
 
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
@@ -511,7 +456,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
 
         int first_login = CustomSharedPreferences.getIntData(getApplicationContext(), CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
         boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
-        if(first_login == 1 && !guest) {
+        if (first_login == 1 && !guest) {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 FingerprintManager fingerprintManager = (FingerprintManager) getApplicationContext().getSystemService(Context.FINGERPRINT_SERVICE);
                 if (fingerprintManager.hasEnrolledFingerprints()) {
@@ -579,198 +524,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         mainmenu_gridview.setExpanded(true);
         adapter1 = new MyAdapter(this);
         mainmenu_gridview.setAdapter(adapter1);
-        /*LinearLayout ll = (LinearLayout) findViewById(R.id.more_box);
-        ll.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                scroll.fullScroll(HorizontalScrollView.FOCUS_DOWN);
-                //more_img1.setBackgroundResource(R.drawable.down_arrow);
-                if (!scroll.fullScroll(HorizontalScrollView.FOCUS_RIGHT)) {
-                    goleft();
-                }
-            }
 
-            private void goleft() {
-                scroll.fullScroll(HorizontalScrollView.FOCUS_DOWN);
-                //more_img1.setBackgroundResource(R.drawable.up_arrow_new);
-            }
-        });*/
-        /*mainmenu_gridview.setOnTouchListener(new View.OnTouchListener() {
-            public boolean onTouch(View v, MotionEvent me) {
-
-                System.out.println("Position is " + me.getRawY());
-
-                // int action = me.getActionMasked();  // MotionEvent types such as ACTION_UP, ACTION_DOWN
-                float currentXPosition = me.getX();
-                float currentYPosition = me.getY();
-                StateListDrawable states = null;
-
-                int position = mainmenu_gridview.pointToPosition((int) currentXPosition, (int) currentYPosition);
-                switch (position) {
-
-                    case 0:
-                        FrameLayout view = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView = (ImageView) view.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.recharge_wallet_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.recharge_wallet));
-                        imageView.setImageDrawable(states);
-                        break;
-                    case 1:
-                        FrameLayout view12 = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView12 = (ImageView) view12.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.invoice_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.invoice));
-                        imageView12.setImageDrawable(states);
-                        break;
-                    case 2:
-                        FrameLayout view1 = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView1 = (ImageView) view1.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.qrcode_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.qrcode));
-                        imageView1.setImageDrawable(states);
-                        break;
-                    case 3:
-
-                        FrameLayout view2 = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView2 = (ImageView) view2.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.send_money_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.send_money));
-                        imageView2.setImageDrawable(states);
-                        break;
-                    case 4:
-
-                        FrameLayout view3 = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView3 = (ImageView) view3.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.where_to_pay_icon_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.where_to_pay_icon));
-                        imageView3.setImageDrawable(states);
-                        break;
-
-                    case 5:
-
-                        FrameLayout view4 = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView4 = (ImageView) view4.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.topupchanged_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.topupchanged));
-                        imageView4.setImageDrawable(states);
-                        break;
-                    case 6:
-
-                        FrameLayout view5 = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView5 = (ImageView) view5.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.mobilebillnew_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.mobilebillnew));
-                        imageView5.setImageDrawable(states);
-                        break;
-                    case 7:
-
-                        FrameLayout view6 = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView6 = (ImageView) view6.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.pre_paidcard_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.pre_paidcard));
-                        imageView6.setImageDrawable(states);
-                        break;
-
-
-                    case 8:
-
-                        FrameLayout view7 = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView7 = (ImageView) view7.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.offer_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.offer));
-                        imageView7.setImageDrawable(states);
-                        break;
-
-
-                    *//*case 9:
-
-                        FrameLayout view9 = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView9 = (ImageView) view9.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.store_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.store));
-                        imageView9.setImageDrawable(states);
-                        break;*//*
-                    case 9:
-                        FrameLayout view8 = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView8 = (ImageView) view8.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.help_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.help));
-                        imageView8.setImageDrawable(states);
-                        break;
-                    case 10:
-                        FrameLayout view11 = (FrameLayout) mainmenu_gridview.getChildAt(position);
-                        ImageView imageView11 = (ImageView) view11.findViewById(R.id.picture);
-                        //for handling to images in onclick android
-                        states = new StateListDrawable();
-                        states.addState(new int[]{android.R.attr.state_pressed},
-                                getResources().getDrawable(R.drawable.others_secondary));
-
-                        states.addState(new int[]{},
-                                getResources().getDrawable(R.drawable.others));
-                        imageView11.setImageDrawable(states);
-                        break;
-
-                    default:
-                        break;
-                }
-                return false;
-            }
-        });*/
         //Commented for creditcard view START
         bookeey_mainmenu_loadwallet_btn.setOnClickListener(new OnClickListener() {
             @Override
@@ -926,28 +680,27 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         });
     }
 
-
-        public void showBiometricenablealert() {
-            AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
-            dialog.setCancelable(false);
-            dialog.setMessage(getString(R.string.enable_biometric_for_access));
-            dialog.setPositiveButton(getString(R.string.yes_newflow), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    showTermsAndConditions();
-                    dialog.dismiss();
-                }
-            });
-            dialog.setNegativeButton(getString(R.string.no_newflow), new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int id) {
-                    enableBiometric(false);
-                    dialog.dismiss();
-                }
-            });
-            final AlertDialog alert = dialog.create();
-            alert.show();
-        }
+    public void showBiometricenablealert() {
+        AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+        dialog.setCancelable(false);
+        dialog.setMessage(getString(R.string.enable_biometric_for_access));
+        dialog.setPositiveButton(getString(R.string.yes_newflow), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                showTermsAndConditions();
+                dialog.dismiss();
+            }
+        });
+        dialog.setNegativeButton(getString(R.string.no_newflow), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int id) {
+                enableBiometric(false);
+                dialog.dismiss();
+            }
+        });
+        final AlertDialog alert = dialog.create();
+        alert.show();
+    }
 
     public void showTermsAndConditions() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
@@ -981,304 +734,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         progress.setCancelable(true);
         progress.setArguments(bundle);
         progress.show(getSupportFragmentManager(), "progress_dialog");
-    }
-
-
-    private void initializeSpeechRecognizer() {
-        if (SpeechRecognizer.isRecognitionAvailable(this)) {
-            speechRecog = SpeechRecognizer.createSpeechRecognizer(this);
-            speechRecog.setRecognitionListener(new RecognitionListener() {
-                @Override
-                public void onReadyForSpeech(Bundle params) {
-                }
-
-                @Override
-                public void onBeginningOfSpeech() {
-                }
-
-                @Override
-                public void onRmsChanged(float rmsdB) {
-                }
-
-                @Override
-                public void onBufferReceived(byte[] buffer) {
-                }
-
-                @Override
-                public void onEndOfSpeech() {
-                }
-
-                @Override
-                public void onError(int error) {
-                }
-
-                @Override
-                public void onResults(Bundle results) {
-                    List<String> result_arr = results.getStringArrayList(SpeechRecognizer.RESULTS_RECOGNITION);
-//                    Toast.makeText(MainActivity.this,result_arr.get(0),Toast.LENGTH_LONG).show();
-                    processResult(result_arr.get(0));
-                }
-
-                @Override
-                public void onPartialResults(Bundle partialResults) {
-                }
-
-                @Override
-                public void onEvent(int eventType, Bundle params) {
-                }
-            });
-        }
-    }
-
-    private void processResult(String result_message) {
-        result_message = result_message.toLowerCase();
-        Log.e("processResult", "" + result_message);
-        Toast.makeText(MainActivity.this, result_message, Toast.LENGTH_LONG).show();
-        Toast.makeText(MainActivity.this, result_message, Toast.LENGTH_LONG).show();
-
-        if (result_message.indexOf("load") != -1 || result_message.indexOf("wallet") != -1) {
-            speak("Opening load money screen");
-            loadMoneyCheck();
-        } else if (result_message.indexOf("where to pay") != -1 || result_message.indexOf("where to be") != -1 || result_message.indexOf("where to buy") != -1 || result_message.indexOf("way2way") != -1 || result_message.indexOf("where the play") != -1 || result_message.indexOf("white topi") != -1 || result_message.indexOf("y2k") != -1 || result_message.indexOf("wwe 2k") != -1) {
-            speak("Opening merchant categories");
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                boolean isEnabled = checkLocationPermission();
-                if (isEnabled) {
-                    updateSlidingPanel(_SLIDE_ECOM);
-                }
-            } else {
-                updateSlidingPanel(_SLIDE_ECOM);
-            }
-        } else if (result_message.indexOf("pay") != -1 || result_message.indexOf("de") != -1 || result_message.indexOf("bae") != -1 || result_message.indexOf("baby") != -1 || result_message.indexOf("hay") != -1 || result_message.indexOf("fairy") != -1) {
-            speak("Opening Pay screen");
-            showAmountEntryPayDialogue();
-        } else if (result_message.indexOf("send") != -1 || result_message.indexOf("money") != -1) {
-            speak("Opening Send Money");
-            killSomeTime();
-            intent = new Intent(MainActivity.this, SendMoneyLeg1RequestActivity.class);
-            startActivity(intent);
-        } else if (result_message.indexOf("prepaid") != -1 || result_message.indexOf("virtual") != -1 || result_message.indexOf("cards") != -1 || result_message.indexOf("chords") != -1) {
-            speak("Opening Prepaid virtual cards");
-            killSomeTime();
-            utilityBillsList();
-        } else if (result_message.indexOf("mobile") != -1 || result_message.indexOf("bill") != -1 || result_message.indexOf("bil") != -1) {
-            speak("Opening Mobile Bill");
-            killSomeTime();
-            mobileBill();
-        } else if (result_message.indexOf("international") != -1 || result_message.indexOf("top") != -1 || result_message.indexOf("top up") != -1 || result_message.indexOf("toupee") != -1 || result_message.indexOf("national") != -1) {
-            speak("Opening International topup");
-            killSomeTime();
-            intent = new Intent(getBaseContext(), TopUpInitialActivity.class);
-            intent.putExtra("BACK", "");
-            startActivity(intent);
-        } else if (result_message.indexOf("invoice") != -1 || result_message.indexOf("in force") != -1 || result_message.indexOf("voice") != -1) {
-            speak("Opening Invoices");
-            killSomeTime();
-            onItemClicked = true;
-            invoice();
-        } else if (result_message.indexOf("offers") != -1 || result_message.indexOf("loafers") != -1 || result_message.indexOf("grofers") != -1 || result_message.indexOf("office") != -1 || result_message.indexOf("opus") != -1) {
-            speak("Opening Offers");
-            killSomeTime();
-//            intent = new Intent(getBaseContext(), NewOffersActivity.class);
-//            startActivity(intent);
-            intent = new Intent(getBaseContext(), NewOffersActivityAfterLogin.class);
-            startActivity(intent);
-        } else if (result_message.indexOf("transaction") != -1 || result_message.indexOf("history") != -1) {
-            speak("Opening transaction history");
-            killSomeTime();
-            Intent serviceIntent = new Intent(getBaseContext(), SyncService.class);
-            serviceIntent.putExtra("type", SyncService.TYPE_USER_LOGGED_IN_STATUS);
-            startService(serviceIntent);
-            ((CoreApplication) getApplication()).setTransactionHistoryResponse(new TransactionHistoryResponse());
-            Intent i = new Intent(getBaseContext(), TransactionHistoryActivity.class);
-            startActivity(i);
-        } else if (result_message.indexOf("help") != -1 || result_message.indexOf("hug") != -1) {
-            speak("Opening Help");
-            killSomeTime();
-            intent = new Intent(getBaseContext(), Help.class);
-            startActivity(intent);
-        } else {
-            speak("Please say again");
-            try {
-                Thread.sleep(1000);
-            } catch (Exception e) {
-            }
-            pressMic();
-        }
-    }
-
-    public void killSomeTime() {
-        try {
-            Thread.sleep(1500);
-        } catch (Exception e) {
-        }
-    }
-
-    public void showVoiceIntroLayout() {
-        final LinearLayout main_menu_whole_layout = findViewById(R.id.main_menu_whole_layout);
-        final LinearLayout voice_command_layout = findViewById(R.id.voice_command_layout);
-        ImageView close_button = findViewById(R.id.close_button);
-        close_button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CustomSharedPreferences.saveBooleanData(MainActivity.this, false, CustomSharedPreferences.SP_KEY.COMING_FROM_LOGIN);
-                // slide-down animation
-                Animation slide_down = AnimationUtils.loadAnimation(MainActivity.this, R.anim.alert_dialog_anim_from_top);
-                if (voice_command_layout.getVisibility() == View.VISIBLE) {
-                    voice_command_layout.setVisibility(View.GONE);
-                    voice_command_layout.startAnimation(slide_down);
-                    main_menu_whole_layout.setEnabled(true);
-                    pressMic();
-                }
-            }
-        });
-        // slide-up animation
-        Animation slideUp = AnimationUtils.loadAnimation(this, R.anim.alert_dialog_anim_from_bottom);
-        if (voice_command_layout.getVisibility() == View.GONE || voice_command_layout.getVisibility() == View.INVISIBLE) {
-            voice_command_layout.setVisibility(View.VISIBLE);
-            voice_command_layout.startAnimation(slideUp);
-            main_menu_whole_layout.setEnabled(false);
-        }
-    }
-
-    public void enableVoice(boolean fromOncreate) {
-
-        /*Commented for SARA video
-
-//        Toast.makeText(MainActivity.this,"enableVoice",Toast.LENGTH_LONG).show();
-
-        //Voice
-        if (SpeechRecognizer.isRecognitionAvailable(this)) {
-            initializeTextToSpeech();
-            initializeSpeechRecognizer();
-        }else {
-            if (fromOncreate){
-
-//                Toast.makeText(MainActivity.this, "Speech recognition not available!", Toast.LENGTH_LONG).show();
-        }
-
-        }
-
-
-         */
-    }
-
-    public void showVoiceIntroDialog() {
-        final Dialog promptsView = new Dialog(this);
-        promptsView.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        promptsView.setContentView(R.layout.mainmenu_voice_intro_alert);
-        final ImageView close_button = promptsView.findViewById(R.id.close_button);
-        close_button.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                promptsView.dismiss();
-            }
-        });
-        Window window = promptsView.getWindow();
-        WindowManager.LayoutParams wlp = window.getAttributes();
-        wlp.gravity = Gravity.BOTTOM;
-        wlp.flags = WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setAttributes(wlp);
-        promptsView.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-        promptsView.getWindow().getAttributes().windowAnimations = R.style.voice_alert_dialog_animation_style;
-        promptsView.setOnDismissListener(new DialogInterface.OnDismissListener() {
-            @Override
-            public void onDismiss(DialogInterface dialog) {
-                pressMic();
-            }
-        });
-        promptsView.show();
-    }
-
-    private void initializeTextToSpeech() {
-        tts_for_voice = new TextToSpeech(this, new TextToSpeech.OnInitListener() {
-            @Override
-            public void onInit(int status) {
-                if (tts_for_voice.getEngines().size() == 0) {
-                    Toast.makeText(MainActivity.this, getString(R.string.tts_no_engines), Toast.LENGTH_LONG).show();
-//                    finish();
-                } else {
-                    tts_for_voice.setLanguage(Locale.US);
-//                    speak("Hello there, I am ready to start our conversation");
-                    //Commented for Rawan & Bita testing
-                    boolean coming_from_login = CustomSharedPreferences.getBooleanData(MainActivity.this, CustomSharedPreferences.SP_KEY.COMING_FROM_LOGIN);
-                    if (coming_from_login) {
-                    } else {
-                        pressMic();
-                    }
-                }
-            }
-        });
-    }
-
-    private void speak(String message) {
-        if (Build.VERSION.SDK_INT >= 21) {
-            tts_for_voice.speak(message, TextToSpeech.QUEUE_FLUSH, null, null);
-        } else {
-            tts_for_voice.speak(message, TextToSpeech.QUEUE_FLUSH, null);
-        }
-    }
-
-    public void pressMic() {
-        if (SpeechRecognizer.isRecognitionAvailable(this)) {
-
-        /*
-        //Commented to install in POS device on Oct 16
-        */
-            try {
-                // Here, thisActivity is the current activity
-                if (ContextCompat.checkSelfPermission(MainActivity.this,
-                        Manifest.permission.RECORD_AUDIO)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    // Permission is not granted
-                    // Should we show an explanation?
-                    if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this,
-                            Manifest.permission.RECORD_AUDIO)) {
-                        // Show an explanation to the user *asynchronously* -- don't block
-                        // this thread waiting for the user's response! After the user
-                        // sees the explanation, try again to request the permission.
-                    } else {
-                        // No explanation needed; request the permission
-                        ActivityCompat.requestPermissions(MainActivity.this,
-                                new String[]{Manifest.permission.RECORD_AUDIO}, MY_PERMISSIONS_REQUEST_RECORD_AUDIO);
-                        // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
-                        // app-defined int constant. The callback method gets the
-                        // result of the request.
-                    }
-                } else {
-                    // Permission has already been granted
-                    Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
-                    intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
-                    intent.putExtra(RecognizerIntent.EXTRA_MAX_RESULTS, 1);
-                    speechRecog.startListening(intent);
-                }
-            } catch (Exception e) {
-                Toast.makeText(MainActivity.this, "Recognize Speech Error!\n\n" + e.getMessage(), Toast.LENGTH_LONG).show();
-            }
-        }
-    }
-
-    private boolean checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
-            // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(MainActivity.this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            } else {
-                // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
-            }
-            return false;
-        } else {
-            return true;
-        }
     }
 
     private void changeText(final TextView mTitleTextView) {
@@ -1323,18 +778,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             }
         }).start();
 
-        /*handler = new Handler();
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                *//*if (application.getInvoices_count() > invoice_count) {
-                    adapter1.notifyDataSetChanged();
-                    isSound = application.isSpeakstatus();
-                }*//*
-                adapter1.notifyDataSetChanged();
-                isSound = application.isSpeakstatus();
-            }
-        }, 2 * 60 * 1000);*/
     }
 
     private void utilityBillsList() {
@@ -1383,79 +826,13 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         progress.show(getSupportFragmentManager(), "progress_dialog");
     }
 
-    private void bWeb() {
-        CoreApplication application = (CoreApplication) getApplication();
-        CustomerLoginRequestReponse customerLoginRequestReponse = application.getCustomerLoginRequestReponse();
-        //CustomSharedPreferences.saveStringData(getApplicationContext(), mobile_number, CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
-        String mobno = CustomSharedPreferences.getStringData(getApplicationContext(), MOBILE_NUMBER);
-        //InvoiceDetailsPojo invoiceRequest = new InvoiceDetailsPojo();
-        // invoiceRequest.setVersionNumber(customerLoginRequestReponse.getDomesticRechargeVersion());
-        //invoiceRequest.setMobileNumber(mobno);
-        GenericRequest invoiceRequest = new GenericRequest();
-        invoiceRequest.setG_userId(mobno);
-        String uiProcessorReference = application.addUserInterfaceProcessor(new BWebProcessing(invoiceRequest, application, true));
-        ProgressDialogFrag progress = new ProgressDialogFrag();
-        Bundle bundle = new Bundle();
-        bundle.putString("uuid", uiProcessorReference);
-        progress.setCancelable(true);
-        progress.setArguments(bundle);
-        progress.show(getSupportFragmentManager(), "progress_dialog");
-    }
-
-    private void invoiceForSessionOut() {
-//        Toast.makeText(MainActivity.this,"InvoiceForSessionOut invoked!",Toast.LENGTH_LONG).show();
-        CoreApplication application = (CoreApplication) getApplication();
-        CustomerLoginRequestReponse customerLoginRequestReponse = application.getCustomerLoginRequestReponse();
-        //CustomSharedPreferences.saveStringData(getApplicationContext(), mobile_number, CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
-        String mobno = CustomSharedPreferences.getStringData(getApplicationContext(), MOBILE_NUMBER);
-        //InvoiceDetailsPojo invoiceRequest = new InvoiceDetailsPojo();
-        // invoiceRequest.setVersionNumber(customerLoginRequestReponse.getDomesticRechargeVersion());
-        //invoiceRequest.setMobileNumber(mobno);
-        GenericRequest invoiceRequest = new GenericRequest();
-        invoiceRequest.setG_userId(mobno);
-        String uiProcessorReference = application.addUserInterfaceProcessor(new InvoiceProcessingForSessionOut(invoiceRequest, application, true));
-        ProgressDialogFrag progress = new ProgressDialogFrag();
-        Bundle bundle = new Bundle();
-        bundle.putString("uuid", uiProcessorReference);
-        progress.setCancelable(true);
-        progress.setArguments(bundle);
-        progress.show(getSupportFragmentManager(), "progress_dialog");
-    }
-
     @Override
     public void onPause() {
         super.onPause();
         if (progressDialog != null && progressDialog.isShowing()) {
             progressDialog.dismiss();
         }
-        if (tts_for_voice != null) {
-            tts_for_voice.shutdown();
-        }
     }
-
-    /*private void speakOut() {
-        final Handler handler = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (application.getInvoices_count() != 0) {
-                            for (i = 0; i < 1; i++) {
-                                int timeToBlink = 1000;    //in milisseconnds
-                                try {
-                                    Thread.sleep(timeToBlink);
-                                } catch (Exception e) {
-                                }
-                                letsspeek();
-                            }
-                        }
-                    }
-                });
-            }
-        }).start();
-    }*/
 
     @Override
     public void onResume() {
@@ -1611,13 +988,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         }
     }
 
-    private void letsspeek() {
-        if (isSound) {
-            String text = "You have got new invoices, please pay";
-            tts.speak(text, TextToSpeech.QUEUE_ADD, null);
-        }
-    }
-
     public void onStart() {
         super.onStart();
         // Initiating the GoogleApiClient Connection when the activity is visible
@@ -1762,133 +1132,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         progress.show(getSupportFragmentManager(), "progress_dialog");
     }
 
-    void showScanTypeAlertDialogue() {
-        final Dialog promptsView = new Dialog(this);
-        promptsView.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        promptsView.setContentView(R.layout.scan_type_alert);
-        final Button btn_static_qr_code = promptsView.findViewById(R.id.btn_static_qr_code);
-        final Button btn_merchant_qr_code = promptsView.findViewById(R.id.btn_merchant_qr_code);
-        final TextView btn_scan_type_close = promptsView.findViewById(R.id.btn_scan_type_close);
-        btn_static_qr_code.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                promptsView.dismiss();
-                showAmountEntryPayDialogueForStaticQRCode();
-            }
-        });
-        btn_merchant_qr_code.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                promptsView.dismiss();
-//                Toast.makeText(MainActivity.this, "Need to do", Toast.LENGTH_LONG).show();
-                showAmountEntryPayDialogue();
-            }
-        });
-        btn_scan_type_close.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                promptsView.dismiss();
-            }
-        });
-        promptsView.show();
-    }
-
-    void showAmountEntryPayDialogueForStaticQRCode() {
-        final Dialog promptsView = new Dialog(this);
-
-        promptsView.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        promptsView.setContentView(R.layout.static_qr_code_enter_amount);
-        final EditText amountField = promptsView.findViewById(R.id.ypc_getAmoint_getAmount);
-        final CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse();
-        final TransactionLimitResponse limits = customerLoginRequestReponse.getFilteredLimits().get("P2M");
-        amountField.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5, 3, limits.getMaxValuePerTransaction().floatValue())});
-
-
-        final EditText pay_via_qrcode_pin_edt = (EditText) promptsView.findViewById(R.id.pay_via_qrcode_pin_edt);
-        final Button pay_qrcode_cancel_btn_new = (Button) promptsView.findViewById(R.id.pay_qrcode_cancel_btn_new);
-        final Button pay_qrcode_pay_btn_new = (Button) promptsView.findViewById(R.id.pay_qrcode_pay_btn_new);
-        amountField.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                amount = amountField.getText().toString();
-                Double amount_double = 0.000;
-                try {
-                    amount_double = Double.parseDouble(amount);
-                } catch (Exception e) {
-                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_please_enter_amount), Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                    toast.show();
-                }
-                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
-                if (amount_double > limits.getTpinLimit() && !guest) {
-                    pay_via_qrcode_pin_edt.setVisibility(View.VISIBLE);
-                } else {
-                    pay_via_qrcode_pin_edt.setVisibility(View.GONE);
-                }
-            }
-        });
-        pay_qrcode_cancel_btn_new.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                promptsView.dismiss();
-//                pressMic();
-            }
-        });
-        pay_qrcode_pay_btn_new.setOnClickListener(new OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                amount_str = amountField.getText().toString().trim();
-                tpin = pay_via_qrcode_pin_edt.getText().toString().trim();
-                if (amount_str.length() == 0) {
-                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_please_enter_amount), Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                    toast.show();
-                    return;
-                }
-                Double amount = Double.parseDouble(amount_str);
-                if (amount == 0) {
-                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_please_enter_amount), Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                    toast.show();
-                    return;
-                }
-                if (amount > customerLoginRequestReponse.getWalletBalance()) {
-                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_sufficient_balance), Toast.LENGTH_LONG);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                    toast.show();
-                    return;
-                }
-                promptsView.dismiss();
-                Intent intent;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    boolean isEnabled = checkCameraPermissionLatest();
-                    if (isEnabled) {
-                        intent = new Intent(getBaseContext(), CaptureActivity.class);
-                        intent.setAction("br.com.google.zxing.client.android.SCAN");
-                        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-                        intent.putExtra("CHARACTER_SET", "ISO-8859-1");
-                        startActivityForResult(intent, STATIC_QR_CODE_REQUEST);
-                    }
-                } else {
-                    intent = new Intent(getBaseContext(), CaptureActivity.class);
-                    intent.setAction("br.com.google.zxing.client.android.SCAN");
-                    intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-                    intent.putExtra("CHARACTER_SET", "ISO-8859-1");
-                    startActivityForResult(intent, STATIC_QR_CODE_REQUEST);
-                }
-            }
-        });
-        promptsView.show();
-    }
-
     public void showAmountEntryPayDialogue() {
         final Dialog promptsView = new Dialog(this);
         promptsView.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1899,9 +1142,9 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         amountField.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5, 3, limits.getMaxValuePerTransaction().floatValue())});
 
 
-        final EditText pay_via_qrcode_pin_edt = (EditText) promptsView.findViewById(R.id.pay_via_qrcode_pin_edt);
-        final Button pay_qrcode_cancel_btn_new = (Button) promptsView.findViewById(R.id.pay_qrcode_cancel_btn_new);
-        final Button pay_qrcode_pay_btn_new = (Button) promptsView.findViewById(R.id.pay_qrcode_pay_btn_new);
+        final EditText pay_via_qrcode_pin_edt = promptsView.findViewById(R.id.pay_via_qrcode_pin_edt);
+        final Button pay_qrcode_cancel_btn_new = promptsView.findViewById(R.id.pay_qrcode_cancel_btn_new);
+        final Button pay_qrcode_pay_btn_new = promptsView.findViewById(R.id.pay_qrcode_pay_btn_new);
         amountField.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -1922,7 +1165,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
                 }
-                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
                 if (amount_double > limits.getTpinLimit() && !guest) {
                     pay_via_qrcode_pin_edt.setVisibility(View.VISIBLE);
                 } else {
@@ -1942,9 +1185,9 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             public void onClick(View v) {
                 amount_str = amountField.getText().toString().trim();
                 //if (biometricVerified)
-              //      tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
-               // else
-                    tpin = pay_via_qrcode_pin_edt.getText().toString().trim();
+                //      tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
+                // else
+                tpin = pay_via_qrcode_pin_edt.getText().toString().trim();
                 if (amount_str.length() == 0) {
                     Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_please_enter_amount), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
@@ -2014,7 +1257,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 if (motionEvent.getRawX() >= (pin.getRight() - pin.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
                     verifyBio = value;
                     verifyBiometric();
-
                 }
             }
             return false;
@@ -2028,18 +1270,52 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         verify_password_btn_new.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pin.getText().toString().equals("")){
+                if (pin.getText().toString().equals("")) {
                     Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_password_validate), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
                     return;
                 }
                 tpin = pin.getText().toString().trim();
-                payViaQrCodeProcess();
-                promptsViewPassword.dismiss();
+                if(value == 2) {
+                    payViaQrCodeProcess();
+                    promptsViewPassword.dismiss();
+                }
+                else if (value == 3)
+                {
+                    VerifyPassword verifyPassword = new VerifyPassword();
+                    verifyPassword.execute();
+                }
             }
         });
         promptsViewPassword.show();
+    }
+
+    public void scanQRCode()
+    {
+        int height = getScreenWidth();
+        int width = getScreenHeight();
+        Intent intent;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            boolean isEnabled = checkCameraPermissionLatest();
+            if (isEnabled) {
+                intent = new Intent(getBaseContext(), CaptureActivity.class);
+                intent.setAction("br.com.google.zxing.client.android.SCAN");
+                intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+                intent.putExtra("CHARACTER_SET", "ISO-8859-1");
+                intent.putExtra(Intents.Scan.WIDTH, width);
+                intent.putExtra(Intents.Scan.HEIGHT, height);
+                startActivityForResult(intent, STATIC_QR_CODE_REQUEST);
+            }
+        } else {
+            intent = new Intent(getBaseContext(), CaptureActivity.class);
+            intent.setAction("br.com.google.zxing.client.android.SCAN");
+            intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
+            intent.putExtra("CHARACTER_SET", "ISO-8859-1");
+            intent.putExtra(Intents.Scan.WIDTH, width);
+            intent.putExtra(Intents.Scan.HEIGHT, height);
+            startActivityForResult(intent, STATIC_QR_CODE_REQUEST);
+        }
     }
 
     public void showAmountEntryPayDialogueWithTwoPayOptions() {
@@ -2095,7 +1371,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     toast.show();
                     return;
                 }
-                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
                 if (amount > limits.getTpinLimit() && !guest) {
                     ShowEnterPassword(2);
                 } else {
@@ -2108,7 +1384,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         pay_qrcode_generatel_btn_new.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                amount_str = amountField.getText().toString().trim();
+                amount = amount_str = amountField.getText().toString().trim();
 
                 if (amount_str.length() == 0) {
                     Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_please_enter_amount), Toast.LENGTH_LONG);
@@ -2136,11 +1412,11 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     return;
                 }*/
 
-                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
                 if (amount > limits.getTpinLimit() && !guest) {
                     ShowEnterPassword(3);
                 } else {
-                   // promptsView.dismiss();
+                    // promptsView.dismiss();
                     int height = getScreenWidth();
                     int width = getScreenHeight();
                     Intent intent;
@@ -2183,121 +1459,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         promptsView.show();
     }
 
-    public void updateSlidingPanel(int slideType) {
-        //Facebook
-        AppEventsLogger logger = AppEventsLogger.newLogger(this);
-        logger.logEvent("Merchant categories list page");
-        //Firebase
-        Bundle bundle = new Bundle();
-        bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, 19);
-        bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Merchant categories list page");
-        //Logs an app event.
-        firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-        Log.e("Firebase ", " Event 19 logged");
-        View sliding_frame_view = findViewById(R.id.sliding_list_frame);
-        sliding_frame_view.setBackgroundColor(Color.WHITE);
-        FragmentManager fragmentManager = getSupportFragmentManager();
-        Fragment frag = null;
-        Fragment oldFrag = null;
-        switch (slideType) {
-            case _SLIDE_ECOM:
-                frag = fragmentManager.findFragmentByTag(MerchantSelectionSliderList.tag);
-                if (frag == null) {
-                    frag = new MerchantSelectionSliderList();
-                }
-                mDrawer.closeDrawer(sliding_frame_view);
-                break;
-            default:
-                return;
-        }
-        if (frag != null) {
-            oldFrag = fragmentManager.findFragmentById(R.id.sliding_list_frame);
-            if (oldFrag != null) {
-                if (oldFrag.getClass() == frag.getClass()) {
-                    if (mDrawer.isDrawerOpen(sliding_frame_view)) {
-                        mDrawer.closeDrawer(sliding_frame_view);
-                    } else {
-                        mDrawer.openDrawer(sliding_frame_view);
-                    }
-                    return;
-                }
-            }
-            if (oldFrag != null) {
-                mDrawer.closeDrawer(sliding_frame_view);
-            }
-            FragmentTransaction transaction = fragmentManager.beginTransaction();
-            transaction.replace(R.id.sliding_list_frame, frag);
-            transaction.commit();
-            mDrawer.openDrawer(sliding_frame_view);
-        }
-    }
-
-    private void alertDialog() {
-        LayoutInflater li = LayoutInflater.from(this);
-        View promptsView = li.inflate(R.layout.custom_alert_image, null);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
-        alertDialog.setView(promptsView);
-        alertDialog.setPositiveButton(getResources().getString(R.string.registration_camera), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                /*if (!checkPermissionForCamera()) {
-                    requestPermissionForCamera(1);
-                } else {
-                    final Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE).putExtra(MediaStore.EXTRA_OUTPUT, mImageCaptureUri);
-                    File mImageCaptureUri = new File(Environment.getExternalStorageDirectory() + File.separator + "img.jpg");
-                    camera.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(mImageCaptureUri));
-                    camera.putExtra("android.intent.extras.CAMERA_FACING", 1);
-                    startActivityForResult(camera, 1);
-                }*/
-                if (!checkPermissionForCamera()) {
-                    Log.i("IF", "if");
-                    requestPermissionForCamera(CAMERA_REQUEST_CODE);
-                } else {
-                    Log.i("ELSE", "else");
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
-                        startActivityForResult(takePictureIntent, CAMERA_REQUEST_CODE);
-                    } else {
-                        Toast.makeText(getBaseContext(), "Your camera can't able to take the data of picture ", Toast.LENGTH_SHORT);
-                    }
-                }
-            }
-        });
-        alertDialog.setNegativeButton(getResources().getString(R.string.registration_gallery), new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
-                } else {
-                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
-                    photoPickerIntent.setType("image/*");
-                    startActivityForResult(photoPickerIntent, PICK_FROM_GALLERY);
-                }
-
-               /* if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
-                    requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, which);
-                } else {
-                    Intent intent = new Intent();
-                    intent.setType("image*//*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    intent.putExtra("crop", "true");
-                    intent.putExtra("aspectX", 1);
-                    intent.putExtra("aspectY", 1);
-                    intent.putExtra("outputX", 256);
-                    intent.putExtra("outputY", 256);
-                    try {
-                        intent.putExtra("return-data", true);
-                        startActivityForResult(Intent.createChooser(intent,
-                                "Complete action using"), PICK_FROM_GALLERY);
-                    } catch (ActivityNotFoundException e) {
-                        Toast.makeText(getResources(), "" + e, Toast.LENGTH_LONG).show();
-                    }
-                }*/
-            }
-        });
-        alertDialog.show();
-    }
-
     private void biometricDialog() {
         LayoutInflater li = LayoutInflater.from(this);
         View promptsView = li.inflate(R.layout.custom_alert_whatsapp, null);
@@ -2309,20 +1470,17 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     public void onPurchased(boolean withFingerprint, String password) {
         //if (!withFingerprint) invoice_tpin_edit.setText(password);
         // invoicePayNowRequest(invoice_amount, 0, offerID);
-        if(verifyBio == 1){
+        if (verifyBio == 1) {
             enableBiometric(true);
         } else {
             boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
             if (!bio) {
                 biometricDialog();
-            }
-            else if (verifyBio == 2)
-            {
+            } else if (verifyBio == 2) {
                 tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
                 payViaQrCodeProcess();
                 promptsViewPassword.dismiss();
-            }
-            else if (verifyBio == 3){
+            } else if (verifyBio == 3) {
                 promptsViewPassword.dismiss();
                 int height = getScreenWidth();
                 int width = getScreenHeight();
@@ -2362,7 +1520,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     isFingerprintAvailable = mFingerprintManager.isHardwareDetected()
                             && mFingerprintManager.hasEnrolledFingerprints();
                 }
-                if (!isFingerprintPermissionGranted || !isFingerprintAvailable) {
+                /*if (!isFingerprintPermissionGranted || !isFingerprintAvailable) {
                     // The user either rejected permission to read their fingerprint, we're on
                     // a device that doesn't support it, or the user doesn't have any
                     // fingerprints enrolled.
@@ -2370,7 +1528,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     mFragment.setStage(
                             FingerprintAuthenticationDialogFragmentPayQR.Stage.PASSWORD);
                     mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
-                } else if (initCipher()) {
+                } else*/ if (initCipher()) {
                     // Set up the crypto object for later. The object will be authenticated by use
                     // of the fingerprint.
                     // Show the fingerprint dialog. The user has the option to use the fingerprint with
@@ -2382,10 +1540,10 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     if (useFingerprintPreference) {
                         mFragment.setStage(
                                 FingerprintAuthenticationDialogFragmentPayQR.Stage.FINGERPRINT);
-                    } else {
+                    }/* else {
                         mFragment.setStage(
                                 FingerprintAuthenticationDialogFragmentPayQR.Stage.PASSWORD);
-                    }
+                    }*/
                     mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
                 } else {
                     // This happens if the lock screen has been disabled or or a fingerprint got
@@ -2457,24 +1615,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         }
     }
 
-    private boolean canMakeSmores() {
-        return (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1);
-    }
-
-    public void hideProgressIndicatorInAction(final ImageView imageView) {
-        runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                imageView.setVisibility(View.INVISIBLE);
-                onCompletionOfSyncProcess();
-            }
-        });
-    }
-
-    public void onCompletionOfSyncProcess() {
-        imageview.setVisibility(View.VISIBLE);
-    }
-
     public void payViaQrCodeProcess() {
         P2MBarcodeGenInitValidationRequest request = new P2MBarcodeGenInitValidationRequest();
         request.setTpin(tpin);
@@ -2483,26 +1623,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         long currentLocalTime = cal.getTimeInMillis();
         request.setBarcodeGeneratedDate(currentLocalTime);
         request.setTxnAmount((Double.parseDouble(amount)));
-        String barcodeData = generateSecureBarCodeText((byte) 2, PriceFormatter.format(Double.parseDouble(amount_str), 3, 3));
-        request.setBarcodeData(Hex.toHex(new BigInteger(barcodeData).toByteArray()));
-        CoreApplication application = (CoreApplication) getApplication();
-        String uiProcessorReference = application.addUserInterfaceProcessor(new PayToMerchantValidationProcessing(request, application, barcodeData, true));
-        ProgressDialogFrag progress = new ProgressDialogFrag();
-        Bundle bundle = new Bundle();
-        bundle.putString("uuid", uiProcessorReference);
-        progress.setCancelable(true);
-        progress.setArguments(bundle);
-        progress.show(getSupportFragmentManager(), "progress_dialog");
-    }
-
-    public void payViaQrCodeProcess(String amount_str) {
-        P2MBarcodeGenInitValidationRequest request = new P2MBarcodeGenInitValidationRequest();
-        request.setTpin(tpin);
-        String timezone = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse().getG_servertime();
-        Calendar cal = Calendar.getInstance(TimeZone.getTimeZone(timezone));
-        long currentLocalTime = cal.getTimeInMillis();
-        request.setBarcodeGeneratedDate(currentLocalTime);
-        request.setTxnAmount((Double.parseDouble(amount_str)));
         String barcodeData = generateSecureBarCodeText((byte) 2, PriceFormatter.format(Double.parseDouble(amount_str), 3, 3));
         request.setBarcodeData(Hex.toHex(new BigInteger(barcodeData).toByteArray()));
         CoreApplication application = (CoreApplication) getApplication();
@@ -2807,18 +1927,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         startActivityForResult(cropIntent, 0);
     }
 
-    private void showIfNotVisible(String title) {
-        if (!progressDialog.isShowing()) {
-            progressDialog.setTitle(title);
-            progressDialog.show();
-            progressDialog.isShowing();
-        } else {
-            progressDialog.setTitle(title);
-            progressDialog.show();
-            progressDialog.isShowing();
-        }
-    }
-
     private void hideIfVisible() {
         if (progressDialog.isShowing()) {
             progressDialog.hide();
@@ -2832,48 +1940,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         String temp = Base64.encodeToString(b, Base64.DEFAULT);
         CustomSharedPreferences.saveStringData(getBaseContext(), temp, CustomSharedPreferences.SP_KEY.IMAGE);
         return temp;
-    }
-
-    public final int convertDimensionPixelsToPixels(float dimensionPixels) {
-        final float scale = getResources().getDisplayMetrics().density;
-        return (int) (dimensionPixels * (scale) + 0.5f);
-    }
-
-    private void blink(final TextView count_text, final ImageView bell_image) {
-        //if (mBlinking) {
-        final Handler handler2 = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int timeToBlink = 1000;    //in milissegunds
-                try {
-                    Thread.sleep(timeToBlink);
-                } catch (Exception e) {
-                }
-                handler2.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (count_text.getVisibility() == View.VISIBLE && bell_image.getVisibility() == View.VISIBLE) {
-                            count_text.setVisibility(View.INVISIBLE);
-                            bell_image.setVisibility(View.INVISIBLE);
-                        } else {
-                            count_text.setVisibility(View.VISIBLE);
-                            bell_image.setVisibility(View.VISIBLE);
-                        }
-                       /* if (onItemClicked) {
-                            if (count_text.getVisibility() == View.VISIBLE && bell_image.getVisibility() == View.VISIBLE) {
-                                count_text.setVisibility(View.GONE);
-                                bell_image.setVisibility(View.GONE);
-                            }
-                        } else {
-                            blink(count_text, bell_image);
-                        }*/
-                        blink(count_text, bell_image);
-                    }
-                });
-            }
-        }).start();
-        // }
     }
 
     @Override
@@ -2900,19 +1966,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             return null;
         } catch (OutOfMemoryError e) {
             return null;
-        }
-    }
-
-    public boolean checkPermissionForCamera() {
-        int result = ContextCompat.checkSelfPermission(MainActivity.this, android.Manifest.permission.CAMERA);
-        return result == PackageManager.PERMISSION_GRANTED;
-    }
-
-    public void requestPermissionForCamera(int requestCode) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivity.this, android.Manifest.permission.CAMERA)) {
-            Toast.makeText(this, "Camera permission needed. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
-        } else {
-            ActivityCompat.requestPermissions(MainActivity.this, new String[]{android.Manifest.permission.CAMERA}, requestCode);
         }
     }
 
@@ -3229,6 +2282,70 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         }
     }
 
+    public class VerifyPassword extends AsyncTask<String, String, String> {
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if(result != null && !result.equals("")){
+                Log.e("Verify Response: ", "" + result);
+                GenericResponse response = new Gson().fromJson(result, GenericResponse.class);
+                if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.FORGOT_CHECK_RESPONSE.name()) && response.getG_status() == 1) {
+                    promptsViewPassword.dismiss();
+                    scanQRCode();
+                } else {
+                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.Received_Password_entered_wrong), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                    toast.show();
+                }
+            } else {
+                Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.failure_general_server_error), Toast.LENGTH_LONG);
+                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                toast.show();
+            }
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                String mob = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
+                VerifyPasswordRequest request = new VerifyPasswordRequest();
+                request.setOldPin(tpin);
+                request.setMobileNumber(mob);
+                request.setG_transType(TransType.FORGOT_CHECK_REQUEST.name());
+                String serverURL = TransType.FORGOT_CHECK_REQUEST.getURL() +  "?d=" + URLUTF8Encoder.encode(new Gson().toJson(request));
+                Log.e("Verify serverURL: ", "" + serverURL);
+                Log.e("Verify serverURL: ", "" + new Gson().toJson(request));
+                URL urls = new URL(serverURL);
+
+                HttpURLConnection conn = (HttpURLConnection) urls.openConnection();
+                conn.setReadTimeout(150000); //milliseconds
+                conn.setConnectTimeout(15000); // milliseconds
+                conn.setRequestMethod("POST");
+                conn.connect();
+
+                if (conn.getResponseCode() == HttpURLConnection.HTTP_OK) {
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(conn.getInputStream(), "iso-8859-1"), 8);
+                    StringBuilder sb = new StringBuilder();
+                    String line = null;
+                    while ((line = reader.readLine()) != null) {
+                        sb.append(line).append("\n");
+                    }
+                    return sb.toString();
+                } else {
+                    return "";
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
+    }
+
     public class InvoiceSessionTimeOut extends AsyncTask<String, Void, String> {
         public static final String REQUEST_METHOD = "GET";
         public static final int READ_TIMEOUT = 15000;
@@ -3309,32 +2426,3 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         }
     }
 }
-//class Item {
-//    Bitmap image;
-//    String title;
-//
-//    public Item(Bitmap image, String title) {
-//        super();
-//        this.image = image;
-//        this.title = title;
-//    }
-//
-//    public Bitmap getImage() {
-//        return image;
-//    }
-//
-//    public void setImage(Bitmap image) {
-//        this.image = image;
-//    }
-//
-//    public String getTitle() {
-//        return title;
-//    }
-//
-//    public void setTitle(String title) {
-//        this.title = title;
-//    }
-//
-//    Button btn_recharge_wallet;
-//}
-

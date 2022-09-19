@@ -59,7 +59,7 @@
     <string name="more_text">More</string>
     <string name="poweredby_tv">Powered by</string>
     <string name="send_money_others">Others</string>
-
+    <string name="Wrong_Password">Entered Password is wrong</string>
     //Mobile number validation starts
     <string name="mob_validation_welcome">مرحبا بك في</string>
     <string name="mob_validation_langauge_type">Language Type</string>

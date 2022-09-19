@@ -1,43 +1,77 @@
 package com.bookeey.wallet.live.sendmoney;
 
 
+import android.Manifest;
+import android.annotation.TargetApi;
 import android.app.ActionBar;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.ContactsContract;
+import android.security.keystore.KeyGenParameterSpec;
+import android.security.keystore.KeyPermanentlyInvalidatedException;
+import android.security.keystore.KeyProperties;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.inputmethod.InputMethodManager;
+import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.SimpleAdapter;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bookeey.wallet.live.R;
+import com.bookeey.wallet.live.application.CoreApplication;
+import com.bookeey.wallet.live.login.FingerprintAuthenticationDialogFragmentSendMoney;
+import com.facebook.appevents.AppEventsLogger;
+import com.google.firebase.analytics.FirebaseAnalytics;
+import com.google.gson.Gson;
+
+import java.io.IOException;
+import java.security.InvalidAlgorithmParameterException;
+import java.security.InvalidKeyException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.crypto.Cipher;
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import javax.inject.Inject;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
@@ -46,16 +80,6 @@ import coreframework.taskframework.DecimalDigitsInputFilter;
 import coreframework.taskframework.GenericActivity;
 import coreframework.taskframework.ProgressDialogFrag;
 import coreframework.taskframework.YPCHeadlessCallback;
-
-import com.bookeey.wallet.live.R;
-import com.bookeey.wallet.live.application.CoreApplication;
-import com.facebook.appevents.AppEventsLogger;
-import com.google.firebase.analytics.FirebaseAnalytics;
-import com.google.gson.Gson;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import coreframework.utils.URLUTF8Encoder;
 import ycash.wallet.json.pojo.generic.GenericRequest;
 import ycash.wallet.json.pojo.generic.GenericResponse;
@@ -69,20 +93,17 @@ import ycash.wallet.json.pojo.translimit.TransactionLimitResponse;
  * @author mohit
  */
 public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPCHeadlessCallback {
-
+    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
+    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
+    private static final String KEY_NAME = "my_key";
     RadioGroup sendmoney_radioGroup1;
-    Spinner sp;
     RadioButton sendmoney_local_radio, sendmoney_international_radio;
     LinearLayout send_money_international;
     LinearLayout send_money_local;
-    TextView send_money_select_contact_international_text;
     ImageView send_money_selectcontact_local_image;
-
-
     EditText send_money_to_mobile_amount_edit, ooredoo_sendmoneyscreeen_local_pin_edt;
     LinearLayout ooredoo_sendmoneyscreeen_pin_layout;
     View pinlayout_line_view;
-    String sendmoney_international_spinner_str;
     PeerToPeerTranRequest peerToPeerTranRequest;
     Double amount = 0.000;
     int RQS_PICK_CONTACT = 1;
@@ -90,8 +111,18 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
     ProgressDialog progress = null;
     List<String> aList = null;
     P2PReceiverNumberListResponse p2PReceiverNumberListResponse = null;
-
+    Dialog promptsViewPassword;
+    boolean IsBio = false;
+    String tpin = "";
+    @Inject
+    FingerprintManagerCompat mFingerprintManager;
+    @Inject
+    FingerprintAuthenticationDialogFragmentSendMoney mFragment;
+    @Inject
+    SharedPreferences mSharedPreferences;
     private FirebaseAnalytics firebaseAnalytics;
+    private KeyStore mKeyStore;
+    private Cipher mCipher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -102,18 +133,6 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         send_money_selectcontact_local_image = (ImageView) findViewById(R.id.send_money_selectcontact_local_image);
-        /*View mCustomView = getActionBar().getCustomView();
-        TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.title_text);
-        LinearLayout.LayoutParams txvPars = (LinearLayout.LayoutParams) mTitleTextView.getLayoutParams();
-        DisplayMetrics metrics = getResources().getDisplayMetrics();
-        txvPars.gravity = Gravity.CENTER_HORIZONTAL;
-        txvPars.width = metrics.widthPixels;
-        mTitleTextView.setLayoutParams(txvPars);
-        mTitleTextView.setGravity(Gravity.CENTER);
-        mTitleTextView.setPadding(-80, 0, 0, 0);
-        mTitleTextView.setText("SEND MONEY");
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);*/
 
         ActionBar mActionBar = getActionBar();
         mActionBar.setDisplayHomeAsUpEnabled(true);
@@ -138,7 +157,9 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
                 onBackPressed();
             }
         });
-
+        ((CoreApplication) getApplication()).inject(this);
+        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.USE_FINGERPRINT},
+                FINGERPRINT_PERMISSION_REQUEST_CODE);
         progress = new ProgressDialog(SendMoneyLeg1RequestActivity.this, R.style.MyTheme2);
         progress.setCanceledOnTouchOutside(false);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -159,28 +180,6 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
         ooredoo_sendmoneyscreeen_pin_layout.setVisibility(View.INVISIBLE);
         pinlayout_line_view = (View) findViewById(R.id.pinlayout_line_view);
         pinlayout_line_view.setVisibility(View.GONE);
-//        requestHeaderInformationUpdate();
-        /*ooredoo_sendmoneyscreeen_local_pin_edt.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-                String pin = ooredoo_sendmoneyscreeen_local_pin_edt.getText().toString();
-
-                if (pin.length() == 4) {
-                    InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                    imm.hideSoftInputFromWindow(ooredoo_sendmoneyscreeen_local_pin_edt.getWindowToken(), 0);
-                }
-            }
-        });*/
 
         send_money_to_mobile_amount_edit.addTextChangedListener(new TextWatcher() {
             @Override
@@ -209,17 +208,16 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
                     e.printStackTrace();
                     // Toast.makeText(getApplicationContext(), "Please enter amount", Toast.LENGTH_SHORT).show();
                 }
-                if (amount > limits.getTpinLimit()) {
-                    ooredoo_sendmoneyscreeen_pin_layout.setVisibility(View.VISIBLE);
-                    pinlayout_line_view.setVisibility(View.VISIBLE);
-                   /* Toast toast = Toast.makeText(getBaseContext(), "Please enter TPIN", Toast.LENGTH_SHORT);
+
+                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                //ooredoo_sendmoneyscreeen_pin_layout.setVisibility(View.VISIBLE);
+                //pinlayout_line_view.setVisibility(View.VISIBLE);
+                /* Toast toast = Toast.makeText(getBaseContext(), "Please enter TPIN", Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();*/
-
-                } else {
-                    ooredoo_sendmoneyscreeen_pin_layout.setVisibility(View.GONE);
-                    pinlayout_line_view.setVisibility(View.GONE);
-                }
+                //ooredoo_sendmoneyscreeen_pin_layout.setVisibility(View.GONE);
+                //pinlayout_line_view.setVisibility(View.GONE);
+                IsBio = amount > limits.getTpinLimit() && !guest;
             }
         });
         updateProfile(R.id.sendmoney_nameTextooredo, R.id.sendmoney_wallet_id, R.id.sendmoney_balance_id);
@@ -230,10 +228,10 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
                 // if (sendmoney_local_radio.isChecked()) {
                 String local_recipientmobilenumber = ((EditText) findViewById(R.id.send_money_to_mobile_recepient_mobile_no_complete_edt)).getText().toString().trim();
                 String string_amount = ((EditText) findViewById(R.id.send_money_to_mobile_amount_edit)).getText().toString().trim();
-                String string_pin = ((EditText) findViewById(R.id.ooredoo_sendmoneyscreeen_local_pin_edt)).getText().toString().trim();
+                //String string_pin = ((EditText) findViewById(R.id.ooredoo_sendmoneyscreeen_local_pin_edt)).getText().toString().trim();
 
                 if (local_recipientmobilenumber.length() == 0) {
-                    Toast toast = Toast.makeText(getBaseContext(),getResources().getString(R.string.send_money_enter_mobile_number), Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.send_money_enter_mobile_number), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
                     return;
@@ -245,56 +243,28 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
                     return;
                 }
                 if (string_amount.length() == 0) {
-                    Toast toast = Toast.makeText(getBaseContext(),getResources().getString(R.string.send_money_enter_amount), Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.send_money_enter_amount), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
                     return;
                 }
                 Double _amount = Double.parseDouble(string_amount);
                 if (_amount < limits.getMinValuePerTransaction() || _amount > limits.getMaxValuePerTransaction()) {
-                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.send_money_amount_between) + limits.getMinValuePerTransaction() +getResources().getString(R.string.send_money_amount_between_to)+ limits.getMaxValuePerTransaction(), Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.send_money_amount_between) + limits.getMinValuePerTransaction() + getResources().getString(R.string.send_money_amount_between_to) + limits.getMaxValuePerTransaction(), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
                     return;
                 }
-                if (ooredoo_sendmoneyscreeen_pin_layout.getVisibility() == View.VISIBLE && pinlayout_line_view.getVisibility() == View.VISIBLE) {
-                    if (ooredoo_sendmoneyscreeen_local_pin_edt.getText().length() == 0) {
-                        Toast toast = Toast.makeText(getBaseContext(),getResources().getString(R.string.send_money_enter_password), Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                        toast.show();
-                        return;
-                        // Its visible
-                    }
-                }  /*else {
-                        // Either gone or invisible
-                    }
-                    if (amount > limits.getTpinLimit()) {
-                        ooredoo_sendmoneyscreeen_pin_layout.setVisibility(View.VISIBLE);
-                        pinlayout_line_view.setVisibility(View.VISIBLE);
-                        Toast toast = Toast.makeText(getBaseContext(), "Please enter TPIN", Toast.LENGTH_SHORT);
-                        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                        toast.show();
-
-                    }*/
-                    /*--------------Disabled by krishna-----------------------*/
-//                    CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication)getApplication()).getCustomerLoginRequestReponse();
-
                 peerToPeerTranRequest = new PeerToPeerTranRequest();
-
-                    /*--------------Disabled by krishna-----------------------*/
-                    /*if (customerLoginRequestReponse.getWalletBalance() < _amount) {
-                        Toast toast = Toast.makeText(getBaseContext(), "Please load amount to do this transaction", Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                        toast.show();
-                        return;
-                    }*/
                 peerToPeerTranRequest.setTxnAmount(Double.parseDouble(string_amount));
                 peerToPeerTranRequest.setRecipientName(null);
-                peerToPeerTranRequest.setTpin(string_pin);
+                peerToPeerTranRequest.setTpin("");
                 peerToPeerTranRequest.setRecipientMobileNumber(local_recipientmobilenumber);
-                sendmoneyProcessing();
-
-                // }
+                if (IsBio)
+                    ShowEnterPassword();
+                else {
+                    sendMoneyProcessing();
+                }
             }
         });
         send_money_selectcontact_local_image.setOnClickListener(new OnClickListener() {
@@ -334,15 +304,169 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
 
                     }
                 });
-        /*View viewActionBar = getLayoutInflater().inflate(
-                R.layout.ooredoo_sendmoney_actionbar_title, null);
-        ActionBar.LayoutParams params = new ActionBar.LayoutParams(
-                // Center the textview in the ActionBar !
-                ActionBar.LayoutParams.WRAP_CONTENT,
-                ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
-        TextView textviewTitle = (TextView) viewActionBar
-                .findViewById(R.id.actionbar_textview);
-        textviewTitle.setText("SEND MONEY");*/
+    }
+
+    private void verifyBiometric() {
+        try {
+            boolean isFingerprintAvailable = false;
+            if (!mFragment.isAdded()) {
+                boolean isFingerprintPermissionGranted = ActivityCompat.checkSelfPermission(
+                        SendMoneyLeg1RequestActivity.this, Manifest.permission.USE_FINGERPRINT)
+                        == PackageManager.PERMISSION_GRANTED;
+                if (mFingerprintManager != null) {
+                    isFingerprintAvailable = mFingerprintManager.isHardwareDetected()
+                            && mFingerprintManager.hasEnrolledFingerprints();
+                }
+                if (!isFingerprintPermissionGranted || !isFingerprintAvailable) {
+                    // The user either rejected permission to read their fingerprint, we're on
+                    // a device that doesn't support it, or the user doesn't have any
+                    // fingerprints enrolled.
+                    // Let them authenticate with a password
+                    mFragment.setStage(
+                            FingerprintAuthenticationDialogFragmentSendMoney.Stage.PASSWORD);
+                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+                } else if (initCipher()) {
+                    // Set up the crypto object for later. The object will be authenticated by use
+                    // of the fingerprint.
+                    // Show the fingerprint dialog. The user has the option to use the fingerprint with
+                    // crypto, or you can fall back to using a server-side verified password.
+                    mFragment.setCryptoObject(new FingerprintManagerCompat.CryptoObject(mCipher));
+                    boolean useFingerprintPreference = mSharedPreferences
+                            .getBoolean(getString(R.string.use_fingerprint_to_authenticate_key),
+                                    true);
+                    if (useFingerprintPreference) {
+                        mFragment.setStage(
+                                FingerprintAuthenticationDialogFragmentSendMoney.Stage.FINGERPRINT);
+                    } else {
+                        mFragment.setStage(
+                                FingerprintAuthenticationDialogFragmentSendMoney.Stage.PASSWORD);
+                    }
+                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+                } else {
+                    // This happens if the lock screen has been disabled or or a fingerprint got
+                    // enrolled. Thus show the dialog to authenticate with their password first
+                    // and ask the user if they want to authenticate with fingerprints in the
+                    // future
+                    mFragment.setCryptoObject(new FingerprintManagerCompat.CryptoObject(mCipher));
+                    mFragment.setStage(
+                            FingerprintAuthenticationDialogFragmentSendMoney.Stage.NEW_FINGERPRINT_ENROLLED);
+                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
+                }
+            }
+        } catch (Exception e) {
+            Toast.makeText(SendMoneyLeg1RequestActivity.this, " Fingerprint Sensor Exc: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            e.printStackTrace();
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    private boolean initCipher() {
+        try {
+            if (mKeyStore == null) {
+                createKey();
+            }
+            mKeyStore.load(null);
+            SecretKey key = (SecretKey) mKeyStore.getKey(KEY_NAME, null);
+            mCipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
+                    + KeyProperties.BLOCK_MODE_CBC + "/"
+                    + KeyProperties.ENCRYPTION_PADDING_PKCS7);
+            mCipher.init(Cipher.ENCRYPT_MODE, key);
+            return true;
+        } catch (Exception e) {
+            if (e instanceof KeyPermanentlyInvalidatedException)
+                return false;
+            else if (e instanceof KeyStoreException | e instanceof CertificateException | e instanceof UnrecoverableKeyException | e instanceof IOException | e instanceof NoSuchAlgorithmException | e instanceof InvalidKeyException)
+                throw new RuntimeException("Failed to init Cipher", e);
+        }
+        /*catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
+                | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException e) {
+            throw new RuntimeException("Failed to init Cipher", e);
+        }*/
+        return false;
+    }
+
+    @TargetApi(Build.VERSION_CODES.M)
+    public void createKey() {
+        // The enrolling flow for fingerprint. This is where you ask the user to set up fingerprint
+        // for your flow. Use of keys is necessary if you need to know if the set of
+        // enrolled fingerprints has changed.
+        try {
+            mKeyStore = KeyStore.getInstance("AndroidKeyStore");
+            mKeyStore.load(null);
+            // Set the alias of the entry in Android KeyStore where the key will appear
+            // and the constrains (purposes) in the constructor of the Builder
+            KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
+            keyGenerator.init(new KeyGenParameterSpec.Builder(KEY_NAME,
+                    KeyProperties.PURPOSE_ENCRYPT |
+                            KeyProperties.PURPOSE_DECRYPT)
+                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
+                    // Require the user to authenticate with a fingerprint to authorize every use
+                    // of the key
+                    .setUserAuthenticationRequired(true)
+                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
+                    .build());
+            keyGenerator.generateKey();
+        } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | KeyStoreException
+                | CertificateException | NoSuchProviderException | IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void ShowEnterPassword() {
+        promptsViewPassword = new Dialog(this);
+        promptsViewPassword.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        promptsViewPassword.setContentView(R.layout.enter_password);
+        final EditText pin = promptsViewPassword.findViewById(R.id.pay_via_qrcode_pin_edt);
+        final Button pay_qrcode_cancel_btn_new = promptsViewPassword.findViewById(R.id.pay_qrcode_cancel_btn_new);
+        final Button verify_password_btn_new = promptsViewPassword.findViewById(R.id.verify_password_btn_new);
+        pin.setOnTouchListener((view, motionEvent) -> {
+            final int DRAWABLE_RIGHT = 2;
+            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                if (motionEvent.getRawX() >= (pin.getRight() - pin.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                    verifyBiometric();
+                }
+            }
+            return false;
+        });
+        pay_qrcode_cancel_btn_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                promptsViewPassword.dismiss();
+            }
+        });
+        verify_password_btn_new.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (pin.getText().toString().equals("")) {
+                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_password_validate), Toast.LENGTH_LONG);
+                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                    toast.show();
+                    return;
+                }
+                tpin = pin.getText().toString().trim();
+                sendMoneyProcessing();
+                promptsViewPassword.dismiss();
+            }
+        });
+        promptsViewPassword.show();
+    }
+
+    private void alertDialog() {
+        LayoutInflater li = LayoutInflater.from(this);
+        View promptsView = li.inflate(R.layout.custom_alert_whatsapp, null);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(SendMoneyLeg1RequestActivity.this);
+        alertDialog.setView(promptsView);
+        alertDialog.show();
+    }
+
+    public void onPurchased(boolean withFingerprint, String password) {
+        boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
+        if (!bio)
+            alertDialog();
+        else {
+            tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
+            sendMoneyProcessing();
+        }
     }
 
     @Override
@@ -354,18 +478,19 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
         logger.logEvent("Send money - enter mobile no & amount page");
 
 
-
         //Firebase
         Bundle bundle = new Bundle();
         bundle.putInt(FirebaseAnalytics.Param.ITEM_ID, 8);
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Send money - enter mobile no & amount page");
         //Logs an app event.
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-        Log.e("Firebase "," Event 8 logged");
+        Log.e("Firebase ", " Event 8 logged");
 
     }
 
-    private void sendmoneyProcessing() {
+    private void sendMoneyProcessing() {
+        if (IsBio)
+            peerToPeerTranRequest.setTpin(tpin);
         CoreApplication application = (CoreApplication) getApplication();
         String uiProcessorReference = application.addUserInterfaceProcessor(new SendMoneyPhase1Processing(peerToPeerTranRequest, application, true));
         ProgressDialogFrag progress = new ProgressDialogFrag();
@@ -383,30 +508,6 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
 
     @Override
     public void onProgressComplete() {
-
-    }
-
-    public class ItemData {
-        String text;
-        Integer imageId;
-
-
-        public ItemData(String text, Integer imageId) {
-            this.text = text;
-            this.imageId = imageId;
-
-        }
-
-
-        public String getText() {
-            return text;
-
-        }
-
-        public Integer getImageId() {
-
-            return imageId;
-        }
 
     }
 
@@ -523,7 +624,7 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
                 }
             }
         };
-        new Thread(new ServerConnection(0, messageHandler, buffer.toString(),getApplicationContext())).start();
+        new Thread(new ServerConnection(0, messageHandler, buffer.toString(), getApplicationContext())).start();
         showIfNotVisible("");
     }
 
@@ -543,5 +644,29 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
             progress.show();
             progress.isShowing();
         }
+    }
+
+    public class ItemData {
+        String text;
+        Integer imageId;
+
+
+        public ItemData(String text, Integer imageId) {
+            this.text = text;
+            this.imageId = imageId;
+
+        }
+
+
+        public String getText() {
+            return text;
+
+        }
+
+        public Integer getImageId() {
+
+            return imageId;
+        }
+
     }
 }

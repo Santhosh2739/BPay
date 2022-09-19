@@ -161,9 +161,9 @@ public class ShowQRCode extends GenericActivity {
                 Intent serviceIntent = new Intent(getBaseContext(), SyncService.class);
                 serviceIntent.putExtra("type", SyncService.TYPE_USER_LOGGED_IN_STATUS);
                 startService(serviceIntent);
-                ((CoreApplication) getApplication()).setTransactionHistoryResponse(new TransactionHistoryResponse());
+                /*((CoreApplication) getApplication()).setTransactionHistoryResponse(new TransactionHistoryResponse());
                 Intent intent = new Intent(getBaseContext(), TransactionHistoryActivity.class);
-                startActivity(intent);
+                startActivity(intent);*/
                 ShowQRCode.this.finish();
             }
         });

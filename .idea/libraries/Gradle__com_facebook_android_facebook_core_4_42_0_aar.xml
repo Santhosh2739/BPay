@@ -4,6 +4,12 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c1bc36e722ef1e3edeb5228d99426f54/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c1bc36e722ef1e3edeb5228d99426f54/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c1bc36e722ef1e3edeb5228d99426f54/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7ccaf7faaa73fc749f35869c1495bf57/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/238c46247a52f84a1b5a04bba3540e59/transformed/facebook-core-4.42.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/33f6e169085950631d1bf560882eac52/transformed/jetified-facebook-core-4.42.0/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bfa388525ca000b172e220f86463d893/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7ccaf7faaa73fc749f35869c1495bf57/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/7ccaf7faaa73fc749f35869c1495bf57/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.android/facebook-core/4.42.0/cefb60deba6266d6d3e28d36c074718a86bcbd72/facebook-core-4.42.0-javadoc.jar!/" />

@@ -122,7 +122,8 @@ public enum TransType {
     INVOICE_PAYMENT_REQUEST(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
     OFFER_BANNER_REQUEST(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
     OFFER_BANNER_RESPONSE,
-
+    FORGOT_CHECK_REQUEST(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
+    FORGOT_CHECK_RESPONSE,
     BIO_LOGIN_CUSTOMER_REQUEST(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
     BIO_LOGIN_CUSTOMER_RESPONSE,
     INVOICE_DETAILS_REQUEST(ADDRESS_BASE.getURL() + "ooredooServerRequest"),

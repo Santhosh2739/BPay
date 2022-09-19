@@ -1186,7 +1186,7 @@ customercare@bookeey.com\nThank you.</string>
     //Offers error message starts
     <string name="Received_Password_entered_wrong">Received Password entered wrong</string>
     //Offers error message starts
-
+    <string name="Wrong_Password">Entered Password is wrong</string>
 
     //Change PIN starts
     <string name="bpoitns">BPoints</string>

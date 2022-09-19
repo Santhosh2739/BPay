@@ -4,6 +4,9 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/665748fef542784d41413e12975d24ad/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/665748fef542784d41413e12975d24ad/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/665748fef542784d41413e12975d24ad/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3bb84d4c677ba8fbea986d67ce1a56a8/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3bb84d4c677ba8fbea986d67ce1a56a8/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3bb84d4c677ba8fbea986d67ce1a56a8/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.android/facebook-share/4.42.0/3e09e423eaa79903ec9d4d02df95ce3be786ecdf/facebook-share-4.42.0-javadoc.jar!/" />

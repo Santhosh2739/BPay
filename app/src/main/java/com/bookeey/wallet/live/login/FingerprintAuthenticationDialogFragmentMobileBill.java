@@ -19,44 +19,46 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bookeey.wallet.live.R;
-import com.bookeey.wallet.live.invoice.InvoiceL1Activity;
-import com.bookeey.wallet.live.mainmenu.MainActivity;
+import com.bookeey.wallet.live.mobilebill.MobileBill_L1_Activity;
 
 import javax.inject.Inject;
+
 /**
  * A dialog which uses fingerprint APIs to authenticate the user, and falls back to password
  * authentication if fingerprint is not available.
  */
-public class FingerprintAuthenticationDialogFragmentPayQR extends DialogFragment
+public class FingerprintAuthenticationDialogFragmentMobileBill extends DialogFragment
         implements TextView.OnEditorActionListener, FingerprintUiHelper.Callback {
 
+    @Inject
+    FingerprintUiHelper.FingerprintUiHelperBuilder mFingerprintUiHelperBuilder;
+    @Inject
+    InputMethodManager mInputMethodManager;
+    @Inject
+    SharedPreferences mSharedPreferences;
     private Button mCancelButton;
     private Button mSecondDialogButton;
     private View mFingerprintContent;
     private View mBackupContent;
     private EditText mPassword;
+    private final Runnable mShowKeyboardRunnable = new Runnable() {
+        @Override
+        public void run() {
+            mInputMethodManager.showSoftInput(mPassword, 0);
+        }
+    };
     private CheckBox mUseFingerprintFutureCheckBox;
     private TextView mPasswordDescriptionTextView;
     private TextView mNewFingerprintEnrolledTextView;
-
+//    private LoginActivityNewFlow mActivityNewFlow;
     private Stage mStage = Stage.FINGERPRINT;
-
     private CryptoObject mCryptoObject;
     private FingerprintUiHelper mFingerprintUiHelper;
-//    private LoginActivity mActivity;
-    private MainActivity mActivityFromSplashNewFlow;
-//    private LoginActivityNewFlow mActivityNewFlow;
-
-
-
-    @Inject FingerprintUiHelper.FingerprintUiHelperBuilder mFingerprintUiHelperBuilder;
-    @Inject
-    InputMethodManager mInputMethodManager;
-    @Inject
-    SharedPreferences mSharedPreferences;
+    //    private LoginActivity mActivity;
+    private MobileBill_L1_Activity mActivityFromSplashNewFlow;
 
     @Inject
-    public FingerprintAuthenticationDialogFragmentPayQR() {
+    public FingerprintAuthenticationDialogFragmentMobileBill() {
     }
 
     @Override
@@ -82,7 +84,6 @@ public class FingerprintAuthenticationDialogFragmentPayQR extends DialogFragment
         });
 
         mSecondDialogButton = (Button) v.findViewById(R.id.second_dialog_button);
-        mSecondDialogButton.setVisibility(View.GONE);
         mSecondDialogButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -137,12 +138,9 @@ public class FingerprintAuthenticationDialogFragmentPayQR extends DialogFragment
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 //        mActivity = (LoginActivity) activity;
-        mActivityFromSplashNewFlow = (MainActivity) activity;
+        mActivityFromSplashNewFlow = (MobileBill_L1_Activity) activity;
 //        mActivityFromGuestMainMenu = (LoginActivityFromGuestMainMenu)activity;
 //        mActivityNewFlow = (LoginActivityNewFlow) activity;
-
-
-
 
 
     }
@@ -198,7 +196,7 @@ public class FingerprintAuthenticationDialogFragmentPayQR extends DialogFragment
         }
         // mPassword.setText("");
 //        mActivity.onPurchased(false,mPassword.getText().toString() /* without Fingerprint */);
-        mActivityFromSplashNewFlow.onPurchased(false,mPassword.getText().toString() /* without Fingerprint */);
+        mActivityFromSplashNewFlow.onPurchased(false, mPassword.getText().toString() /* without Fingerprint */);
 //        mActivityNewFlow.onPurchased(false,mPassword.getText().toString() /* without Fingerprint */);
 //        mActivityFromGuestMainMenu.onPurchased(false,mPassword.getText().toString() /* without Fingerprint */);
         dismiss();
@@ -212,13 +210,6 @@ public class FingerprintAuthenticationDialogFragmentPayQR extends DialogFragment
         // In the real world situation, the password needs to be verified in the server side.
         return password.length() > 0;
     }
-
-    private final Runnable mShowKeyboardRunnable = new Runnable() {
-        @Override
-        public void run() {
-            mInputMethodManager.showSoftInput(mPassword, 0);
-        }
-    };
 
     private void updateStage() {
         switch (mStage) {
@@ -258,7 +249,7 @@ public class FingerprintAuthenticationDialogFragmentPayQR extends DialogFragment
         // Callback from FingerprintUiHelper. Let the activity know that authentication was
         // successful.
 //        mActivity.onPurchased(true ,""/* withFingerprint */);
-        mActivityFromSplashNewFlow.onPurchased(true ,""/* withFingerprint */);
+        mActivityFromSplashNewFlow.onPurchased(true, ""/* withFingerprint */);
 //        mActivityNewFlow.onPurchased(true ,""/* withFingerprint */);
 
 //        mActivityFromGuestMainMenu.onPurchased(true ,""/* withFingerprint */);
