@@ -2,9 +2,9 @@
   <library name="Gradle: com.google.android.gms:play-services-awareness:11.4.0@aar">
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/75c3c6ecae004693ada7bc44b7182fea/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f493ba68f3f14c11b6f56607d7801cdb/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f493ba68f3f14c11b6f56607d7801cdb/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f493ba68f3f14c11b6f56607d7801cdb/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/e63879bc1a1de4418bc45fd569ad912f/transformed/play-services-awareness-11.4.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/e63879bc1a1de4418bc45fd569ad912f/transformed/play-services-awareness-11.4.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

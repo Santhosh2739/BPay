@@ -2,9 +2,9 @@
   <library name="Gradle: com.google.android.gms:play-services-location:11.4.0@aar">
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bfe44677edc28a78b76e915f303f0e92/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/93232f80646527dedd8637cb97800358/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/93232f80646527dedd8637cb97800358/AndroidManifest.xml" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/93232f80646527dedd8637cb97800358/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/b4a5162658be53d88fd6d1f5d0f1f1db/transformed/play-services-location-11.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/b4a5162658be53d88fd6d1f5d0f1f1db/transformed/play-services-location-11.4.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -14,6 +14,7 @@
 
         <activity
             android:name=".Splash"
+            android:exported="true"
             android:label="@string/app_name"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -62,29 +63,36 @@
         <activity
             android:name=".OoredooWelcome"
             android:configChanges="keyboardHidden"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".registration.OoredooRegistration"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="newflow.OoredooRegistrationNewFlow"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".registration.RejectEditOoredooRegistration"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".registration.TermsAndConditions"
             android:configChanges="keyboardHidden"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".changes.DevChangeDeviceNumber"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
             android:name=".changes.MobChangeMobileNumber"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateAlwaysHidden" />
         <activity
@@ -98,14 +106,17 @@
         <activity
             android:name=".registration.OoredooActivation"
             android:configChanges="keyboardHidden"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".OoredooValidation"
             android:configChanges="keyboardHidden"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="newflow.OoredooValidateFromGuestMainMenu"
             android:configChanges="keyboardHidden"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".registration.Ooredoo_NotApprovedActivity"
@@ -138,6 +149,7 @@
         <activity
             android:name=".voicecommands.VoiceCommndsDialogActivity"
             android:configChanges="keyboardHidden"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent" />
         <activity
@@ -147,10 +159,12 @@
         <activity
             android:name=".login.ResetTPIN"
             android:configChanges="keyboardHidden"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent" />
         <activity
             android:name=".sendmoney.SendMoneyLeg1RequestActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -159,6 +173,7 @@
         </activity>
         <activity
             android:name=".PayUWebPage"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -167,6 +182,7 @@
         </activity>
         <activity
             android:name=".ViewProfileActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -175,6 +191,7 @@
         </activity>
         <activity
             android:name=".prepaidcard.VirtualPrepaidcardListActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -183,6 +200,7 @@
         </activity>
         <activity
             android:name=".sendmoney.SendMoneyFinalScreen"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -191,6 +209,7 @@
         </activity>
         <activity
             android:name=".mainmenu.MainActivity"
+            android:exported="false"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.nfc.action.NDEF_DISCOVERED" />
@@ -203,9 +222,11 @@
         <activity
             android:name=".login.LoginActivity"
             android:configChanges="locale|orientation"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name=".CheckForUpdatesActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -214,6 +235,7 @@
         </activity>
         <activity
             android:name=".paytomerchant.ShowQRCode"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -222,6 +244,8 @@
         </activity>
         <activity
             android:name=".Contact_Us_Activity"
+            android:exported="false"
+
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -230,6 +254,7 @@
         </activity>
         <activity
             android:name=".txnhistory.About_Us_Activity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -238,6 +263,7 @@
         </activity>
         <activity
             android:name="newflow.TransactionHistoryActivityNewFlow"
+            android:exported="false"
             android:parentActivityName="newflow.MainActivityNewFlow"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -247,6 +273,7 @@
         </activity>
         <activity
             android:name=".txnhistory.TransactionHistoryActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -256,6 +283,7 @@
         </activity>
         <activity
             android:name=".txnhistory.TransactionHistoryDisplayActivity"
+            android:exported="false"
             android:parentActivityName=".txnhistory.TransactionHistoryActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -264,6 +292,7 @@
         </activity>
         <activity
             android:name="newflow.TransactionHistoryDisplayActivityNewFlow"
+            android:exported="false"
             android:parentActivityName="newflow.TransactionHistoryActivityNewFlow"
             android:screenOrientation="portrait">
             <meta-data
@@ -272,18 +301,22 @@
         </activity>
         <activity
             android:name=".login.ForgotPassword_Success"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent" />
         <activity
             android:name=".login.ResetTPIN_Success"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent" /> <!-- Declaring Service in Manifest -->
         <activity
             android:name=".sendmoney.SendMoneyConfirmation"
+            android:exported="false"
             android:parentActivityName=".sendmoney.SendMoneyLeg1RequestActivity"
             android:screenOrientation="portrait" />
         <activity
             android:name=".Help"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -293,6 +326,7 @@
 
         <activity
             android:name=".wheretopay.MerchantListCatogorieyActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -302,6 +336,7 @@
         </activity>
         <activity
             android:name="wheretopaynew.MerchantListCatogorieyActivityNewUI"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -311,6 +346,7 @@
         </activity>
         <activity
             android:name="wheretopaynew.MerchantListCatogorieyActivityNewUIActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -320,6 +356,7 @@
         </activity>
         <activity
             android:name="newflow.MerchantListCatogorieyActivityNewFlowNewUI"
+            android:exported="false"
             android:parentActivityName="newflow.MainActivityNewFlow"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1"
@@ -330,6 +367,7 @@
         </activity>
         <activity
             android:name="newflow.MerchantListCatogorieyActivityNewFlowNewUIActivity"
+            android:exported="false"
             android:parentActivityName="newflow.MainActivityNewFlow"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1"
@@ -340,6 +378,7 @@
         </activity>
         <activity
             android:name=".wheretopay.MerchantMapsActivity"
+            android:exported="false"
             android:parentActivityName=".wheretopay.MerchantListCatogorieyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -349,6 +388,7 @@
         </activity>
         <activity
             android:name=".offers.OffersActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -357,6 +397,7 @@
         </activity>
         <activity
             android:name=".offers.NewOffersActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -365,6 +406,7 @@
         </activity>
         <activity
             android:name=".offers.IndividualSavedMerchantOffersActivity"
+            android:exported="false"
             android:parentActivityName=".offers.NewOffersActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -373,6 +415,7 @@
         </activity>
         <activity
             android:name=".recharge.TopUpInitialActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -381,6 +424,7 @@
         </activity>
         <activity
             android:name=".offers.RedeemOffersActivity"
+            android:exported="false"
             android:parentActivityName=".offers.IndividualSavedMerchantOffersActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -389,6 +433,7 @@
         </activity>
         <activity
             android:name=".offers.ShowRedeemQRcode"
+            android:exported="false"
             android:parentActivityName=".offers.OffersActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -397,6 +442,7 @@
         </activity>
         <activity
             android:name=".recharge.TopupScreen2Activity"
+            android:exported="false"
             android:parentActivityName=".recharge.TopUpInitialActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -405,6 +451,7 @@
         </activity>
         <activity
             android:name=".recharge.TopupL1ScreenActvity"
+            android:exported="false"
             android:parentActivityName=".recharge.TopupScreen2Activity"
             android:screenOrientation="portrait">
             <meta-data
@@ -413,6 +460,7 @@
         </activity>
         <activity
             android:name=".recharge.TopupFinalScreenActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -421,6 +469,7 @@
         </activity>
         <activity
             android:name=".offers.MyActiveOffersActivity"
+            android:exported="false"
             android:parentActivityName=".offers.OffersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -433,6 +482,7 @@
             android:theme="@style/Transparent" />
         <activity
             android:name=".offers.ShowOfferActivity"
+            android:exported="false"
             android:parentActivityName=".offers.IndividualSavedMerchantOffersActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -442,6 +492,7 @@
         </activity>
         <activity
             android:name=".offers.ShowOfferActivityNewFlow"
+            android:exported="false"
             android:launchMode="singleTop"
             android:parentActivityName="newflow.NewOffersActivityNewFlow"
             android:screenOrientation="portrait"
@@ -452,6 +503,7 @@
         </activity>
         <activity
             android:name=".offers.ShowOfferActivityAfterLogin"
+            android:exported="false"
             android:parentActivityName=".offers.NewOffersActivityAfterLogin"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -461,6 +513,7 @@
         </activity>
         <activity
             android:name=".Merchant_Map_Activity"
+            android:exported="false"
             android:parentActivityName=".wheretopay.MerchantListCatogorieyActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -470,6 +523,7 @@
         </activity>
         <activity
             android:name=".wheretopay.GpsNavigationActivty"
+            android:exported="false"
             android:parentActivityName=".Merchant_Map_Activity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -479,6 +533,7 @@
         </activity>
         <activity
             android:name=".prepaidcard.VirtualDenominationActivity"
+            android:exported="false"
             android:parentActivityName=".prepaidcard.VirtualPrepaidcardListActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -487,6 +542,7 @@
         </activity>
         <activity
             android:name=".prepaidcard.LocalCurrencyAmountActivity"
+            android:exported="false"
             android:parentActivityName=".prepaidcard.VirtualDenominationActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Dialog">
@@ -496,6 +552,7 @@
         </activity>
         <activity
             android:name=".prepaidcard.FinalVirtualCardActvity"
+            android:exported="false"
             android:parentActivityName=".prepaidcard.VirtualPrepaidcardListActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -504,6 +561,7 @@
         </activity>
         <activity
             android:name=".mobilebill.MobileBill_List_Activity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -512,6 +570,7 @@
         </activity>
         <activity
             android:name=".mobilebill.MobileBill_L1_Activity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -520,6 +579,7 @@
         </activity>
         <activity
             android:name=".mobilebill.MobileBill_L2_Activity"
+            android:exported="false"
             android:parentActivityName=".mobilebill.MobileBill_L1_Activity"
             android:screenOrientation="portrait">
             <meta-data
@@ -528,6 +588,7 @@
         </activity>
         <activity
             android:name=".mobilebill.MobileBill_Final_Screen"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -536,6 +597,7 @@
         </activity>
         <activity
             android:name=".prepaidcard.VirtualPrepaidMainActivityNew"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -544,6 +606,7 @@
         </activity>
         <activity
             android:name=".prepaidcard.VirtualPrepaidL1Activity"
+            android:exported="false"
             android:parentActivityName=".prepaidcard.VirtualPrepaidcardListActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -552,6 +615,7 @@
         </activity>
         <activity
             android:name=".prepaidcard.VirtualPrepaid_final_Activity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -560,6 +624,7 @@
         </activity>
         <activity
             android:name=".invoice.Invoice_List_Activity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -568,6 +633,7 @@
         </activity>
         <activity
             android:name=".webotp.BWeb_ECom_OTP_List_Activity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -576,6 +642,7 @@
         </activity>
         <activity
             android:name=".invoice.InvoiceL1Activity"
+            android:exported="false"
             android:parentActivityName=".invoice.Invoice_List_Activity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateHidden">
@@ -585,6 +652,7 @@
         </activity>
         <activity
             android:name=".invoice.InvoiceFinalActivity"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -593,14 +661,17 @@
         </activity>
         <activity
             android:name=".invoice.InvoiceReasonDialogue"
+            android:exported="false"
             android:screenOrientation="portrait"
             android:theme="@style/Transparent" />
         <activity
             android:name=".changes.ChangePinActivity"
+            android:exported="false"
             android:label="@string/title_activity_change_pin"
             android:screenOrientation="portrait" />
         <activity
             android:name=".changes.ChangeTPinActivity"
+            android:exported="false"
             android:label="@string/title_activity_change_pin"
             android:screenOrientation="portrait" /> <!-- <meta-data -->
         <!-- android:name="com.google.android.gms.version" -->
@@ -608,6 +679,7 @@
         <!-- Production -->
         <activity
             android:name="coreframework.utils.SendLogReportsActivity"
+            android:exported="false"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="coreframework.utils.SendLogReportsActivity" />
@@ -638,18 +710,22 @@
         -->
         <activity
             android:name="newflow.MainActivityNewFlow"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="newflow.LoginActivityFromSplashNewFlow"
             android:configChanges="locale|orientation"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="newflow.LoginActivityFromGuestMainMenu"
             android:configChanges="locale|orientation"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
         <activity
             android:name="newflow.MerchantListCatogorieyActivityNewFlow"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme1">
@@ -660,6 +736,7 @@
 
         <activity
             android:name="newflow.NewOffersActivityNewFlow"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -669,6 +746,7 @@
 
         <activity
             android:name=".offers.NewOffersActivityAfterLogin"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -677,6 +755,7 @@
         </activity>
         <activity
             android:name="newflow.TopUpInitialActivityNewFlow"
+            android:exported="false"
             android:parentActivityName="newflow.MainActivityNewFlow"
             android:screenOrientation="portrait">
             <meta-data
@@ -686,6 +765,7 @@
 
         <activity
             android:name="newflow.TopupL1ScreenActvityNewFlow"
+            android:exported="false"
             android:parentActivityName="newflow.TopUpInitialActivityNewFlow"
             android:screenOrientation="portrait">
             <meta-data
@@ -695,6 +775,7 @@
 
         <activity
             android:name="newflow.TopupL1ScreenActivityNewFlowCustomerInfo"
+            android:exported="false"
             android:parentActivityName="newflow.TopUpInitialActivityNewFlow"
             android:screenOrientation="portrait">
             <meta-data
@@ -703,6 +784,7 @@
         </activity>
         <activity
             android:name="newflow.MobileBill_List_ActivityNewFlow"
+            android:exported="false"
             android:parentActivityName="newflow.MainActivityNewFlow"
             android:screenOrientation="portrait">
             <meta-data
@@ -711,6 +793,7 @@
         </activity>
         <activity
             android:name="newflow.MobileBill_L1_ActivityNewFlow"
+            android:exported="false"
             android:parentActivityName="newflow.MainActivityNewFlow"
             android:screenOrientation="portrait">
             <meta-data
@@ -719,6 +802,7 @@
         </activity>
         <activity
             android:name="newflow.MobileBill_L1_ActivityNewFlowCustomerInfo"
+            android:exported="false"
             android:parentActivityName="newflow.MainActivityNewFlow"
             android:screenOrientation="portrait">
             <meta-data
@@ -727,6 +811,7 @@
         </activity>
         <activity
             android:name="newflow.VoucherPrepaid_L1_ActivityNewFlowCustomerInfo"
+            android:exported="false"
             android:parentActivityName="newflow.MainActivityNewFlow"
             android:screenOrientation="portrait">
             <meta-data
@@ -735,6 +820,7 @@
         </activity>
         <activity
             android:name="newflow.VirtualPrepaidMainActivityNewNewFlow"
+            android:exported="false"
             android:parentActivityName="newflow.MainActivityNewFlow"
             android:screenOrientation="portrait">
             <meta-data
@@ -743,6 +829,7 @@
         </activity>
         <activity
             android:name="newflow.PayUWebPageNewFlow"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -752,6 +839,7 @@
         <activity
             android:name="newflow.LoginActivityNewFlow"
             android:configChanges="locale|orientation"
+            android:exported="false"
             android:screenOrientation="portrait" />
 
 
@@ -760,18 +848,23 @@
 
         <activity
             android:name="merchant.DisplayAmountToMerchantActivityDummy"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="merchant.QRCodePaymentCollectionLeg2RequestScreen"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="merchant.QRCodePaymentCollectionFinalScreen"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="merchant.StaticQRCodePaymentCollectionFinalScreen"
+            android:exported="false"
             android:screenOrientation="portrait" />
         <activity
             android:name="merchant.StaticQRCodePaymentFinalScreenCX"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -780,6 +873,7 @@
         </activity>
         <activity
             android:name="merchant.StaticQRCodePaymentConfirmationScreenCX"
+            android:exported="false"
             android:parentActivityName=".mainmenu.MainActivity"
             android:screenOrientation="portrait">
             <meta-data
@@ -790,7 +884,9 @@
         <activity
             android:name="br.com.google.zxing.client.android.CaptureActivity"
             android:configChanges="orientation|keyboardHidden"
+            android:exported="false"
             android:screenOrientation="portrait" />
+
         <meta-data
             android:name="com.google.android.maps.v2.API_KEY"
             android:value="AIzaSyD0o9zWuzYlxhZmZ6yjtNzYdemOxd4V1Yc" />
@@ -807,6 +903,7 @@
             android:name="com.facebook.FacebookContentProvider"
             android:authorities="com.facebook.app.FacebookContentProvider1234"
             android:exported="true" />
+
         <service
             android:name=".application.SyncService"
             android:exported="false" />
@@ -827,16 +924,19 @@
                 <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
             </intent-filter>
         </service>
+
         <uses-library
             android:name="org.apache.http.legacy"
             android:required="false" />
     </application>
+
     <permission
         android:name="com.bookeey.wallet.live.permission.MAPS_RECEIVE"
         android:protectionLevel="signature" />
     <permission
         android:name="com.bookeey.wallet.live.gcm.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature
         android:glEsVersion="0x00020000"
@@ -847,6 +947,7 @@
     <uses-feature
         android:name="android.hardware.location.gps"
         android:required="true" />
+
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />

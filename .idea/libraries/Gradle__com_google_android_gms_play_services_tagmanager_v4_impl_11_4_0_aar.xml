@@ -3,8 +3,8 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/68fa69061366fe092afbb9c379c8556e/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/83431de2a32a35d170fcd75beefb824b/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/83431de2a32a35d170fcd75beefb824b/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/83431de2a32a35d170fcd75beefb824b/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/d3a0efeb3d28bd5215a49d48af3ba755/transformed/play-services-tagmanager-v4-impl-11.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/d3a0efeb3d28bd5215a49d48af3ba755/transformed/play-services-tagmanager-v4-impl-11.4.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

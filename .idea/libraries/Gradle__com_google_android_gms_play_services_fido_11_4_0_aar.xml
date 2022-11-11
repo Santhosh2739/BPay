@@ -2,9 +2,9 @@
   <library name="Gradle: com.google.android.gms:play-services-fido:11.4.0@aar">
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/36ff5c1dfa3961848ad90161c8c77522/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3612d50f7fa44292b78972200db65909/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3612d50f7fa44292b78972200db65909/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3612d50f7fa44292b78972200db65909/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/a8795bb2b2f5aaea05d2dd8479fa189b/transformed/play-services-fido-11.4.0/AndroidManifest.xml" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/a8795bb2b2f5aaea05d2dd8479fa189b/transformed/play-services-fido-11.4.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

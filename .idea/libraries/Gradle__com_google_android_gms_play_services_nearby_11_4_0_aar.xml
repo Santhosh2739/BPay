@@ -2,9 +2,9 @@
   <library name="Gradle: com.google.android.gms:play-services-nearby:11.4.0@aar">
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/3fe7cf17c3e07e37e2fc0a25057df9e5/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8e310a22cf5ad325f6379f3b0c6a6a2f/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8e310a22cf5ad325f6379f3b0c6a6a2f/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/8e310a22cf5ad325f6379f3b0c6a6a2f/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/2e16a51f77c144e45b9882bf878dc2a7/transformed/play-services-nearby-11.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/2e16a51f77c144e45b9882bf878dc2a7/transformed/play-services-nearby-11.4.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

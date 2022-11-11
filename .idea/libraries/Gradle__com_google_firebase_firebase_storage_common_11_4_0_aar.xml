@@ -3,8 +3,8 @@
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/c8a9a46326757d3bed5f1cfdc1938c7a/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/15447b110dcab18d2b6135c597969c5a/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/15447b110dcab18d2b6135c597969c5a/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/15447b110dcab18d2b6135c597969c5a/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/ef4b7325b234a619a337241abb99a791/transformed/firebase-storage-common-11.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/ef4b7325b234a619a337241abb99a791/transformed/firebase-storage-common-11.4.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

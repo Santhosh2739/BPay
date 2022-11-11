@@ -4,9 +4,9 @@
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/544a677d45bb7ae9cf57e949f1bc9217/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/544a677d45bb7ae9cf57e949f1bc9217/res" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/544a677d45bb7ae9cf57e949f1bc9217/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f369658dc7b3ccfa3c19033465d87112/res" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f369658dc7b3ccfa3c19033465d87112/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/f369658dc7b3ccfa3c19033465d87112/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bc213a29957e6309a7e783be72fce7df/transformed/facebook-messenger-4.42.0/AndroidManifest.xml" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/bc213a29957e6309a7e783be72fce7df/transformed/facebook-messenger-4.42.0/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/bc213a29957e6309a7e783be72fce7df/transformed/facebook-messenger-4.42.0/jars/classes.jar!/" />
     </CLASSES>
     <JAVADOC>
       <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.facebook.android/facebook-messenger/4.42.0/f6b9e057e3a148c8c8e34ff5b64471ae367ec0a7/facebook-messenger-4.42.0-javadoc.jar!/" />

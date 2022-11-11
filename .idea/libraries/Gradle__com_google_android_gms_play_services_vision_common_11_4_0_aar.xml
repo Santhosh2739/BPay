@@ -2,9 +2,9 @@
   <library name="Gradle: com.google.android.gms:play-services-vision-common:11.4.0@aar">
     <CLASSES>
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/fcf61661a70bd6fa6e473471b3bfc52e/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a7e0fa6538ac18ee50a9a97cc2c16050/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a7e0fa6538ac18ee50a9a97cc2c16050/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a7e0fa6538ac18ee50a9a97cc2c16050/res" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/87d8257f0eec4842438937e799747d01/transformed/play-services-vision-common-11.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/87d8257f0eec4842438937e799747d01/transformed/play-services-vision-common-11.4.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

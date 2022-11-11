@@ -3,7 +3,6 @@ package com.bookeey.wallet.live.registration;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.ActivityNotFoundException;
-import android.content.ContentValues;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -16,14 +15,12 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
 import android.provider.ContactsContract;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.text.Html;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.ActionMode;
 import android.view.Gravity;
@@ -34,19 +31,21 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bookeey.wallet.live.Help;
+import com.bookeey.wallet.live.R;
+import com.bookeey.wallet.live.application.CoreApplication;
+import com.facebook.appevents.AppEventsLogger;
+import com.google.gson.Gson;
+
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.util.regex.Pattern;
@@ -56,19 +55,7 @@ import coreframework.processing.Registration_processing.RegistrationProcessing;
 import coreframework.taskframework.GenericActivity;
 import coreframework.taskframework.ProgressDialogFrag;
 import coreframework.taskframework.YPCHeadlessCallback;
-
-import com.bookeey.wallet.live.Help;
-import com.bookeey.wallet.live.Manifest;
-import com.bookeey.wallet.live.R;
-import com.bookeey.wallet.live.Splash;
-import com.bookeey.wallet.live.application.CoreApplication;
-import com.bookeey.wallet.live.mainmenu.MainActivity;
-import com.facebook.appevents.AppEventsLogger;
-import com.google.gson.Gson;
-
 import coreframework.utils.LocaleHelper;
-import coreframework.utils.URLUTF8Encoder;
-import ycash.wallet.json.pojo.generic.TransType;
 import ycash.wallet.json.pojo.registration.CustomerRegistrationRequest;
 import ycash.wallet.json.pojo.registration.Scandetails;
 
@@ -77,36 +64,32 @@ public class OoredooRegistration extends GenericActivity implements YPCHeadlessC
     private static final int CAMERA_REQUEST_BACK = 124;
     private static final int PICK_FROM_GALLERY = 2;
     private static final int PICK_FROM_GALLERY_BACK = 3;
-
-    EditText registration_firstname_edit, registration_lastname_edit, registration_email_id_edit,
-            registration_mobile_edit, registration_civilid_edit, registration_security_answer_edit;
+    private static final int SELECT_PHONE_NUMBER = 24242;
 
 //    EditText registration_confirm_email_id_edit;
-
+    EditText registration_firstname_edit, registration_lastname_edit, registration_email_id_edit,
+            registration_mobile_edit, registration_civilid_edit, registration_security_answer_edit;
     ImageView registration_capture_btn_id;
-    private String front_civil_id_data = null;
-    private String back_civil_id_data = null;
-    private LinearLayout registration_front_capture_btn_id, registration_back_capture_btn_id;
     String mobile_number;
     View ooredoo_registration_view1, ooredoo_registration_view2, ooredoo_registration_view3, ooredoo_registration_view4, ooredoo_registration_view5;
     View ooredoo_registration_view6, ooredoo_registration_view07, ooredoo_registration_view08, ooredoo_registration_view7, ooredoo_registration_view8, ooredoo_registration_view9, ooredoo_registration_view10;
+    Scandetails scandetails = null;
+    String selectedLanguage = null;
+    private String front_civil_id_data = null;
+    private String back_civil_id_data = null;
+    private LinearLayout registration_front_capture_btn_id, registration_back_capture_btn_id;
     private LinearLayout ooreddoo_registration_png_attachment;
     private CheckBox registration_terms_and_conditions_checkbox;
-    private Button registration_submit_btn;
-    Scandetails scandetails = null;
-    private Uri mFrontCaptureimageUri, mBackCaptureimageUri;
     //Spinner registration_security_question_spinner;
     /*String security_question_types[] = {"Please select a question", "What is a security question?", "Are answers to security questions case sensitive?", "How do I change my security question on my Gmail account?", "What is of common security?"};
     String question_type;*/
-
-    String selectedLanguage = null;
-    private static final int SELECT_PHONE_NUMBER = 24242;
+    private Button registration_submit_btn;
+    private Uri mFrontCaptureimageUri, mBackCaptureimageUri;
     private EditText registration_referred_by_edit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
 
 
         //Rahman
@@ -195,15 +178,10 @@ public class OoredooRegistration extends GenericActivity implements YPCHeadlessC
         registration_civilid_edit = (EditText) findViewById(R.id.registration_civilid_edit);
 
 
-        registration_referred_by_edit = (EditText)findViewById(R.id.registration_referred_by_edit);
-
-
+        registration_referred_by_edit = (EditText) findViewById(R.id.registration_referred_by_edit);
 
 
         ooreddoo_registration_png_attachment = (LinearLayout) findViewById(R.id.ooreddoo_registration_png_attachment);
-
-
-
 
 
 //        registration_confirm_email_id_edit = (EditText) findViewById(R.id.registration_confirm_email_id_edit);
@@ -252,7 +230,6 @@ public class OoredooRegistration extends GenericActivity implements YPCHeadlessC
 //        });
 //        registration_confirm_email_id_edit.setLongClickable(false);
 //        registration_confirm_email_id_edit.setTextIsSelectable(false);
-
 
 
         registration_firstname_edit.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -343,7 +320,6 @@ public class OoredooRegistration extends GenericActivity implements YPCHeadlessC
 //                }
 
 
-
 //                if (registration_confirm_email_id_edit.getText().toString().length() == 0) {
 //                    Toast toast = Toast.makeText(OoredooRegistration.this, getResources().getString(R.string.Please_enter_confirm_email_id), Toast.LENGTH_SHORT);
 //                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
@@ -364,7 +340,6 @@ public class OoredooRegistration extends GenericActivity implements YPCHeadlessC
                     toast.show();
                     return;
                 }
-
 
 
                 if (front_civil_id_data == null) {
@@ -529,13 +504,12 @@ public class OoredooRegistration extends GenericActivity implements YPCHeadlessC
         }
 
 
-
-        ImageView contact_picker = (ImageView)findViewById(R.id.contact_picker);
+        ImageView contact_picker = (ImageView) findViewById(R.id.contact_picker);
         contact_picker.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                Intent i=new Intent(Intent.ACTION_PICK);
+                Intent i = new Intent(Intent.ACTION_PICK);
                 i.setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE);
                 startActivityForResult(i, SELECT_PHONE_NUMBER);
 
@@ -807,24 +781,24 @@ public class OoredooRegistration extends GenericActivity implements YPCHeadlessC
 
                     String phoneNumberWithCountryCode = cursor.getString(numberIndex);
 
-                    if(phoneNumberWithCountryCode.contains("+") && phoneNumberWithCountryCode.contains(" ")) {
+                    if (phoneNumberWithCountryCode.contains("+") && phoneNumberWithCountryCode.contains(" ")) {
 
                         Pattern complie = Pattern.compile(" ");
                         String[] phonenUmber = complie.split(phoneNumberWithCountryCode);
                         registration_referred_by_edit.setText(phonenUmber[1] + phonenUmber[2]);
 
-                    }else if(phoneNumberWithCountryCode.contains(" ")){
+                    } else if (phoneNumberWithCountryCode.contains(" ")) {
 
                         Pattern complie = Pattern.compile(" ");
                         String[] phonenUmber = complie.split(phoneNumberWithCountryCode);
                         registration_referred_by_edit.setText(phonenUmber[0] + phonenUmber[1]);
 
-                    }else if(phoneNumberWithCountryCode.contains("+")){
+                    } else if (phoneNumberWithCountryCode.contains("+")) {
 
 
                         registration_referred_by_edit.setText(phoneNumberWithCountryCode.substring(4));
 
-                    }else{
+                    } else {
 
                         registration_referred_by_edit.setText(phoneNumberWithCountryCode);
                     }
@@ -835,15 +809,7 @@ public class OoredooRegistration extends GenericActivity implements YPCHeadlessC
             }
 
 
-
-
-
-
-
-
-
         } catch (Exception e) {
-
 
 
             Toast toast = Toast.makeText(OoredooRegistration.this, "Something went wrong", Toast.LENGTH_SHORT);
@@ -869,7 +835,6 @@ public class OoredooRegistration extends GenericActivity implements YPCHeadlessC
             LocaleHelper.setLocale(OoredooRegistration.this, selectedLanguage);
         }
         //Rahman
-
 
 
         //Rahman
@@ -922,8 +887,6 @@ public class OoredooRegistration extends GenericActivity implements YPCHeadlessC
         crr.setDeviceIdNumber(deviceID);
 //        crr.setNationality(scandetails.getNationality());
 //        crr.setGender(scandetails.getGender());
-
-
 
 
 //        log
