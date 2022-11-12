@@ -136,17 +136,17 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
                     boolean bio = false;
                     try {
                         bio = responseJo.getBoolean("biometric");
-                    } catch(Exception e){
+                    } catch (Exception e) {
                         Toast toast = Toast.makeText(activity, e.getMessage(), Toast.LENGTH_LONG);
                         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                         toast.show();
                     }
                     Log.e("Bio Device", "-" + bio);
-                    if(mob == null || mob.isEmpty() || !mob.equals(newMobi)) {
-                        CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC);
+                    if (mob == null || mob.isEmpty() || !mob.equals(newMobi)) {
+                        CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                         CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
-                    }else
-                        CustomSharedPreferences.saveBooleanData(activity, bio, CustomSharedPreferences.SP_KEY.BIOMETRIC);
+                    } else
+                        CustomSharedPreferences.saveBooleanData(activity, bio, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                     CustomSharedPreferences.saveStringData(activity, newMobi, CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
                     CustomSharedPreferences.saveStringData(activity, responseJo.getString("custFirstName"), CustomSharedPreferences.SP_KEY.NAME);
                     //CustomSharedPreferences.saveBooleanData(activity, responseJo.getBoolean("biometric"), CustomSharedPreferences.SP_KEY.BIOMETRIC);
@@ -172,7 +172,7 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
                 CustomSharedPreferences.saveIntData(activity, 1, CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
 
                 if (guestSignUp && isFromMainNewFlow) {
-                    CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC);
+                    CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                     CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
                     Intent in = new Intent(activity, OoredooRegistrationNewFlow.class);
                     activity.startActivity(in);
@@ -183,7 +183,7 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
 //                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
 //                    toast.show();
                     //Jan 07 Original START
-                    CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC);
+                    CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                     CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
                     Intent in = new Intent(activity, OoredooValidateFromGuestMainMenu.class);
                     activity.startActivity(in);
@@ -223,17 +223,17 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
                     String mob = CustomSharedPreferences.getStringData(activity, CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
                     boolean bio = responseJo.getBoolean("biometric");
                     Log.e("Bio Device", "-" + bio);
-                    if(mob == null || mob.isEmpty() || !mob.equals(newMobi)) {
-                        CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC);
+                    if (mob == null || mob.isEmpty() || !mob.equals(newMobi)) {
+                        CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                         CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
-                    }else
-                        CustomSharedPreferences.saveBooleanData(activity, bio, CustomSharedPreferences.SP_KEY.BIOMETRIC);
+                    } else
+                        CustomSharedPreferences.saveBooleanData(activity, bio, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                     CustomSharedPreferences.saveStringData(activity, newMobi, CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
                     CustomSharedPreferences.saveStringData(activity, responseJo.getString("custFirstName"), CustomSharedPreferences.SP_KEY.NAME);
                     //CustomSharedPreferences.saveBooleanData(activity, responseJo.getBoolean("biometric"), CustomSharedPreferences.SP_KEY.BIOMETRIC);
                     //CustomSharedPreferences.saveBooleanData(activity, true, CustomSharedPreferences.SP_KEY.BIOMETRIC);
                     //CustomSharedPreferences.saveBooleanData(activity, responseJo.getBoolean("faceid"), CustomSharedPreferences.SP_KEY.FACEID);
-                   // CustomSharedPreferences.saveBooleanData(activity, true, CustomSharedPreferences.SP_KEY.FACEID);
+                    // CustomSharedPreferences.saveBooleanData(activity, true, CustomSharedPreferences.SP_KEY.FACEID);
                     CustomSharedPreferences.saveIntData(application, CustomSharedPreferences.APP_STATUS_ACTIVATED, CustomSharedPreferences.SP_KEY.APP_STATUS);
 //                if (!isFromMainNewFlow) {
 //                    Intent intent = new Intent(activity, MainActivityNewFlow.class);

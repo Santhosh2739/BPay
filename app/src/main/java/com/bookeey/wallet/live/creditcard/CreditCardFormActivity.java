@@ -2,8 +2,6 @@ package com.bookeey.wallet.live.creditcard;
 
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.support.v4.app.FragmentActivity;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,12 +9,14 @@ import android.widget.DatePicker;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.FragmentActivity;
+
 import com.bookeey.wallet.live.R;
 
 import java.util.Calendar;
 
 
-public class CreditCardFormActivity extends FragmentActivity  {
+public class CreditCardFormActivity extends FragmentActivity {
 
     private DatePicker datePicker;
     private Calendar calendar;

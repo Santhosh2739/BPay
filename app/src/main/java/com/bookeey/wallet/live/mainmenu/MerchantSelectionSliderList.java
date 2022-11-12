@@ -5,14 +5,15 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ListFragment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.fragment.app.ListFragment;
 
 import com.bookeey.wallet.live.R;
 import com.bookeey.wallet.live.application.CoreApplication;

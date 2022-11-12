@@ -7,7 +7,6 @@ import android.content.res.Resources;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -22,6 +21,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.bookeey.wallet.live.Help;
 import com.bookeey.wallet.live.R;
@@ -118,7 +119,7 @@ public class OoredooValidateFromGuestMainMenu extends FragmentActivity implement
                 String newMobi = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
                 String mob = mobile_number_validation_edit.getText().toString().trim();
                 if(!mob.equals(newMobi)) {
-                    CustomSharedPreferences.saveBooleanData(getApplicationContext(), false, CustomSharedPreferences.SP_KEY.BIOMETRIC);
+                    CustomSharedPreferences.saveBooleanData(getApplicationContext(), false, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                     CustomSharedPreferences.saveStringData(getApplicationContext(), null, CustomSharedPreferences.SP_KEY.PIN);
                 }
                 mobileNumberValidation(mobile_number_validation_edit.getText().toString().trim());

@@ -1,10 +1,8 @@
 <component name="libraryTable">
   <library name="Gradle: com.google.android.gms:play-services-tasks:11.4.0@aar">
     <CLASSES>
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/443d6540be02d0cba699ba18d06e2906/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/bdc89e8b243bde1afbfda7287632e575/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/6d3f57ded45c490ee1950e83242d95e3/transformed/play-services-tasks-11.4.0/AndroidManifest.xml" />
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/6d3f57ded45c490ee1950e83242d95e3/transformed/play-services-tasks-11.4.0/jars/classes.jar!/" />
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/80390f99ca60fd2b8ce65faa4a447d8f/transformed/jetified-play-services-tasks-11.4.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/80390f99ca60fd2b8ce65faa4a447d8f/transformed/jetified-play-services-tasks-11.4.0/AndroidManifest.xml" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

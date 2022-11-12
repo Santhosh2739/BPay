@@ -14,6 +14,7 @@ public class CustomSharedPreferences {
     public final static String SIMPLE_NULL = "";
 
     public enum SP_KEY {
+        BIOMETRIC_DEVICE,
         BARCODE_SIZE,
         SUCCESS,
         GCM_REG_ID,
@@ -24,7 +25,7 @@ public class CustomSharedPreferences {
         GUEST_LOGIN,
         APP_STATUS,
         NAME,
-        BIOMETRIC,
+        BIOMETRIC_ENABLED,
         FACEID,
         AUTH_TOKEN,
         LAST_LOGGED_IN_STATUS,

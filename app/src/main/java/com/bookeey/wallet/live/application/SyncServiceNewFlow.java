@@ -6,8 +6,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.ResultReceiver;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
+
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bookeey.wallet.live.forceface.TransTypeInterface;
 import com.bookeey.wallet.live.login.LoginActivity;

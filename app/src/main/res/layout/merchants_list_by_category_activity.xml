@@ -12,7 +12,7 @@
     <EditText
         android:id="@+id/etSearch"
         android:hint="  Search"
-        android:drawableLeft="@drawable/places_ic_search"
+        android:drawableLeft="@drawable/search"
         android:layout_width="fill_parent"
         android:layout_height="24dp"
         android:visibility="gone"

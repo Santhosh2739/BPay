@@ -14,10 +14,10 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
-import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Spinner;
+
+import androidx.core.app.NotificationCompat;
 
 import com.bookeey.wallet.live.R;
 import com.bookeey.wallet.live.Splash;
@@ -146,18 +146,21 @@ public class MyFirebaseMsgService extends FirebaseMessagingService {
         //notificationIntent.putExtra("msg_from_browser", "com.bookeey.wallet.live.launchfrombrowser");
 
 
-        Notification n = new Notification.Builder(this, ChannelID)
-                .setContentTitle("Bookeey Application")
-                .setContentText(messageBody)
-                //.setBadgeIconType(R.drawable.icon)
-                //.setNumber(5)
-                .setSmallIcon(R.drawable.icon)
-                .setAutoCancel(true)
-                .setDefaults(Notification.DEFAULT_ALL)
-                .setSound(notificationSoundURI)
-                .setPriority(Notification.PRIORITY_MAX)
-                .setContentIntent(pendingIntent)
-                .build();
+        Notification n = null;
+        if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+            n = new Notification.Builder(this, ChannelID)
+                    .setContentTitle("Bookeey Application")
+                    .setContentText(messageBody)
+                    //.setBadgeIconType(R.drawable.icon)
+                    //.setNumber(5)
+                    .setSmallIcon(R.drawable.icon)
+                    .setAutoCancel(true)
+                    .setDefaults(Notification.DEFAULT_ALL)
+                    .setSound(notificationSoundURI)
+                    .setPriority(Notification.PRIORITY_MAX)
+                    .setContentIntent(pendingIntent)
+                    .build();
+        }
 
         mNotific.notify(ncode, n);
 

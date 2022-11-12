@@ -20,7 +20,7 @@ import coreframework.utils.URLUTF8Encoder;
 import ycash.wallet.json.pojo.generic.BioMetricRequest;
 import ycash.wallet.json.pojo.generic.GenericResponse;
 import ycash.wallet.json.pojo.generic.TransType;
-import ycash.wallet.json.pojo.registration.CustomerActivationRequest;
+
 /**
  * Created by 10030 on 12/6/2016.
  */
@@ -61,7 +61,7 @@ public class BiometricProcessing implements UserInterfaceBackgroundProcessing {
             if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.BIO_RESPONSE.name()) && response.getG_status() == 1) {
                 _temp_response = network_response;
                 Log.e("BIO_RESPONSE", "->" + request.isBiometric());
-                CustomSharedPreferences.saveBooleanData(application, request.isBiometric() ,CustomSharedPreferences.SP_KEY.BIOMETRIC);
+                CustomSharedPreferences.saveBooleanData(application, request.isBiometric() ,CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                 this.success = true;
             } else if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.BIO_RESPONSE.name()) && response.getG_status() != 1) {
                 error_text_header = response.getG_errorDescription();

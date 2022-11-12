@@ -163,8 +163,8 @@ public class GreetingsActivity extends Activity {
                                             if (imageUri.contains(".gif")) {
                                                 Glide.with(context)
                                                         .load(imageUri)
-                                                        .asGif()
-                                                        .crossFade()
+                                                        //.asGif()
+                                                       // .crossFade()
                                                         .into(greetings_image);
                                             }
                                         }

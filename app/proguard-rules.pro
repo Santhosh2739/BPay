@@ -13,14 +13,13 @@
 -keep public class * extends android.content.ContentProvider
 -keep public class * extends android.app.backup.BackupAgentHelper
 -keep public class * extends android.preference.Preference
--keep public class com.android.vending.licensing.ILicensingService
+
 
 #-keep public class com.ypaycash.production.android.database.tables.Tables
 #-keepclassmembers class com.ypaycash.production.android.database.tables.Tables** {*;}
 -keep class com.microblink.** { *; }
 -keepclassmembers class com.microblink.** { *; }
 -dontwarn android.hardware.**
--dontwarn android.support.v4.**
 
 
 -keepclasseswithmembernames class * {
@@ -61,14 +60,12 @@
 # For using GSON @Expose annotation
 -keepattributes *Annotation*
 
--dontwarn net.fortuna.ical4j.model.CalendarFactory
-# Gson specific classes
--keep class sun.misc.Unsafe { *; }
+
 #-keep class com.google.gson.stream.** { *; }
 
 # Application classes that will be serialized/deserialized over Gson
 -keep class app.core.json.** { *; }
--keep class app.core.json.forceface.TransTypeInterface
+
 -keep class ycash.wallet.json.pojo.** {*;}
 -keep class org.jsoup.**{*;}
 #-dontwarn javax.annotation.**
