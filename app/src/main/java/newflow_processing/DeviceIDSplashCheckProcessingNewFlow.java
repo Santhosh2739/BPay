@@ -118,17 +118,14 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
     @Override
     public void performUserInterfaceAndDismiss(Activity activity, ProgressDialogFrag dialogueFragment) {
         _activity = activity;
-        CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+        CustomSharedPreferences.saveBooleanData(activity, true, CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+        CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
         dialogueFragment.dismiss();
         if (success) {
             CustomSharedPreferences.saveStringData(activity, response.getModule(), CustomSharedPreferences.SP_KEY.MODULE);
             if (response.getG_status() == 1) {
                 try {
                     CustomSharedPreferences.saveStringData(activity, "" + response.getNotificationCount(), CustomSharedPreferences.SP_KEY.NOTIFICATION_MSG_COUNT);
-//                    {"lastSuccessLoginTime":0,"enc_key":"","mac_key":"","mobileNumber":"60064534","custFirstName":"Basha",
-//                            "walletBalance":0.0,"oauth_2_0_client_token":"","uniqueCustomerId":"","custLastName":"A","g_status":1,
-//                            "g_status_description":"Success","g_errorDescription":"",
-//                            "g_response_trans_type":"DEVICEID_LOGIN_CHECK_RESPONSE","g_servertime":"GMT+0300"}
                     JSONObject responseJo = new JSONObject(networkResponse);
                     String newMobi = responseJo.getString("mobileNumber");
                     Log.e("mobileNumber", "-" + newMobi);
@@ -137,26 +134,33 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
                     try {
                         bio = responseJo.getBoolean("biometric");
                     } catch (Exception e) {
-                        Toast toast = Toast.makeText(activity, e.getMessage(), Toast.LENGTH_LONG);
-                        toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                        toast.show();
+                        Log.e("biometric", ":" + e);
                     }
-                    Log.e("Bio Device", "-" + bio);
-                    if (mob == null || mob.isEmpty() || !mob.equals(newMobi)) {
+                    Log.e("Biometric enabled", ":" + bio);
+                    Log.e("mob", ":" + mob);
+                    if (mob != null && !mob.isEmpty() && mob.equals(newMobi)) {
+                        CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                    }
+                    if(mob == null || mob.isEmpty()){
+                        CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                    }
+
+                    CustomSharedPreferences.saveBooleanData(activity, bio, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
+                    String pin = CustomSharedPreferences.getStringData(activity, CustomSharedPreferences.SP_KEY.PIN);
+                    if(bio && (pin == null || pin.isEmpty())){
+                        CustomSharedPreferences.saveBooleanData(activity, true, CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
                         CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
-                        CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
-                    } else
-                        CustomSharedPreferences.saveBooleanData(activity, bio, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
+                    }
                     CustomSharedPreferences.saveStringData(activity, newMobi, CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
                     CustomSharedPreferences.saveStringData(activity, responseJo.getString("custFirstName"), CustomSharedPreferences.SP_KEY.NAME);
-                    //CustomSharedPreferences.saveBooleanData(activity, responseJo.getBoolean("biometric"), CustomSharedPreferences.SP_KEY.BIOMETRIC);
-
-                    //CustomSharedPreferences.saveBooleanData(activity, responseJo.getBoolean("faceid"), CustomSharedPreferences.SP_KEY.FACEID);
-                    CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.FACEID);
                     CustomSharedPreferences.saveIntData(application, CustomSharedPreferences.APP_STATUS_ACTIVATED, CustomSharedPreferences.SP_KEY.APP_STATUS);
+                    boolean enable = CustomSharedPreferences.getBooleanData(activity, CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
+                    boolean biometric_device = CustomSharedPreferences.getBooleanData(activity, CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
+                    boolean guest = CustomSharedPreferences.getBooleanData(activity, CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                    Log.e("enable", ":"+enable);
+                    Log.e("biometric_device", ":"+biometric_device);
+                    Log.e("guest", ":"+guest);
                     Intent intent = new Intent(activity, LoginActivityFromSplashNewFlow.class);
-                    //Test
-//                    Intent intent = new Intent(activity, MainActivityNewFlow.class);
                     activity.startActivity(intent);
                     activity.finish();
                 } catch (Exception e) {
@@ -165,80 +169,39 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
                     toast.show();
                 }
             } else if (response.getG_status() == -1) {
-//                Toast toast = Toast.makeText(activity, "Please register to login", Toast.LENGTH_SHORT);
-//                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-//                toast.show();
-                CustomSharedPreferences.saveBooleanData(activity, true, CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
-                CustomSharedPreferences.saveIntData(activity, 1, CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
-
+                CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
+                CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
                 if (guestSignUp && isFromMainNewFlow) {
-                    CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
-                    CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
                     Intent in = new Intent(activity, OoredooRegistrationNewFlow.class);
                     activity.startActivity(in);
                 } else if (guestLogin & isFromMainNewFlow) {
-//                    Intent in = new Intent(activity, LoginActivityNewFlow.class);
-//                    activity.startActivity(in);
-//                    Toast toast = Toast.makeText(activity, "Please SignUp to Login", Toast.LENGTH_SHORT);
-//                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-//                    toast.show();
-                    //Jan 07 Original START
-                    CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
-                    CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
                     Intent in = new Intent(activity, OoredooValidateFromGuestMainMenu.class);
                     activity.startActivity(in);
-//                    Jan 19
-//                    activity.finish();
-                    //Jan 07 Original END
-//                   showRegistrationAlertDialogue(_activity);
                 } else {
-                    //TEST Remove it
-//                    Toast toast = Toast.makeText(activity, response.getG_errorDescription(), Toast.LENGTH_SHORT);
-//                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-//                    toast.show();
-                    //TEST Remove it
                     Intent intent = new Intent(activity, MainActivityNewFlow.class);
                     activity.startActivity(intent);
                     activity.finish();
                 }
             } else if (response.getG_status() == 211) {
+                CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
+                CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
                 Intent intent = new Intent(activity, OoredooActivation.class);
                 activity.startActivity(intent);
                 activity.finish();
             } else if (response.getG_status() == 209) {
+                CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
+                CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
                 Intent intent = new Intent(activity, ErrorDialog_DeviceIdChange.class);
                 activity.startActivity(intent);
-//                Jan 19
-//                activity.finish();
             } else if (response.getG_status() == 299) {
-//                {"lastSuccessLoginTime":0,"enc_key":"","mac_key":"","mobileNumber":"36325555","custFirstName":"",
-//                        "walletBalance":0.0,"oauth_2_0_client_token":"","uniqueCustomerId":"","custLastName":"",
-//                        "g_status":299,"g_status_description":"Dear Customer, Your Bookeey wallet is rejected." +
-//                        " Please modify your info by providing correct data. for any inquiries Please send email " +
-//                        "to customercare@bookeey.com","g_errorDescription":"","g_response_trans_type":"DEVICEID_LOGIN_CHECK_RESPONSE",
-//                        "g_servertime":"GMT+0300"}
                 try {
+                    CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
+                    CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
                     JSONObject responseJo = new JSONObject(networkResponse);
                     String newMobi = responseJo.getString("mobileNumber");
-                    String mob = CustomSharedPreferences.getStringData(activity, CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
-                    boolean bio = responseJo.getBoolean("biometric");
-                    Log.e("Bio Device", "-" + bio);
-                    if (mob == null || mob.isEmpty() || !mob.equals(newMobi)) {
-                        CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
-                        CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
-                    } else
-                        CustomSharedPreferences.saveBooleanData(activity, bio, CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                     CustomSharedPreferences.saveStringData(activity, newMobi, CustomSharedPreferences.SP_KEY.MOBILE_NUMBER);
                     CustomSharedPreferences.saveStringData(activity, responseJo.getString("custFirstName"), CustomSharedPreferences.SP_KEY.NAME);
-                    //CustomSharedPreferences.saveBooleanData(activity, responseJo.getBoolean("biometric"), CustomSharedPreferences.SP_KEY.BIOMETRIC);
-                    //CustomSharedPreferences.saveBooleanData(activity, true, CustomSharedPreferences.SP_KEY.BIOMETRIC);
-                    //CustomSharedPreferences.saveBooleanData(activity, responseJo.getBoolean("faceid"), CustomSharedPreferences.SP_KEY.FACEID);
-                    // CustomSharedPreferences.saveBooleanData(activity, true, CustomSharedPreferences.SP_KEY.FACEID);
                     CustomSharedPreferences.saveIntData(application, CustomSharedPreferences.APP_STATUS_ACTIVATED, CustomSharedPreferences.SP_KEY.APP_STATUS);
-//                if (!isFromMainNewFlow) {
-//                    Intent intent = new Intent(activity, MainActivityNewFlow.class);
-//                    activity.startActivity(intent);
-//                }
                     if (!isFromMainNewFlow) {
                         Intent intent = new Intent(activity, MainActivityNewFlow.class);
                         activity.startActivity(intent);
@@ -248,17 +211,13 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
                     if (responseJo.has("reason")) {
                         intentRejected.putExtra(Ooredoo_RejectedActivityNewFlow.KEY_REJECTED_REASON, responseJo.getString("reason"));
                     }
-                    //TEST
-//                    intentRejected.putExtra(Ooredoo_RejectedActivityNewFlow.KEY_REJECTED_REASON,"ID is not clear");
                     activity.startActivity(intentRejected);
                 } catch (Exception e) {
                     Toast.makeText(activity, "System Error!", Toast.LENGTH_LONG).show();
                 }
             } else if (response.getG_status() == 0) {
-//                if (!isFromMainNewFlow) {
-//                    Intent intent = new Intent(activity, MainActivityNewFlow.class);
-//                    activity.startActivity(intent);
-//                }
+                CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
+                CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
                 if (!isFromMainNewFlow) {
                     Intent intent = new Intent(activity, MainActivityNewFlow.class);
                     activity.startActivity(intent);
@@ -272,6 +231,8 @@ public class DeviceIDSplashCheckProcessingNewFlow implements UserInterfaceBackgr
                 toast.show();
             }
         } else {
+            CustomSharedPreferences.saveBooleanData(activity, false, CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
+            CustomSharedPreferences.saveStringData(activity, null, CustomSharedPreferences.SP_KEY.PIN);
             switch (error_text_header) {
                 case "Please call to customer care to unlock wallet account":
                     Toast toast = Toast.makeText(activity, (String) activity.getResources().getString(R.string.Please_call_to_customer_care_to_unlock), Toast.LENGTH_LONG);

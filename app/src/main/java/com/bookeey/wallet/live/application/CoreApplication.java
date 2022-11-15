@@ -1,16 +1,17 @@
 package com.bookeey.wallet.live.application;
 
+import android.annotation.SuppressLint;
 import android.app.AlarmManager;
 import android.app.Application;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.provider.Settings;
-import android.support.multidex.MultiDex;
 import android.util.Log;
 
+import androidx.multidex.MultiDex;
+
 import com.bookeey.wallet.live.R;
-import com.bookeey.wallet.live.login.FingerprintModule;
 import com.google.android.gms.analytics.GoogleAnalytics;
 import com.google.android.gms.analytics.Tracker;
 
@@ -42,6 +43,7 @@ import ycash.wallet.json.pojo.virtualprepaidcards.RequestCardResponse;
 import ycash.wallet.json.pojo.wheretopay.BranchDetailsPojo;
 import ycash.wallet.json.pojo.wheretopay.CategoryDetailsListPojo;
 import ycash.wallet.json.pojo.wheretopay.MerchantListResponse;
+
 /**
  * Created by mohit on 01-06-2015.
  */
@@ -594,10 +596,11 @@ public class CoreApplication extends Application {
     }
 
     public String getThisDeviceUniqueAndroidId() {
-        String android_id = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
+        @SuppressLint("HardwareIds") String android_id = Settings.Secure.getString(getBaseContext().getContentResolver(), Settings.Secure.ANDROID_ID);
         android_id = android_id.length() % 2 == 1 ? android_id + "FA0A1" : android_id;
-        android_id="000000034567822919";
+        //android_id = "0000000345678229190";
         //android_id="9a050ddd94da20aa";
+        //android_id="c05da65cd8907d4f";
         Log.e("deviceID Core: ", "" + android_id);
         CustomSharedPreferences.saveStringData(getApplicationContext(), android_id, CustomSharedPreferences.SP_KEY.DEVICE_ID);
         return android_id;
@@ -606,7 +609,7 @@ public class CoreApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        initObjectGraph(new FingerprintModule(this));
+        //initObjectGraph(new FingerprintModule(this));
         sAnalytics = GoogleAnalytics.getInstance(this);
     }
 

@@ -3,7 +3,7 @@ package com.bookeey.wallet.live.mainmenu;
 import static coreframework.database.CustomSharedPreferences.SP_KEY.MOBILE_NUMBER;
 
 import android.Manifest;
-import android.annotation.TargetApi;
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
@@ -22,7 +22,6 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Shader;
-import android.hardware.fingerprint.FingerprintManager;
 import android.location.Location;
 import android.net.Uri;
 import android.nfc.NdefMessage;
@@ -33,17 +32,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Parcelable;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyPermanentlyInvalidatedException;
-import android.security.keystore.KeyProperties;
 import android.speech.SpeechRecognizer;
 import android.speech.tts.TextToSpeech;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
-import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -69,12 +59,18 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+
 import com.bookeey.wallet.live.BuildConfig;
 import com.bookeey.wallet.live.Help;
 import com.bookeey.wallet.live.R;
 import com.bookeey.wallet.live.application.CoreApplication;
 import com.bookeey.wallet.live.application.SyncService;
-import com.bookeey.wallet.live.login.FingerprintAuthenticationDialogFragmentPayQR;
 import com.bookeey.wallet.live.login.LoginActivity;
 import com.bookeey.wallet.live.offers.NewOffersActivityAfterLogin;
 import com.bookeey.wallet.live.recharge.TopUpInitialActivity;
@@ -86,6 +82,12 @@ import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderApi;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.InstallState;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.InstallStatus;
+import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 
@@ -104,24 +106,15 @@ import java.lang.ref.WeakReference;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.TimeZone;
+import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
 import javax.inject.Inject;
 
 import br.com.google.zxing.client.android.CaptureActivity;
@@ -151,6 +144,7 @@ import coreframework.utils.URLUTF8Encoder;
 import merchant.DecodedQrPojo;
 import merchant.DisplayAmountToMerchantActivityDummy;
 import merchant.PayToMerchantStaticQRCodeInitProcessing;
+import util.Util;
 import wheretopaynew.MerchantListCatogorieyActivityNewUIActivity;
 import ycash.wallet.json.pojo.generic.BioMetricRequest;
 import ycash.wallet.json.pojo.generic.GenericRequest;
@@ -195,10 +189,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     private final boolean session_expired = false;
     public boolean should_call_session_time_out_from_onResume = true;
     @Inject
-    FingerprintManagerCompat mFingerprintManager;
-    @Inject
-    FingerprintAuthenticationDialogFragmentPayQR mFragment;
-    @Inject
     SharedPreferences mSharedPreferences;
     Dialog promptsViewPassword;
     TextToSpeech tts;
@@ -231,7 +221,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     boolean isScrolled = true;
     String versionname;
     String moduleName = "";
-    int verifyBio = 0;
+    int verifyBio = 1;
     EditText pay_via_qrcode_pin_edt_two;
     String selectedLanguage = null;
     private KeyStore mKeyStore;
@@ -241,7 +231,21 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     private DrawerLayout mDrawer = null;
     private GoogleApiClient googleApiClient;
     private FirebaseAnalytics firebaseAnalytics;
-
+    private Executor executor;
+    private BiometricPrompt biometricPrompt;
+    private AppUpdateManager mAppUpdateManager;
+    InstallStateUpdatedListener installStateUpdatedListener = new InstallStateUpdatedListener() {
+        @Override
+        public void onStateUpdate(InstallState state) {
+            if (state.installStatus() == InstallStatus.INSTALLED) {
+                if (mAppUpdateManager != null) {
+                    mAppUpdateManager.unregisterListener(installStateUpdatedListener);
+                }
+            } else {
+                Log.i("AppUpdate", "InstallStateUpdatedListener: state: " + state.installStatus());
+            }
+        }
+    };
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
@@ -276,9 +280,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         View cView = getLayoutInflater().inflate(R.layout.activity_main_actionbar, null);
         getActionBar().setCustomView(cView, params);*/
-        ((CoreApplication) getApplication()).inject(this);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.USE_FINGERPRINT},
-                FINGERPRINT_PERMISSION_REQUEST_CODE);
         application = (CoreApplication) getApplication();
         customerLoginRequestReponse = application.getCustomerLoginRequestReponse();
         if (!(application.getBannerDetails() == null)) {
@@ -307,6 +308,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         //mActionBar.setDisplayShowCustomEnabled(true);
         //Showing Notification count
         TextView count_text_top = mCustomView.findViewById(R.id.count_text_top);
+        FrameLayout frame_layout = mCustomView.findViewById(R.id.push_notifications_frame_layout);
         String notification_count = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.NOTIFICATION_MSG_COUNT);
         count_text_top.setText(notification_count);
         if (notification_count.length() > 0) {
@@ -441,33 +443,23 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         txn_history = BitmapFactory.decodeResource(this.getResources(), R.drawable.others);
         bookeey_mainmenu_loadwallet_btn = findViewById(R.id.bookeey_mainmenu_loadwallet_btn);
         bookeey_mainmenu_pay_btn = findViewById(R.id.bookeey_mainmenu_pay_btn);
-        more_text = findViewById(R.id.more_text);
+        // more_text = findViewById(R.id.more_text);
         scroll = findViewById(R.id.scroll);
         // more_img1 = (ImageView) findViewById(R.id.more_img1);
         image_person = findViewById(R.id.image_person);
-//        Commented for CreditCard view Feb 11
-//        image_person.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                alertDialog();
-//            }
-//        });
+
         refresh();
 
-        int first_login = CustomSharedPreferences.getIntData(getApplicationContext(), CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
+        boolean enable = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
+        boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
         boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
-        if (first_login == 1 && !guest) {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                FingerprintManager fingerprintManager = (FingerprintManager) getApplicationContext().getSystemService(Context.FINGERPRINT_SERVICE);
-                if (fingerprintManager.hasEnrolledFingerprints()) {
-                    showBiometricenablealert();
-                }
-            }
+        Log.e("enable", ":"+enable);
+        Log.e("biometric_device", ":"+biometric_device);
+        Log.e("guest", ":"+guest);
+        if (enable && !guest && biometric_device) {
+            ShowBiometricEnableAlert();
         }
 
-        /*if (application.getInvoices_count() > 0) {
-            isSound = customerLoginRequestReponse.isSpeakstatus();
-        }*/
         if (getIntent().getExtras() != null) {
             isSound = getIntent().getExtras().getBoolean("voice");
             /*if (isSound) {
@@ -652,12 +644,9 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         } catch (Exception e) {
             Log.e("TAG1", "" + e);
         }
-        int versionCode = BuildConfig.VERSION_CODE;
-        versionname = BuildConfig.VERSION_NAME;
-        VersionChecker versionChecker = new VersionChecker();
-        versionChecker.execute();
+
         //Invoke push notification messages
-        FrameLayout frame_layout = findViewById(R.id.push_notifications_frame_layout);
+        //FrameLayout frame_layout = findViewById(R.id.push_notifications_frame_layout);
 //        BadgeView badge = new BadgeView(this, push_notification_message_bell);
 //        badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
 //        badge.setBackgroundResource(R.drawable.bookeey_small);
@@ -678,22 +667,69 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 progress.show(getSupportFragmentManager(), "progress_dialog");
             }
         });
+
+        executor = ContextCompat.getMainExecutor(this);
+        biometricPrompt = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Toast.makeText(getApplicationContext(), "" + errString, Toast.LENGTH_LONG).show();
+                if (verifyBio != 1) {
+                    ShowEnterPassword();
+                }
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+                //Toast.makeText(getApplicationContext(), "Main succeeded!", Toast.LENGTH_SHORT).show();
+                boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
+                if (verifyBio == 1) {
+                    enableBiometric(true);
+                } else if (biometric_enabled) {
+                    BiometricVerified();
+                } else
+                    Util.EnableBiometricAlert(MainActivity.this);
+                verifyBio = 1;
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    public void showBiometricenablealert() {
+    public void BiometricVerified() {
+        Log.e("verifyBio", "=" + verifyBio);
+        if (verifyBio == 2) {
+            tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
+            payViaQrCodeProcess();
+            if(promptsViewPassword!= null)
+                promptsViewPassword.dismiss();
+        } else if (verifyBio == 3) {
+            if(promptsViewPassword!= null)
+                promptsViewPassword.dismiss();
+            tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
+            VerifyPassword verifyPassword = new VerifyPassword();
+            verifyPassword.execute();
+        }
+    }
+
+    public void ShowBiometricEnableAlert() {
         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
         dialog.setCancelable(false);
         dialog.setMessage(getString(R.string.enable_biometric_for_access));
-        dialog.setPositiveButton(getString(R.string.yes_newflow), new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int id) {
-                showTermsAndConditions();
-                dialog.dismiss();
-            }
+        dialog.setPositiveButton(getString(R.string.yes_newflow), (dialog1, id) -> {
+            showTermsAndConditions();
+            dialog1.dismiss();
         });
         dialog.setNegativeButton(getString(R.string.no_newflow), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
+                CustomSharedPreferences.saveBooleanData(getApplicationContext(), false, CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
+                CustomSharedPreferences.saveBooleanData(getApplicationContext(), false, CustomSharedPreferences.SP_KEY.ASKED_BIOMETRIC);
                 enableBiometric(false);
                 dialog.dismiss();
             }
@@ -711,7 +747,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 verifyBio = 1;
-                verifyBiometric();
+                biometricPrompt.authenticate(Util.EnableBiometricDialog());
                 dialog.dismiss();
             }
         });
@@ -719,9 +755,9 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         alert.show();
     }
 
-
     private void enableBiometric(boolean bio) {
-        CustomSharedPreferences.saveIntData(getApplicationContext(), 0, CustomSharedPreferences.SP_KEY.FIRST_LOGIN);
+        CustomSharedPreferences.saveBooleanData(getApplicationContext(), false, CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
+        CustomSharedPreferences.saveBooleanData(getApplicationContext(), true, CustomSharedPreferences.SP_KEY.ASKED_BIOMETRIC);
         BioMetricRequest bioMetricRequest = new BioMetricRequest();
         bioMetricRequest.setG_oauth_2_0_client_token(((CoreApplication) getApplication()).getCustomerLoginRequestReponse().getOauth_2_0_client_token());
         bioMetricRequest.setG_transType(TransType.BIO_REQUEST.name());
@@ -988,16 +1024,40 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         }
     }
 
-    public void onStart() {
+    @Override
+    protected void onStart() {
         super.onStart();
         // Initiating the GoogleApiClient Connection when the activity is visible
         googleApiClient.connect();
+        mAppUpdateManager = AppUpdateManagerFactory.create(this);
+        mAppUpdateManager.registerListener(installStateUpdatedListener);
+        mAppUpdateManager.getAppUpdateInfo().addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                LayoutInflater li = LayoutInflater.from(MainActivity.this);
+                View promptsView = li.inflate(R.layout.custom_update_playstore_dialog, null);
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
+                alertDialog.setView(promptsView);
+                alertDialog.setPositiveButton(getResources().getString(R.string.update), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName()));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                });
+                alertDialog.setCancelable(false);
+                alertDialog.show();
+            }
+        });
     }
 
     public void onStop() {
         super.onStop();
         //Disconnecting the GoogleApiClient when the activity goes invisible
         googleApiClient.disconnect();
+        if (mAppUpdateManager != null) {
+            mAppUpdateManager.unregisterListener(installStateUpdatedListener);
+        }
     }
 
     //This callback is invoked when the user grants or rejects the location permission
@@ -1244,23 +1304,36 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         alert.show();
     }
 
-    public void ShowEnterPassword(int value) {
+    @SuppressLint("ClickableViewAccessibility")
+    public void ShowEnterPassword() {
         promptsViewPassword = new Dialog(this);
         promptsViewPassword.requestWindowFeature(Window.FEATURE_NO_TITLE);
         promptsViewPassword.setContentView(R.layout.enter_password);
-        final EditText pin = promptsViewPassword.findViewById(R.id.pay_via_qrcode_pin_edt);
+
+        final TextView enter_pwd_title = promptsViewPassword.findViewById(R.id.enter_pwd_title);
         final Button pay_qrcode_cancel_btn_new = promptsViewPassword.findViewById(R.id.pay_qrcode_cancel_btn_new);
         final Button verify_password_btn_new = promptsViewPassword.findViewById(R.id.verify_password_btn_new);
-        pin.setOnTouchListener((view, motionEvent) -> {
-            final int DRAWABLE_RIGHT = 2;
-            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                if (motionEvent.getRawX() >= (pin.getRight() - pin.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                    verifyBio = value;
-                    verifyBiometric();
+        final EditText pin;
+        boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
+        boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
+        if (biometric_device && biometric_enabled) {
+            pin = promptsViewPassword.findViewById(R.id.enter_pwd_edt_new);
+            pin.setOnTouchListener((view, motionEvent) -> {
+                final int DRAWABLE_RIGHT = 2;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (motionEvent.getRawX() >= (pin.getRight() - pin.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        biometricPrompt.authenticate(Util.GetBiometricDialog());
+                        promptsViewPassword.dismiss();
+                    }
                 }
-            }
-            return false;
-        });
+                return false;
+            });
+        } else {
+            pin = promptsViewPassword.findViewById(R.id.enter_pwd_edt_old);
+            enter_pwd_title.setText(R.string.Verify);
+        }
+        pin.setVisibility(View.VISIBLE);
+
         pay_qrcode_cancel_btn_new.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1277,12 +1350,10 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     return;
                 }
                 tpin = pin.getText().toString().trim();
-                if(value == 2) {
+                if (verifyBio == 2) {
                     payViaQrCodeProcess();
                     promptsViewPassword.dismiss();
-                }
-                else if (value == 3)
-                {
+                } else if (verifyBio == 3) {
                     VerifyPassword verifyPassword = new VerifyPassword();
                     verifyPassword.execute();
                 }
@@ -1291,8 +1362,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         promptsViewPassword.show();
     }
 
-    public void scanQRCode()
-    {
+    public void scanQRCode() {
         int height = getScreenWidth();
         int width = getScreenHeight();
         Intent intent;
@@ -1372,8 +1442,14 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     return;
                 }
                 boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
+                boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                 if (amount > limits.getTpinLimit() && !guest) {
-                    ShowEnterPassword(2);
+                    verifyBio = 2;
+                    if (biometric_device && biometric_enabled)
+                        biometricPrompt.authenticate(Util.GetBiometricDialog());
+                    else
+                        ShowEnterPassword();
                 } else {
                     payViaQrCodeProcess();
                 }
@@ -1413,8 +1489,14 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 }*/
 
                 boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
+                boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                 if (amount > limits.getTpinLimit() && !guest) {
-                    ShowEnterPassword(3);
+                    verifyBio = 3;
+                    if (biometric_device && biometric_enabled)
+                        biometricPrompt.authenticate(Util.GetBiometricDialog());
+                    else
+                        ShowEnterPassword();
                 } else {
                     // promptsView.dismiss();
                     int height = getScreenWidth();
@@ -1457,162 +1539,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             }
         });
         promptsView.show();
-    }
-
-    private void biometricDialog() {
-        LayoutInflater li = LayoutInflater.from(this);
-        View promptsView = li.inflate(R.layout.custom_alert_whatsapp, null);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
-        alertDialog.setView(promptsView);
-        alertDialog.show();
-    }
-
-    public void onPurchased(boolean withFingerprint, String password) {
-        //if (!withFingerprint) invoice_tpin_edit.setText(password);
-        // invoicePayNowRequest(invoice_amount, 0, offerID);
-        if (verifyBio == 1) {
-            enableBiometric(true);
-        } else {
-            boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
-            if (!bio) {
-                biometricDialog();
-            } else if (verifyBio == 2) {
-                tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
-                payViaQrCodeProcess();
-                promptsViewPassword.dismiss();
-            } else if (verifyBio == 3) {
-                promptsViewPassword.dismiss();
-                int height = getScreenWidth();
-                int width = getScreenHeight();
-                Intent intent;
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    boolean isEnabled = checkCameraPermissionLatest();
-                    if (isEnabled) {
-                        intent = new Intent(getBaseContext(), CaptureActivity.class);
-                        intent.setAction("br.com.google.zxing.client.android.SCAN");
-                        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-                        intent.putExtra("CHARACTER_SET", "ISO-8859-1");
-                        intent.putExtra(Intents.Scan.WIDTH, width);
-                        intent.putExtra(Intents.Scan.HEIGHT, height);
-                        startActivityForResult(intent, STATIC_QR_CODE_REQUEST);
-                    }
-                } else {
-                    intent = new Intent(getBaseContext(), CaptureActivity.class);
-                    intent.setAction("br.com.google.zxing.client.android.SCAN");
-                    intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-                    intent.putExtra("CHARACTER_SET", "ISO-8859-1");
-                    intent.putExtra(Intents.Scan.WIDTH, width);
-                    intent.putExtra(Intents.Scan.HEIGHT, height);
-                    startActivityForResult(intent, STATIC_QR_CODE_REQUEST);
-                }
-            }
-        }
-    }
-
-    private void verifyBiometric() {
-        try {
-            boolean isFingerprintAvailable = false;
-            if (!mFragment.isAdded()) {
-                boolean isFingerprintPermissionGranted = ActivityCompat.checkSelfPermission(
-                        MainActivity.this, Manifest.permission.USE_FINGERPRINT)
-                        == PackageManager.PERMISSION_GRANTED;
-                if (mFingerprintManager != null) {
-                    isFingerprintAvailable = mFingerprintManager.isHardwareDetected()
-                            && mFingerprintManager.hasEnrolledFingerprints();
-                }
-                /*if (!isFingerprintPermissionGranted || !isFingerprintAvailable) {
-                    // The user either rejected permission to read their fingerprint, we're on
-                    // a device that doesn't support it, or the user doesn't have any
-                    // fingerprints enrolled.
-                    // Let them authenticate with a password
-                    mFragment.setStage(
-                            FingerprintAuthenticationDialogFragmentPayQR.Stage.PASSWORD);
-                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
-                } else*/ if (initCipher()) {
-                    // Set up the crypto object for later. The object will be authenticated by use
-                    // of the fingerprint.
-                    // Show the fingerprint dialog. The user has the option to use the fingerprint with
-                    // crypto, or you can fall back to using a server-side verified password.
-                    mFragment.setCryptoObject(new FingerprintManagerCompat.CryptoObject(mCipher));
-                    boolean useFingerprintPreference = mSharedPreferences
-                            .getBoolean(getString(R.string.use_fingerprint_to_authenticate_key),
-                                    true);
-                    if (useFingerprintPreference) {
-                        mFragment.setStage(
-                                FingerprintAuthenticationDialogFragmentPayQR.Stage.FINGERPRINT);
-                    }/* else {
-                        mFragment.setStage(
-                                FingerprintAuthenticationDialogFragmentPayQR.Stage.PASSWORD);
-                    }*/
-                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
-                } else {
-                    // This happens if the lock screen has been disabled or or a fingerprint got
-                    // enrolled. Thus show the dialog to authenticate with their password first
-                    // and ask the user if they want to authenticate with fingerprints in the
-                    // future
-                    mFragment.setCryptoObject(new FingerprintManagerCompat.CryptoObject(mCipher));
-                    mFragment.setStage(
-                            FingerprintAuthenticationDialogFragmentPayQR.Stage.NEW_FINGERPRINT_ENROLLED);
-                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
-                }
-            }
-        } catch (Exception e) {
-            Toast.makeText(MainActivity.this, " Fingerprint Sensor Exc: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private boolean initCipher() {
-        try {
-            if (mKeyStore == null) {
-                createKey();
-            }
-            mKeyStore.load(null);
-            SecretKey key = (SecretKey) mKeyStore.getKey(KEY_NAME, null);
-            mCipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
-                    + KeyProperties.BLOCK_MODE_CBC + "/"
-                    + KeyProperties.ENCRYPTION_PADDING_PKCS7);
-            mCipher.init(Cipher.ENCRYPT_MODE, key);
-            return true;
-        } catch (Exception e) {
-            if (e instanceof KeyPermanentlyInvalidatedException)
-                return false;
-            else if (e instanceof KeyStoreException | e instanceof CertificateException | e instanceof UnrecoverableKeyException | e instanceof IOException | e instanceof NoSuchAlgorithmException | e instanceof InvalidKeyException)
-                throw new RuntimeException("Failed to init Cipher", e);
-        }
-        /*catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
-                | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException e) {
-            throw new RuntimeException("Failed to init Cipher", e);
-        }*/
-        return false;
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    public void createKey() {
-        // The enrolling flow for fingerprint. This is where you ask the user to set up fingerprint
-        // for your flow. Use of keys is necessary if you need to know if the set of
-        // enrolled fingerprints has changed.
-        try {
-            mKeyStore = KeyStore.getInstance("AndroidKeyStore");
-            mKeyStore.load(null);
-            // Set the alias of the entry in Android KeyStore where the key will appear
-            // and the constrains (purposes) in the constructor of the Builder
-            KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
-            keyGenerator.init(new KeyGenParameterSpec.Builder(KEY_NAME,
-                    KeyProperties.PURPOSE_ENCRYPT |
-                            KeyProperties.PURPOSE_DECRYPT)
-                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                    // Require the user to authenticate with a fingerprint to authorize every use
-                    // of the key
-                    .setUserAuthenticationRequired(true)
-                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
-                    .build());
-            keyGenerator.generateKey();
-        } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | KeyStoreException
-                | CertificateException | NoSuchProviderException | IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     public void payViaQrCodeProcess() {
@@ -1781,85 +1707,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 }
             }
 
-
-            /*
-//            Merchant to Customer payment implementd by me
-
-                if (resultCode == RESULT_OK && requestCode == 1111) {
-
-                    //Setting language
-                    selectedLanguage = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.LANGUAGE);
-                    if (selectedLanguage != null && !selectedLanguage.isEmpty()) {
-                        LocaleHelper.setLocale(MainActivity.this, selectedLanguage);
-                    }
-                    //@end
-                    try {
-                        String qr_code_data = data.getStringExtra("SCAN_RESULT");
-
-//                                CoreApplication application = (CoreApplication) getApplication();
-//                                String uiProcessorReference = application.addUserInterfaceProcessor(new DecodeIncomingQrPaymentCode(url));
-//                                ProgressDialogFrag progress = new ProgressDialogFrag();
-//                                Bundle bundle = new Bundle();
-//                                bundle.putString("uuid", uiProcessorReference);
-//                                progress.setCancelable(true);
-//                                progress.setArguments(bundle);
-//                                progress.show(getSupportFragmentManager(), "progress_dialog");
-
-
-//                                    BigInteger bg = new BigInteger(qr_code_data.trim());
-//                                    byte[] encoded = bg.toByteArray();
-
-//                                    byte[] len_bytes_enc_length = new byte[4];
-//                                    System.arraycopy(encoded,encoded.length-4,len_bytes_enc_length,0,4);
-//                                    int length_of_enc_data = Hex.byteArrayToInt(len_bytes_enc_length);
-//                                    int length_of_header_data = encoded.length - length_of_enc_data -4;
-//
-//                                    byte[] header = new byte[length_of_header_data];
-//                                    System.arraycopy(encoded,0,header,0,length_of_header_data);
-//
-//                                    byte[] enciphered = new byte[length_of_enc_data];
-//                                    System.arraycopy(encoded,length_of_header_data,enciphered,0,length_of_enc_data);
-
-//                                    BcodeHeaderEncoderPlain bcodeHeaderEncoder = new BcodeHeaderEncoderPlain(encoded);
-
-//                                    Log.e("mx_auth_token","mx_auth_token"+bcodeHeaderEncoder.mx_auth_token);
-
-//                                    DecodedQrPojo  decodedQrPojo = new DecodedQrPojo(encoded,header,enciphered,bcodeHeaderEncoder);
-
-
-                        //Rahman
-
-                        String scanned_data = qr_code_data.trim();
-                        String scanned_data_spilted[] = scanned_data.split("-");
-                        String auth_token = scanned_data_spilted[0];
-                        String amount_hex_string = scanned_data_spilted[1];
-
-                        byte[] amount_byte_array = Hex.toByteArr(amount_hex_string);
-
-                        String amount_str = new String(amount_byte_array);
-
-                        Intent proceedIntent = new Intent(this, DisplayAmountToMerchantActivityDummy.class);
-                        proceedIntent.putExtra(DisplayAmountToMerchantActivityDummy.KEY_AMOUNT_SCANNED, amount_str);
-                        proceedIntent.putExtra(DisplayAmountToMerchantActivityDummy.KEY_MX_AUTH_TOKEN, auth_token);
-                        startActivity(proceedIntent);
-
-                    } catch (Exception e) {
-                        Log.e("Barcode data decode Ex", " " + e.getMessage());
-
-                    }
-
-                } else {
-
-
-                    selectedLanguage = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.LANGUAGE);
-                    if (selectedLanguage != null && !selectedLanguage.isEmpty()) {
-                        LocaleHelper.setLocale(MainActivity.this, selectedLanguage);
-                    }
-
-                }
-
-
-             */
             if (resultCode == RESULT_OK && requestCode == STATIC_QR_CODE_REQUEST) {
 //                    this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
                 should_call_session_time_out_from_onResume = false;
@@ -2173,115 +2020,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         }
     }
 
-    class Item {
-        Bitmap image;
-        String title;
-
-        public Item(Bitmap image, String title) {
-            super();
-            this.image = image;
-            this.title = title;
-        }
-
-        public Bitmap getImage() {
-            return image;
-        }
-
-        public void setImage(Bitmap image) {
-            this.image = image;
-        }
-
-        public String getTitle() {
-            return title;
-        }
-
-        public void setTitle(String title) {
-            this.title = title;
-        }
-    }
-
-    public class VersionChecker extends AsyncTask<String, String, String> {
-        private String newVersion;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-//        showIfNotVisible("");
-        }
-
-        @Override
-        protected void onPostExecute(String latestVersion) {
-//        hideIfVisible();
-            Log.e("Version", "" + latestVersion);
-            if (latestVersion != null && !latestVersion.isEmpty()) {
-                double live_version = Double.parseDouble(latestVersion);
-                double local_version = Double.parseDouble(versionname);
-                Log.e("live_version", "" + live_version);
-                Log.e("local_version", "" + local_version);
-                if (local_version < live_version) {
-                    LayoutInflater li = LayoutInflater.from(MainActivity.this);
-                    View promptsView = li.inflate(R.layout.custom_update_playstore_dialog, null);
-                    final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivity.this);
-                    alertDialog.setView(promptsView);
-                    alertDialog.setPositiveButton(getResources().getString(R.string.update), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-                            Intent intent = new Intent(Intent.ACTION_VIEW);
-                            intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName()));
-                            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(intent);
-                        }
-                    });
-
-/*                    alertDialog.setNegativeButton(getResources().getString(R.string.no_newflow), new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface dialog, int which) {
-
-                            dialog.dismiss();
-                        }
-                    });*/
-                    alertDialog.setCancelable(false);
-                    alertDialog.show();
-                } else {
-//                check_for_updates_up_to_date.setText(getResources().getString(R.string.check_up_to_date));
-//                check_for_updates_version_no.setText(getResources().getString(R.string.current_version) + versionname);
-                }
-            }
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-            try {
-                //new way to get version number
-               /* newVersion = Jsoup.connect("https://play.google.com/store/apps/details?id=" + "trai.gov.in.dnd" + "&hl=en")
-                        .timeout(30000)
-                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                        .referrer("http://www.google.com")
-                        .get()
-                        .select(".xyOfqd .hAyfc:nth-child(4) .htlgb span")
-                        .get(0)
-                        .ownText();*/
-                Document document = Jsoup.connect("https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "&hl=en")
-                        .timeout(30000)
-                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                        .referrer("http://www.google.com")
-                        .get();
-                if (document != null) {
-                    Elements element = document.getElementsContainingOwnText("Current Version");
-                    for (Element ele : element) {
-                        if (ele.siblingElements() != null) {
-                            Elements sibElemets = ele.siblingElements();
-                            for (Element sibElemet : sibElemets) {
-                                newVersion = sibElemet.text();
-                            }
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return newVersion;
-        }
-    }
-
     public class VerifyPassword extends AsyncTask<String, String, String> {
 
         @Override
@@ -2291,11 +2029,12 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
 
         @Override
         protected void onPostExecute(String result) {
-            if(result != null && !result.equals("")){
+            if (result != null && !result.equals("")) {
                 Log.e("Verify Response: ", "" + result);
                 GenericResponse response = new Gson().fromJson(result, GenericResponse.class);
                 if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.FORGOT_CHECK_RESPONSE.name()) && response.getG_status() == 1) {
-                    promptsViewPassword.dismiss();
+                    if(promptsViewPassword != null)
+                        promptsViewPassword.dismiss();
                     scanQRCode();
                 } else {
                     Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.Received_Password_entered_wrong), Toast.LENGTH_LONG);
@@ -2317,7 +2056,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 request.setOldPin(tpin);
                 request.setMobileNumber(mob);
                 request.setG_transType(TransType.FORGOT_CHECK_REQUEST.name());
-                String serverURL = TransType.FORGOT_CHECK_REQUEST.getURL() +  "?d=" + URLUTF8Encoder.encode(new Gson().toJson(request));
+                String serverURL = TransType.FORGOT_CHECK_REQUEST.getURL() + "?d=" + URLUTF8Encoder.encode(new Gson().toJson(request));
                 Log.e("Verify serverURL: ", "" + serverURL);
                 Log.e("Verify serverURL: ", "" + new Gson().toJson(request));
                 URL urls = new URL(serverURL);

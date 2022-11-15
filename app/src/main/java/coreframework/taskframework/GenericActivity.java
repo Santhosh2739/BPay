@@ -13,8 +13,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.HandlerThread;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.content.LocalBroadcastManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -23,6 +21,12 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.content.ContextCompat;
+import androidx.fragment.app.FragmentActivity;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 
 import com.bookeey.wallet.live.BuildConfig;
 import com.bookeey.wallet.live.CheckForUpdatesActivity;
@@ -35,11 +39,13 @@ import com.bookeey.wallet.live.application.SyncService;
 import com.bookeey.wallet.live.changes.ChangePinActivity;
 import com.bookeey.wallet.live.changes.ChangeTPinActivity;
 import com.bookeey.wallet.live.changes.ErrorDialog_MobileNumberChange;
+import com.bookeey.wallet.live.mainmenu.MainActivity;
 import com.bookeey.wallet.live.txnhistory.About_Us_Activity;
 import com.bookeey.wallet.live.txnhistory.TransactionHistoryActivity;
 import com.google.gson.Gson;
 
 import java.util.Date;
+import java.util.concurrent.Executor;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
@@ -50,6 +56,7 @@ import coreframework.utils.HandleUncaughtException;
 import coreframework.utils.PriceFormatter;
 import coreframework.utils.TimeUtils;
 import coreframework.utils.URLUTF8Encoder;
+import util.Util;
 import ycash.wallet.json.pojo.generic.BioMetricRequest;
 import ycash.wallet.json.pojo.generic.GenericRequest;
 import ycash.wallet.json.pojo.generic.TransType;
@@ -93,6 +100,8 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
     private boolean showMenu = true;
     private Handler disconnectHandler = null;
     private HandlerThread mHandlerThread = null;
+    private Executor executorNew;
+    private BiometricPrompt biometricPromptNew;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +119,28 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
         infoUpdateReceiver = new InfoUpdateReceiver();
         LocalBroadcastManager.getInstance(this).registerReceiver(infoUpdateReceiver, new IntentFilter("custom-event-profile-update"));
         Thread.setDefaultUncaughtExceptionHandler(new HandleUncaughtException(this));
+
+        executorNew = ContextCompat.getMainExecutor(this);
+        biometricPromptNew = new BiometricPrompt(this, executorNew, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                //Toast.makeText(getApplicationContext(), "Generic " + errString, Toast.LENGTH_LONG).show();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+               // Toast.makeText(getApplicationContext(), "generic succeeded!", Toast.LENGTH_SHORT).show();
+                enableBiometric();
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
@@ -184,18 +215,11 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
                 startActivity(in);
                 return true;
             case R.id.action_biometric:
-                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
-                if(!guest) {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        //Fingerprint API only available on from Android 6.0 (M)
-                        FingerprintManager fingerprintManager = (FingerprintManager) getApplicationContext().getSystemService(Context.FINGERPRINT_SERVICE);
-                        if (!fingerprintManager.hasEnrolledFingerprints()) {
-                            Toast.makeText(getApplicationContext(), "Finger Print not registered", Toast.LENGTH_LONG).show();
-                        } else {
-                            // Everything is ready for fingerprint authentication
-                            enableBiometric();
-                        }
-                    }
+                boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
+                if(!bio){
+                    biometricPromptNew.authenticate(Util.EnableBiometricDialog());
+                } else {
+                    enableBiometric();
                 }
                 // Toast.makeText(getApplicationContext(), "Disabled.", Toast.LENGTH_LONG).show();
                 return true;
@@ -252,7 +276,8 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
             action_biometric.setTitle(R.string.enable_biometric);*/
 
         boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
-        if(guest) {
+        boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
+        if(guest || !biometric_device) {
             MenuItem bio = menu.findItem(R.id.action_biometric);
             bio.setVisible(false);
         }
@@ -276,7 +301,7 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
     }
 
     private void enableBiometric() {
-        boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
+        boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
         BioMetricRequest bioMetricRequest = new BioMetricRequest();
         bioMetricRequest.setG_oauth_2_0_client_token(((CoreApplication) getApplication()).getCustomerLoginRequestReponse().getOauth_2_0_client_token());
         bioMetricRequest.setG_transType(TransType.BIO_REQUEST.name());

@@ -6,8 +6,9 @@ import android.os.Handler;
 import android.os.HandlerThread;
 import android.os.Looper;
 import android.os.Message;
-import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+
+import androidx.fragment.app.FragmentActivity;
 
 import com.bookeey.wallet.live.Splash;
 import com.bookeey.wallet.live.application.CoreApplication;

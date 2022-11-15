@@ -1,6 +1,7 @@
 package com.bookeey.wallet.live.prepaidcard;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.AlertDialog;
@@ -9,7 +10,6 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
@@ -20,8 +20,6 @@ import android.os.Message;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyPermanentlyInvalidatedException;
 import android.security.keystore.KeyProperties;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.hardware.fingerprint.FingerprintManagerCompat;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
@@ -43,9 +41,13 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.biometric.BiometricPrompt;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.bookeey.wallet.live.R;
 import com.bookeey.wallet.live.application.CoreApplication;
-import com.bookeey.wallet.live.login.FingerprintAuthenticationDialogFragmentPrePaid;
 import com.bookeey.wallet.live.login.LoginActivity;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.analytics.FirebaseAnalytics;
@@ -64,6 +66,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -85,6 +88,7 @@ import nostra13.universalimageloader.core.assist.FailReason;
 import nostra13.universalimageloader.core.assist.QueueProcessingType;
 import nostra13.universalimageloader.core.listener.ImageLoadingProgressListener;
 import nostra13.universalimageloader.core.listener.SimpleImageLoadingListener;
+import util.Util;
 import ycash.wallet.json.pojo.generic.GenericResponse;
 import ycash.wallet.json.pojo.generic.TransType;
 import ycash.wallet.json.pojo.login.CustomerLoginRequestReponse;
@@ -136,10 +140,6 @@ public class VirtualPrepaidMainActivityNew extends GenericActivity {
     private static final String DIALOG_FRAGMENT_TAG = "myFragment";
     private static final String KEY_NAME = "my_key";
     @Inject
-    FingerprintManagerCompat mFingerprintManager;
-    @Inject
-    FingerprintAuthenticationDialogFragmentPrePaid mFragment;
-    @Inject
     SharedPreferences mSharedPreferences;
     private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
     private String response_det_str = null;
@@ -148,6 +148,9 @@ public class VirtualPrepaidMainActivityNew extends GenericActivity {
     private KeyStore mKeyStore;
     private Cipher mCipher;
     String moduleName;
+
+    private Executor executor;
+    private BiometricPrompt biometricPrompt;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -505,9 +508,15 @@ public class VirtualPrepaidMainActivityNew extends GenericActivity {
                     }
                 }*/
 
-
-                    if(IsBio)
-                        ShowEnterPassword(1);
+                    boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
+                    boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
+                    if (IsBio) {
+                        value = 1;
+                        if(biometric_device && biometric_enabled)
+                            biometricPrompt.authenticate(Util.GetBiometricDialog());
+                        else
+                            ShowEnterPassword();
+                    }
                     else
                         proceedL1Request();
                     //proceedL1Request();
@@ -531,9 +540,15 @@ public class VirtualPrepaidMainActivityNew extends GenericActivity {
                             return;
                         }
                     }
-
-                    if(IsBio)
-                        ShowEnterPassword(2);
+                    boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
+                    boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
+                    if (IsBio) {
+                        value = 2;
+                        if(biometric_device && biometric_enabled)
+                            biometricPrompt.authenticate(Util.GetBiometricDialog());
+                        else
+                            ShowEnterPassword();
+                    }
                     else
                         domesticL1Request();
 
@@ -541,25 +556,68 @@ public class VirtualPrepaidMainActivityNew extends GenericActivity {
 
             }
         });
+
+        boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
+        executor = ContextCompat.getMainExecutor(this);
+        biometricPrompt = new BiometricPrompt(this, executor, new BiometricPrompt.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
+                super.onAuthenticationError(errorCode, errString);
+                Toast.makeText(getApplicationContext(),"" + errString, Toast.LENGTH_LONG).show();
+                ShowEnterPassword();
+            }
+
+            @Override
+            public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
+                super.onAuthenticationSucceeded(result);
+               // Toast.makeText(getApplicationContext(),"Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                if(biometric_enabled){
+                    biometricVerified = true;
+                    if(value == 1)
+                        proceedL1Request();
+                    else if (value == 2)
+                        domesticL1Request();
+                }
+                else
+                    Util.EnableBiometricAlert(VirtualPrepaidMainActivityNew.this);
+            }
+
+            @Override
+            public void onAuthenticationFailed() {
+                super.onAuthenticationFailed();
+                Toast.makeText(getApplicationContext(), "Authentication failed",Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
-    public void ShowEnterPassword(int vl) {
+    @SuppressLint("ClickableViewAccessibility")
+    public void ShowEnterPassword() {
         promptsViewPassword = new Dialog(this);
         promptsViewPassword.requestWindowFeature(Window.FEATURE_NO_TITLE);
         promptsViewPassword.setContentView(R.layout.enter_password);
-        final EditText pin = promptsViewPassword.findViewById(R.id.pay_via_qrcode_pin_edt);
+        final TextView enter_pwd_title = promptsViewPassword.findViewById(R.id.enter_pwd_title);
         final Button pay_qrcode_cancel_btn_new = promptsViewPassword.findViewById(R.id.pay_qrcode_cancel_btn_new);
         final Button verify_password_btn_new = promptsViewPassword.findViewById(R.id.verify_password_btn_new);
-        pin.setOnTouchListener((view, motionEvent) -> {
-            final int DRAWABLE_RIGHT = 2;
-            if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
-                if (motionEvent.getRawX() >= (pin.getRight() - pin.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                    value = vl;
-                    verifyBiometric();
+        final EditText pin;
+        boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
+        boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
+        if(biometric_device && biometric_enabled) {
+            pin = promptsViewPassword.findViewById(R.id.enter_pwd_edt_new);
+            pin.setOnTouchListener((view, motionEvent) -> {
+                final int DRAWABLE_RIGHT = 2;
+                if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
+                    if (motionEvent.getRawX() >= (pin.getRight() - pin.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
+                        biometricPrompt.authenticate(Util.GetBiometricDialog());
+                        promptsViewPassword.dismiss();
+                    }
                 }
-            }
-            return false;
-        });
+                return false;
+            });
+        } else {
+            pin = promptsViewPassword.findViewById(R.id.enter_pwd_edt_old);
+            enter_pwd_title.setText(R.string.Verify);
+        }
+        pin.setVisibility(View.VISIBLE);
         pay_qrcode_cancel_btn_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -576,9 +634,9 @@ public class VirtualPrepaidMainActivityNew extends GenericActivity {
                     return;
                 }
                 tpin = pin.getText().toString().trim();
-                if(vl == 1)
+                if(value == 1)
                     proceedL1Request();
-                else if (vl == 2)
+                else if (value == 2)
                     domesticL1Request();
 
                 promptsViewPassword.dismiss();
@@ -587,135 +645,6 @@ public class VirtualPrepaidMainActivityNew extends GenericActivity {
         promptsViewPassword.show();
     }
 
-    private void verifyBiometric() {
-        try {
-            boolean isFingerprintAvailable = false;
-            if (!mFragment.isAdded()) {
-                boolean isFingerprintPermissionGranted = ActivityCompat.checkSelfPermission(
-                        VirtualPrepaidMainActivityNew.this, Manifest.permission.USE_FINGERPRINT)
-                        == PackageManager.PERMISSION_GRANTED;
-                if (mFingerprintManager != null) {
-                    isFingerprintAvailable = mFingerprintManager.isHardwareDetected()
-                            && mFingerprintManager.hasEnrolledFingerprints();
-                }
-                if (!isFingerprintPermissionGranted || !isFingerprintAvailable) {
-                    // The user either rejected permission to read their fingerprint, we're on
-                    // a device that doesn't support it, or the user doesn't have any
-                    // fingerprints enrolled.
-                    // Let them authenticate with a password
-                    mFragment.setStage(
-                            FingerprintAuthenticationDialogFragmentPrePaid.Stage.PASSWORD);
-                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
-                } else if (initCipher()) {
-                    // Set up the crypto object for later. The object will be authenticated by use
-                    // of the fingerprint.
-                    // Show the fingerprint dialog. The user has the option to use the fingerprint with
-                    // crypto, or you can fall back to using a server-side verified password.
-                    mFragment.setCryptoObject(new FingerprintManagerCompat.CryptoObject(mCipher));
-                    boolean useFingerprintPreference = mSharedPreferences
-                            .getBoolean(getString(R.string.use_fingerprint_to_authenticate_key),
-                                    true);
-                    if (useFingerprintPreference) {
-                        mFragment.setStage(
-                                FingerprintAuthenticationDialogFragmentPrePaid.Stage.FINGERPRINT);
-                    } else {
-                        mFragment.setStage(
-                                FingerprintAuthenticationDialogFragmentPrePaid.Stage.PASSWORD);
-                    }
-                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
-                } else {
-                    // This happens if the lock screen has been disabled or or a fingerprint got
-                    // enrolled. Thus show the dialog to authenticate with their password first
-                    // and ask the user if they want to authenticate with fingerprints in the
-                    // future
-                    mFragment.setCryptoObject(new FingerprintManagerCompat.CryptoObject(mCipher));
-                    mFragment.setStage(
-                            FingerprintAuthenticationDialogFragmentPrePaid.Stage.NEW_FINGERPRINT_ENROLLED);
-                    mFragment.show(getFragmentManager(), DIALOG_FRAGMENT_TAG);
-                }
-            }
-        } catch (Exception e) {
-            Toast.makeText(VirtualPrepaidMainActivityNew.this, " Fingerprint Sensor Exc: " + e.getMessage(), Toast.LENGTH_LONG).show();
-            e.printStackTrace();
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    private boolean initCipher() {
-        try {
-            if (mKeyStore == null) {
-                createKey();
-            }
-            mKeyStore.load(null);
-            SecretKey key = (SecretKey) mKeyStore.getKey(KEY_NAME, null);
-            mCipher = Cipher.getInstance(KeyProperties.KEY_ALGORITHM_AES + "/"
-                    + KeyProperties.BLOCK_MODE_CBC + "/"
-                    + KeyProperties.ENCRYPTION_PADDING_PKCS7);
-            mCipher.init(Cipher.ENCRYPT_MODE, key);
-            return true;
-        } catch (Exception e) {
-            if (e instanceof KeyPermanentlyInvalidatedException)
-                return false;
-            else if (e instanceof KeyStoreException | e instanceof CertificateException | e instanceof UnrecoverableKeyException | e instanceof IOException | e instanceof NoSuchAlgorithmException | e instanceof InvalidKeyException)
-                throw new RuntimeException("Failed to init Cipher", e);
-        }
-        /*catch (KeyStoreException | CertificateException | UnrecoverableKeyException | IOException
-                | NoSuchAlgorithmException | InvalidKeyException | NoSuchPaddingException e) {
-            throw new RuntimeException("Failed to init Cipher", e);
-        }*/
-        return false;
-    }
-
-    @TargetApi(Build.VERSION_CODES.M)
-    public void createKey() {
-        // The enrolling flow for fingerprint. This is where you ask the user to set up fingerprint
-        // for your flow. Use of keys is necessary if you need to know if the set of
-        // enrolled fingerprints has changed.
-        try {
-            mKeyStore = KeyStore.getInstance("AndroidKeyStore");
-            mKeyStore.load(null);
-            // Set the alias of the entry in Android KeyStore where the key will appear
-            // and the constrains (purposes) in the constructor of the Builder
-            KeyGenerator keyGenerator = KeyGenerator.getInstance(KeyProperties.KEY_ALGORITHM_AES, "AndroidKeyStore");
-            keyGenerator.init(new KeyGenParameterSpec.Builder(KEY_NAME,
-                    KeyProperties.PURPOSE_ENCRYPT |
-                            KeyProperties.PURPOSE_DECRYPT)
-                    .setBlockModes(KeyProperties.BLOCK_MODE_CBC)
-                    // Require the user to authenticate with a fingerprint to authorize every use
-                    // of the key
-                    .setUserAuthenticationRequired(true)
-                    .setEncryptionPaddings(KeyProperties.ENCRYPTION_PADDING_PKCS7)
-                    .build());
-            keyGenerator.generateKey();
-        } catch (NoSuchAlgorithmException | InvalidAlgorithmParameterException | KeyStoreException
-                | CertificateException | NoSuchProviderException | IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    private void alertDialog() {
-        LayoutInflater li = LayoutInflater.from(this);
-        View promptsView = li.inflate(R.layout.custom_alert_whatsapp, null);
-        AlertDialog.Builder alertDialog = new AlertDialog.Builder(VirtualPrepaidMainActivityNew.this);
-        alertDialog.setView(promptsView);
-        alertDialog.show();
-    }
-
-    public void onPurchased(boolean withFingerprint, String password) {
-        //if (!withFingerprint) invoice_tpin_edit.setText(password);
-        // invoicePayNowRequest(invoice_amount, 0, offerID);
-        boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC);
-        if(!bio)
-            alertDialog();
-        else {
-            biometricVerified = true;
-            if(value == 1)
-                proceedL1Request();
-            else if (value == 2)
-                domesticL1Request();
-
-        }
-    }
     @Override
     public void onResume() {
         super.onResume();

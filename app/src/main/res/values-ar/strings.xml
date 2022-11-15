@@ -79,7 +79,7 @@
     <string name="contact_us_screen_office_adress">عنوان مكتب الشركة</string>
 
 
-    <string name="contact_us_screen_office_adress_detail">شرق، قطعة 2 ، شارع أحمد الجابر، برج جرافيتي، الدور الثالث.</string>
+    <string name="contact_us_screen_office_adress_detail">قبله - قطعة ١٢ - شارع فهد السالم - عمارة الكويت - الدور ١٩</string>
     <string name="contact_us_screen_write_us">تواصل معنا</string>
     <string name="contact_us_screen_website"></string>
     <string name="contact_us_screen_mail">customercare@bookeey.com</string>
@@ -1312,11 +1312,11 @@ customercare@bookeey.com </string>
     <string name="registration_confirm_password">تأكيد كلمة المرور</string>
     <string name="registration_password">كلمه السر</string>
     <string name="alert">Alert</string>
-    <string name="please_enable_biometric_for_access">Please enable biometric for access</string>
+    <string name="please_enable_biometric_for_access">الرجاء تمكين البيومترية للوصول</string>
     <string name="enable_biometric">تمكين / تعطيل المقاييس الحيوية</string>
     <string name="invoice_enter_password_biometric">أدخل كلمة المرور أو المقاييس الحيوية</string>
     <string name="enable_biometric_for_access">هل تريد تمكين البيومترية للوصول؟</string>
     <string name="verify_password">تحقق من كلمة المرور / البيومترية</string>
-    <string name="Verify">Verify Password</string>
+    <string name="Verify">اكد كلمة المرور</string>
 
 </resources>

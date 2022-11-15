@@ -1,7 +1,8 @@
 package newflow;
 
+import static coreframework.database.CustomSharedPreferences.SP_KEY.MOBILE_NUMBER;
+
 import android.Manifest;
-import android.animation.ObjectAnimator;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -31,15 +32,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
 import android.speech.tts.TextToSpeech;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.ViewPager;
-import android.support.v4.widget.DrawerLayout;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -59,28 +51,46 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
-import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.bookeey.wallet.live.BuildConfig;
+import com.bookeey.wallet.live.Help;
+import com.bookeey.wallet.live.R;
+import com.bookeey.wallet.live.application.CoreApplication;
 import com.bookeey.wallet.live.application.SyncServiceNewFlow;
-import com.bookeey.wallet.live.creditcardview.ViewPagerAdapter;
-import com.bookeey.wallet.live.creditcardview.ViewPagerAdapterNewFlow;
 import com.bookeey.wallet.live.login.LoginActivity;
-//import com.bookeey.wallet.live.login.LoginActivityNewFlow;
 import com.bookeey.wallet.live.mainmenu.ExpandableHeightGridView;
+import com.bookeey.wallet.live.mainmenu.MainActivity;
 import com.bookeey.wallet.live.mainmenu.MerchantSelectionSliderList;
-import com.bookeey.wallet.live.showpushnotificationmessage.ShowPushNotificationMessageDialogActivity;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderApi;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
+import com.google.android.play.core.appupdate.AppUpdateManager;
+import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
+import com.google.android.play.core.install.InstallState;
+import com.google.android.play.core.install.InstallStateUpdatedListener;
+import com.google.android.play.core.install.model.InstallStatus;
+import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.gson.Gson;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 import java.io.ByteArrayOutputStream;
 import java.io.FileNotFoundException;
@@ -88,10 +98,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ref.WeakReference;
 import java.math.BigInteger;
-import java.nio.ByteBuffer;
-import java.nio.CharBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.CharsetDecoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -104,7 +110,6 @@ import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
 import coreframework.processing.GetPushNotificationMessageProcessing;
 import coreframework.processing.LoadMoneyProcessing;
-//import coreframework.processing.Login_processing.DeviceIDLoginCheckProcessingNewFlow;
 import coreframework.processing.PayToMerchantValidationProcessing;
 import coreframework.processing.invoice_Processing.InvoiceProcessing;
 import coreframework.processing.invoice_Processing.InvoiceProcessingForSessionOut;
@@ -117,18 +122,6 @@ import coreframework.utils.Hex;
 import coreframework.utils.LocaleHelper;
 import coreframework.utils.PriceFormatter;
 import coreframework.utils.SMSUtils;
-
-import com.bookeey.wallet.live.Help;
-import com.bookeey.wallet.live.R;
-import com.bookeey.wallet.live.application.CoreApplication;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
 import coreframework.utils.URLUTF8Encoder;
 import newflow_processing.DeviceIDSplashCheckProcessingNewFlow;
 import newflow_processing.MobileBillProcessingNewFlow;
@@ -147,48 +140,29 @@ import ycash.wallet.json.pojo.translimit.TransactionLimitResponse;
 import ycash.wallet.json.pojo.txnhistory.TransactionHistoryResponse;
 import ycash.wallet.json.pojo.userinfo.UserInfoResponse;
 
-import static com.facebook.FacebookSdk.getApplicationContext;
-import static coreframework.database.CustomSharedPreferences.SP_KEY.MOBILE_NUMBER;
-
-
 public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHeadlessCallback, TextToSpeech.OnInitListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
-    TextToSpeech tts;
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-
-    Intent intent;
-    GridView gridView;
-    ArrayList<Item> gridArray = new ArrayList<Item>();
-    Bitmap load_wallet, invoice, pay, recharge_paybill, sendmoney, help, where_to_pay, my_offers, mobilebill, prepaid_cards, txn_history, store, testimage;
-    TextView more_text;
-    ExpandableHeightGridView mainmenu_gridview;
-    //for 3 columns use below grdiview and setExpanded(false)
-    //GridView  mainmenu_gridview;
-    ScrollView scroll;
     //int i = 0;
     static public final int _SLIDE_ECOM = 9;
-    //ImageView more_img1;
-    private UserInfoUpdateHandler userInfoUpdateHandler;
-    private String amount_str = null;
+    public static final int LOCATION_REQUEST = 101;
+    private static final int CAMERA_REQUEST_CODE = 1;
+    private static final int PICK_FROM_GALLERY = 2;
+
+    TextToSpeech tts;
+    Intent intent;
+    Bitmap load_wallet, invoice, pay, recharge_paybill, sendmoney, help, where_to_pay, my_offers, mobilebill, prepaid_cards, txn_history, store, testimage;
+    ExpandableHeightGridView mainmenu_gridview;
+    ScrollView scroll;
     MyAdapter adapter1;
     ImageView imageview;
     WalletLimits walletLimits;
     String amount, tpin;
-    private DrawerLayout mDrawer = null;
-    private Uri mImageCaptureUri;
-    // private static final int PICK_FROM_GALLERY = 2;
     ImageView image_person;
     ProgressDialog progressDialog;
-
-    private static final int CAMERA_REQUEST_CODE = 1;
-    private static final int PICK_FROM_GALLERY = 2;
-
     CoreApplication application = null;
     CustomerLoginRequestReponse customerLoginRequestReponse = null;
-    boolean onItemClicked = false, isSound = false;
+    boolean isSound = false;
     int i = 0;
-    ObjectAnimator textColorAnim, ImageColorAnim;
-    boolean mBlinking = true;
-    boolean notifyDataSetChangedCalled = false;
     int invoice_count = 0;
     Animation animBlink, animRight, animLeft;
     Button bookeey_mainmenu_loadwallet_btn, bookeey_mainmenu_pay_btn;
@@ -197,21 +171,30 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
     int right_count = 0;
     int left_count = 0;
     Handler handler2 = null;
-
     boolean isScrolled = true;
-
-    //Initializing the GoogleApiClient object
-    private GoogleApiClient googleApiClient;
-
-    public static final int LOCATION_REQUEST = 101;
-
     LinearLayout language_layout;
     ImageView coutry_flag_img;
     TextView language_text;
-
     String selectedLanguage = null;
-
     String moduleName = "";
+    String versionname;
+    private UserInfoUpdateHandler userInfoUpdateHandler;
+    private String amount_str = null;
+    private DrawerLayout mDrawer = null;
+    private GoogleApiClient googleApiClient;
+    private AppUpdateManager mAppUpdateManager;
+    InstallStateUpdatedListener installStateUpdatedListener = new InstallStateUpdatedListener() {
+        @Override
+        public void onStateUpdate(InstallState state) {
+            if (state.installStatus() == InstallStatus.INSTALLED) {
+                if (mAppUpdateManager != null) {
+                    mAppUpdateManager.unregisterListener(installStateUpdatedListener);
+                }
+            } else {
+                Log.i("AppUpdate", "InstallStateUpdatedListener: state: " + state.installStatus());
+            }
+        }
+    };
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -220,187 +203,86 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         animBlink = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
         animLeft = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_slide_in_left);
         animRight = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_slide_in_right);
-        /*if (getIntent().getExtras() != null) {
-            isSound = getIntent().getExtras().getBoolean("voice");
-        }*/
-        //requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main_newflow);
         moduleName = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MODULE);
 
-        TextView tv_login_newflow = (TextView)findViewById(R.id.tv_login_newflow);
-        TextView tv_signup_newflow = (TextView)findViewById(R.id.tv_signup_newflow);
-
-//        tv_login_newflow.setPaintFlags(tv_login_newflow.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
-
-//        tv_signup_newflow.setPaintFlags(tv_signup_newflow.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
-
-
-
-
-        //Commented for Creditcard view Feb12 START
-
+        TextView tv_login_newflow = (TextView) findViewById(R.id.tv_login_newflow);
+        TextView tv_signup_newflow = (TextView) findViewById(R.id.tv_signup_newflow);
         tv_login_newflow.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                //Jan 04 Original START
-//                Intent in = new Intent(getBaseContext(), LoginActivityNewFlow.class);
-//                startActivity(in);
-                //Jan 04 Original END
-
-
-
-                //Jan 04 After call  START
-
                 CustomerMobileNumberRequest clr = new CustomerMobileNumberRequest();
                 String deviceID = ((CoreApplication) getApplication()).getThisDeviceUniqueAndroidId();
                 clr.setDeviceId(deviceID);
 
                 CoreApplication application = (CoreApplication) getApplication();
-                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application,true,false,true));
+                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application, true, false, true));
                 ProgressDialogFrag progress = new ProgressDialogFrag();
                 Bundle bundle_req = new Bundle();
                 bundle_req.putString("uuid", uiProcessorReference);
                 progress.setCancelable(true);
                 progress.setArguments(bundle_req);
                 progress.show(getSupportFragmentManager(), "progress_dialog");
-
-                //Jan 04 After call  END
-
-
-
             }
         });
-
 
         tv_signup_newflow.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //Jan 04 Original START
-
-//                Intent in = new Intent(getBaseContext(), OoredooRegistrationNewFlow.class);
-//                startActivity(in);
-
-                //Jan 04 Original END
-
-
-
-
-                //Jan 04 After call  START
-
                 CustomerMobileNumberRequest clr = new CustomerMobileNumberRequest();
                 String deviceID = ((CoreApplication) getApplication()).getThisDeviceUniqueAndroidId();
                 clr.setDeviceId(deviceID);
 
                 CoreApplication application = (CoreApplication) getApplication();
-                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application,true,true,false));
+                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application, true, true, false));
                 ProgressDialogFrag progress = new ProgressDialogFrag();
                 Bundle bundle_req = new Bundle();
                 bundle_req.putString("uuid", uiProcessorReference);
                 progress.setCancelable(true);
                 progress.setArguments(bundle_req);
                 progress.show(getSupportFragmentManager(), "progress_dialog");
-
-                //Jan 04 After call  END
-
             }
         });
 
-
-
-
-        FrameLayout login_frame_layout =  (FrameLayout)findViewById(R.id.login_frame_layout) ;
-
-
+        FrameLayout login_frame_layout = (FrameLayout) findViewById(R.id.login_frame_layout);
 
         login_frame_layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
-                //Jan 04 Original START
-//                Intent in = new Intent(getBaseContext(), LoginActivityNewFlow.class);
-//                startActivity(in);
-                //Jan 04 Original END
-
-
-
-                //Jan 04 After call  START
-
                 CustomerMobileNumberRequest clr = new CustomerMobileNumberRequest();
                 String deviceID = ((CoreApplication) getApplication()).getThisDeviceUniqueAndroidId();
                 clr.setDeviceId(deviceID);
 
                 CoreApplication application = (CoreApplication) getApplication();
-                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application,true,false,true));
+                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application, true, false, true));
                 ProgressDialogFrag progress = new ProgressDialogFrag();
                 Bundle bundle_req = new Bundle();
                 bundle_req.putString("uuid", uiProcessorReference);
                 progress.setCancelable(true);
                 progress.setArguments(bundle_req);
                 progress.show(getSupportFragmentManager(), "progress_dialog");
-
-                //Jan 04 After call  END
-
-
-
             }
         });
 
-
-        FrameLayout signup_frame_layout =  (FrameLayout)findViewById(R.id.signup_frame_layout) ;
-
-
-
+        FrameLayout signup_frame_layout = (FrameLayout) findViewById(R.id.signup_frame_layout);
         signup_frame_layout.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                //Jan 04 Original START
-
-//                Intent in = new Intent(getBaseContext(), OoredooRegistrationNewFlow.class);
-//                startActivity(in);
-
-                //Jan 04 Original END
-
-
-
-
-                //Jan 04 After call  START
-
                 CustomerMobileNumberRequest clr = new CustomerMobileNumberRequest();
                 String deviceID = ((CoreApplication) getApplication()).getThisDeviceUniqueAndroidId();
                 clr.setDeviceId(deviceID);
 
                 CoreApplication application = (CoreApplication) getApplication();
-                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application,true,true,false));
+                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application, true, true, false));
                 ProgressDialogFrag progress = new ProgressDialogFrag();
                 Bundle bundle_req = new Bundle();
                 bundle_req.putString("uuid", uiProcessorReference);
                 progress.setCancelable(true);
                 progress.setArguments(bundle_req);
                 progress.show(getSupportFragmentManager(), "progress_dialog");
-
-                //Jan 04 After call  END
-
             }
         });
 
-       //Commented for Creditcard view Feb12 END
-
-
-        /*ActionBar.LayoutParams params = new
-                ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
-        getActionBar().setDisplayShowTitleEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(false);
-        getActionBar().setHomeButtonEnabled(false);
-        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        View cView = getLayoutInflater().inflate(R.layout.activity_main_actionbar, null);
-        getActionBar().setCustomView(cView, params);*/
         application = (CoreApplication) getApplication();
         customerLoginRequestReponse = ((CoreApplication) application).getCustomerLoginRequestReponse();
         if (!(application.getBannerDetails() == null)) {
@@ -422,46 +304,29 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
             mActionBar.setDisplayShowCustomEnabled(true);
             mActionBar.setDisplayShowHomeEnabled(false);
         }
-        // mActionBar.setDisplayHomeAsUpEnabled(false);
-        //getActionBar().setLogo(R.drawable.bookeey_latest_icon);
-        //getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         LayoutInflater mInflater = LayoutInflater.from(this);
         View mCustomView = mInflater.inflate(R.layout.custom_actionbar_guest, null);
-        //mActionBar.setDisplayShowCustomEnabled(true);
-
-
-
         //Showing Notification count
         TextView count_text_top = (TextView) mCustomView.findViewById(R.id.count_text_top);
-        String notification_count  = CustomSharedPreferences.getStringData(getApplicationContext(),CustomSharedPreferences.SP_KEY.NOTIFICATION_MSG_COUNT);
+        FrameLayout push_notifications_frame_layout = (FrameLayout) mCustomView.findViewById(R.id.push_notifications_frame_layout);
+        String notification_count = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.NOTIFICATION_MSG_COUNT);
 
-        if(notification_count.length()>0) {
-            count_text_top.setText(""+notification_count);
-        }else{
+        if (notification_count.length() > 0) {
+            count_text_top.setText("" + notification_count);
+        } else {
             count_text_top.setText("0");
         }
 
-
-        ActionBar.LayoutParams params = new
-                ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT, Gravity.LEFT);
+        ActionBar.LayoutParams params = new ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT, ActionBar.LayoutParams.MATCH_PARENT, Gravity.LEFT);
         mActionBar.setCustomView(mCustomView, params);
         final TextView mTitleTextView = (TextView) mCustomView.findViewById(R.id.marquee_text);
         final ImageView leftArrow = (ImageView) mCustomView.findViewById(R.id.left);
         final ImageView rightArrow = (ImageView) mCustomView.findViewById(R.id.right);
 
-        //ImageView imageView=(ImageView)mCustomView.findViewById(R.id.home_up_back);
-        //imageView.setVisibility(View.GONE);
-        //mTitleTextView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        //mTitleTextView.setText(bannerString);
         mTitleTextView.setGravity(Gravity.CENTER);
-        //mTitleTextView.setSelected(true);
         mTitleTextView.setSingleLine(true);
-
-
         //NewFlow
-        mTitleTextView.setText(""+getString(R.string.please_register_to_gain_all_feature));
-
+        mTitleTextView.setText("" + getString(R.string.please_register_to_gain_all_feature));
 
         if (right_count < bannerList.size() || left_count < bannerList.size()) {
             if (!bannerString.equalsIgnoreCase("No offers available")) {
@@ -575,7 +440,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         recharge_paybill = BitmapFactory.decodeResource(this.getResources(), R.drawable.topupchanged);
         mobilebill = BitmapFactory.decodeResource(this.getResources(), R.drawable.mobilebillnew);
 
-        if(moduleName.equalsIgnoreCase("utility bills")) {
+        if (moduleName.equalsIgnoreCase("utility bills")) {
             prepaid_cards = BitmapFactory.decodeResource(this.getResources(), R.drawable.pre_paidcard);
         } else {
             prepaid_cards = BitmapFactory.decodeResource(this.getResources(), R.drawable.pre_paidcard);
@@ -586,7 +451,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
         bookeey_mainmenu_loadwallet_btn = (Button) findViewById(R.id.bookeey_mainmenu_loadwallet_btn);
         bookeey_mainmenu_pay_btn = (Button) findViewById(R.id.bookeey_mainmenu_pay_btn);
-        more_text = (TextView) findViewById(R.id.more_text);
+        //more_text = (TextView) findViewById(R.id.more_text);
         scroll = (ScrollView) findViewById(R.id.scroll);
         // more_img1 = (ImageView) findViewById(R.id.more_img1);
 
@@ -625,20 +490,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         }
 
         updateProfile(R.id.nameTextooredo, R.id.wallet_id, R.id.balance_id);
-
-
-        //more_img1.setBackgroundResource(R.drawable.down_arrow);
-        /*gridArray.add(new Item(load_wallet, "LOAD WALLET"));
-        gridArray.add(new Item(invoice, "INVOICE"));
-        gridArray.add(new Item(pay, "PAY"));
-        gridArray.add(new Item(sendmoney, "SEND MONEY"));
-        gridArray.add(new Item(where_to_pay, "WHERE TO PAY"));
-        gridArray.add(new Item(recharge_paybill, "INT'L TOP UP"));
-        gridArray.add(new Item(mobilebill, "MOBILE BILL"));
-        gridArray.add(new Item(prepaid_cards, "VIRTUAL PREPAID CARDS"));
-        gridArray.add(new Item(my_offers, "MERCHANT OFFERS"));
-        gridArray.add(new Item(help, "HELP"));
-        gridArray.add(new Item(txn_history, "TRANSACTION HISTORY"));*/
 
         mDrawer = (DrawerLayout) findViewById(R.id.drawer_layout);
 
@@ -840,7 +691,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         });*/
 
 
-
         //Commented for Creditcardview Feb12 START
 
 
@@ -874,13 +724,10 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         //Commented for Creditcardview Feb12 END
 
 
-        mainmenu_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener()
-
-        {
+        mainmenu_gridview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             @Override
-            public void onItemClick(AdapterView<?> view, View v, int position,
-                                    long id) {
+            public void onItemClick(AdapterView<?> view, View v, int position, long id) {
                 switch (position) {
                     case 0:
 
@@ -928,7 +775,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 //                        Toast.makeText(MainActivityNewFlow.this, "Need to implement", Toast.LENGTH_SHORT).show();
 
                         intent = new Intent(getBaseContext(), TopUpInitialActivityNewFlow.class);
-                        intent.putExtra("BACK","");
+                        intent.putExtra("BACK", "");
                         startActivity(intent);
                         break;
                     case 4:
@@ -945,7 +792,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
                         //Implemented on Feb 13
                         showNewFlowAlertDialogueCreditCardView();
-
 
 
                         //Commented on Feb 13 START to show new alert dialog
@@ -980,8 +826,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 //                        }
 
 
-
-
 //                        Newflow
 //                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //                            boolean isEnabled = checkLocationPermission();
@@ -993,16 +837,12 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 //                        }
 
 
-
 //                        Intent intent = new Intent(MainActivityNewFlow.this, MerchantListCatogorieyActivityNewFlowNewUI.class);
 //                        startActivity(intent);
 
 
                         Intent intent = new Intent(MainActivityNewFlow.this, MerchantListCatogorieyActivityNewFlowNewUIActivity.class);
                         startActivity(intent);
-
-
-
 
 
                         break;
@@ -1055,21 +895,15 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 //        updateUserInfo(userInfoUpdateHandler);
 
 
-
-
         //For location
         //Building a instance of Google Api Client
-        googleApiClient = new GoogleApiClient.Builder(this)
-                .addApi(LocationServices.API)
-                .addOnConnectionFailedListener(this)
-                .addConnectionCallbacks(this)
-                .build();
+        googleApiClient = new GoogleApiClient.Builder(this).addApi(LocationServices.API).addOnConnectionFailedListener(this).addConnectionCallbacks(this).build();
 
 
         //NewFlow START
         //Commented for creditcard view START Feb 12
 
-        Button btn_newflow_login = (Button)findViewById(R.id.btn_newflow_login);
+        Button btn_newflow_login = (Button) findViewById(R.id.btn_newflow_login);
         btn_newflow_login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1094,8 +928,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         });
 
 
-
-        Button btn_newflow_register  = (Button)findViewById(R.id.btn_newflow_register);
+        Button btn_newflow_register = (Button) findViewById(R.id.btn_newflow_register);
         btn_newflow_register.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -1106,11 +939,9 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         });
 
 
-
         //NewFlow END
 
         //language selection
-
 
 
         language_layout = (LinearLayout) findViewById(R.id.language_layout);
@@ -1155,7 +986,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         });
 
 
-        LinearLayout     demo_layout = (LinearLayout) findViewById(R.id.demo_layout);
+        LinearLayout demo_layout = (LinearLayout) findViewById(R.id.demo_layout);
         TextView demo_text = (TextView) findViewById(R.id.demo_text);
 
         demo_layout.setOnClickListener(new View.OnClickListener() {
@@ -1188,14 +1019,13 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         //Commented for creditcard view END Feb 12
 
 
-
         //Rahman //Check for updates
 
         PackageInfo pInfo = null;
         try {
             pInfo = getPackageManager().getPackageInfo(getPackageName(), PackageManager.GET_META_DATA);
         } catch (Exception e) {
-            Log.e("TAG1", "" + e.toString());
+            Log.e("TAG1", "" + e);
         }
         int versionCode = BuildConfig.VERSION_CODE;
         versionname = BuildConfig.VERSION_NAME;
@@ -1204,10 +1034,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         versionChecker.execute();
 
 
-
-
-
-        FrameLayout push_notifications_frame_layout =  (FrameLayout)findViewById(R.id.push_notifications_frame_layout);
+        // FrameLayout push_notifications_frame_layout =  (FrameLayout)findViewById(R.id.push_notifications_frame_layout);
 
 
 //        BadgeView badge = new BadgeView(this, push_notification_message_bell);
@@ -1222,7 +1049,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
             public void onClick(View v) {
 
 
-
                 //Fetch pushnotification message from server
                 GetPushNotificationMessageRequest pushNotificationMessageRequest = new GetPushNotificationMessageRequest();
 
@@ -1234,8 +1060,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
                 progress.setCancelable(true);
                 progress.setArguments(bundle);
                 progress.show(getSupportFragmentManager(), "progress_dialog");
-
-
 
 
                 //For Test
@@ -1308,10 +1132,8 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 */
 
 
-
             }
         });
-
 
 
         //Creditcard view pager view
@@ -1323,6 +1145,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
 
     }
+
     public void refresh(Activity loginActivity, String selectedLanguage) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
             Locale locale = new Locale(selectedLanguage);
@@ -1347,30 +1170,15 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         }
     }
 
-
-    private final LocationListener mLocationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(final Location location) {
-            //your code here
-        }
-    };
-
     private boolean checkLocationPermission() {
-        if (ContextCompat.checkSelfPermission(this,
-                Manifest.permission.ACCESS_FINE_LOCATION)
-                != PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
 
             // Should we show an explanation?
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this,
-                    Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(MainActivityNewFlow.this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
+                ActivityCompat.requestPermissions(MainActivityNewFlow.this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(this,
-                        new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
-                        MY_PERMISSIONS_REQUEST_LOCATION);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, MY_PERMISSIONS_REQUEST_LOCATION);
             }
             return false;
         } else {
@@ -1385,11 +1193,9 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
             @Override
             public void run() {
                 if (isScrolled) {
-                    if (bannerList.size() > 0)
-                        mTitleTextView.setText(bannerList.get(i));
+                    if (bannerList.size() > 0) mTitleTextView.setText(bannerList.get(i));
                     i++;
-                    if (i == bannerList.size())
-                        i = 0;
+                    if (i == bannerList.size()) i = 0;
                     animLeft = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_slide_in_left);
                     animLeft.setDuration(900);
                     mTitleTextView.startAnimation(animLeft);
@@ -1502,7 +1308,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
     }
 
-
     @Override
     public void onPause() {
         super.onPause();
@@ -1520,10 +1325,10 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 //        Toast.makeText(MainActivityNewFlow.this,"Guest page",Toast.LENGTH_LONG).show();
 
 
-        Log.e("onResume Kill1","MainActivity "+application.getCustomerLoginRequestReponse());
+        Log.e("onResume Kill1", "MainActivity " + application.getCustomerLoginRequestReponse());
         CustomerLoginRequestReponse response = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse();
 
-        Log.e("onResume Kill2","Limits: "+application.getCustomerLoginRequestReponse().getFilteredLimits());
+        Log.e("onResume Kill2", "Limits: " + application.getCustomerLoginRequestReponse().getFilteredLimits());
 
 
         //OldFlow "Need to be enabled"
@@ -1533,7 +1338,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 //            startActivity(i);
 //            finishAffinity();
 //        }
-
 
 
 //To identify session out July 02 started
@@ -1555,28 +1359,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
             } else {
                 tts.shutdown();
             }
-        }
-    }
-
-
-    @Override
-    public void onInit(int status) {
-
-        if (status == TextToSpeech.SUCCESS) {
-
-            int result = tts.setLanguage(Locale.US);
-
-            if (result == TextToSpeech.LANG_MISSING_DATA
-                    || result == TextToSpeech.LANG_NOT_SUPPORTED) {
-                Log.e("TTS", "This Language is not supported");
-            } else {
-                //speakOut();
-                letsspeek();
-
-            }
-
-        } else {
-            Log.e("TTS", "Initilization Failed!");
         }
     }
 
@@ -1604,6 +1386,26 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         }).start();
     }*/
 
+    @Override
+    public void onInit(int status) {
+
+        if (status == TextToSpeech.SUCCESS) {
+
+            int result = tts.setLanguage(Locale.US);
+
+            if (result == TextToSpeech.LANG_MISSING_DATA || result == TextToSpeech.LANG_NOT_SUPPORTED) {
+                Log.e("TTS", "This Language is not supported");
+            } else {
+                //speakOut();
+                letsspeek();
+
+            }
+
+        } else {
+            Log.e("TTS", "Initilization Failed!");
+        }
+    }
+
     private void letsspeek() {
         if (isSound) {
             String text = "You have got new invoices, please pay";
@@ -1612,16 +1414,39 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
     }
 
-
     public void onStart() {
         super.onStart();
         // Initiating the GoogleApiClient Connection when the activity is visible
         googleApiClient.connect();
+        mAppUpdateManager = AppUpdateManagerFactory.create(this);
+        mAppUpdateManager.registerListener(installStateUpdatedListener);
+        mAppUpdateManager.getAppUpdateInfo().addOnSuccessListener(appUpdateInfo -> {
+            if (appUpdateInfo.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE) {
+                LayoutInflater li = LayoutInflater.from(MainActivityNewFlow.this);
+                View promptsView = li.inflate(R.layout.custom_update_playstore_dialog, null);
+                final AlertDialog.Builder alertDialog = new AlertDialog.Builder(MainActivityNewFlow.this);
+                alertDialog.setView(promptsView);
+                alertDialog.setPositiveButton(getResources().getString(R.string.update), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        Intent intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("https://play.google.com/store/apps/details?id=" + getApplicationContext().getPackageName()));
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(intent);
+                    }
+                });
+                alertDialog.setCancelable(false);
+                alertDialog.show();
+            }
+        });
     }
+
     public void onStop() {
         super.onStop();
         //Disconnecting the GoogleApiClient when the activity goes invisible
         googleApiClient.disconnect();
+        if (mAppUpdateManager != null) {
+            mAppUpdateManager.unregisterListener(installStateUpdatedListener);
+        }
     }
 
     //This callback is invoked when the user grants or rejects the location permission
@@ -1631,30 +1456,27 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
             case LOCATION_REQUEST:
                 if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     getCurrentLocation();
-                } else
-                    Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT);
+                } else Toast.makeText(this, "Location permission denied", Toast.LENGTH_SHORT);
                 break;
         }
     }
+
     private void getCurrentLocation() {
         //Checking if the location permission is granted
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION
-            }, LOCATION_REQUEST);
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, LOCATION_REQUEST);
             return;
         }
         //Fetching location using FusedLOcationProviderAPI
         FusedLocationProviderApi fusedLocationApi = LocationServices.FusedLocationApi;
         Location location = fusedLocationApi.getLastLocation(googleApiClient);
         //In some rare cases Location obtained can be null
-        if (location == null)
-            Log.e("Location: ","Not able to fetch location");
-        else{
+        if (location == null) Log.e("Location: ", "Not able to fetch location");
+        else {
             Log.e("Location: ", "" + location.getLatitude() + " - " + location.getLongitude());
 
-            CustomSharedPreferences.saveStringData(getApplicationContext(),String.valueOf(location.getLatitude() ),CustomSharedPreferences.SP_KEY.CURRENT_LATITUTE);
-            CustomSharedPreferences.saveStringData(getApplicationContext(),String.valueOf(location.getLongitude()),CustomSharedPreferences.SP_KEY.CURRENT_LONGITUDE);
+            CustomSharedPreferences.saveStringData(getApplicationContext(), String.valueOf(location.getLatitude()), CustomSharedPreferences.SP_KEY.CURRENT_LATITUTE);
+            CustomSharedPreferences.saveStringData(getApplicationContext(), String.valueOf(location.getLongitude()), CustomSharedPreferences.SP_KEY.CURRENT_LONGITUDE);
         }
 
 
@@ -1675,30 +1497,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
     @Override
     public void onConnectionFailed(@NonNull ConnectionResult connectionResult) {
 
-    }
-
-    public static class UserInfoUpdateHandler extends Handler {
-        WeakReference<MainActivityNewFlow> reference = null;
-
-        public UserInfoUpdateHandler(MainActivityNewFlow mainActivityOld) {
-            reference = new WeakReference<MainActivityNewFlow>(mainActivityOld);
-        }
-
-        @Override
-        public void handleMessage(Message msg) {
-            if (msg.arg1 == ServerConnection.OPERATION_SUCCESS) {
-                MainActivityNewFlow mainActivityOld = reference.get();
-                if (null != mainActivityOld) {
-                    GenericResponse response = new Gson().fromJson((String) msg.obj, GenericResponse.class);
-                    if (null != response && response.getG_response_trans_type().equalsIgnoreCase(TransType.USER_INFO_RESPONSE.name()) && response.getG_status() == 1) {
-                        UserInfoResponse userInfoResponse = new Gson().fromJson((String) msg.obj, UserInfoResponse.class);
-                        ((CoreApplication) mainActivityOld.getApplication()).setUserInfoResponse(userInfoResponse);
-                        ((CoreApplication) mainActivityOld.getApplication()).getCustomerLoginRequestReponse().setWalletBalance(userInfoResponse.getBalance());
-                        mainActivityOld.updateProfile(R.id.nameTextooredo, R.id.wallet_id, R.id.balance_id);
-                    }
-                }
-            }
-        }
     }
 
     void showLoadMoneyNeutralDailog() {
@@ -1776,7 +1574,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         progress.show(getSupportFragmentManager(), "progress_dialog");
     }
 
-     void showAmountEntryPayDialogue() {
+    void showAmountEntryPayDialogue() {
         final Dialog promptsView = new Dialog(this);
         promptsView.requestWindowFeature(Window.FEATURE_NO_TITLE);
         promptsView.setContentView(R.layout.ypc_get_amount_new);
@@ -1785,7 +1583,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         final TransactionLimitResponse limits = customerLoginRequestReponse.getFilteredLimits().get("P2M");
 
         amountField.setFilters(new InputFilter[]{new DecimalDigitsInputFilter(5, 3, limits.getMaxValuePerTransaction().floatValue())});
-
 
 
         final EditText pay_via_qrcode_pin_edt = (EditText) promptsView.findViewById(R.id.pay_via_qrcode_pin_edt);
@@ -1856,7 +1653,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
     }
 
 
-
     public void showNewFlowAlertDialogueCreditCardView() {
         final Dialog promptsView = new Dialog(this);
         promptsView.requestWindowFeature(Window.FEATURE_NO_TITLE);
@@ -1878,7 +1674,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
                 clr.setDeviceId(deviceID);
 
                 CoreApplication application = (CoreApplication) getApplication();
-                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application,true,false,true));
+                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application, true, false, true));
                 ProgressDialogFrag progress = new ProgressDialogFrag();
                 Bundle bundle_req = new Bundle();
                 bundle_req.putString("uuid", uiProcessorReference);
@@ -1912,7 +1708,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
         final Button mainmenu_newflow_cancel = (Button) promptsView.findViewById(R.id.mainmenu_newflow_cancel);
         final Button mainmenu_newflow_register = (Button) promptsView.findViewById(R.id.mainmenu_newflow_register);
-        final TextView  mainmenu_newflow_login  = (TextView) promptsView.findViewById(R.id.mainmenu_newflow_login);
+        final TextView mainmenu_newflow_login = (TextView) promptsView.findViewById(R.id.mainmenu_newflow_login);
 
         mainmenu_newflow_cancel.setOnClickListener(new OnClickListener() {
             @Override
@@ -1935,7 +1731,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
                 clr.setDeviceId(deviceID);
 
                 CoreApplication application = (CoreApplication) getApplication();
-                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application,true,false,true));
+                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application, true, false, true));
                 ProgressDialogFrag progress = new ProgressDialogFrag();
                 Bundle bundle_req = new Bundle();
                 bundle_req.putString("uuid", uiProcessorReference);
@@ -1967,7 +1763,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
                 clr.setDeviceId(deviceID);
 
                 CoreApplication application = (CoreApplication) getApplication();
-                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application,true,true,false));
+                String uiProcessorReference = application.addUserInterfaceProcessor(new DeviceIDSplashCheckProcessingNewFlow(clr, true, application, true, true, false));
                 ProgressDialogFrag progress = new ProgressDialogFrag();
                 Bundle bundle_req = new Bundle();
                 bundle_req.putString("uuid", uiProcessorReference);
@@ -1976,7 +1772,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
                 progress.show(getSupportFragmentManager(), "progress_dialog");
 
                 //Jan 22 After call  END
-
 
 
             }
@@ -2108,8 +1903,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         alertDialog.setNegativeButton(getResources().getString(R.string.registration_gallery), new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
 
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M &&
-                        checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M && checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                     requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, PICK_FROM_GALLERY);
                 } else {
                     Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
@@ -2221,14 +2015,13 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
                 }
             }
         };
-        new Thread(new ServerConnection(0, messageHandler, buffer.toString(),getApplicationContext())).start();
+        new Thread(new ServerConnection(0, messageHandler, buffer.toString(), getApplicationContext())).start();
 
 
         //Commented for
 //        channel-is-unrecoverably-broken-and-will-be-disposed Exception June 24/2019
 
 //        showIfNotVisible("");
-
 
 
     }
@@ -2243,15 +2036,9 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
             byte[] amount_bytes = Hex.floatToByteArray(Float.parseFloat(amount));
             byte[] random = SecurityUtils.generateApplicationAESKey(4);
             byte[] time_bytes = new BarCodeTimeParser().getEncoded();
-            byte[] dataToBeMaced = SMSUtils.mountLVParams(null, new Object[]{
-                    counter, random, amount_bytes, time_bytes}, new byte[]{
-                    SMSUtils.cw_pre_formed, SMSUtils.cw_pre_formed,
-                    SMSUtils.cw_pre_formed, SMSUtils.cw_pre_formed});
+            byte[] dataToBeMaced = SMSUtils.mountLVParams(null, new Object[]{counter, random, amount_bytes, time_bytes}, new byte[]{SMSUtils.cw_pre_formed, SMSUtils.cw_pre_formed, SMSUtils.cw_pre_formed, SMSUtils.cw_pre_formed});
             byte[] mac = SecurityUtils.generateMac(Hex.toByteArr(customerLoginRequestReponse.getMac_key()), Hex.toByteArr(android_id), dataToBeMaced, 0, dataToBeMaced.length, 32);
-            byte[] dataToBeEnced = SMSUtils.mountLVParams(null, new Object[]{
-                    counter, random, time_bytes, mac}, new byte[]{
-                    SMSUtils.cw_pre_formed, SMSUtils.cw_pre_formed,
-                    SMSUtils.cw_pre_formed, SMSUtils.cw_pre_formed});
+            byte[] dataToBeEnced = SMSUtils.mountLVParams(null, new Object[]{counter, random, time_bytes, mac}, new byte[]{SMSUtils.cw_pre_formed, SMSUtils.cw_pre_formed, SMSUtils.cw_pre_formed, SMSUtils.cw_pre_formed});
             byte[] enc = SecurityUtils.encipherData(Hex.toByteArr(customerLoginRequestReponse.getEnc_key()), Hex.toByteArr(android_id), dataToBeEnced, 0, dataToBeEnced.length);
             BcodeHeaderEncoder headerEncoder = new BcodeHeaderEncoder(staticId, Float.parseFloat(amount), (byte) spIndex);
             StringBuffer url = new StringBuffer();
@@ -2458,10 +2245,113 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         return (int) (dimensionPixels * (scale) + 0.5f);
     }
 
-    private class MyAdapter extends BaseAdapter {
-        private List<Item> items = new ArrayList<Item>();
+    private void blink(final TextView count_text, final ImageView bell_image) {
 
-        private LayoutInflater inflater;
+        //if (mBlinking) {
+        final Handler handler2 = new Handler();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                int timeToBlink = 1000;    //in milissegunds
+                try {
+                    Thread.sleep(timeToBlink);
+                } catch (Exception e) {
+                }
+                handler2.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (count_text.getVisibility() == View.VISIBLE && bell_image.getVisibility() == View.VISIBLE) {
+                            count_text.setVisibility(View.INVISIBLE);
+                            bell_image.setVisibility(View.INVISIBLE);
+                        } else {
+                            count_text.setVisibility(View.VISIBLE);
+                            bell_image.setVisibility(View.VISIBLE);
+                        }
+                       /* if (onItemClicked) {
+                            if (count_text.getVisibility() == View.VISIBLE && bell_image.getVisibility() == View.VISIBLE) {
+                                count_text.setVisibility(View.GONE);
+                                bell_image.setVisibility(View.GONE);
+                            }
+                        } else {
+                            blink(count_text, bell_image);
+                        }*/
+                        blink(count_text, bell_image);
+                    }
+                });
+            }
+        }).start();
+        // }
+
+    }
+
+    @Override
+    public void onProgressUpdate(int progress) {
+    }
+
+    @Override
+    public void onProgressComplete() {
+    }
+
+    @Override
+    public void handleProfileUpdate() {
+        super.handleProfileUpdate();
+        updateProfile(R.id.nameTextooredo, R.id.wallet_id, R.id.balance_id);
+    }
+
+    private Bitmap stringToBitmap(String encodedString) {
+        try {
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            return bitmap;
+        } catch (NullPointerException e) {
+            e.getMessage();
+            return null;
+        } catch (OutOfMemoryError e) {
+            return null;
+        }
+    }
+
+    public boolean checkPermissionForCamera() {
+        int result = ContextCompat.checkSelfPermission(MainActivityNewFlow.this, android.Manifest.permission.CAMERA);
+        return result == PackageManager.PERMISSION_GRANTED;
+    }
+
+    public void requestPermissionForCamera(int requestCode) {
+        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivityNewFlow.this, android.Manifest.permission.CAMERA)) {
+            Toast.makeText(this, "Camera permission needed. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
+        } else {
+            ActivityCompat.requestPermissions(MainActivityNewFlow.this, new String[]{android.Manifest.permission.CAMERA}, requestCode);
+        }
+    }
+
+    public static class UserInfoUpdateHandler extends Handler {
+        WeakReference<MainActivityNewFlow> reference = null;
+
+        public UserInfoUpdateHandler(MainActivityNewFlow mainActivityOld) {
+            reference = new WeakReference<MainActivityNewFlow>(mainActivityOld);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            if (msg.arg1 == ServerConnection.OPERATION_SUCCESS) {
+                MainActivityNewFlow mainActivityOld = reference.get();
+                if (null != mainActivityOld) {
+                    GenericResponse response = new Gson().fromJson((String) msg.obj, GenericResponse.class);
+                    if (null != response && response.getG_response_trans_type().equalsIgnoreCase(TransType.USER_INFO_RESPONSE.name()) && response.getG_status() == 1) {
+                        UserInfoResponse userInfoResponse = new Gson().fromJson((String) msg.obj, UserInfoResponse.class);
+                        ((CoreApplication) mainActivityOld.getApplication()).setUserInfoResponse(userInfoResponse);
+                        ((CoreApplication) mainActivityOld.getApplication()).getCustomerLoginRequestReponse().setWalletBalance(userInfoResponse.getBalance());
+                        mainActivityOld.updateProfile(R.id.nameTextooredo, R.id.wallet_id, R.id.balance_id);
+                    }
+                }
+            }
+        }
+    }
+
+    private class MyAdapter extends BaseAdapter {
+        private final List<Item> items = new ArrayList<Item>();
+
+        private final LayoutInflater inflater;
 
 //        @Override
 //        public boolean isEnabled(int position)
@@ -2479,7 +2369,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
             prepaid_cards = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.pre_paidcard);
             mobilebill = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.mobilebillnew);
             help = BitmapFactory.decodeResource(getApplicationContext().getResources(), R.drawable.help);
-
 
 
             //Wallet service old Sep 17
@@ -2512,7 +2401,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
 
             items.add(new Item(sendmoney, getResources().getString(R.string.mainmenu_send_money)));
-            if(moduleName.equalsIgnoreCase("utility bills")) {
+            if (moduleName.equalsIgnoreCase("utility bills")) {
                 items.add(new Item(prepaid_cards, getResources().getString(R.string.mainmenu_utility_bills)));
             } else {
                 items.add(new Item(prepaid_cards, getResources().getString(R.string.mainmenu_prepaid_cards)));
@@ -2529,20 +2418,20 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
         }
 
-        public Bitmap bright(Bitmap bmp){
-            Bitmap operation= Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(),bmp.getConfig());
+        public Bitmap bright(Bitmap bmp) {
+            Bitmap operation = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
 
-            for(int i=0; i<bmp.getWidth(); i++){
-                for(int j=0; j<bmp.getHeight(); j++){
+            for (int i = 0; i < bmp.getWidth(); i++) {
+                for (int j = 0; j < bmp.getHeight(); j++) {
                     int p = bmp.getPixel(i, j);
                     int r = Color.red(p);
                     int g = Color.green(p);
                     int b = Color.blue(p);
                     int alpha = Color.alpha(p);
 
-                    r = 100  +  r;
-                    g = 100  + g;
-                    b = 100  + b;
+                    r = 100 + r;
+                    g = 100 + g;
+                    b = 100 + b;
                     alpha = 100 + alpha;
                     operation.setPixel(i, j, Color.argb(alpha, r, g, b));
                 }
@@ -2551,19 +2440,19 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         }
 
         public Bitmap gama(Bitmap bmp) {
-            Bitmap operation = Bitmap.createBitmap(bmp.getWidth(),bmp.getHeight(),bmp.getConfig());
+            Bitmap operation = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
 
-            for(int i=0; i<bmp.getWidth(); i++){
-                for(int j=0; j<bmp.getHeight(); j++){
+            for (int i = 0; i < bmp.getWidth(); i++) {
+                for (int j = 0; j < bmp.getHeight(); j++) {
                     int p = bmp.getPixel(i, j);
                     int r = Color.red(p);
                     int g = Color.green(p);
                     int b = Color.blue(p);
                     int alpha = Color.alpha(p);
 
-                    r =  r + 150;
-                    g =  0;
-                    b =  0;
+                    r = r + 150;
+                    g = 0;
+                    b = 0;
                     alpha = 0;
                     operation.setPixel(i, j, Color.argb(Color.alpha(p), r, g, b));
                 }
@@ -2573,7 +2462,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
 
         public Bitmap gray(Bitmap bmp) {
-            Bitmap operation = Bitmap.createBitmap(bmp.getWidth(),bmp.getHeight(), bmp.getConfig());
+            Bitmap operation = Bitmap.createBitmap(bmp.getWidth(), bmp.getHeight(), bmp.getConfig());
             double red = 0.33;
             double green = 0.59;
             double blue = 0.11;
@@ -2591,11 +2480,10 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
                     operation.setPixel(i, j, Color.argb(Color.alpha(p), r, g, b));
                 }
             }
-            return  operation;
+            return operation;
         }
 
-        private Bitmap adjustedContrast(Bitmap src, double value)
-        {
+        private Bitmap adjustedContrast(Bitmap src, double value) {
             // image size
             int width = src.getWidth();
             int height = src.getHeight();
@@ -2619,26 +2507,35 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
             double contrast = Math.pow((100 + value) / 100, 2);
 
             // scan through all pixels
-            for(int x = 0; x < width; ++x) {
-                for(int y = 0; y < height; ++y) {
+            for (int x = 0; x < width; ++x) {
+                for (int y = 0; y < height; ++y) {
                     // get pixel color
                     pixel = src.getPixel(x, y);
                     A = Color.alpha(pixel);
                     // apply filter contrast for every channel R, G, B
                     R = Color.red(pixel);
-                    R = (int)(((((R / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
-                    if(R < 0) { R = 0; }
-                    else if(R > 255) { R = 255; }
+                    R = (int) (((((R / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
+                    if (R < 0) {
+                        R = 0;
+                    } else if (R > 255) {
+                        R = 255;
+                    }
 
                     G = Color.green(pixel);
-                    G = (int)(((((G / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
-                    if(G < 0) { G = 0; }
-                    else if(G > 255) { G = 255; }
+                    G = (int) (((((G / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
+                    if (G < 0) {
+                        G = 0;
+                    } else if (G > 255) {
+                        G = 255;
+                    }
 
                     B = Color.blue(pixel);
-                    B = (int)(((((B / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
-                    if(B < 0) { B = 0; }
-                    else if(B > 255) { B = 255; }
+                    B = (int) (((((B / 255.0) - 0.5) * contrast) + 0.5) * 255.0);
+                    if (B < 0) {
+                        B = 0;
+                    } else if (B > 255) {
+                        B = 255;
+                    }
 
                     // set new pixel color to output bitmap
                     bmOut.setPixel(x, y, Color.argb(A, R, G, B));
@@ -2770,46 +2667,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         }
     }
 
-
-    private void blink(final TextView count_text, final ImageView bell_image) {
-
-        //if (mBlinking) {
-        final Handler handler2 = new Handler();
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                int timeToBlink = 1000;    //in milissegunds
-                try {
-                    Thread.sleep(timeToBlink);
-                } catch (Exception e) {
-                }
-                handler2.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        if (count_text.getVisibility() == View.VISIBLE && bell_image.getVisibility() == View.VISIBLE) {
-                            count_text.setVisibility(View.INVISIBLE);
-                            bell_image.setVisibility(View.INVISIBLE);
-                        } else {
-                            count_text.setVisibility(View.VISIBLE);
-                            bell_image.setVisibility(View.VISIBLE);
-                        }
-                       /* if (onItemClicked) {
-                            if (count_text.getVisibility() == View.VISIBLE && bell_image.getVisibility() == View.VISIBLE) {
-                                count_text.setVisibility(View.GONE);
-                                bell_image.setVisibility(View.GONE);
-                            }
-                        } else {
-                            blink(count_text, bell_image);
-                        }*/
-                        blink(count_text, bell_image);
-                    }
-                });
-            }
-        }).start();
-        // }
-
-    }
-
     class Item {
         Bitmap image;
         String title;
@@ -2838,53 +2695,6 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
 
     }
 
-    @Override
-    public void onProgressUpdate(int progress) {
-    }
-
-    @Override
-    public void onProgressComplete() {
-    }
-
-    @Override
-    public void handleProfileUpdate() {
-        super.handleProfileUpdate();
-        updateProfile(R.id.nameTextooredo, R.id.wallet_id, R.id.balance_id);
-    }
-
-    private Bitmap stringToBitmap(String encodedString) {
-        try {
-            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch (NullPointerException e) {
-            e.getMessage();
-            return null;
-        } catch (OutOfMemoryError e) {
-            return null;
-        }
-    }
-
-    public boolean checkPermissionForCamera() {
-        int result = ContextCompat.checkSelfPermission(MainActivityNewFlow.this, android.Manifest.permission.CAMERA);
-        if (result == PackageManager.PERMISSION_GRANTED) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    public void requestPermissionForCamera(int requestCode) {
-        if (ActivityCompat.shouldShowRequestPermissionRationale(MainActivityNewFlow.this, android.Manifest.permission.CAMERA)) {
-            Toast.makeText(this, "Camera permission needed. Please allow in App Settings for additional functionality.", Toast.LENGTH_LONG).show();
-        } else {
-            ActivityCompat.requestPermissions(MainActivityNewFlow.this, new String[]{android.Manifest.permission.CAMERA}, requestCode);
-        }
-    }
-
-
-    String versionname;
-
     public class VersionChecker extends AsyncTask<String, String, String> {
         private String newVersion;
 
@@ -2899,13 +2709,13 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
         protected void onPostExecute(String latestVersion) {
 //        hideIfVisible();
 
-            Log.e("Version",""+latestVersion);
+            Log.e("Version", "" + latestVersion);
 
 
             if (latestVersion != null && !latestVersion.isEmpty()) {
                 double live_version = Double.parseDouble(latestVersion);
                 double local_version = Double.parseDouble(versionname);
-                Log.e("local_version",""+local_version);
+                Log.e("local_version", "" + local_version);
                 if (local_version < live_version) {
                     LayoutInflater li = LayoutInflater.from(MainActivityNewFlow.this);
                     View promptsView = li.inflate(R.layout.custom_update_playstore_dialog, null);
@@ -2952,11 +2762,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
                         .get(0)
                         .ownText();*/
 
-                Document document = Jsoup.connect("https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "&hl=en")
-                        .timeout(30000)
-                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
-                        .referrer("http://www.google.com")
-                        .get();
+                Document document = Jsoup.connect("https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID + "&hl=en").timeout(30000).userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6").referrer("http://www.google.com").get();
                 if (document != null) {
                     Elements element = document.getElementsContainingOwnText("Current Version");
                     for (Element ele : element) {

@@ -8,7 +8,6 @@ import android.view.Gravity;
 import android.widget.Toast;
 
 import com.bookeey.wallet.live.application.CoreApplication;
-import com.bookeey.wallet.live.login.LoginActivity;
 import com.bookeey.wallet.live.showpushnotificationmessage.ShowPushNotificationMessageDialogActivity;
 import com.google.gson.Gson;
 
@@ -20,13 +19,10 @@ import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
 
-import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
 import coreframework.taskframework.ProgressDialogFrag;
 import coreframework.taskframework.UserInterfaceBackgroundProcessing;
 import coreframework.utils.URLUTF8Encoder;
-import newflow.LoginActivityFromSplashNewFlow;
-import ycash.wallet.json.pojo.changes.UpdateCustDeviceIdRequest;
 import ycash.wallet.json.pojo.generic.GenericResponse;
 import ycash.wallet.json.pojo.generic.TransType;
 import ycash.wallet.json.pojo.getpushnotificationmessage.GetPushNotificationMessageRequest;
@@ -42,7 +38,7 @@ public class GetPushNotificationMessageProcessing implements UserInterfaceBackgr
     private String error_text_header = "";
     private String error_text_details = "";
 
-    public  GetPushNotificationMessageProcessing(GetPushNotificationMessageRequest request, CoreApplication application, boolean isPost) {
+    public GetPushNotificationMessageProcessing(GetPushNotificationMessageRequest request, CoreApplication application, boolean isPost) {
         this.request = request;
         this.application = application;
         this.isPost = isPost;
@@ -94,38 +90,38 @@ public class GetPushNotificationMessageProcessing implements UserInterfaceBackgr
 
 
 
-                try {
-                    PushNotificationDetailsPojo responsePojo = new Gson().fromJson(response_json, PushNotificationDetailsPojo.class);
+            try {
+                PushNotificationDetailsPojo responsePojo = new Gson().fromJson(response_json, PushNotificationDetailsPojo.class);
 
 
 
 
-                    JSONObject finalJsonObject = new JSONObject();
+                JSONObject finalJsonObject = new JSONObject();
 
-                    JSONArray pushMessageObjectJsonArray =  new JSONArray();
+                JSONArray pushMessageObjectJsonArray = new JSONArray();
 
-                    for (int i=0;i< responsePojo.getPushList().size();i++) {
-
-
-
-                        JSONObject pushMessageJsonObject =  new JSONObject();
-
-                        Charset charset = Charset.forName("ISO-8859-6");
-                        CharsetDecoder decoder = charset.newDecoder();
-                        ByteBuffer buf = ByteBuffer.wrap(responsePojo.getPushList().get(i).getMessage());
-                        CharBuffer cbuf = decoder.decode(buf);
-                        CharSequence pushNotificationMessage = java.nio.CharBuffer.wrap(cbuf);
-
-                        pushMessageJsonObject.put("message", pushNotificationMessage);
-                        pushMessageJsonObject.put("time", responsePojo.getPushList().get(i).getTime());
-
-                        pushMessageObjectJsonArray.put(pushMessageJsonObject);
+                for (int i = 0; i < responsePojo.getPushList().size(); i++) {
 
 
 
-                    }
+                    JSONObject pushMessageJsonObject = new JSONObject();
 
-                    finalJsonObject.put("list",pushMessageObjectJsonArray);
+                    Charset charset = Charset.forName("ISO-8859-6");
+                    CharsetDecoder decoder = charset.newDecoder();
+                    ByteBuffer buf = ByteBuffer.wrap(responsePojo.getPushList().get(i).getMessage());
+                    CharBuffer cbuf = decoder.decode(buf);
+                    CharSequence pushNotificationMessage = java.nio.CharBuffer.wrap(cbuf);
+
+                    pushMessageJsonObject.put("message", pushNotificationMessage);
+                    pushMessageJsonObject.put("time", responsePojo.getPushList().get(i).getTime());
+
+                    pushMessageObjectJsonArray.put(pushMessageJsonObject);
+
+
+
+                }
+
+                finalJsonObject.put("list", pushMessageObjectJsonArray);
 
 //                    Charset charset = Charset.forName("ISO-8859-6");
 //                    CharsetDecoder decoder = charset.newDecoder();
@@ -138,23 +134,23 @@ public class GetPushNotificationMessageProcessing implements UserInterfaceBackgr
 //                    toast.show();
 
 
-                    Intent intent = new Intent(activity, ShowPushNotificationMessageDialogActivity.class);
-                    intent.putExtra(ShowPushNotificationMessageDialogActivity.KEY_PUSH_NOTIFICATION_MESSAGES,finalJsonObject.toString());
-                    activity.startActivity(intent);
+                Intent intent = new Intent(activity, ShowPushNotificationMessageDialogActivity.class);
+                intent.putExtra(ShowPushNotificationMessageDialogActivity.KEY_PUSH_NOTIFICATION_MESSAGES, finalJsonObject.toString());
+                activity.startActivity(intent);
 
 
 
-                } catch (Exception e) {
+            } catch (Exception e) {
 
-                    Log.e("Push Notifica Msg Ex:", "" + e.getMessage());
+                Log.e("Push Notifica Msg Ex:", "" + e.getMessage());
 
-                    Toast toast = Toast.makeText(activity, "System Error! "+e.getMessage(), Toast.LENGTH_SHORT);
-                    toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
-                    toast.show();
+                Toast toast = Toast.makeText(activity, "System Error! " + e.getMessage(), Toast.LENGTH_SHORT);
+                toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
+                toast.show();
 
 
 
-                }
+            }
 
         } else {
             Toast toast = Toast.makeText(activity, error_text_header, Toast.LENGTH_SHORT);

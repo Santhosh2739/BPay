@@ -1,28 +1,20 @@
 package ycash.wallet.json.pojo.generic;
 
-/**
- * THIS IS NOT A POJO
- * Co
- *
- * @author mohit
- */
 public enum TransType {
 
     //DEMO URLS July 12 2020
-
     ADDRESS_BASE("https://demo.bookeey.com/mno/"),
-    // ADDRESS_BASE("https://www.bookeey.com/mno/"),
     LOADMONEY_REQUEST("https://demo.bookeey.com/portal/proceed"),
     LOADMONEY_CHECK_REQUEST("https://demo.bookeey.com/portal/rechargelimits"),
     NEW_ADDRESS_BASE("https://demo.bookeey.com/"),
 
 
-//    PRODUCTION URLS July 12 2020
-//    ADDRESS_BASE("https://api.bookeey.com/mno/"),
-   // LOADMONEY_REQUEST("https://www.bookeey.com/portal/proceed"),
-   // LOADMONEY_CHECK_REQUEST("https://www.bookeey.com/portal/rechargelimits"),
-    //NEW_ADDRESS_BASE("https://www.bookeey.com/"),
-
+    //    PRODUCTION URLS July 12 2020
+    /*ADDRESS_BASE("https://api.bookeey.com/mno/"),
+    LOADMONEY_REQUEST("https://www.bookeey.com/portal/proceed"),
+    LOADMONEY_CHECK_REQUEST("https://www.bookeey.com/portal/rechargelimits"),
+    NEW_ADDRESS_BASE("https://www.bookeey.com/"),
+*/
 
     //--------------------------------------------Merchant URLS START--------------------------------------------------
     MX_ADDRESS_BASE("http://demo.bookeey.com/mno/ooredooServerRequest"),
@@ -41,7 +33,6 @@ public enum TransType {
 
     SEND_MONEY_REQUEST(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
     SEND_MONEY_COMMIT_REQUEST(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
-    //    PAY_TO_MERCHANT(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
     SEND_MONEY_TO_BANK(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
     GET_USER_DETAILS(ADDRESS_BASE.getURL() + "ooredooServerRequest"),
     LOGIN_MERCHANT(ADDRESS_BASE.getURL() + "ooredooServerRequest"),

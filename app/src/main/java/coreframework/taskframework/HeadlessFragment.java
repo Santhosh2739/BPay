@@ -8,8 +8,9 @@ import org.apache.http.params.HttpParams;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Message;
-import android.support.v4.app.Fragment;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import coreframework.network.ServerConnection;
 import com.bookeey.wallet.live.application.CoreApplication;

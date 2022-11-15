@@ -3,11 +3,6 @@ package coreframework.database;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.bookeey.wallet.live.mainmenu.MainActivity;
-import com.google.gson.Gson;
-
-import ycash.wallet.json.pojo.login.CustomerLoginRequestReponse;
-
 
 public class CustomSharedPreferences {
 
@@ -21,7 +16,8 @@ public class CustomSharedPreferences {
         MOBILE_NUMBER,
         DEVICE_ID,
         PIN,
-        FIRST_LOGIN,
+        SHOW_ENABLE_BIOMETRIC,
+        ASKED_BIOMETRIC,
         GUEST_LOGIN,
         APP_STATUS,
         NAME,

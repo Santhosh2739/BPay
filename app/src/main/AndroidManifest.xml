@@ -30,32 +30,10 @@
             </intent-filter>
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
-                <!--
-                <data
-                    android:scheme="http"
-                    android:host="demo.bookeey.com"
-                    android:pathPrefix="portal/smslink"
-                    ></data>
-                <data android:scheme="https" />
-                -->
-
-
-                <!--
-                <data
-                    android:scheme="http"
-                    android:host="demo.bookeey.com"
-                    android:pathPrefix="portal/smslink"
-                    ></data>
-                <data android:scheme="https" />
-                -->
-
                 <data
                     android:host="www.bookeey.com"
-                    android:pathPrefix="/portal/smslink"
                     android:scheme="http" />
                 <data android:scheme="https" />
             </intent-filter>
@@ -836,11 +814,11 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.bookeey.wallet.live.mainmenu.MainActivity" />
         </activity>
-        <activity
+<!--        <activity
             android:name="newflow.LoginActivityNewFlow"
             android:configChanges="locale|orientation"
             android:exported="false"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait" />-->
 
 
         <activity android:name=".creditcard.CreditCardFormActivity"></activity>
@@ -956,7 +934,8 @@
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
-    <uses-permission android:name="com.bookeey.wallet.live.permission.MAPS_RECEIVE" /> <!-- <uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
+    <uses-permission android:name="com.bookeey.wallet.live.permission.MAPS_RECEIVE"
+        tools:ignore="UniquePermission" /> <!-- <uses-permission android:name="android.permission.RECORD_AUDIO" /> -->
     <!-- <uses-feature -->
     <!-- android:name="android.hardware.nfc" -->
     <!-- android:required="true" /> -->
