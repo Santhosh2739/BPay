@@ -14,10 +14,6 @@ import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class RegistrationSuccess extends Activity {
 
-
-
-    private FirebaseAnalytics firebaseAnalytics;
-
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -35,16 +31,12 @@ public class RegistrationSuccess extends Activity {
 
 
         // Obtain the Firebase Analytics instance.
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.SIGN_UP_METHOD, "SignUp");
+        bundle.putString(FirebaseAnalytics.Param.SUCCESS, "SignUp");
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
-
-
-
 		((Button) findViewById(R.id.ooredoo_success_screen_close_button)).setOnClickListener(new OnClickListener() {
-			
 			@Override
 			public void onClick(View v) {
                 RegistrationSuccess.this.finish();

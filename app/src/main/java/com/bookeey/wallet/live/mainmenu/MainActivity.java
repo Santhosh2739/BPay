@@ -21,7 +21,6 @@ import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Shader;
-import android.location.Location;
 import android.net.Uri;
 import android.nfc.NdefMessage;
 import android.nfc.NfcAdapter;
@@ -77,7 +76,7 @@ import com.bookeey.wallet.live.txnhistory.TransactionHistoryActivity;
 import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
-import com.google.android.gms.location.FusedLocationProviderApi;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -158,6 +157,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int PICK_FROM_GALLERY = 2;
     public static Context context;
+    private double wayLatitude = 0.0, wayLongitude = 0.0;
     public boolean should_call_session_time_out_from_onResume = true;
     Dialog promptsViewPassword;
     TextToSpeech tts;
@@ -550,7 +550,8 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         });
-    }    InstallStateUpdatedListener installStateUpdatedListener = new InstallStateUpdatedListener() {
+    }
+    InstallStateUpdatedListener installStateUpdatedListener = new InstallStateUpdatedListener() {
         @Override
         public void onStateUpdate(InstallState state) {
             if (state.installStatus() == InstallStatus.INSTALLED) {
@@ -601,10 +602,11 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     }
 
     public void showTermsAndConditions() {
+        LayoutInflater li = LayoutInflater.from(MainActivity.this);
+        View promptsView = li.inflate(R.layout.terma_condition, null);
         AlertDialog.Builder dialog = new AlertDialog.Builder(MainActivity.this);
+        dialog.setView(promptsView);
         dialog.setCancelable(false);
-        dialog.setTitle(R.string.terms_and_conditions_title);
-        dialog.setMessage(getString(R.string.terms_conditions_biometric));
         dialog.setPositiveButton(getString(R.string.accept), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int id) {
@@ -938,16 +940,17 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             return;
         }
         //Fetching location using FusedLOcationProviderAPI
-        FusedLocationProviderApi fusedLocationApi = LocationServices.FusedLocationApi;
-        Location location = fusedLocationApi.getLastLocation(googleApiClient);
+        FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+            if (location != null) {
+                wayLatitude = location.getLatitude();
+                wayLongitude = location.getLongitude();
+            }
+        });
         //In some rare cases Location obtained can be null
-        if (location == null)
-            Log.e("Location: ", "Not able to fetch location");
-        else {
-            Log.e("Location: ", "" + location.getLatitude() + " - " + location.getLongitude());
-            CustomSharedPreferences.saveStringData(getApplicationContext(), String.valueOf(location.getLatitude()), CustomSharedPreferences.SP_KEY.CURRENT_LATITUTE);
-            CustomSharedPreferences.saveStringData(getApplicationContext(), String.valueOf(location.getLongitude()), CustomSharedPreferences.SP_KEY.CURRENT_LONGITUDE);
-        }
+        Log.e("Location: ", "" + wayLatitude + " - " + wayLongitude);
+        CustomSharedPreferences.saveStringData(getApplicationContext(), String.valueOf(wayLatitude), CustomSharedPreferences.SP_KEY.CURRENT_LATITUTE);
+        CustomSharedPreferences.saveStringData(getApplicationContext(), String.valueOf(wayLongitude), CustomSharedPreferences.SP_KEY.CURRENT_LONGITUDE);
     }
 
     @Override

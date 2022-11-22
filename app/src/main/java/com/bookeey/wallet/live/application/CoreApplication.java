@@ -24,7 +24,6 @@ import java.util.UUID;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.taskframework.UserInterfaceBackgroundProcessing;
-import dagger.ObjectGraph;
 import newflow.NewFlowOfferNew;
 import newflow.OffersNewFlow;
 import ycash.wallet.json.pojo.Internationaltopup.InternationalRechargeFinalResponsePojo;
@@ -53,7 +52,6 @@ public class CoreApplication extends Application {
     private static Tracker sTracker;
     public String offer_merchantName;
     List<CategoryDetailsListPojo> categoryDetails;
-    private ObjectGraph mObjectGraph;
     private CustomerLoginRequestReponse customerLoginRequestReponse = new CustomerLoginRequestReponse();
     private UserInfoResponse userInfoResponse = new UserInfoResponse();
     private MerchantListResponse merchantListResponse = new MerchantListResponse();
@@ -581,16 +579,16 @@ public class CoreApplication extends Application {
         AlarmManager alarmManager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         Intent alarmIntent = new Intent(this, SyncService.class);
         alarmIntent.putExtra("type", SyncService.TYPE_USER_LOGGED_IN_STATUS);
-        PendingIntent pending = PendingIntent.getService(this, 0, alarmIntent, 0);
+        PendingIntent pending = PendingIntent.getService(this, 0, alarmIntent, PendingIntent.FLAG_MUTABLE);
         alarmManager.setInexactRepeating(AlarmManager.RTC, calendar.getTimeInMillis(), 2 * 60 * 1000, pending);
     }
 
     public void cancelUserLoggedInStatusAlarmManager() {
         Intent alarmIntent = new Intent(this, SyncService.class);
-        boolean alarmUp = (PendingIntent.getService(this, 0, alarmIntent, PendingIntent.FLAG_NO_CREATE) != null);
+        boolean alarmUp = (PendingIntent.getService(this, 0, alarmIntent, PendingIntent.FLAG_MUTABLE) != null);
         if (alarmUp) {
             AlarmManager alarmMgr = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-            PendingIntent pending = PendingIntent.getService(this, 0, alarmIntent, 0);
+            PendingIntent pending = PendingIntent.getService(this, 0, alarmIntent, PendingIntent.FLAG_MUTABLE);
             alarmMgr.cancel(pending);
         }
     }
@@ -611,19 +609,6 @@ public class CoreApplication extends Application {
         super.onCreate();
         //initObjectGraph(new FingerprintModule(this));
         sAnalytics = GoogleAnalytics.getInstance(this);
-    }
-
-    public void initObjectGraph(Object module) {
-        mObjectGraph = module != null ? ObjectGraph.create(module) : null;
-    }
-
-    public void inject(Object object) {
-        if (mObjectGraph == null) {
-            // This usually happens during tests.
-            Log.i(TAG, "Object graph is not initialized.");
-            return;
-        }
-        mObjectGraph.inject(object);
     }
 
 }

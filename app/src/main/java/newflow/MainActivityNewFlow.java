@@ -78,6 +78,7 @@ import com.bookeey.wallet.live.mainmenu.MerchantSelectionSliderList;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderApi;
+import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -147,7 +148,7 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
     public static final int LOCATION_REQUEST = 101;
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int PICK_FROM_GALLERY = 2;
-
+    private double wayLatitude = 0.0, wayLongitude = 0.0;
     TextToSpeech tts;
     Intent intent;
     Bitmap load_wallet, invoice, pay, recharge_paybill, sendmoney, help, where_to_pay, my_offers, mobilebill, prepaid_cards, txn_history, store, testimage;
@@ -1468,17 +1469,17 @@ public class MainActivityNewFlow extends GenericNewFlowActivity implements YPCHe
             return;
         }
         //Fetching location using FusedLOcationProviderAPI
-        FusedLocationProviderApi fusedLocationApi = LocationServices.FusedLocationApi;
-        Location location = fusedLocationApi.getLastLocation(googleApiClient);
+        FusedLocationProviderClient mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this);
+        mFusedLocationClient.getLastLocation().addOnSuccessListener(this, location -> {
+            if (location != null) {
+                wayLatitude = location.getLatitude();
+                wayLongitude = location.getLongitude();
+            }
+        });
         //In some rare cases Location obtained can be null
-        if (location == null) Log.e("Location: ", "Not able to fetch location");
-        else {
-            Log.e("Location: ", "" + location.getLatitude() + " - " + location.getLongitude());
-
-            CustomSharedPreferences.saveStringData(getApplicationContext(), String.valueOf(location.getLatitude()), CustomSharedPreferences.SP_KEY.CURRENT_LATITUTE);
-            CustomSharedPreferences.saveStringData(getApplicationContext(), String.valueOf(location.getLongitude()), CustomSharedPreferences.SP_KEY.CURRENT_LONGITUDE);
-        }
-
+        Log.e("Location: ", "" + wayLatitude + " - " + wayLongitude);
+        CustomSharedPreferences.saveStringData(getApplicationContext(), String.valueOf(wayLatitude), CustomSharedPreferences.SP_KEY.CURRENT_LATITUTE);
+        CustomSharedPreferences.saveStringData(getApplicationContext(), String.valueOf(wayLongitude), CustomSharedPreferences.SP_KEY.CURRENT_LONGITUDE);
 
     }
 

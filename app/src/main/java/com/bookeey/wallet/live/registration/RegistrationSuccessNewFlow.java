@@ -1,7 +1,6 @@
 package com.bookeey.wallet.live.registration;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -14,10 +13,6 @@ import com.bookeey.wallet.live.R;
 import com.google.firebase.analytics.FirebaseAnalytics;
 
 public class RegistrationSuccessNewFlow extends Activity {
-
-
-
-    private FirebaseAnalytics firebaseAnalytics;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,10 +31,10 @@ public class RegistrationSuccessNewFlow extends Activity {
 
 
         // Obtain the Firebase Analytics instance.
-        firebaseAnalytics = FirebaseAnalytics.getInstance(this);
+        FirebaseAnalytics firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
         Bundle bundle = new Bundle();
-        bundle.putString(FirebaseAnalytics.Param.SIGN_UP_METHOD, "SignUp");
+        bundle.putString(FirebaseAnalytics.Param.SUCCESS, "SignUp");
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SIGN_UP, bundle);
 
 

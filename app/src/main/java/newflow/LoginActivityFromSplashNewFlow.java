@@ -289,6 +289,8 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
         });
         fingerprint_img.setOnClickListener(v -> biometricPrompt.authenticate(Util.GetLoginBiometricDialog()));
         fingerprint_text.setOnClickListener(v -> biometricPrompt.authenticate(Util.GetLoginBiometricDialog()));
+        if (biometric_device && biometric_enabled && !guest)
+            biometricPrompt.authenticate(Util.GetLoginBiometricDialog());
     }
 
     public void BiometricVerified() {
