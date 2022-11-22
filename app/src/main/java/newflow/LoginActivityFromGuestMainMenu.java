@@ -1,19 +1,13 @@
 package newflow;
 
-import android.Manifest;
 import android.app.ActionBar;
-import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
-import android.content.pm.PackageInfo;
-import android.content.pm.PackageManager;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Base64;
@@ -28,7 +22,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.FragmentActivity;
 
 import com.bookeey.wallet.live.BuildConfig;
@@ -38,67 +31,25 @@ import com.bookeey.wallet.live.application.CoreApplication;
 import com.bookeey.wallet.live.changes.MobChangeMobileNumber;
 import com.bookeey.wallet.live.login.ForgotPassword;
 import com.facebook.appevents.AppEventsLogger;
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.security.KeyStore;
 import java.util.Locale;
-
-import javax.crypto.Cipher;
-import javax.inject.Inject;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.processing.Login_processing.CustomerLoginProcessing;
-import coreframework.processing.Login_processing.FingerPrintLoginProcessing;
 import coreframework.taskframework.ProgressDialogFrag;
 import coreframework.taskframework.YPCHeadlessCallback;
-import coreframework.utils.HandleUncaughtException;
 import coreframework.utils.LocaleHelper;
 import ycash.wallet.json.pojo.activationresponse.ActivationResponsePojo;
 import ycash.wallet.json.pojo.login.CustomerLoginRequest;
 
 public class LoginActivityFromGuestMainMenu extends FragmentActivity implements YPCHeadlessCallback {
-    public static final String PROPERTY_REG_ID = "registration_id";
-    private final static int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
-    private static final String PROPERTY_APP_VERSION = "appVersion";
-    private final static String TAG = "DEVICE_ID";
-    //Finger print authentication
-    private static final String TAG2 = LoginActivityFromSplashNewFlow.class.getSimpleName();
-    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
-    private static final String SECRET_MESSAGE = "Very secret message";
-    /**
-     * Alias for our key in the Android Key Store
-     */
-    private static final String KEY_NAME = "my_key";
-    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
-    private static String SENDER_ID = "367248879471"; //google api project number
     TextView forgotpassword_text, forgotpassword_help_text, change_mobile_no_tv;
     ImageView imageView;
-    //private static String SENDER_ID = "905970718814"; //NEW google api project number
-    //private  static  String SENDER_ID="861276600463";
-    //    ScheduledExecutorService scheduleTaskExecutor = null;
-    //MyReceiver myReceiver;
     String selectedLanguage = null;
     LinearLayout language_layout, login_finger_print_layout;
     ImageView coutry_flag_img;
     TextView language_text, fingerprint_text, login_ok_text, goto_tour_text;
-    @Inject
-    SharedPreferences mSharedPreferences;
-    private GoogleCloudMessaging gcm = null;
-    private KeyStore mKeyStore;
-    private Cipher mCipher;
-
-    private static int getAppVersion(Context context) {
-        try {
-            PackageInfo packageInfo = context.getPackageManager().getPackageInfo(context.getPackageName(), 0);
-            return packageInfo.versionCode;
-        } catch (PackageManager.NameNotFoundException e) {
-            throw new RuntimeException("Could not get package name: " + e);
-        }
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,11 +108,6 @@ public class LoginActivityFromGuestMainMenu extends FragmentActivity implements 
 
 
         imageView = (ImageView) findViewById(R.id.ooredoo_header_logo);
-
-        //fingerprint
-        ((CoreApplication) getApplication()).inject(this);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.USE_FINGERPRINT},
-                FINGERPRINT_PERMISSION_REQUEST_CODE);
 
         //language selection
         if (language_text.getText().toString().equals("English")) {

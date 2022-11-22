@@ -1,6 +1,5 @@
 package com.bookeey.wallet.live.recharge;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
@@ -41,7 +40,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricPrompt;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bookeey.wallet.live.R;
@@ -58,7 +56,6 @@ import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
-import javax.inject.Inject;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
@@ -89,19 +86,14 @@ import ycash.wallet.json.pojo.translimit.TransactionLimitResponse;
  * Created by 30099 on 4/27/2016.
  */
 public class TopUpInitialActivity extends GenericActivity implements AdapterView.OnItemSelectedListener {
-    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
-    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
-    private static final String KEY_NAME = "my_key";
     ImageView image_person;
-    ArrayList<String> search_country;
     ProgressDialog progress = null;
-    InternationalRechargeResponsePojo internationalRechargeResponsePojo = null;
     InternationalRechargeFinalResponsePojo internationalRechargeFinalResponsePojo = null;
     HashMap<String, String> hm;
     String countryCode = "";
     String imagepath;
     P2PReceiverNumberListResponse p2PReceiverNumberListResponse = null;
-    TextView textname, topup_1_country_code;
+    TextView topup_1_country_code;
     boolean itemselected;
     List<HashMap<String, String>> aList = null;
     LinearLayout topup_1_editmobilenumber_linear;
@@ -113,8 +105,7 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
     EditText top_up_pin_edt;
     LinearLayout top_up_denominations_layout;
     SimpleAdapter adapter;
-    String amountinKwd, amount_currency;
-    String local_currency_value, denominationvalue;
+    String  denominationvalue;
     int count = 0;
     InternationalRechargeInitiationResponsePojo internationalRechargeInitiationResponsePojo = new InternationalRechargeInitiationResponsePojo();
     CustomAutoCompleteTextView autoCompleteTextView;
@@ -122,18 +113,15 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
     Dialog promptsViewPassword;
     boolean IsBio = false;
     String tpin = "";
-    @Inject
-    SharedPreferences mSharedPreferences;
     InternationalRechargeRequestPojo requestPojo = new InternationalRechargeRequestPojo();
     private Button topup_1_next;
     private CustomTextview topup_1_mobilenumber_edit;
     private DisplayImageOptions options;
     private ImageView flag_country;
     private FirebaseAnalytics firebaseAnalytics;
-    private KeyStore mKeyStore;
-    private Cipher mCipher;
     private Executor executor;
     private BiometricPrompt biometricPrompt;
+
     public static void hideKeyboard(Activity activity) {
         InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
         //Find the currently focused view, so we can grab the correct window token from it.
@@ -176,7 +164,6 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
                 onBackPressed();
             }
         });
-        ((CoreApplication) getApplication()).inject(this);
 
         ImageView imageView = (ImageView) findViewById(R.id.topup_1_image_person);
         topup_1_country_code = (TextView) findViewById(R.id.topup_1_country_code);
@@ -194,10 +181,6 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
         flag_country = (ImageView) findViewById(R.id.flag_country);
         topup_1_mobilenumber_edit = (CustomTextview) findViewById(R.id.topup_1_mobilenumber_edit);
 
-
-        /*if (!autoCompleteTextView.getText().toString().equalsIgnoreCase("Enter Country Name")) {
-            flag_country.setVisibility(View.VISIBLE);
-        }*/
         //newly added for navigate from L2 page to previous page
         String bundle_data = getIntent().getStringExtra("BACK");
         if (bundle_data != null && !bundle_data.isEmpty()) {
@@ -210,7 +193,6 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
             top_up_pin_edt.setText("");
         }
 
-
         autoCompleteTextView.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -219,13 +201,6 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
                 return false;
 
             }
-
-            /*@Override
-            public void onT(View v) {
-                if (!itemselected) {
-                    Toast.makeText(getBaseContext(), getResources().getString(R.string.intl_top_up_select_country), Toast.LENGTH_SHORT).show();
-                }
-            }*/
         });
 
         topup_1_mobilenumber_edit.setOnTouchListener(new View.OnTouchListener() {
@@ -236,13 +211,6 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
                 }
                 return false;
             }
-
-            /*@Override
-            public void onT(View v) {
-                if (!itemselected) {
-                    Toast.makeText(getBaseContext(), getResources().getString(R.string.intl_top_up_select_country), Toast.LENGTH_SHORT).show();
-                }
-            }*/
         });
 
         List<HashMap<String, String>> aList = new ArrayList<>();
@@ -369,12 +337,11 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
                     boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
                     boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                     if (IsBio) {
-                        if(biometric_device && biometric_enabled)
+                        if (biometric_device && biometric_enabled)
                             biometricPrompt.authenticate(Util.GetBiometricDialog());
                         else
                             ShowEnterPassword();
-                    }
-                    else
+                    } else
                         proceedTopup();
                 }
             }
@@ -386,7 +353,7 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(getApplicationContext(),"" + errString, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + errString, Toast.LENGTH_LONG).show();
                 ShowEnterPassword();
             }
 
@@ -397,15 +364,14 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
                 if (biometric_enabled) {
                     tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
                     proceedTopup();
-                }
-                else
+                } else
                     Util.EnableBiometricAlert(TopUpInitialActivity.this);
             }
 
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                Toast.makeText(getApplicationContext(), "Authentication failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -421,7 +387,7 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
         final EditText pin;
         boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
         boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
-        if(biometric_device && biometric_enabled) {
+        if (biometric_device && biometric_enabled) {
             pin = promptsViewPassword.findViewById(R.id.enter_pwd_edt_new);
             pin.setOnTouchListener((view, motionEvent) -> {
                 final int DRAWABLE_RIGHT = 2;
@@ -462,7 +428,7 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
     }
 
     public void proceedTopup() {
-        if(IsBio)
+        if (IsBio)
             requestPojo.setTpin(tpin);
         String json = new Gson().toJson(requestPojo);
         StringBuffer buffer = new StringBuffer();
@@ -1080,7 +1046,7 @@ public class TopUpInitialActivity extends GenericActivity implements AdapterView
             String[] values = top_up_currency_kwd_text.getText().toString().split(" ");
             CustomerLoginRequestReponse customerLoginRequestReponse = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse();
             final TransactionLimitResponse limits = customerLoginRequestReponse.getFilteredLimits().get("INTL_RECHARGE");
-            boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+            boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
             if (Double.parseDouble(values[0]) > limits.getTpinLimit() && !guest) {
                 //top_up_pin_edt.setVisibility(View.VISIBLE);
                 IsBio = true;

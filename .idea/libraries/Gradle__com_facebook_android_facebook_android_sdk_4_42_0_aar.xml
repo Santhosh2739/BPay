@@ -1,12 +1,6 @@
 <component name="libraryTable">
   <library name="Gradle: com.facebook.android:facebook-android-sdk:4.42.0@aar">
     <CLASSES>
-      <root url="jar://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ecb429de762036b178242d72584e542c/jars/classes.jar!/" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ecb429de762036b178242d72584e542c/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/ecb429de762036b178242d72584e542c/AndroidManifest.xml" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-2/files-2.1/a1b0ccc02e41da136fe2c4b4eeb99db9/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/fc31494125720273183e5e7b98812d3c/transformed/facebook-android-sdk-4.42.0/res" />
-      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/07492facbfd65a0b65a9b8e2dfd1564e/transformed/jetified-facebook-android-sdk-4.42.0/res" />
       <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/cf5fdac3f35fd518bf9f0911059eec1a/transformed/facebook-android-sdk-4.42.0/jars/classes.jar!/" />
       <root url="file://$USER_HOME$/.gradle/caches/transforms-3/cf5fdac3f35fd518bf9f0911059eec1a/transformed/facebook-android-sdk-4.42.0/AndroidManifest.xml" />
     </CLASSES>

@@ -1,30 +1,20 @@
 package com.bookeey.wallet.live.mobilebill;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyPermanentlyInvalidatedException;
-import android.security.keystore.KeyProperties;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextWatcher;
 import android.util.Base64;
-import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -37,8 +27,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -50,7 +38,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricPrompt;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bookeey.wallet.live.R;
@@ -59,23 +46,12 @@ import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.inject.Inject;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.processing.mobile.DenominationsL1Processing;
@@ -83,7 +59,6 @@ import coreframework.taskframework.DecimalDigitsInputFilter;
 import coreframework.taskframework.GenericActivity;
 import coreframework.taskframework.ProgressDialogFrag;
 import coreframework.taskframework.YPCHeadlessCallback;
-import newflow.MobileBill_L1_ActivityNewFlow;
 import nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
 import nostra13.universalimageloader.core.DisplayImageOptions;
 import nostra13.universalimageloader.core.ImageLoader;
@@ -96,7 +71,6 @@ import util.Util;
 import ycash.wallet.json.pojo.login.CustomerLoginRequestReponse;
 import ycash.wallet.json.pojo.mobilebilloperator.DenominationResponse;
 import ycash.wallet.json.pojo.mobilebilloperator.DomesticL1RequestPojo;
-import ycash.wallet.json.pojo.mobilebilloperator.DomesticL2Response;
 import ycash.wallet.json.pojo.translimit.TransactionLimitResponse;
 
 /**
@@ -112,13 +86,10 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
     RadioGroup mobile_radiogroup;
     RadioButton mobile_totup_radio_btn,
             mobile_billpay_radio_btn;
-    private String mobile_billpayment_type_str;
     Button submit_btn;
     String amount_billpay_str = "", operatorName_str;
-    private DisplayImageOptions options;
     ImageView opearator_image;
     Double tpin_double = 0.000;
-    private String tpin_str = null;
     CustomerLoginRequestReponse response = null;
     TransactionLimitResponse limits = null;
     ArrayAdapter<String> aa = null;
@@ -129,16 +100,22 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
     boolean IsBio = false;
     String tpin;
     boolean biometricVerified = false;
+    private String mobile_billpayment_type_str;
+    private DisplayImageOptions options;
     private FirebaseAnalytics firebaseAnalytics;
-    private KeyStore mKeyStore;
-    private Cipher mCipher;
-    @Inject
-    SharedPreferences mSharedPreferences;
-    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
-    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
-    private static final String KEY_NAME = "my_key";
     private Executor executor;
     private BiometricPrompt biometricPrompt;
+
+    public static void hideKeyboard(Activity activity) {
+        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        //Find the currently focused view, so we can grab the correct window token from it.
+        View view = activity.getCurrentFocus();
+        //If no view currently has focus, create a new one, just so we can grab a window token from it
+        if (view == null) {
+            view = new View(activity);
+        }
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -210,9 +187,6 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
                 onBackPressed();
             }
         });
-        ((CoreApplication) getApplication()).inject(this);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.USE_FINGERPRINT},
-                FINGERPRINT_PERMISSION_REQUEST_CODE);
 
         response = ((CoreApplication) getApplication()).getCustomerLoginRequestReponse();
         limits = response.getFilteredLimits().get("LOCAL_RECHARGE");
@@ -240,7 +214,7 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
                 try {
                     if (amount_without_kd != "") {
                         tpin_double = Double.parseDouble(amount_without_kd);
-                        boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                        boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
                         if (tpin_double > limits.getTpinLimit() && !guest) {
                             IsBio = true;
                         }
@@ -268,7 +242,7 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
 
         DenominationResponse denominationResponse = new Gson().fromJson(response_str, DenominationResponse.class);
         for (int i = 0; i < denominationResponse.getDenom().size(); i++) {
-            categories.add("" + denominationResponse.getDenom().get(i)+" "+"KD");
+            categories.add("" + denominationResponse.getDenom().get(i) + " " + "KD");
         }
 
         /*String denomiAmount = ((CoreApplication) getApplication()).getDenominationsAmount();
@@ -363,7 +337,7 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
                 try {
                     if (amount_without_kd != "") {
                         tpin_double = Double.parseDouble(amount_without_kd);
-                        boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                        boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
                         if (tpin_double > limits.getTpinLimit() && !guest) {
                             IsBio = true;
                         }
@@ -437,20 +411,20 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
                     return;
                 }*/
                 if ((mobile_mobilenumber_edit.getText().toString().length() == 0)) {
-                    Toast toast = Toast.makeText(getBaseContext(),getResources().getString(R.string.mobile_bill_L1_toast_mobile_number), Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.mobile_bill_L1_toast_mobile_number), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
                     return;
                 }
                 if ((mobile_mobilenumber_edit.getText().toString().length() != 8)) {
-                    Toast toast = Toast.makeText(getBaseContext(),getResources().getString(R.string.mobile_bill_L1_toast_valid_mobile__number), Toast.LENGTH_SHORT);
+                    Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.mobile_bill_L1_toast_valid_mobile__number), Toast.LENGTH_SHORT);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
                     return;
                 }
                 if (mobile_billpay_amount_layout.getVisibility() == View.VISIBLE) {
                     if (mobile_billapy_amount_edit.getText().toString().length() == 0) {
-                        Toast toast = Toast.makeText(getBaseContext(),getResources().getString(R.string.mobile_bill_L1_toast_amount), Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.mobile_bill_L1_toast_amount), Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                         toast.show();
                         return;
@@ -483,7 +457,7 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
 
                     Double _amount = Double.parseDouble(amount_without_kd);
                     if (_amount < limits.getMinValuePerTransaction() || _amount > limits.getMaxValuePerTransaction()) {
-                        Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.mobile_bill_L1_toast_between)+ limits.getMinValuePerTransaction() +getResources().getString(R.string.mobile_bill_L1_toast_to) + limits.getMaxValuePerTransaction(), Toast.LENGTH_SHORT);
+                        Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.mobile_bill_L1_toast_between) + limits.getMinValuePerTransaction() + getResources().getString(R.string.mobile_bill_L1_toast_to) + limits.getMaxValuePerTransaction(), Toast.LENGTH_SHORT);
                         toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                         toast.show();
                         return;
@@ -492,8 +466,8 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
                 }
                 boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
                 boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
-                if (IsBio){
-                    if(biometric_device && biometric_enabled)
+                if (IsBio) {
+                    if (biometric_device && biometric_enabled)
                         biometricPrompt.authenticate(Util.GetBiometricDialog());
                     else
                         ShowEnterPassword();
@@ -508,7 +482,7 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(getApplicationContext(),"" + errString, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + errString, Toast.LENGTH_LONG).show();
                 ShowEnterPassword();
             }
 
@@ -516,18 +490,17 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 //Toast.makeText(getApplicationContext(),"Authentication succeeded!", Toast.LENGTH_SHORT).show();
-                if(biometric_enabled){
+                if (biometric_enabled) {
                     biometricVerified = true;
                     DomesticL1Request();
-                }
-                else
+                } else
                     Util.EnableBiometricAlert(MobileBill_L1_Activity.this);
             }
 
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                Toast.makeText(getApplicationContext(), "Authentication failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -544,7 +517,7 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
         final EditText pin;
         boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
         boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
-        if(biometric_device && biometric_enabled) {
+        if (biometric_device && biometric_enabled) {
             pin = promptsViewPassword.findViewById(R.id.enter_pwd_edt_new);
             pin.setOnTouchListener((view, motionEvent) -> {
                 final int DRAWABLE_RIGHT = 2;
@@ -570,7 +543,7 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
         verify_password_btn_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pin.getText().toString().equals("")){
+                if (pin.getText().toString().equals("")) {
                     Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_password_validate), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();
@@ -584,26 +557,14 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
         promptsViewPassword.show();
     }
 
-    public static void hideKeyboard(Activity activity) {
-        InputMethodManager imm = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        //Find the currently focused view, so we can grab the correct window token from it.
-        View view = activity.getCurrentFocus();
-        //If no view currently has focus, create a new one, just so we can grab a window token from it
-        if (view == null) {
-            view = new View(activity);
-        }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
-    }
     @Override
     public void onResume() {
         super.onResume();
 
 
-
         //Facebook
         AppEventsLogger logger = AppEventsLogger.newLogger(this);
         logger.logEvent("Mobile Bill - enter product info - page");
-
 
 
         //Firebase
@@ -612,7 +573,7 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
         bundle.putString(FirebaseAnalytics.Param.ITEM_NAME, "Mobile Bill - enter product info - page");
         //Logs an app event.
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT, bundle);
-        Log.e("Firebase "," Event 12 logged");
+        Log.e("Firebase ", " Event 12 logged");
     }
 
     private Bitmap stringToBitmap(String encodedString) {

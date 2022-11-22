@@ -2,7 +2,6 @@ package newflow;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -42,8 +41,6 @@ import com.google.gson.Gson;
 import java.util.Locale;
 import java.util.concurrent.Executor;
 
-import javax.inject.Inject;
-
 import coreframework.database.CustomSharedPreferences;
 import coreframework.processing.GetPushNotificationMessageProcessing;
 import coreframework.processing.Login_processing.CustomerLoginProcessing;
@@ -63,8 +60,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
     LinearLayout language_layout, login_finger_print_layout;
     ImageView coutry_flag_img;
     TextView language_text, fingerprint_text, login_ok_text, goto_tour_text;
-    @Inject
-    SharedPreferences mSharedPreferences;
     private Executor executor;
     private BiometricPrompt biometricPrompt;
 
@@ -135,9 +130,6 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
         final TextView login_user_id = (TextView) findViewById(R.id.login_user_id);
         final EditText login_password = (EditText) findViewById(R.id.login_password);
         imageView = (ImageView) findViewById(R.id.ooredoo_header_logo);
-        //fingerprint
-        ((CoreApplication) getApplication()).inject(this);
-
         //language selection
         if (language_text.getText().toString().equals("English")) {
             language_text.setText(getResources().getString(R.string.login_arabic));

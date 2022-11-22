@@ -2,26 +2,18 @@ package com.bookeey.wallet.live.invoice;
 
 import static coreframework.database.CustomSharedPreferences.SP_KEY.MOBILE_NUMBER;
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyPermanentlyInvalidatedException;
-import android.security.keystore.KeyProperties;
 import android.text.InputFilter;
 import android.util.Base64;
 import android.util.Log;
@@ -41,7 +33,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricPrompt;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bookeey.wallet.live.R;
@@ -54,25 +45,14 @@ import com.google.gson.Gson;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.CharBuffer;
 import java.nio.charset.Charset;
 import java.nio.charset.CharsetDecoder;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.inject.Inject;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
@@ -94,25 +74,23 @@ import ycash.wallet.json.pojo.loadmoney.PaymentForm;
 import ycash.wallet.json.pojo.loadmoney.WalletLimits;
 import ycash.wallet.json.pojo.login.CustomerLoginRequestReponse;
 import ycash.wallet.json.pojo.translimit.TransactionLimitResponse;
+
 /**
  * Created by 10037 on 23-Sep-17.
  */
 public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCallback {
-    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
-    private static final String KEY_NAME = "my_key";
-
     Button invoice_paynow_btn, invoice_hold_btn, invoice_reject_btn;
     EditText invoice_mer_name_edit, invoice_inv_no_edit,
             invoice_inv_date_edit, invoice_inv_amount_edit, invoice_desc_edit, invoice_tpin_edit,
             invoice_cust_name_edit, invoice_cust_email_edit,
-    invoice_inv_offerID_edit,
+            invoice_inv_offerID_edit,
             invoice_inv_discount_per_edit,
             invoice_inv_discount_amt_edit,
             invoice_inv_total_amount_edit;
     View invoice_tpin_horizantal_view, description_view,
             ooredoo_sendmoney_confirmpayment_cust_name_horizantal0_view,
             ooredoo_sendmoney_confirmpayment_cust_email_horizantal0_view,
-    ooredoo_sendmoney_confirmpayment_offerID_horizantal0_view2,
+            ooredoo_sendmoney_confirmpayment_offerID_horizantal0_view2,
             ooredoo_sendmoney_confirmpayment_discount_per_horizantal0_view2,
             ooredoo_sendmoney_confirmpayment_discount_amt_horizantal0_view2,
             ooredoo_sendmoney_confirmpayment_total_amount_horizantal0_view2;
@@ -121,7 +99,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
     LinearLayout invoice_group_btn_layout, invoice_inv_tpin_linear, description_linear,
             ooredoo_sendmoney_confirmpayment_cust_name_layout,
             ooredoo_sendmoney_confirmpayment_cust_email_layout,
-    ooredoo_sendmoney_confirmpayment_offerID_linear,
+            ooredoo_sendmoney_confirmpayment_offerID_linear,
             ooredoo_sendmoney_confirmpayment_discount_per_linear,
             ooredoo_sendmoney_confirmpayment_discount_amt_linear,
             ooredoo_sendmoney_confirmpayment_total_amount_linear;
@@ -133,14 +111,9 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
     boolean IsBio = false;
     Dialog promptsViewPassword;
     String tpin;
-    @Inject
-    SharedPreferences mSharedPreferences;
-    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
     private String response_det_str = null;
     private boolean isMerchantRequest = false;
     private FirebaseAnalytics firebaseAnalytics;
-    private KeyStore mKeyStore;
-    private Cipher mCipher;
     private Executor executor;
     private BiometricPrompt biometricPrompt;
 
@@ -233,9 +206,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 onBackPressed();
             }
         });
-        ((CoreApplication) getApplication()).inject(this);
-        ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.USE_FINGERPRINT},
-                FINGERPRINT_PERMISSION_REQUEST_CODE);
+
         ImageView image_person = (ImageView) findViewById(R.id.invoice_user_image);
         progress = new ProgressDialog(InvoiceL1Activity.this, R.style.MyTheme2);
         progress.setCanceledOnTouchOutside(false);
@@ -357,7 +328,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 }
                 this.isMerchantRequest = response2.isMerchantRequest();
                 amount = Double.parseDouble(invoice_inv_amount_edit.getText().toString().trim());
-                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(),  CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
+                boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
                 if (amount > limits.getTpinLimit() && !guest) {
                     //invoice_inv_tpin_linear.setVisibility(View.VISIBLE);
                     //invoice_tpin_horizantal_view.setVisibility(View.VISIBLE);
@@ -378,7 +349,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(getApplicationContext(),"" + errString, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + errString, Toast.LENGTH_LONG).show();
                 ShowEnterPassword();
             }
 
@@ -386,18 +357,17 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
                 //Toast.makeText(getApplicationContext(),"Authentication succeeded!", Toast.LENGTH_SHORT).show();
-                if(biometric_enabled) {
+                if (biometric_enabled) {
                     biometricVerified = true;
                     invoicePayNowRequest(invoice_amount, 0, offerID);
-                }
-                else
+                } else
                     Util.EnableBiometricAlert(InvoiceL1Activity.this);
             }
 
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                Toast.makeText(getApplicationContext(), "Authentication failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -448,12 +418,11 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
                 boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
                 boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                 if (IsBio) {
-                    if(biometric_device && biometric_enabled)
+                    if (biometric_device && biometric_enabled)
                         biometricPrompt.authenticate(Util.GetBiometricDialog());
                     else
                         ShowEnterPassword();
-                }
-                else
+                } else
                     invoicePayNowRequest(invoice_amount, 0, offerID);
             }
         });
@@ -470,7 +439,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         final EditText pin;
         boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
         boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
-        if(biometric_device && biometric_enabled) {
+        if (biometric_device && biometric_enabled) {
             pin = promptsViewPassword.findViewById(R.id.enter_pwd_edt_new);
             pin.setOnTouchListener((view, motionEvent) -> {
                 final int DRAWABLE_RIGHT = 2;
@@ -496,7 +465,7 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         verify_password_btn_new.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(pin.getText().toString().equals("")){
+                if (pin.getText().toString().equals("")) {
                     Toast toast = Toast.makeText(getBaseContext(), getResources().getString(R.string.p2m_password_validate), Toast.LENGTH_LONG);
                     toast.setGravity(Gravity.BOTTOM | Gravity.CENTER, 0, 400);
                     toast.show();

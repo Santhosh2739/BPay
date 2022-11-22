@@ -2,7 +2,6 @@ package com.bookeey.wallet.live.login;
 
 import android.app.ActionBar;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -40,8 +39,6 @@ import com.google.gson.Gson;
 import java.util.Locale;
 import java.util.concurrent.Executor;
 
-import javax.inject.Inject;
-
 import coreframework.database.CustomSharedPreferences;
 import coreframework.processing.Login_processing.CustomerLoginProcessing;
 import coreframework.taskframework.ProgressDialogFrag;
@@ -62,9 +59,6 @@ public class LoginActivity extends FragmentActivity implements YPCHeadlessCallba
     LinearLayout language_layout, login_finger_print_layout;
     ImageView coutry_flag_img;
     TextView language_text, fingerprint_text, login_ok_text, goto_tour_text;
-
-    @Inject
-    SharedPreferences mSharedPreferences;
 
     private FirebaseAnalytics firebaseAnalytics;
     private Executor executor;

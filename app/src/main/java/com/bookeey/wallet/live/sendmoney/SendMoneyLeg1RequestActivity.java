@@ -1,11 +1,8 @@
 package com.bookeey.wallet.live.sendmoney;
 
 
-import android.Manifest;
 import android.annotation.SuppressLint;
-import android.annotation.TargetApi;
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -14,15 +11,10 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Message;
 import android.provider.ContactsContract;
-import android.security.keystore.KeyGenParameterSpec;
-import android.security.keystore.KeyPermanentlyInvalidatedException;
-import android.security.keystore.KeyProperties;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
@@ -50,7 +42,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.biometric.BiometricPrompt;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.bookeey.wallet.live.R;
@@ -59,23 +50,12 @@ import com.facebook.appevents.AppEventsLogger;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
 
-import java.io.IOException;
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
 import java.security.KeyStore;
-import java.security.KeyStoreException;
-import java.security.NoSuchAlgorithmException;
-import java.security.NoSuchProviderException;
-import java.security.UnrecoverableKeyException;
-import java.security.cert.CertificateException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Executor;
 
 import javax.crypto.Cipher;
-import javax.crypto.KeyGenerator;
-import javax.crypto.SecretKey;
-import javax.inject.Inject;
 
 import coreframework.database.CustomSharedPreferences;
 import coreframework.network.ServerConnection;
@@ -98,9 +78,6 @@ import ycash.wallet.json.pojo.translimit.TransactionLimitResponse;
  * @author mohit
  */
 public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPCHeadlessCallback {
-    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
-    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
-    private static final String KEY_NAME = "my_key";
     RadioGroup sendmoney_radioGroup1;
     RadioButton sendmoney_local_radio, sendmoney_international_radio;
     LinearLayout send_money_international;
@@ -119,13 +96,10 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
     Dialog promptsViewPassword;
     boolean IsBio = false;
     String tpin = "";
-    @Inject
-    SharedPreferences mSharedPreferences;
     private FirebaseAnalytics firebaseAnalytics;
-    private KeyStore mKeyStore;
-    private Cipher mCipher;
     private Executor executor;
     private BiometricPrompt biometricPrompt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -159,7 +133,6 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
                 onBackPressed();
             }
         });
-        ((CoreApplication) getApplication()).inject(this);
         progress = new ProgressDialog(SendMoneyLeg1RequestActivity.this, R.style.MyTheme2);
         progress.setCanceledOnTouchOutside(false);
         progress.setProgressStyle(ProgressDialog.STYLE_SPINNER);
@@ -264,7 +237,7 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
                 boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
                 boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                 if (IsBio)
-                    if(biometric_device && biometric_enabled)
+                    if (biometric_device && biometric_enabled)
                         biometricPrompt.authenticate(Util.GetBiometricDialog());
                     else
                         ShowEnterPassword();
@@ -315,26 +288,25 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
             @Override
             public void onAuthenticationError(int errorCode, @NonNull CharSequence errString) {
                 super.onAuthenticationError(errorCode, errString);
-                Toast.makeText(getApplicationContext(),"" + errString, Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "" + errString, Toast.LENGTH_LONG).show();
                 ShowEnterPassword();
             }
 
             @Override
             public void onAuthenticationSucceeded(@NonNull BiometricPrompt.AuthenticationResult result) {
                 super.onAuthenticationSucceeded(result);
-               // Toast.makeText(getApplicationContext(),"Authentication succeeded!", Toast.LENGTH_SHORT).show();
-                if(biometric_enabled){
+                // Toast.makeText(getApplicationContext(),"Authentication succeeded!", Toast.LENGTH_SHORT).show();
+                if (biometric_enabled) {
                     tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
                     sendMoneyProcessing();
-                }
-                else
+                } else
                     Util.EnableBiometricAlert(SendMoneyLeg1RequestActivity.this);
             }
 
             @Override
             public void onAuthenticationFailed() {
                 super.onAuthenticationFailed();
-                Toast.makeText(getApplicationContext(), "Authentication failed",Toast.LENGTH_SHORT).show();
+                Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -351,7 +323,7 @@ public class SendMoneyLeg1RequestActivity extends GenericActivity implements YPC
         final EditText pin;
         boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
         boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
-        if(biometric_device && biometric_enabled) {
+        if (biometric_device && biometric_enabled) {
             pin = promptsViewPassword.findViewById(R.id.enter_pwd_edt_new);
             pin.setOnTouchListener((view, motionEvent) -> {
                 final int DRAWABLE_RIGHT = 2;

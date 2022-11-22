@@ -12,7 +12,6 @@ import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
@@ -66,7 +65,6 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
-import com.bookeey.wallet.live.BuildConfig;
 import com.bookeey.wallet.live.Help;
 import com.bookeey.wallet.live.R;
 import com.bookeey.wallet.live.application.CoreApplication;
@@ -80,7 +78,6 @@ import com.facebook.appevents.AppEventsLogger;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.location.FusedLocationProviderApi;
-import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationServices;
 import com.google.android.play.core.appupdate.AppUpdateManager;
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory;
@@ -90,11 +87,6 @@ import com.google.android.play.core.install.model.InstallStatus;
 import com.google.android.play.core.install.model.UpdateAvailability;
 import com.google.firebase.analytics.FirebaseAnalytics;
 import com.google.gson.Gson;
-
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -106,16 +98,12 @@ import java.lang.ref.WeakReference;
 import java.math.BigInteger;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.concurrent.Executor;
-
-import javax.crypto.Cipher;
-import javax.inject.Inject;
 
 import br.com.google.zxing.client.android.CaptureActivity;
 import br.com.google.zxing.client.android.Intents;
@@ -165,45 +153,21 @@ import ycash.wallet.json.pojo.userinfo.UserInfoResponse;
 
 public class MainActivity extends GenericActivity implements YPCHeadlessCallback, TextToSpeech.OnInitListener, GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
     public static final int MY_PERMISSIONS_REQUEST_LOCATION = 99;
-    //int i = 0;
-    static public final int _SLIDE_ECOM = 9;
     public static final int LOCATION_REQUEST = 101;
-    public static final String KEY_FROM_LOGIN = "KEY_FROM_LOGIN";
-    public static final String KEY_IS_AUTO_LOGIN_FROM_NFC = "KEY_IS_AUTO_LOGIN_FROM_NFC";
     public static final int STATIC_QR_CODE_REQUEST = 2442;
     private static final int CAMERA_REQUEST_CODE = 1;
     private static final int PICK_FROM_GALLERY = 2;
-    //Voiece
-    private static final int MY_PERMISSIONS_REQUEST_RECORD_AUDIO = 1;
-    private static final int FINGERPRINT_PERMISSION_REQUEST_CODE = 0;
-    private static final String DIALOG_FRAGMENT_TAG = "myFragment";
-    private static final String KEY_NAME = "my_key";
     public static Context context;
-    private final LocationListener mLocationListener = new LocationListener() {
-        @Override
-        public void onLocationChanged(final Location location) {
-            //your code here
-        }
-    };
-    //For NFC logic
-    private final boolean session_expired = false;
     public boolean should_call_session_time_out_from_onResume = true;
-    @Inject
-    SharedPreferences mSharedPreferences;
     Dialog promptsViewPassword;
     TextToSpeech tts;
     Intent intent;
     Bitmap load_wallet, invoice, pay, recharge_paybill, sendmoney, help, where_to_pay, my_offers, mobilebill, prepaid_cards, txn_history, store, testimage;
-    TextView more_text;
     ExpandableHeightGridView mainmenu_gridview;
-    //for 3 columns use below grdiview and setExpanded(false)
-    //GridView  mainmenu_gridview;
     ScrollView scroll;
     MyAdapter adapter1;
-    ImageView imageview;
     WalletLimits walletLimits;
     String amount, tpin;
-    // private static final int PICK_FROM_GALLERY = 2;
     ImageView image_person;
     ProgressDialog progressDialog;
     CoreApplication application = null;
@@ -219,13 +183,10 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     int left_count = 0;
     Handler handler2 = null;
     boolean isScrolled = true;
-    String versionname;
     String moduleName = "";
     int verifyBio = 1;
     EditText pay_via_qrcode_pin_edt_two;
     String selectedLanguage = null;
-    private KeyStore mKeyStore;
-    private Cipher mCipher;
     private UserInfoUpdateHandler userInfoUpdateHandler;
     private String amount_str = null;
     private DrawerLayout mDrawer = null;
@@ -234,18 +195,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     private Executor executor;
     private BiometricPrompt biometricPrompt;
     private AppUpdateManager mAppUpdateManager;
-    InstallStateUpdatedListener installStateUpdatedListener = new InstallStateUpdatedListener() {
-        @Override
-        public void onStateUpdate(InstallState state) {
-            if (state.installStatus() == InstallStatus.INSTALLED) {
-                if (mAppUpdateManager != null) {
-                    mAppUpdateManager.unregisterListener(installStateUpdatedListener);
-                }
-            } else {
-                Log.i("AppUpdate", "InstallStateUpdatedListener: state: " + state.installStatus());
-            }
-        }
-    };
+
     public static int getScreenWidth() {
         return Resources.getSystem().getDisplayMetrics().widthPixels;
     }
@@ -261,25 +211,11 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         animBlink = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.blink);
         animLeft = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_slide_in_left);
         animRight = AnimationUtils.loadAnimation(getApplicationContext(), R.anim.anim_slide_in_right);
-        /*if (getIntent().getExtras() != null) {
-            isSound = getIntent().getExtras().getBoolean("voice");
-        }*/
-        //requestWindowFeature(Window.FEATURE_INDETERMINATE_PROGRESS);
         setContentView(R.layout.activity_main_new_framelayout);
         moduleName = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.MODULE);
         // Obtain the Firebase Analytics instance.
         firebaseAnalytics = FirebaseAnalytics.getInstance(this);
 
-        /*ActionBar.LayoutParams params = new
-                ActionBar.LayoutParams(ActionBar.LayoutParams.MATCH_PARENT,
-                ActionBar.LayoutParams.MATCH_PARENT, Gravity.CENTER);
-        getActionBar().setDisplayShowTitleEnabled(true);
-        getActionBar().setDisplayHomeAsUpEnabled(false);
-        getActionBar().setHomeButtonEnabled(false);
-        getActionBar().setBackgroundDrawable(getResources().getDrawable(R.drawable.white));
-        getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
-        View cView = getLayoutInflater().inflate(R.layout.activity_main_actionbar, null);
-        getActionBar().setCustomView(cView, params);*/
         application = (CoreApplication) getApplication();
         customerLoginRequestReponse = application.getCustomerLoginRequestReponse();
         if (!(application.getBannerDetails() == null)) {
@@ -300,13 +236,8 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             mActionBar.setDisplayShowCustomEnabled(true);
             mActionBar.setDisplayShowHomeEnabled(false);
         }
-        // mActionBar.setDisplayHomeAsUpEnabled(false);
-        //getActionBar().setLogo(R.drawable.bookeey_latest_icon);
-        //getActionBar().setIcon(new ColorDrawable(getResources().getColor(android.R.color.transparent)));
         LayoutInflater mInflater = LayoutInflater.from(this);
         View mCustomView = mInflater.inflate(R.layout.custom_action_bar_mainmenu, null);
-        //mActionBar.setDisplayShowCustomEnabled(true);
-        //Showing Notification count
         TextView count_text_top = mCustomView.findViewById(R.id.count_text_top);
         FrameLayout frame_layout = mCustomView.findViewById(R.id.push_notifications_frame_layout);
         String notification_count = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.NOTIFICATION_MSG_COUNT);
@@ -323,22 +254,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         final TextView mTitleTextView = mCustomView.findViewById(R.id.marquee_text);
         final ImageView leftArrow = mCustomView.findViewById(R.id.left);
         final ImageView rightArrow = mCustomView.findViewById(R.id.right);
-//        ImageView  main_refresh  = (ImageView)findViewById(R.id.main_refresh) ;
-//
-//        main_refresh.setOnClickListener(new OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//
-//                refreshUserInfo(true);
-//
-//            }
-//        });
-        //ImageView imageView=(ImageView)mCustomView.findViewById(R.id.home_up_back);
-        //imageView.setVisibility(View.GONE);
-        //mTitleTextView.setEllipsize(TextUtils.TruncateAt.MARQUEE);
-        //mTitleTextView.setText(bannerString);
         mTitleTextView.setGravity(Gravity.CENTER);
-        //mTitleTextView.setSelected(true);
         mTitleTextView.setSingleLine(true);
         if (right_count < bannerList.size() || left_count < bannerList.size()) {
             if (!bannerString.equalsIgnoreCase("No offers available")) {
@@ -453,9 +369,9 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         boolean enable = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.SHOW_ENABLE_BIOMETRIC);
         boolean biometric_device = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_DEVICE);
         boolean guest = CustomSharedPreferences.getBooleanData(getApplicationContext(), CustomSharedPreferences.SP_KEY.GUEST_LOGIN);
-        Log.e("enable", ":"+enable);
-        Log.e("biometric_device", ":"+biometric_device);
-        Log.e("guest", ":"+guest);
+        Log.e("enable", ":" + enable);
+        Log.e("biometric_device", ":" + biometric_device);
+        Log.e("guest", ":" + guest);
         if (enable && !guest && biometric_device) {
             ShowBiometricEnableAlert();
         }
@@ -473,18 +389,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             image_person.setImageBitmap(stringToBitmap(image));
         }
         updateProfile(R.id.nameTextooredo, R.id.wallet_id, R.id.balance_id);
-        //more_img1.setBackgroundResource(R.drawable.down_arrow);
-        /*gridArray.add(new Item(load_wallet, "LOAD WALLET"));
-        gridArray.add(new Item(invoice, "INVOICE"));
-        gridArray.add(new Item(pay, "PAY"));
-        gridArray.add(new Item(sendmoney, "SEND MONEY"));
-        gridArray.add(new Item(where_to_pay, "WHERE TO PAY"));
-        gridArray.add(new Item(recharge_paybill, "INT'L TOP UP"));
-        gridArray.add(new Item(mobilebill, "MOBILE BILL"));
-        gridArray.add(new Item(prepaid_cards, "VIRTUAL PREPAID CARDS"));
-        gridArray.add(new Item(my_offers, "MERCHANT OFFERS"));
-        gridArray.add(new Item(help, "HELP"));
-        gridArray.add(new Item(txn_history, "TRANSACTION HISTORY"));*/
         mDrawer = findViewById(R.id.drawer_layout);
         mDrawer.addDrawerListener(new DrawerLayout.DrawerListener() {
             @Override
@@ -527,29 +431,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
         bookeey_mainmenu_pay_btn.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//                showAmountEntryPayDialogue();
-//                CX <->  MX
-//                    Original code
-//                Intent intent;
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//
-//                    boolean isEnabled = checkCameraPermissionLatest();
-//                    if (isEnabled) {
-//                        intent = new Intent(getBaseContext(), CaptureActivity.class);
-//                        intent.setAction("br.com.google.zxing.client.android.SCAN");
-//                        intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-//                        intent.putExtra("CHARACTER_SET", "ISO-8859-1");
-//                        startActivityForResult(intent, 1111);
-//                    }
-//                } else {
-//                    intent = new Intent(getBaseContext(), CaptureActivity.class);
-//                    intent.setAction("br.com.google.zxing.client.android.SCAN");
-//                    intent.putExtra("SCAN_MODE", "QR_CODE_MODE");
-//                    intent.putExtra("CHARACTER_SET", "ISO-8859-1");
-//                    startActivityForResult(intent, 1111);
-//                }
-//                showScanTypeAlertDialogue();
-                //Mar 15
                 showAmountEntryPayDialogueWithTwoPayOptions();
             }
         });
@@ -580,21 +461,10 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
 //                      bWeb();
                         break;
                     case 5:
-//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                            boolean isEnabled = checkLocationPermission();
-//                            if (isEnabled) {
-//                                updateSlidingPanel(_SLIDE_ECOM);
-//                            }
-//                        } else {
-//                            updateSlidingPanel(_SLIDE_ECOM);
-//                        }
-                        //New where to pay list
                         Intent intent = new Intent(MainActivity.this, MerchantListCatogorieyActivityNewUIActivity.class);
                         startActivity(intent);
                         break;
                     case 6:
-//                        intent = new Intent(getBaseContext(), NewOffersActivity.class);
-//                        startActivity(intent);
                         intent = new Intent(getBaseContext(), NewOffersActivityAfterLogin.class);
                         startActivity(intent);
                         break;
@@ -610,18 +480,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                         intent = new Intent(getBaseContext(), Help.class);
                         startActivity(intent);
                         break;
-                    /*case 9:
-                        intent = new Intent(getBaseContext(), Help.class);
-                        startActivity(intent);
-                        break;
-                    case 10:
-                        Intent serviceIntent = new Intent(getBaseContext(), SyncService.class);
-                        serviceIntent.putExtra("type", SyncService.TYPE_USER_LOGGED_IN_STATUS);
-                        startService(serviceIntent);
-                        ((CoreApplication) getApplication()).setTransactionHistoryResponse(new TransactionHistoryResponse());
-                        Intent i = new Intent(getBaseContext(), TransactionHistoryActivity.class);
-                        startActivity(i);
-                        break;*/
                     default:
                         break;
                 }
@@ -645,13 +503,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             Log.e("TAG1", "" + e);
         }
 
-        //Invoke push notification messages
-        //FrameLayout frame_layout = findViewById(R.id.push_notifications_frame_layout);
-//        BadgeView badge = new BadgeView(this, push_notification_message_bell);
-//        badge.setBadgePosition(BadgeView.POSITION_TOP_RIGHT);
-//        badge.setBackgroundResource(R.drawable.bookeey_small);
-//        badge.setText("1");
-//        badge.show();
         frame_layout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -699,17 +550,28 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         });
-    }
+    }    InstallStateUpdatedListener installStateUpdatedListener = new InstallStateUpdatedListener() {
+        @Override
+        public void onStateUpdate(InstallState state) {
+            if (state.installStatus() == InstallStatus.INSTALLED) {
+                if (mAppUpdateManager != null) {
+                    mAppUpdateManager.unregisterListener(installStateUpdatedListener);
+                }
+            } else {
+                Log.i("AppUpdate", "InstallStateUpdatedListener: state: " + state.installStatus());
+            }
+        }
+    };
 
     public void BiometricVerified() {
         Log.e("verifyBio", "=" + verifyBio);
         if (verifyBio == 2) {
             tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
             payViaQrCodeProcess();
-            if(promptsViewPassword!= null)
+            if (promptsViewPassword != null)
                 promptsViewPassword.dismiss();
         } else if (verifyBio == 3) {
-            if(promptsViewPassword!= null)
+            if (promptsViewPassword != null)
                 promptsViewPassword.dismiss();
             tpin = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.PIN);
             VerifyPassword verifyPassword = new VerifyPassword();
@@ -873,12 +735,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
     @Override
     public void onResume() {
         super.onResume();
-        //Commented on Jan 28 after suffling bug fixed
-//        deleteCache(getApplicationContext());
-        //To identify session out July 02 started
-//        invoiceForSessionOut();
-//        Toast.makeText(MainActivity.this,"onResume",Toast.LENGTH_LONG).show();
-        //Facebook
         AppEventsLogger logger = AppEventsLogger.newLogger(this);
         logger.logEvent("Main menu");
         //Firebase
@@ -1154,18 +1010,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 if (dialog_loadmoney.isShowing()) {
                     dialog_loadmoney.dismiss();
                 }
-
-                /*PaymentForm paymentForm = new PaymentForm();
-                paymentForm.setMobileNumber(CustomSharedPreferences.getStringData(getBaseContext(), MOBILE_NUMBER));
-                paymentForm.setPrice(amount_db);
-                CoreApplication application = (CoreApplication) getApplication();
-                String uiProcessorReference = application.addUserInterfaceProcessor(new LoadMoneyProcessing(paymentForm, application, false));
-                ProgressDialogFrag progress = new ProgressDialogFrag();
-                Bundle bundle = new Bundle();
-                bundle.putString("uuid", uiProcessorReference);
-                progress.setCancelable(true);
-                progress.setArguments(bundle);
-                progress.show(getFragmentManager(), "progress_dialog");*/
             }
         });
         cancel_btn.setOnClickListener(new OnClickListener() {
@@ -1941,21 +1785,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             count_text.setBackground(null);
             bell_icon_image = (ImageView) v.getTag(R.id.bell_icon_image);
             Item item = (Item) getItem(i);
-            /*if (items.get(i).name.equalsIgnoreCase("invoice")) {
-                if (application.getInvoices_count() != 0) {
-                    count_text.setVisibility(View.VISIBLE);
-                    bell_icon_image.setVisibility(View.VISIBLE);
-                    if (Integer.parseInt(count_text.getText().toString()) < application.getInvoices_count()) {
-                        isSound = true;
-                        letsspeek();
-                    }
-                    count_text.setText("" + application.getInvoices_count());
-                    blink(count_text, bell_icon_image);
-                }
-            } else {
-                count_text.setVisibility(View.GONE);
-                bell_icon_image.setVisibility(View.GONE);
-            }*/
+
             picture.setImageBitmap(item.drawableId);
             name.setText(item.name);
             // if (name.getText().toString().equalsIgnoreCase("invoice")) {
@@ -1964,26 +1794,8 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 if (application.getInvoices_count() != 0) {
                     count_text.setVisibility(View.VISIBLE);
                     bell_icon_image.setVisibility(View.VISIBLE);
-                    //                        letsspeek();
-                    /*} else if (application.getInvoices_count() > invoice_count) {
-                        isSound = true;
-                        letsspeek();
-                    }*/
-                    /*} else if (isSound) {
-                        isSound = true;
-                        letsspeek();
-                    }*/
                     isSound = isSound;
                     count_text.setText("" + application.getInvoices_count());
-                    /*if (notifyDataSetChangedCalled) {
-                        mBlinking = true;
-                        blink(count_text, bell_icon_image);
-                    } else {
-                        blink(count_text, bell_icon_image);
-                    }*/
-                    //old time using blink
-                    //blink(count_text, bell_icon_image);
-                    //new blink using animation
                     count_text.setVisibility(View.VISIBLE);
                     bell_icon_image.setVisibility(View.VISIBLE);
                     count_text.setBackground(getResources().getDrawable(R.drawable.invoice_circle));
@@ -1991,8 +1803,6 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                     bell_icon_image.startAnimation(animBlink);
                 }
             } else {
-                /*count_text.setVisibility(View.GONE);
-                bell_icon_image.setVisibility(View.GONE);*/
                 count_text.setVisibility(View.GONE);
                 bell_icon_image.setVisibility(View.GONE);
                 count_text.clearAnimation();
@@ -2033,7 +1843,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 Log.e("Verify Response: ", "" + result);
                 GenericResponse response = new Gson().fromJson(result, GenericResponse.class);
                 if (response != null && response.getG_response_trans_type().equalsIgnoreCase(TransType.FORGOT_CHECK_RESPONSE.name()) && response.getG_status() == 1) {
-                    if(promptsViewPassword != null)
+                    if (promptsViewPassword != null)
                         promptsViewPassword.dismiss();
                     scanQRCode();
                 } else {
