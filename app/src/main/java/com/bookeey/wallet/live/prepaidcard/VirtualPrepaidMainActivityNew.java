@@ -485,7 +485,7 @@ public class VirtualPrepaidMainActivityNew extends GenericActivity {
                     if (IsBio) {
                         value = 1;
                         if (biometric_device && biometric_enabled)
-                            biometricPrompt.authenticate(Util.GetBiometricDialog());
+                            biometricPrompt.authenticate(Util.GetBiometricDialog(getApplicationContext()));
                         else
                             ShowEnterPassword();
                     } else
@@ -516,7 +516,7 @@ public class VirtualPrepaidMainActivityNew extends GenericActivity {
                     if (IsBio) {
                         value = 2;
                         if (biometric_device && biometric_enabled)
-                            biometricPrompt.authenticate(Util.GetBiometricDialog());
+                            biometricPrompt.authenticate(Util.GetBiometricDialog(getApplicationContext()));
                         else
                             ShowEnterPassword();
                     } else
@@ -576,7 +576,7 @@ public class VirtualPrepaidMainActivityNew extends GenericActivity {
                 final int DRAWABLE_RIGHT = 2;
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     if (motionEvent.getRawX() >= (pin.getRight() - pin.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        biometricPrompt.authenticate(Util.GetBiometricDialog());
+                        biometricPrompt.authenticate(Util.GetBiometricDialog(getApplicationContext()));
                         promptsViewPassword.dismiss();
                     }
                 }

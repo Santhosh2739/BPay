@@ -468,7 +468,7 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
                 boolean biometric_enabled = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                 if (IsBio) {
                     if (biometric_device && biometric_enabled)
-                        biometricPrompt.authenticate(Util.GetBiometricDialog());
+                        biometricPrompt.authenticate(Util.GetBiometricDialog(getApplicationContext()));
                     else
                         ShowEnterPassword();
                 } else
@@ -523,7 +523,7 @@ public class MobileBill_L1_Activity extends GenericActivity implements YPCHeadle
                 final int DRAWABLE_RIGHT = 2;
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     if (motionEvent.getRawX() >= (pin.getRight() - pin.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        biometricPrompt.authenticate(Util.GetBiometricDialog());
+                        biometricPrompt.authenticate(Util.GetBiometricDialog(getApplicationContext()));
                         promptsViewPassword.dismiss();
                     }
                 }

@@ -263,8 +263,8 @@ public class LoginActivity extends FragmentActivity implements YPCHeadlessCallba
                 Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         });
-        fingerprint_img.setOnClickListener(v -> biometricPrompt.authenticate(Util.GetLoginBiometricDialog()));
-        fingerprint_text.setOnClickListener(v -> biometricPrompt.authenticate(Util.GetLoginBiometricDialog()));
+        fingerprint_img.setOnClickListener(v -> biometricPrompt.authenticate(Util.GetLoginBiometricDialog(getApplicationContext())));
+        fingerprint_text.setOnClickListener(v -> biometricPrompt.authenticate(Util.GetLoginBiometricDialog(getApplicationContext())));
     }
 
     public void BiometricVerified() {

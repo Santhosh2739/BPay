@@ -19,27 +19,27 @@ public class Util {
         alertDialog.show();
     }
 
-    public static BiometricPrompt.PromptInfo GetLoginBiometricDialog() {
+    public static BiometricPrompt.PromptInfo GetLoginBiometricDialog(Context context) {
         return new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Unlock Bookeey Pay")
-                .setSubtitle("Log in using your biometric credential")
-                .setNegativeButtonText("Login with password")
+                .setTitle(context.getResources().getString(R.string.unlock_bookeey))
+                .setSubtitle(context.getResources().getString(R.string.login_biometric))
+                .setNegativeButtonText(context.getResources().getString(R.string.login_password))
                 .build();
     }
 
-    public static BiometricPrompt.PromptInfo GetBiometricDialog() {
+    public static BiometricPrompt.PromptInfo GetBiometricDialog(Context context) {
         return new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Verify Biometric")
-                .setSubtitle("Verify your biometric credential.")
-                .setNegativeButtonText("Verify with password")
+                .setTitle(context.getResources().getString(R.string.verify_biometric))
+                .setSubtitle(context.getResources().getString(R.string.verify_biometric_cred))
+                .setNegativeButtonText(context.getResources().getString(R.string.verify_with_password))
                 .build();
     }
 
-    public static BiometricPrompt.PromptInfo EnableBiometricDialog() {
+    public static BiometricPrompt.PromptInfo EnableBiometricDialog(Context context) {
         return new BiometricPrompt.PromptInfo.Builder()
-                .setTitle("Enable Biometric")
-                .setSubtitle("Verify your biometric credential.")
-                .setNegativeButtonText("Cancel")
+                .setTitle(context.getResources().getString(R.string.enable_biometric_text))
+                .setSubtitle(context.getResources().getString(R.string.verify_biometric_cred))
+                .setNegativeButtonText(context.getResources().getString(R.string.cancel))
                 .build();
     }
 }

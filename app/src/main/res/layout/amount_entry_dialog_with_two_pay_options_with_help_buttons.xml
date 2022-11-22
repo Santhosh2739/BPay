@@ -132,7 +132,8 @@
                         android:layout_height="20dp"
                         android:layout_gravity="center|center_vertical"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/help_red"></ImageView>
+                        android:layout_marginRight="10dp"
+                        android:src="@drawable/help_red" />
                 </LinearLayout>
 
             </LinearLayout>
@@ -175,7 +176,6 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="10dp"
                         android:text="@string/generate_qr_help"
                         android:textColor="#000000"
                         android:textSize="16sp">
@@ -187,6 +187,8 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:layout_gravity="top"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginRight="10dp"
                         android:src="@drawable/help_red">
 
                     </ImageView>

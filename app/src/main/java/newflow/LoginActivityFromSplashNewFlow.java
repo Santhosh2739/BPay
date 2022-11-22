@@ -287,10 +287,10 @@ public class LoginActivityFromSplashNewFlow extends FragmentActivity implements 
                 Toast.makeText(getApplicationContext(), "Authentication failed", Toast.LENGTH_SHORT).show();
             }
         });
-        fingerprint_img.setOnClickListener(v -> biometricPrompt.authenticate(Util.GetLoginBiometricDialog()));
-        fingerprint_text.setOnClickListener(v -> biometricPrompt.authenticate(Util.GetLoginBiometricDialog()));
+        fingerprint_img.setOnClickListener(v -> biometricPrompt.authenticate(Util.GetLoginBiometricDialog(getApplicationContext())));
+        fingerprint_text.setOnClickListener(v -> biometricPrompt.authenticate(Util.GetLoginBiometricDialog(getApplicationContext())));
         if (biometric_device && biometric_enabled && !guest)
-            biometricPrompt.authenticate(Util.GetLoginBiometricDialog());
+            biometricPrompt.authenticate(Util.GetLoginBiometricDialog(getApplicationContext()));
     }
 
     public void BiometricVerified() {

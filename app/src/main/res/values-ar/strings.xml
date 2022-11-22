@@ -1,26 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <!-- Zxing Strings -->
-    <string name="zxing_url">http://code.google.com/p/zxing</string>
-    <string name="history_clear_one_history_text">Clear</string>
-    <string name="history_send">Send history</string>
-    <string name="history_clear_text">Clear history</string>
-    <string name="msg_unmount_usb">Sorry, the SD card is not accessible.</string>
-    <string name="button_ok">OK</string>
-    <string name="history_email_title">Barcode Scanner history</string>
-    <string name="title_section1">My Offers</string>
-    <string name="title_section2"></string>
-    <string name="title_section3"></string>
-    <string name="drawer_open">Open</string>
-    <string name="drawer_close">Close</string>
-    <string name="topup_country_title">Select Country</string>
     <string name="spinner_initiation">Select Denomination</string>
     <string name="title_activity_change_pin">ChangePinActivity</string>
-    <!--End-->
-    <!--Toast messages-->
-    <string name="select_your_image_title">Attach Image</string>_
-    <string name="select_your_image">Get image from</string>
     <string name="firstname_error">Enter firstname</string>
     <string name="lastname_error">Enter lastname</string>
     <string name="email_error">Enter email</string>
@@ -612,7 +593,7 @@ customercare@bookeey.com
 
     <!--end of offers  pay page starts-->
 
-    <string name="orredoo_pay_screen_tab_payinshop_tab_amount_txt">Amount</string>
+    <string name="orredoo_pay_screen_tab_payinshop_tab_amount_txt">مقدار</string>
     <string name="orredoo_pay_screen_tab_payinshop_tab_amount_number_txt">KD 00.000</string>
     <string name="orredoo_pay_screen_tab_payinshop_tab_PIN_txt">PIN</string>
     <string name="orredoo_pay_screen_tab_payinshop_tab_PIN_xxx_txt">xxxx</string>
@@ -644,7 +625,7 @@ customercare@bookeey.com
     <string name="txn_history_txn_id_txt">رمز المعاملة</string>
     <string name="txn_history_payment_amount_txt">مبلغ الدفع</string>
     <string name="txn_history_customerid_txt">هوية العميل</string>
-    <string name="txn_history_balance_after_txt">Balance After</string>
+    <string name="txn_history_balance_after_txt">التوازن بعد</string>
     <string name="txn_history_processingfee_txt">رسوم المعاملة</string>
     <string name="txn_history_success_close_btn">أغلق</string>
     <string name="txn_history_amount_txt">المبلغ الإجمالي</string>
@@ -668,10 +649,10 @@ customercare@bookeey.com
     <string name="txn_serial_number">الرقم المسلسل</string>
     <string name="txn_recharge_code">رمزإعادة الشحن </string>
     <string name="txn_ref_no">رقم المرجع للمعاملة</string>
-    <string name="txn_hold">HOLD</string>
-    <string name="txn_success">SUCCESS</string>
-    <string name="txn_rejected">REJECTED</string>
-    <string name="txn_failed">FAILED</string>
+    <string name="txn_hold">يمسك</string>
+    <string name="txn_success">النجاح</string>
+    <string name="txn_rejected">مرفوض</string>
+    <string name="txn_failed">باءت بالفشل</string>
     <string name="txn_recharge_141">لإعادة الشحن اطلب :  *141*RechargeCode#</string>
     <string name="txn_recharge_111">لإعادة الشحن اطلب : *111*RechargeCode#</string>
     <string name="txn_recharge_500">لإعادة الشحن اطلب : *500*RechargeCode#</string>
@@ -1311,12 +1292,19 @@ customercare@bookeey.com </string>
     <string name="update_app_dialogue_desc">يبدو أنك تستخدم إصدارًا أقدم من Bookeey. قم بالتحديث الآن للحصول على أداء أفضل وأحدث الميزات.</string>
     <string name="registration_confirm_password">تأكيد كلمة المرور</string>
     <string name="registration_password">كلمه السر</string>
-    <string name="alert">Alert</string>
+    <string name="alert">انذار</string>
     <string name="please_enable_biometric_for_access">الرجاء تمكين البيومترية للوصول</string>
     <string name="enable_biometric">تمكين / تعطيل المقاييس الحيوية</string>
     <string name="invoice_enter_password_biometric">أدخل كلمة المرور أو المقاييس الحيوية</string>
     <string name="enable_biometric_for_access">هل تريد تمكين البيومترية للوصول؟</string>
     <string name="verify_password">تحقق من كلمة المرور / البيومترية</string>
     <string name="Verify">اكد كلمة المرور</string>
+    <string name="unlock_bookeey">فتح القفل</string>
+    <string name="login_biometric">تسجيل الدخول عن طريق البصمة الالكترونية</string>
+    <string name="login_password">الدخول عن طريق الرمز السري</string>
+    <string name="verify_biometric">تحقق من البيومترية</string>
+    <string name="verify_biometric_cred">التحقيق من البصمة الالكترونية</string>
+    <string name="verify_with_password">التحقق عن طريق الرمز السري</string>
+    <string name="enable_biometric_text">تفعيل البصمة الالكترونية</string>
 
 </resources>

@@ -1348,5 +1348,12 @@ customercare@bookeey.com\nThank you.</string>
     <string name="enable_biometric">Enable/Disable Biometric</string>
     <string name="verify_password">Verify Password/Biometric</string>
     <string name="Verify">Verify Password</string>
+    <string name="unlock_bookeey">Unlock Bookeey Pay</string>
+    <string name="login_biometric">Log in using your biometric credential</string>
+    <string name="login_password">Login with password</string>
+    <string name="verify_biometric">Verify Biometric</string>
+    <string name="verify_biometric_cred">Verify your biometric credential.</string>
+    <string name="verify_with_password">Verify with password</string>
+    <string name="enable_biometric_text">Enable Biometric</string>
 
 </resources>

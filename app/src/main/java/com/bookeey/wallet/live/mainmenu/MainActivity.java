@@ -611,7 +611,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
             @Override
             public void onClick(DialogInterface dialog, int id) {
                 verifyBio = 1;
-                biometricPrompt.authenticate(Util.EnableBiometricDialog());
+                biometricPrompt.authenticate(Util.EnableBiometricDialog(getApplicationContext()));
                 dialog.dismiss();
             }
         });
@@ -1169,7 +1169,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 final int DRAWABLE_RIGHT = 2;
                 if (motionEvent.getAction() == MotionEvent.ACTION_UP) {
                     if (motionEvent.getRawX() >= (pin.getRight() - pin.getCompoundDrawables()[DRAWABLE_RIGHT].getBounds().width())) {
-                        biometricPrompt.authenticate(Util.GetBiometricDialog());
+                        biometricPrompt.authenticate(Util.GetBiometricDialog(getApplicationContext()));
                         promptsViewPassword.dismiss();
                     }
                 }
@@ -1294,7 +1294,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 if (amount > limits.getTpinLimit() && !guest) {
                     verifyBio = 2;
                     if (biometric_device && biometric_enabled)
-                        biometricPrompt.authenticate(Util.GetBiometricDialog());
+                        biometricPrompt.authenticate(Util.GetBiometricDialog(getApplicationContext()));
                     else
                         ShowEnterPassword();
                 } else {
@@ -1341,7 +1341,7 @@ public class MainActivity extends GenericActivity implements YPCHeadlessCallback
                 if (amount > limits.getTpinLimit() && !guest) {
                     verifyBio = 3;
                     if (biometric_device && biometric_enabled)
-                        biometricPrompt.authenticate(Util.GetBiometricDialog());
+                        biometricPrompt.authenticate(Util.GetBiometricDialog(getApplicationContext()));
                     else
                         ShowEnterPassword();
                 } else {

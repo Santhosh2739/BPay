@@ -217,7 +217,7 @@ public class GenericActivity extends FragmentActivity implements YPCHeadlessCall
             case R.id.action_biometric:
                 boolean bio = CustomSharedPreferences.getBooleanData(getBaseContext(), CustomSharedPreferences.SP_KEY.BIOMETRIC_ENABLED);
                 if(!bio){
-                    biometricPromptNew.authenticate(Util.EnableBiometricDialog());
+                    biometricPromptNew.authenticate(Util.EnableBiometricDialog(getApplicationContext()));
                 } else {
                     enableBiometric();
                 }
