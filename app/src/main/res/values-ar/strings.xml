@@ -2,46 +2,14 @@
 <resources>
     <string name="spinner_initiation">Select Denomination</string>
     <string name="title_activity_change_pin">ChangePinActivity</string>
-    <string name="firstname_error">Enter firstname</string>
-    <string name="lastname_error">Enter lastname</string>
-    <string name="email_error">Enter email</string>
-    <string name="mobilenumber_error">Enter mobilenumber</string>
-    <string name="civilid_error">Enter civilid</string>
-
-    <string name="mobile_number_validation_msg">Please enter valid mobile number</string>
-    <string name="activation_toast_valid_newpin_msg">Please enter 7 digit password</string>
     <string name="activation_toast_help_text">You have clicked help</string>
-    <string name="login_mobile_number_msg">Enter mobile number</string>
-    <string name="login_valid_mobile_number_msg">Enter valid mobile number</string>
-    <!--
-        <string name="login_password_msg">أدخل كلمة السر</string>
-    -->
-    <string name="login_valid_password_msg">Enter valid password</string>
-    <string name="activation_pending">Your account is not yet approved</string>
-    <string name="activation_rejected">Your account is rejected</string>
     <string name="activation_toast_newconfirmpin_msg">أدخل تأكيد كلمة السر</string>
-
-    <!-- END OF Toast messages-->
     <string name="app_name">BookeeyPay</string>
-    <string name="app_name_dummy">NewWallet</string>
     <string name="action_settings">Settings</string>
-    <string name="hello_world">Hello world!</string>
-
     <drawable name="white">#ffffff</drawable>
-    <drawable name="darkgrey">#606060</drawable>
-    <drawable name="grey">#778899</drawable>
-
     <string name="customer_name">Name</string>
     <string name="customer_number">663693338</string>
     <string name="customer_current_balc_amt">KWD 500.000</string>
-    <string name="recharge_wallet_txt">Recharge Wallet</string>
-    <string name="send_money_txt">Buy</string>
-    <string name="send_money_help">مساعدة</string>
-    <string name="more_text">More</string>
-    <string name="poweredby_tv">Powered by</string>
-    <string name="send_money_others">Others</string>
-    <string name="Wrong_Password">Entered Password is wrong</string>
-    //Mobile number validation starts
     <string name="mob_validation_welcome">مرحبا بك في</string>
     <string name="mob_validation_langauge_type">Language Type</string>
     <string name="mob_validation_english">English</string>
@@ -53,102 +21,37 @@
     //Toasts
     <string name="mob_validation_enter_mobile_no">أدخل رقم الجوال</string>
     <string name="mob_validation_enter_valid_mobile_no">الرجاء ادخال رقم نقال صالح</string>
-
-
-    //contact starts
     <string name="contact_us_title">اتصل بنا</string>
     <string name="contact_us_screen_office_adress">عنوان مكتب الشركة</string>
-
-
     <string name="contact_us_screen_office_adress_detail">قبله - قطعة ١٢ - شارع فهد السالم - عمارة الكويت - الدور ١٩</string>
     <string name="contact_us_screen_write_us">تواصل معنا</string>
-    <string name="contact_us_screen_website"></string>
     <string name="contact_us_screen_mail">customercare@bookeey.com</string>
     <string name="contact_us_screen_customer_care">خدمة العملاء</string>
-    <string name="contact_us_screen_mobile_number_whatsapp">22200001</string>
     <string name="contact_us_screen_mobile_number">22200001</string>
     <string name="contact_us_screen_connect_executive">منفذ الارتباط</string>
-    <string name="international_country_code">+92</string>
-    <string name="international_mobile_no">3214074300</string>
-    //contact us ends
-
-
-    //check for update starts
     <string name="check_for_update_title">التحقيق من تحديثات جديدة</string>
     <string name="check_up_to_date">تطبيقك محدث الآن</string>
-    <string name="check_not_up_to_date">تطبيقك غير محدث</string>
     <string name="current_version">الإصدار الحالي هو:</string>
     <string name="update">تحديث</string>
     <string name="check_close">أغلق</string>
     <string name="check_update_dialogue_title">تحديث البلاي استور</string>
-    <string name="check_update_dialogue_desc">هل تود التحديث الي اجدد نسخه؟</string>
-
-    //ends check for update
-
-
-    <string name="send_money_international_transfer_amt">Transfer Amount</string>
-    <string name="send_money_international_receiver_amt">Receivers Amount</string>
-    <string name="ooredoo_sendmoney_kd_amount">KD</string>
-    <string name="ooredoo_sendmoney_pkr_amount">PKR</string>
-    <string name="sendmoney_kd_edit_text">50</string>
-    <string name="not_approved_contact">عزيزي العميل،  لم يتم تفعيل محفظتك البوكي بعد،  ، ستصلك بريد الكتروني بمجرد تفعيل محفظتك،قد يستغرق ذلك 24ساعة, الرجاء مراجعة بريدك الالكتروني لبريد التفعيل !</string>
-    <string name="not_approved_dear_text">Dear Customer,</string>
-    <string name="sendmoney_pkr_edit_text">16,000</string>
-    <string name="ooredoo_sendmoney_international_pin">PIN</string>
-    <string name="ooredoo_sendmoney_international_pin_value">xxxx</string>
-    <string name="send_money_international_exchangerate">Exchange Rate: KWD1 = PKR 350</string>
-    <string name="international_name">Name</string>
-
-
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
-
-
-    <string name="transactions_txt">Topup/ Payment</string>
-    <string name="qrcode">QRCode</string>
-    <string name="chat_txt">Send Money</string>
     <string name="undo">Hide</string>
-    <string name="transaction_history">المعاملات السابقة</string>
-    <string name="sub_heading1">What is Lorem Ipsum?</string>
-    <string name="sub_heading1_exp">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.</string>
-    <string name="sub_heading2">How Lorem Ipsum works?</string>
-    <string name="sub_heading2_exp">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages.</string>
-
-    <string name="title_activity_sendmoney">Sendmoney</string>
-    <string name="title_activity_success_screen">Success_screen</string>
-
-
-    <string name="transaction">Transaction Is Successfull</string>
     <string name="pay">ادفع</string>
-    <string name="ooredoo_footer_text">Powered by</string>
-    <string name="ooredoo_success_screen_registation_success">Your request is under review, you will receive an Email notification within 24 hours.</string>
-    <string name="ooredoo_success_screen_registation_sms_success">Soon you will receive a mail regarding the wallet activation.</string>
-    <string name="ooredoo_success_screen_close_button">CLOSE</string>
-
     <string name="activation_checkmark_tick">PIN Code has been successfully created</string>
-    <string name="sucess">Thank you for registering with Bookeey.</string>
-
-
     <string name="local_radio">Local</string>
     <string name="international_radio">International</string>
-
 
     //Registration success
     <string name="registration_success_title">التسجيل</string>
     <string name="registration_success_desc1">شكرا للتسجيل مع بوكي.</string>
-    <!--<string name="registration_success_desc2">"عزيزي العميل ، سوف يتم تفعيل محفظة بوكي الخاصة بك خلال ٢٤ ساعة القادمة ، وسوف يصلك بريد الكتروني بمجرد تفعيل المحفظة , لأي استفسار يرجى التواصل معنا على بريد بوكي الالكتروني : customercare@bookeey.com-->
-
-<!--و لكم جزيل الشكر"</string>-->
-
     <string name="registration_success_desc2">
 عزيزي العميل ، سوف يتم تفعيل محفظة بوكي الخاصة بك خلال ٢٤ ساعة القادمة ، وسوف تصلك رسالة قصيرة علي الرقم المسجل بمجرد تفعيل المحفظة , لأي استفسار يرجى التواصل معنا على بريد بوكي الالكتروني:
 customercare@bookeey.com
  و لكم جزيل الشكر</string>
-
-
     <string name="registration_success_close_btn">أغلق</string>
     //end of registartion success
-
 
     //Send money starts
     <string name="send_money_title">إرسال الأموال</string>
@@ -162,46 +65,14 @@ customercare@bookeey.com
     <string name="send_money_enter_amount">الرجاء ادخال المبلغ</string>
     <string name="send_money_amount_between">الرجاء ادخال مبلغ ما بين</string>
     <string name="send_money_amount_between_to">إلى</string>
-    <string name="send_money_enter_password">الرجاء ادخال رمز سري </string>
     //end of sendmoney
 
-    <string name="international_code">+91 </string>
-    <string name="international_number">1234567890</string>
-    <string name="select_contact">Select Contact</string>
-    <string name="KD_convertion">1 KD = Rs100</string>
-
-    <string name="pin">PIN</string>
-
-
-    <string name="sendmoney_confirm_payment">Confirm Payment</string>
-    <string name="sendmoney_confirm_payment_status">Status</string>
-    <string name="sendmoney_confirm_payment_TxnId">Txn ID</string>
-    <string name="sendmoney_confirm_payment_TxnAmount">Txn Amount</string>
-    <string name="sendmoney_confirm_payment_Processingfee">Processing Fee</string>
-    <string name="sendmoney_confirm_payment_Totalamount">Total Amount</string>
-    <string name="sendmoney_confirm_payment_customerid">Customer ID</string>
-    <string name="sendmoney_confirm_payment_avl_balance">Avl.Balance</string>
-    <string name="sendmoney_confirm_payment_Txn_time">Txn Time</string>
-    <string name="ooredoo_sendmoney_confirmpayment_btn_str">confirm</string>
     <string name="amount">Amount(KD)</string>
-    <string name="amount_1">Amount</string>
-
-    <string name="wallet_balance_ooredoo_buy_text">Wallet Balance: </string>
-    <string name="askmerchant_toscan">Ask Merchant to scan the QR code</string>
-    <string name="buy_amt_to_pay">Amount to pay: </string>
-
-
     <string name="ooredoo_splash_screen_english_language_text">Register</string>
-    <string name="ooredoo_splash_screen_arabic_language_text">Arabic</string>
     <string name="ooredoo_splash_screen_copyright_text">Copyright 2015 XenonPay</string>
-    <string name="result_text"></string>
-    <string name="register">التسجيل</string>
+    <string name="result_text"/>
     <string name="register_arabic">تسجيل</string>
     <string name="ooredoo_splash_screen_taketour_text">take a tour</string>
-    <string name="loading">Processing</string>
-    <string name="pleasewait">Please Wait...            </string>
-
-
     //registration starts
 
     //choose image or take image
@@ -209,8 +80,6 @@ customercare@bookeey.com
     <string name="registration_gallery">معرض</string>
     <string name="registration_attach_image">ارفاق الصورة</string>
     <string name="registration_get_image_from">حمل الصورة من</string>
-
-
     <string name="registartion_title">التسجيل</string>
     <string name="registration_firstname">الاسم الاول</string>
     <string name="registration_lastname">اسم العائلة</string>
@@ -218,25 +87,18 @@ customercare@bookeey.com
     <string name="registration_email_id">عنوان الايميل</string>
     <string name="registration_confirm_emial">تأكيد البريد</string>
     <string name="capture_civil_form">التقط صورة من بطاقتك المدنية</string>
-
-    <string name="registration_phone">Phone</string>
     <string name="registration_mobile">رقم الجوال</string>
     <string name="registration_capture_front_text_str">الأمام</string>
     <string name="registration_capture_back_text_str">الخلف</string>
-    <string name="registration_capture_front_msg">Front side of civil id captured successfully</string>
-    <string name="registration_capture_back_msg">Back side of civil id captured successfully</string>
-
     <string name="registration_checkmark_tick">Civil ID.JPEG Attached</string>
     <string name="registration_checkbox">أوافق على الشروط و الأحكام</string>
     <string name="btn_submit">تقديم</string>
-    <string name="registration_poweredby_tv">Powered by</string>
     <string name="registration_help">مساعدة</string>
     <string name="view_t_c_str">مشاهدة الشروط و الأحكام</string>
     <string name="help">Help</string>
     <string name="registration_tag">*الرجاء ادخال المعلومات باللغة الانجليزية .</string>
     <string name="registration_alert">يرجى العلم أن صورة البطاقة المدنية أمر إلزامي كجزء من إجراء \"تعرف على عميلك\".</string>
     <string name="registration_alert_ok">موافق</string>
-
 
     //Toasts
     <string name="Please_enter_first_name">الرجاء ادخال الاسم الاول</string>
@@ -253,91 +115,40 @@ customercare@bookeey.com
     <string name="terms_conditions_msg">الرجاء الموافقة علي الشروط و الضوابط</string>
 
     //end of registration starts
-
-    / ACTION BAR
-    <string name="registration_str">REGISTRATION</string>
-    <string name="activation_str">تغيير الرمز السري</string>
-    <string name="validation_str">VALIDATION</string>
-    <!--         //ACTIVATION SCREEN//    Starts Here   -->
-
-<!--    <string name="activation_title">تغيير الرمز السري</string>-->
     <string name="activation_show_password">عرض الرمز السري </string>
-
-
-
-<!--    <string name="activation_show_password">الرمز السري</string>-->
-
-    <string name="activation_confirm_new_hint">xxxx</string>
-
     <string name="activation_confirm_new_str">تأكيد الرمز السري الجديد</string>
-<!--    <string name="activation_confirm_new_str">تأكيد الرمز السري الجديد</string>-->
-
-    <string name="activation_new_hint">xxxx</string>
-
     <string name="activation_new_str">الرمز السري الجديد</string>
-<!--    <string name="activation_new_str">الرمز السري الجديد</string>-->
-
-<!--    <string name="note">ادخل الرمز سري كما هو وارد بالبريد</string>-->
-<!--    <string name="note">أدخل الرمز السري كما ورد في الرسالة</string>-->
-<!--    <string name="note">ادخل رمزك السري او الذي وصلك كرسالة قصيرة.</string>-->
-
     <string name="note">ادخل الرمز السري الصالح لمرة واحدة المرسل إليك كرسالة قصيرة</string>
-
-
     <string name="call_center">ملاحظة :الرجاء الاتصال علي خدمة العملاء علي الرقم 22200001 للحصول علي الرمز السري</string>
-<!--    <string name="call_center">ملاحظة :الرجاء الاتصال علي خدمة العملاء علي الرقم 22200001 للحصول علي الرمز السري</string>-->
-
-    <string name="activation_pin_code_hint">xxxx</string>
-
-<!--    <string name="activation_pin_code_str">الرمز السري الحالي</string>-->
-<!--    <string name="activation_pin_code_str">الرمز السري الحالي</string>-->
-
     <string name="activation_pin_code_str">ادخل الرمز السري</string>
-
     <string name="current_password_change_pin_screen">الرمز السري الحالي</string>
     <string name="change_password_title_change_pin_screen">تغيير الرمز السري</string>
-
-    <string name="mobile_number_str">Enter Mobile Number</string>
-
     <string name="activation_toast_pin_msg">الرجاء ادخال الرمز السري الحالي</string>
     <string name="activation_toast_newpin_msg">الرجاء ادخال الرمز السري الجديد</string>
     <string name="activation_toast_confirmpin_msg">الرجاء تاكيد الرمز السري الجديد</string>
     <string name="activation_toast_samepin_msg">الرمز السري الجديد و تاكيد الرمز السري الجديد لا يتطابقان</string>
     <string name="activation_checkbox">عرض كلمة السر</string>
-
     <!--         //ACTIVATION SCREEN//    End Here   -->
 
     //login starts
     <string name="app_language">العربية</string>
-
     <string name="login_title">الدخول</string>
-    <string name="login_langauge_type">Language Type</string>
     <string name="login_english">English</string>
     <string name="login_arabic">العربية</string>
     <string name="login_or">أو</string>
     <string name="login_touchID">استشعار تعمل باللمس</string>
-
-
     <string name="login_forgot_password">هل نسيت الرمز السري</string>
     <string name="login_help">مساعدة</string>
     <string name="login_password_msg">أدخل كلمة السر</string>
-
-    <string name="login_mob_no_str">Mobile</string>
-    <string name="login_pin_code_str">Enter PIN Code</string>
-<!--    <string name="login_btn_login">تسجيل الدخول</string>-->
     <string name="login_btn_login">الدخول</string>
-    <string name="forgot_pin_code">Forgot PIN Code</string>
-    <string name="login_pin_code_invalid_str">Please enter 4 digit pin</string>
-
     <string name="login_pswd_ed_hint">أدخل كلمة السر</string>
     <string name="login_tour">خذ جولة</string>
-
     //login ends
 
     //forgot password starts
     <string name="forgot_password_title">هل نسيت الرمز السري</string>
     <string name="forgot_password_desc1">عادة  تعيين الرمز السري الرجاء الضغط على " تأكيد "</string>
-<!--    <string name="forgot_password_desc2">وسيتم إرسال رمز سري جديد لك عن طريق البريد الإلكتروني. </string>-->
+    <!--    <string name="forgot_password_desc2">وسيتم إرسال رمز سري جديد لك عن طريق البريد الإلكتروني. </string>-->
     <string name="forgot_password_desc2">سيتم إرسال رمز سري جديد كرسالة نصية قصيرة.</string>
     <string name="forgot_close_btn">أغلق</string>
     <string name="forgot_confirm_btn">تاكيد</string>
@@ -347,9 +158,8 @@ customercare@bookeey.com
     //menu items
     <string name="menu_home">الصفحة الرئيسية</string>
     <string name="menu_manage_profile">إدارة الملف الشخصي</string>
-<!--    <string name="menu_change_password">تغيير الرمز السري</string>-->
+    <!--    <string name="menu_change_password">تغيير الرمز السري</string>-->
     <string name="menu_change_password">  تغيير الرمز السري</string>
-
     <string name="menu_transaction_istory">المعاملات السابقة</string>
     <string name="change_mobile_no">تغيير رقم الموبايل</string>
     <string name="menu_about_us">من نحن</string>
@@ -357,17 +167,6 @@ customercare@bookeey.com
     <string name="menu_check_for_updates">التحقيق من تحديثات جديدة</string>
     <string name="menu_exit_app">الخروج من التطبيق</string>
     //ends menu items
-
-    //fingerprint starts
-    <string name="finger_print_title">Authentication</string>
-    <string name="title_fingerprint">One-touch Sign In</string>
-    <string name="desc_fingerprint">Please place your fingertip on the scanner to verify your identity</string>
-    <string name="fingerprint_note">(Fingerprint sign in makes your app login much faster. Your device should have at least one fingerprint registered in device settings)</string>
-    <string name="title_activity_home">Fingerprint</string>
-    <string name="activity_home_desc">You have successfully logged in with fingerprint authentication</string>
-    <string name="activity_home_note">Close and re-open the app to see the fingerprint auth screen again</string>
-    //fingerprint ends
-
 
     //Main mneu items starts
     <string name="mainmenu_load_wallet">عبئ المحفظة</string>
@@ -380,8 +179,7 @@ customercare@bookeey.com
     <string name="mainmenu_invoice">الفاتورة</string>
     <string name="mainmenu_where_to_pay">نقاط الدفع</string>
     <string name="mainmenu_offers">العروض</string>
-<!--    <string name="mainmenu_txn_history">كشف الحساب</string>-->
-
+    <!--    <string name="mainmenu_txn_history">كشف الحساب</string>-->
     <string name="mainmenu_txn_history">المعاملات السابقة</string>
     <string name="mainmenu_help">مساعدة</string>
     //end Main mneu items starts
@@ -411,7 +209,6 @@ customercare@bookeey.com
     <string name="virtual_prepaid_L1_txn_date">تاريخ المعاملة</string>
     <string name="virtual_prepaid_L1_txn_confirm_btn">تاكيد</string>
     <!--End of Virtual prepaid cards L1-->
-
     <!--Virtual prepaid cards L2-->
     <string name="virtual_prepaid_L2_title">إيصال التحويل</string>
     <string name="virtual_prepaid_L2_operator_name">اسم المشغل</string>
@@ -423,8 +220,6 @@ customercare@bookeey.com
     <string name="virtual_prepaid_L2_txn_date">تاريخ المعاملة</string>
     <string name="virtual_prepaid_L2_txn_close_btn">أغلق</string>
     <!--End of Virtual prepaid cards L2-->
-
-
     <!--Mobile bill starts-->
     <string name="mobile_bill_title">فاتورة الجوال</string>
     <string name="mobile_bill_L1_recharge">تعبئة رصيد</string>
@@ -462,10 +257,7 @@ customercare@bookeey.com
     //mobile final starts
     <string name="mobile_bill_final_transfer_receipt">إيصال التحويل</string>
     <string name="mobile_bill_L2_txn_close_btn">أغلق</string>
-
     <!--Ends Mobile bill starts-->
-
-
     <!--Int'l recharge-->
     <string name="intl_top_up_title">الشحن الدولي</string>
     <string name="intl_mobile_number">أدخل رقم الجوال</string>
@@ -480,8 +272,6 @@ customercare@bookeey.com
     <string name="intl_proceed_btn">تابع</string>
     //toasts
     <string name="intl_select_denomination">الرجاء ادخال المبلغ</string>
-    <string name="intl_password">الرجاء ادخال الرمز السري</string>
-
     //Intl top up L1 starts
     <string name="intl_L1_confirm_payment">تأكيد الدفع</string>
     <string name="intl_L1_receipient_mobile">رقم نقال المستلم</string>
@@ -496,11 +286,8 @@ customercare@bookeey.com
     <string name="intl_L2_receipt">الايصال الدولي</string>
     <string name="intl_L2_status">الحالة</string>
     <string name="intl_L2_balance_after">التوازن بعد</string>
-    <string name="intl_L2_transaction_ID">رمز المعاملة</string>
     <string name="intl_L2_close_btn">أغلق</string>
     <!--End of Int'l recharge-->
-
-
     <!--Invoice page starts-->
     <string name="invoice_title">الفاتورة</string>
     <string name="invoice_details_title">تفاصيل الفاتورة</string>
@@ -512,7 +299,6 @@ customercare@bookeey.com
     <string name="invoice_amount">مبلغ الفاتورة</string>
     <string name="invoice_password">كلمه السر</string>
     <string name="invoice_description">شرح:</string>
-    <string name="invoice_reject_btn">رفض</string>
     <string name="invoice_hold_btn">انتظار</string>
     <string name="invoice_pay_btn">ادفع الان</string>
     <string name="invoice_offer_id">العرض</string>
@@ -536,12 +322,7 @@ customercare@bookeey.com
     //invoie reject reason dialogue
     <string name="invoice_reason_title">اذكر السبب</string>
     <string name="invoice_reason_optional_title">)حقل اختياري(</string>
-
-    <string name="invoice_reason_mention_to">الرجاء ادخال سبب الرفض...                                                                           </string>
     <string name="invoice_reason_submit_btn">تقديم</string>
-
-
-
     <!--End of Invoice page starts-->
     <!--Where to pay page starts-->
     <string name="where_to_pay_all">جميع الفئات</string>
@@ -560,8 +341,6 @@ customercare@bookeey.com
     <string name="where_to_pay_branches_title">الفروع </string>
     <string name="where_to_pay_merchant_location_title">فروع التاجر</string>
     <string name="where_to_pay_get_direction_btn">الحصول علي تعليمات الوجهة</string>
-
-
     <!--End of where to pay page starts-->`
 
     <!--Offers to pay page starts-->
@@ -590,18 +369,7 @@ customercare@bookeey.com
     <string name="offers_qrcode_scanned_at">اطلب من التاجر عمل مسح ضوئي علي الرمز التفعيلي</string>
     <string name="offers_qrcode_for_redemption">FOR REDEMPTION</string>
     <string name="offers_qrcode_close">أغلق</string>
-
     <!--end of offers  pay page starts-->
-
-    <string name="orredoo_pay_screen_tab_payinshop_tab_amount_txt">مقدار</string>
-    <string name="orredoo_pay_screen_tab_payinshop_tab_amount_number_txt">KD 00.000</string>
-    <string name="orredoo_pay_screen_tab_payinshop_tab_PIN_txt">PIN</string>
-    <string name="orredoo_pay_screen_tab_payinshop_tab_PIN_xxx_txt">xxxx</string>
-    <string name="orredoo_pay_screen_button">CONFIRM PAYMENT</string>
-    <string name="orredoo_pay_screen_tab_payinonline_tab_amount_txt">Amount(KD)</string>
-
-    //Transaction history first page starts
-<!--    <string name="txn_history_filter">التصفية حسب الفئة</string>-->
     <string name="txn_history_filter">الكل</string>
     <string name="txn_history_loadwallet">عبئ المحفظة</string>
     <string name="txn_history_pay2mercahnt">الدفع في نقاط البيع</string>
@@ -625,7 +393,6 @@ customercare@bookeey.com
     <string name="txn_history_txn_id_txt">رمز المعاملة</string>
     <string name="txn_history_payment_amount_txt">مبلغ الدفع</string>
     <string name="txn_history_customerid_txt">هوية العميل</string>
-    <string name="txn_history_balance_after_txt">التوازن بعد</string>
     <string name="txn_history_processingfee_txt">رسوم المعاملة</string>
     <string name="txn_history_success_close_btn">أغلق</string>
     <string name="txn_history_amount_txt">المبلغ الإجمالي</string>
@@ -637,7 +404,6 @@ customercare@bookeey.com
     <string name="txn_history_amount_due">المبلغ المستحق</string>
     <string name="txn_history_amount_paid">المبلغ المدفوع</string>
     <string name="txn_history_branch_txt">الفرع</string>
-
 
 
     //inside java side setting values
@@ -678,43 +444,14 @@ customercare@bookeey.com
     //end of java strings
 
     //ends txn history
-
-
-    <string name="ooredoo_transcationfailed_paymentdeclined_header_tv">Transfer Declined</string>
-    <string name="ooredoo_transcationfailed_reasondeclined1_tv">Reason of Decline Reason of Decline Reason of Decline</string>
-    <string name="ooredoo_transcationfailed_reasondeclined3_tv">Reason of Decline</string>
-    <string name="ooredoo_transcationfailed_reasondeclined_information_tv">Sorry you Payment request is declined. Please check the detailes below</string>
-    <string name="ooredoo_transcationfailed_status_tv">Status</string>
-    <string name="ooredoo_transcationfailed_txnamount_tv">Txn Amount</string>
-    <string name="ooredoo_transcationfailed_txtid_tv">Txn ID</string>
-    <string name="ooredoo_transcationfailed_totalamount_tv">Total Amount</string>
-    <string name="ooredoo_transcationfailed_customerid_tv">Customer ID</string>
-    <string name="ooredoo_transcationfailed_help_button">Help</string>
-
-    <string name="title_billpayment">Payment Successful</string>
     <string name="mobilenumber">رقم الجوال</string>
     <string name="status">الحالة</string>
-    <string name="tnxid">Txn ID</string>
-    <string name="paymentamt">Payment Amount</string>
-    <string name="new_wallet_balance">New Wallet Balance</string>
-    <string name="mobileno">Mobile</string>
     <string name="close">اغلق</string>
-    <string name="edit">تعديل</string>
-
-
-    <string name="success">Success</string>
-    <string name="success_line1">Here is the message,that all</string>
-    <string name="success_line2">what you have done is correct.</string>
-    <string name="success_line3">see you soon!!!</string>
-
-
-    <!--send_money_confirm_paymnet-->
     <string name="ooredoo_sendmoney_confirmpayment_confirmpayment_tv">تأكيد الدفع</string>
     <string name="ooredoo_sendmoney_confirmpayment_mobileno_tv">رقم الجوال</string>
     <string name="ooredoo_sendmoney_confirmpayment_status_tv">الحالة</string>
     <string name="ooredoo_sendmoney_confirmpayment_transferamount_tv">مبلغ التحويل</string>
     <string name="ooredoo_sendmoney_confirmpayment_exchangerate_tv">سعر الصرف</string>
-    <string name="ooredoo_sendmoney_confirmpayment_afterwallet_tv">الرصيدبعد المعاملة</string>
     <string name="ooredoo_sendmoney_confirmpayment_processingfee_tv">رسوم المعاملة</string>
     <string name="ooredoo_sendmoney_confirmpayment_wallentbalance_tv">التوازن بعد</string>
     <string name="ooredoo_sendmoney_confirmpayment_totalamount_txt">مبلغ المعاملة</string>
@@ -722,7 +459,6 @@ customercare@bookeey.com
     <string name="ooredoo_sendmoney_confirmpayment_txnid_tv">رمز المعاملة</string>
     <string name="ooredoo_sendmoney_confirmpayment_txntime_tv">وقت المعاملة</string>
     <string name="ooredoo_sendmoney_confirmpayment_confirm_button">تاكيد</string>
-    <string name="ooredoo_sendmoney_confirmpayment_footer_poweredby_tv">Powered by</string>
     <string name="ooredoo_sendmoney_close_btn">أغلق</string>
     <string name="ooredoo_sendmoney_transfer_receipt">إيصال التحويل</string>
     <!--End of send_money_confirm_paymnet-->
@@ -739,9 +475,6 @@ customercare@bookeey.com
     <string name="devchange_title">تغيير الجهاز</string>
     <string name="devchange_mob_no">رقم الجوال</string>
     <string name="devchange_password">كلمه السر</string>
-
-    <string name="devchange_old_device_number_et">Old device number</string>
-    <string name="devchange_old_pin_et">Old PIN</string>
     <string name="devchange_civil_id_et">البطاقة المدنية</string>
     <string name="devchange_submit_btn">تقديم</string>
     //toasts
@@ -750,7 +483,6 @@ customercare@bookeey.com
     <string name="devchange_civilID">الرجاء ادخال الرقم المدني</string>
     <string name="devchange_valid_civilID">الرجاء ادخال رقم مدني صالح</string>
     <string name="devchange_enter_password">الرجاء ادخال الرمز السري</string>
-
     <!--end of devchange and mobile_number-->
 
     //error dialogue mobile change
@@ -765,12 +497,8 @@ customercare@bookeey.com
     <string name="mobchange_password">كلمه السر</string>
     <string name="mobchange_civil_id_et">البطاقة المدنية</string>
     <string name="mobchange_submit_btn">تقديم</string>
-
     <string name="mobchange_old_mobile_number_et">رقم النقال الحالي</string>
     <string name="mobchange_new_mobile_number_et">رقم النقال الجديد</string>
-    <string name="mobchange_old_pin_et">Old PIN</string>
-
-
     //toasts
     <string name="mobchange_old_mobile_number">الرجاء ادخال رقم النقال القديم</string>
     <string name="mobchange_valid_old_mobile_number">الرجاء ادخال رقم نقال صحيح </string>
@@ -796,28 +524,17 @@ customercare@bookeey.com
     <string name="rejected_wallet_edit_btn">تعديل</string>
     <string name="rejected_wallet_close_btn">أغلق</string>
     //Ends rejected page starts
-
-
-    <string name="ooredoo_sendmoney_confirmpayment_receiveramount_tv">Receive Amount</string>
-
-    <string name="buy_amount_tv">Pay build amount</string>
-    <string name="validpin">Please enter valid pin</string>
-
-    <!--Manage Profile details view-->
     <string name="customer_current_balctv">الرصيد الحالي</string>
     <string name="manage_profile_title">إدارة الملف الشخصي</string>
     <string name="mobile">رقم الجوال</string>
     <string name="fname">الاسم الاول</string>
     <string name="lname">اسم العائلة</string>
-    <string name="civil_id">البطاقة المدنية</string>
     <string name="email">عنوان البريد\nالالكتروني</string>
     <string name="profile_btn">أغلق</string>
     <string name="save_btn">تحديث</string>
     <string name="customerid">هوية  العميل</string>
     <string name="wallet_balnce">رصيد المحفظة</string>
     <!--End of Manage Profile details view-->
-
-
     <!--LOAD MONEY-->
     <string name="main_menu_profile_offers_fragment_load_money_str">شحن الاموال</string>
     <string name="jit_insufficient_bal">Insufficient balance in your wallet</string>
@@ -833,11 +550,10 @@ customercare@bookeey.com
     <string name="load_money_cancel_btn">الغاء</string>
     <string name="load_money_proceed_btn">تابع</string>
     <string name="invoice_load_money_btn">شحن الاموال</string>
-
     <!--ENDS LOAD MONEY-->
 
     //P2M starts
-<!--    <string name="p2m_enter_billed_amount">أدخل مبلغ الفاتورة</string>-->
+    <!--    <string name="p2m_enter_billed_amount">أدخل مبلغ الفاتورة</string>-->
     <string name="p2m_enter_billed_amount"> أدخل المبلغ المراد دفعه</string>
     <string name="p2m_amount">المبلغ</string>
     <string name="p2m_password">أدخل كلمة السر</string>
@@ -847,9 +563,7 @@ customercare@bookeey.com
     <string name="p2m_please_enter_amount">الرجاء ادخال المبلغ</string>
     <string name="p2m_sufficient_balance">ليس لديك الرصيد الكافي</string>
     <string name="p2m_password_validate">الرجاء إدخال كلمة المرور للمتابعة</string>
-
     //ends P2M
-
 
     //show QRCode page starts
     <string name="show_qr_code_title">ادفع</string>
@@ -858,14 +572,12 @@ customercare@bookeey.com
     <string name="qr_code_amount_pay">المبلغ المراد دفعه:</string>
     <string name="qr_code_close_btn">أغلق</string>
 
-
     //General errors
     <string name="failure_general_server_error">خطا عام بالخادم</string>
     <string name="failure_network_error">خطأ بالشبكة</string>
     <string name="services_are_down">الخدمة غير متوفرة</string>
     <string name="session_expired">انتهت فترة السريان</string>
     //end of General server error
-
 
     <!--  Terms and conditions -->
     <string name="terms_and_conditions_title">الشروط و الضوابط</string>
@@ -917,7 +629,7 @@ customercare@bookeey.com
 غ. القوانين المطبعة و الاحكام. الشروط تخضع لقوانين دولة الكويت ستكون ذات اختصاص لتسوية اي منازعات تنشأ من الشروط.</string>
 
 
-    Amount:   المبلغ
+    Amount: المبلغ
     <!--loadmoney succees view-->
     <string name="loadmoney_success_title_txt">ايصال التحميل</string>
     <string name="loadmoney_success_paymentID_txt">معرف الدفع</string>
@@ -927,16 +639,11 @@ customercare@bookeey.com
     <string name="loadmoney_success_auth_txt">المصادقة/موثوق به</string>
     <string name="loadmoney_success_track_id_txt">رقم التعقب</string>
     <string name="loadmoney_success_ref_no_txt">رقم المرجع</string>
-    <string name="loadmoney_success_close_btn">close</string>
-
     <!--About US-->
     <string name="about_us_title">من نحن</string>
     <string name="about_us_content1"> شركة زينون لبطاقات الدفع المسبق هو  مزود خدمة المحفظة النقالة، تأسست في عام 2016، للدفع وحلول البيع بالتجزئة.هدفنا هو جعل المال و المدفوعات أسهل بكثير بطريقة آمنة ومريحة.</string>
     <string name="about_us_content2">نحن نصمم و نزود تطبيقات المحفظة النقالة التي تربط الشركات، بغض النظر عن مجالها ،لعملائها في زمان اني .</string>
     <string name="about_us_content3">ونحن نعمل على بناء نظام بيئي كامل حيث يمكن لمستخدمين المحفظة النقالة استخدام هواتفهم الذكية لدفع جميع الفواتير سواء في المحلات أو عبر الإنترنت أو حتى تحويل من محفظة إلى محفظة، مما يجعلها أكثر أمانا وأكثر راحة. </string>
-    <string name="about_us_close">أغلق</string>
-
-
     <!-- Help starts -->
     <!--bookey faq's-->
     <string name="help_title">مساعدة</string>
@@ -973,7 +680,6 @@ customercare@bookeey.com
     <string name="bookey_fa14">لا تقلق !  جميع المعلومات المرسلة بينك وبين بوكيي تتم من خلال قناة مشفرة.  بوكيي لن  تقدم  اي تفاصيل خاصة بك إلى أي شخص او جهه.</string>
     <string name="bookey_fq15">15. مدي سرعة تحويل الرصيد الدولي للخط النقال الدولي؟</string>
     <string name="bookey_fa15">انها مجرد بضع ثوان! لهذا السبب  أنها أسرع وسيلة للحرية النقالة.</string>
-
     <string name="bookey_fq16">16. شحن الرصيد الدولي غير ناجح! اين نقودي؟</string>
     <string name="bookey_fa16">هنا بعض الأسباب المحتملة:
 1- لقد قمت بشحن محفظتك تَوًّا ولكن لم تقدم الطلب بشكل صحيح
@@ -989,7 +695,6 @@ customercare@bookeey.com
     <string name="bookey_fq19">19. لدي اقتراح لكم! كيف يمكنني التواصل معكم؟</string>
     <string name="bookey_fa19">اقتراحاتكم قيمة للغاية، يرجى التواصل معنا عبر:
 customercare@bookeey.com </string>
-
     <string name="bookey_fq20">20. تم الخصم  من رصيد حسابي المصرفي , اين ذهبت اموالي؟</string>
     <string name="bookey_fa20">لا تقلق. يرجى الانتظار لمدة 10 دقائق. إذا لم يتم تحديث رصيد محفظتك بعد 10 دقائق، يرجى الاتصال بالدعم الفني على الرقم 22023232</string>
     <string name="bookey_fq21">21. في حين شحن  بوكيي تلقيت خطأ، لماذا؟</string>
@@ -1018,27 +723,7 @@ customercare@bookeey.com </string>
     <string name="bookey_fa30">يجب عليك استخدام بَيانات الدُخولٍ إلى محفظة بوكيي الخاص بك للوصول إلى حساب بوكيي الخاص بك على البَوّابة إلالكْتْرونيّة . رقم هاتفك المحمول هو اسم المستخدم والرمز السري الخاصة بك هي نفس الرمز السري التي تستخدمها للدخول إلى التطبيق. الرجاء زيارة موقعنا على الانترنت: www.bookeey.com وانقر على دخول العملاء في أعلى الزاوية اليمنى للوصول إلى البوابة الخاصة بك.</string>
     <string name="bookey_fq31">31. هل استطيع الحصول علي عدة محافظ؟</string>
     <string name="bookey_fa31">ليس من الممكن الحصول علي عدة محافظ. أثناء التسجيل ليس من الممكن استخدام نفس الرقم المدني لتسجيل رقم نقال آخر. إذا كنت بحاجة إلى محافظ متعددة لأفراد الأسرة يمكنك تسجيل أرقام هواتفهم النقالة باستخدام بطاقاتهم المدنية الخاصة بهم.</string>
-
-    <string name="faq_close">أغلق</string>
-
     <!--help ends-->
-
-
-    <string-array name="merchnat_main_slider_item">
-        <item>Food &amp; Beverage</item>
-        <item>Fashion</item>
-        <item>Retail</item>
-        <item>Medical care</item>
-        <item>Health &amp; beauty</item>
-        <item>Hotels &amp; accommodations</item>
-        <item>Transportation</item>
-        <item>Groceries &amp; hypermarkets</item>
-        <item>Electronics &amp; Computers</item>
-        <item>Games &amp; Toys</item>
-        <item>Services</item>
-    </string-array>
-
-
     <string name="catogories_food_bevarage">Food &amp; Beverage</string>
     <string name="catogories_fashion">Fashion</string>
     <string name="catogories_retail">Retail</string>
@@ -1051,33 +736,9 @@ customercare@bookeey.com </string>
     <string name="catogories_games_toys">Games &amp; Toys</string>
     <string name="catogories_services">Services</string>
     <string name="facebook_app_id">1830800950491598</string>
-
-
-    //fingerprint
-    <string name="use_password">السري استخدام الرمز</string>
-    <string name="sign_in">تسجيل الدخول</string>
     <string name="ok">موافق</string>
-    <string name="finger_cancel">الغاء</string>
-
-    <string name="password">الرمز السري</string>
-    <string name="fingerprint_description">أكد البصمة للمتابعة</string>
-    <string name="fingerprint_hint">استشعار تعمل باللمس</string>
-    <string name="password_description">ادخل رمزك السري للمتابعة</string>
-    <string name="purchase">شراء</string>
     <string name="fingerprint_not_recognized">البصمة غير معترف بها, حاول مرة اخرى</string>
-    <string name="fingerprint_success">البصمة معترف بها</string>
-    <string name="new_fingerprint_enrolled_description">تمت إضافة بصمة جديدة إلى هذا الجهاز , لذلك مطلوب الرمز السري.</string>
-    <string name="use_fingerprint_in_future">استخدم البصمة في المستقبل</string>
-    <string name="use_fingerprint_to_authenticate_title">استخدم البصمة للتثبيت</string>
-    <string name="use_fingerprint_to_authenticate_key">استخدم البصمة لتثبيت المفتاح</string>
-
-    //Server Error messages
-
-    //View profile error message starts
     <string name="Your_Profile_has_been_updated">تم تحديث بياناتك بنجاح</string>
-    //View profile error message ends
-
-
     //Login error messages starts
     <string name="Please_call_to_customer_care_to_unlock">الرجاء الاتصال علي خدمة العملاء علي الرقم 22200001 لإعادة تفعيل محفظتك</string>
     <string name="Invalid_Password_and_you_have_5_attempts">الرمز السري خاطئ، لديك 5 محاولات  قبل اقفال حسابك!</string>
@@ -1089,7 +750,6 @@ customercare@bookeey.com </string>
 
 
     //P2P error messages starts
-    <string name="P2P_Sender_Insufficient_balance">الرصيد لإرسال الأموال غير كافي</string>
     <string name="Invalid_Password">الرمز السري غير صالح</string>
     <string name="Invalid_tpin">الرقم السري غير صالح</string>
     <string name="Problem_in_processing">واجهنا مشكلة</string>
@@ -1161,11 +821,8 @@ customercare@bookeey.com </string>
     <string name="Problem_in_Saving_the_Data">واجهنا مشكلة في تخزين المعلومات</string>
     <string name="Problem_in_Server_Response">واجهنا مشكلة في الارتباط مع  الحاسوب المركزي</string>
     <string name="Customer_was_Inactive">العميل غير مسجل</string>
-    <string name="Transaction_Details_are_notavailable">لم يتم العثور علي العملية</string>
     <string name="mobile_bill_failed">فشلت</string>
-
     //Mobile bill error messages ends
-
 
     //International recharge error messages starts
     <string name="Data_Entry_Error_Please_Check">خطأ في إدخال البيانات! يرجى التحقق</string>
@@ -1173,87 +830,52 @@ customercare@bookeey.com </string>
     <string name="Service_are_currently_down_Please_try_again">الخدمة غير متاحه مؤقتا - الرجاء المحاولة مجددا</string>
     <string name="Problem_occurs_while_validating_Please_try_again">واجهنا مشكلة في التصديق - الرجاء المحاولة مجددا</string>
     //International recharge error messages ends
-
-
     //Offers error message starts
     <string name="No_offers_available">لا توجد عروض متاحة</string>
     //Offers error message starts
-
-
     //Change PIN starts
     <string name="Received_Password_entered_wrong">تم ادخال الرمز السري خطأ</string>
     //Change PIN ends
-
     <string name="bpoitns">نقاط بوكي</string>
-
     <string name="bpoitns_cashback">استرداد نقدي للنقاط</string>
-
     <string name="social_media_accounts">  مواقع التواصل الاجتماعي</string>
-
     <string name="bpoitns_earned">النقاط المكتسبة</string>
-
-
-
     <string name="bpoints_balance"> رصيد نقاط بوكي</string>
     <string name="cashback_amount">المبلغ المسترد</string>
-
     <string name="bpoints_before_redemption">نقاط بوكي قبل الاسترداد </string>
     <string name="bpoints_after_redemption">نقاط بوكي بعد الاسترداد</string>
-
     <string name="before_balance">الرصيد قبل المعاملة</string>
-
-
     <string name="reset_password_succesfully_done">تم اعادة تعيين كلمة السر بنجاح</string>
     <string name="reset_otp_receive_msg">ستصلك كلمة السر للمرة الواحدة عن طريق رسالة قصيرة علي رقم هاتفك النقال</string>
     <string name="login_newflow_from_splash_change_mobile_no">تغيير رقم الجوال</string>
-
-
-
-
     //New Flow
     <string name="mobile_bill_L1_toast_newflow_name">الرجاء ادخال اسم المرسل</string>
     <string name="mobile_bill_L1_customer_info_header">معلومات العميل</string>
     <string name="mobile_bill_L1_name">اسم المرسل</string>
     <string name="mobile_bill_L1_enter_name">أدخل اسم المرسل</string>
-
     <string name="mobile_bill_L1_email">البريد الالكتروني</string>
     <string name="mobile_bill_L1_enter_email">أدخل البريد الالكتروني</string>
-
     <string name="mobile_bill_L1_paynow_btn">ادفع الان</string>
-
-
     <string name="mobile_bill_L1_sender_mobilenumber">رقم المرسل المحمول</string>
     <string name="mobile_bill_L1_enter_sender_mobile_number">أدخل رقم الجوال المرسل</string>
-
     <string name="knet_gateway">KNET</string>
     <string name="register_newflow">    سجل</string>
-
     <string name="registration_required_newflow">التسجيل مطلوب</string>
     <string name="do_you_want_to_register_newflow">هل ترغب في التسجيل؟</string>
     <string name="no_newflow">لا</string>
     <string name="yes_newflow">نعم</string>
     <string name="already_registered_newflow">مسجل بالفعل, يرجى تسجيل الدخول</string>
     <string name="please_register_to_gain_all_feature">يرجى التسجيل أو تسجيل الدخول للحصول على جميع الميزات</string>
-
     <string name="invalid_service_mobile_no">رقم جوال الخدمة غير صالح</string>
-
-
     <string name="select_card_type">حدد نوع البطاقة</string>
     <string name="select_store_type">حدد نوع المتجر</string>
     <string name="select_card_value">حدد قيمة البطاقة</string>
-    <string name="total_price">السعر الكلي</string>
-
-
     <string name="enter_country_name">أدخل البلد</string>
     <string name="select_denomination">حدد الباقة</string>
     <string name="amount_for_intl_topup">المبلغ</string>
     <string name="select_amount">حدد المبلغ</string>
-    <string name="demo">خذ جولة</string>
     <string name="tour">جولة </string>
-
     <string name="activation_title"> ضبط الرمز السري</string>
-
-
     //Rejected reasons
     <string name="rejected_reason">سبب الرفض</string>
     <string name="invalid_data">بيانات غير صالحة</string>
@@ -1263,14 +885,10 @@ customercare@bookeey.com </string>
     <string name="not_proper_response">استجابة غير مناسبة</string>
     <string name="civil_id_image_not_available">صورة البطاقة المدنية غير متاحة</string>
     <string name="other">أسباب أخرى</string>
-
     <string name="to_use_this_feature">لاستخدام هذه الميزة</string>
     <string name="please_sign_in_or_register">الرجاء الدخول أو التسجيل</string>
     <string name="proceed">تقديم</string>
-
     <string name="invite_friends">دعوة الأصدقاء</string>
-
-    <!-- Static QR -->
     <string name="confirm_to_pay">تأكيد الدفع</string>
     <string name="transaction_id">رقم المعاملة</string>
     <string name="payment_amount">مبلغ الدفع</string>
@@ -1280,13 +898,8 @@ customercare@bookeey.com </string>
     <string name="scan_qr">مسح الرمز</string>
     <string name="generate_qr">انشاء رمز</string>
     <string name="confirm">تأكيد</string>
-
     <string name="scan_qr_help">مسح الرمز الخاص بالتاجر</string>
     <string name="generate_qr_help">التاجر يمسح الرمز الخاص بالعميل</string>
-    <string name="cancel_transaction">إلغاء المعاملة</string>
-
-
-
     <string name="scan_qr_help_content">بحال توفر الرمز عند التاجر، قم بمسح الرمز لدفع المبلغ المستحق</string>
     <string name="generate_qr_help_content">قم بإنشاء الرمز الخاص بالدفع من خلال تطبيقك واطلب من التاجر مسح الرمز باستخدام تطبيق بوكي الخاص بالتجار</string>
     <string name="update_app_dialogue_desc">يبدو أنك تستخدم إصدارًا أقدم من Bookeey. قم بالتحديث الآن للحصول على أداء أفضل وأحدث الميزات.</string>
@@ -1295,7 +908,6 @@ customercare@bookeey.com </string>
     <string name="alert">انذار</string>
     <string name="please_enable_biometric_for_access">الرجاء تمكين البيومترية للوصول</string>
     <string name="enable_biometric">تمكين / تعطيل المقاييس الحيوية</string>
-    <string name="invoice_enter_password_biometric">أدخل كلمة المرور أو المقاييس الحيوية</string>
     <string name="enable_biometric_for_access">هل تريد تمكين البيومترية للوصول؟</string>
     <string name="verify_password">تحقق من كلمة المرور / البيومترية</string>
     <string name="Verify">اكد كلمة المرور</string>
@@ -1306,5 +918,6 @@ customercare@bookeey.com </string>
     <string name="verify_biometric_cred">التحقيق من البصمة الالكترونية</string>
     <string name="verify_with_password">التحقق عن طريق الرمز السري</string>
     <string name="enable_biometric_text">تفعيل البصمة الالكترونية</string>
-
+    <string name="terms_conditions_biometric">By accepting these terms &amp; conditions you are allowed to use biometric features.</string>
+    <string name="faq_close">Close</string>
 </resources>

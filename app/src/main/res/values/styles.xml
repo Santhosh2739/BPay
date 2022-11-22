@@ -2,13 +2,10 @@
     <style name="AppBaseTheme" parent="android:Theme.Holo.Light">
         <!-- API 11 theme customizations can go here. -->
     </style>
-
     <!-- Base application theme. -->
     <style name="AppThemePOld" parent="android:Theme.Holo.Light.DarkActionBar">
         <!-- Customize your theme here. android:Theme.Light.DarkActionBa-->
     </style>
-
-
     <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
         <!-- Customize your theme here. -->
@@ -16,7 +13,6 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
-
     <style name="AppTheme_transparent" parent="@android:style/Theme.Translucent.NoTitleBar">
         <item name="android:windowBackground">@android:color/transparent</item>
         <item name="android:colorBackgroundCacheHint">@null</item>
@@ -34,21 +30,16 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:actionMenuTextColor">@color/white</item>
         <item name="alertDialogTheme">@style/AppCompatAlertDialogStyle</item>
-
     </style>
-
     <style name="AppCompatAlertDialogStyle" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="colorAccent">@color/success_color</item>
         <item name="android:textColorPrimary">@color/black</item>
         <item name="android:background">@color/white</item>
     </style>
-
-
     <style name="MyActionButtonStyle" parent="Widget.AppCompat.ActionBar">
         <item name="android:minWidth">35dip</item>
         <item name="android:padding">0dip</item>
     </style>
-
     <style name="ProgressBarStyle" parent="@android:style/Widget.ProgressBar.Horizontal"/>
     <style name="MyTheme1" parent="android:Theme.Holo.Light">
     </style>
@@ -56,30 +47,20 @@
         <item name="android:background">@color/white</item>
         <item name="android:windowActionBar">true</item>
         <item name="android:windowNoTitle">true</item>
-
-
     </style>
-
-
-
     <!--<style name="MyTheme" parent="android:style/Theme.Holo.Light">
         <item name="android:popupMenuStyle">@style/MyPopupMenu</item>
         <item name="android:panelBackground">@color/red</item>
         <item name="android:actionBarWidgetTheme">@style/MyTheme</item>
     </style>-->
-
     <style name="MyPopupMenu" parent="android:Theme.Holo.Light">
         <item name="android:popupBackground">@color/gold</item>
-
     </style>
-
     <!-- popup-menu-Text -->
-
     <!--<style name="MyTheme" parent="@style/AppBaseTheme">
         <item name="android:textColor">@color/white</item>
         <item name="android:actionMenuTextColor">@color/white</item>
     </style>-->
-
     <style name="UndoBar">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">80dp</item>
@@ -119,8 +100,6 @@
         <item name="android:topBright">@color/transparent</item>
         <item name="android:topDark">@color/transparent</item>
     </style>
-
-
     <style name="CustomAlertDialogStyle">
         <item name="android:bottomBright">@color/gold</item>
         <item name="android:bottomDark">@color/gold</item>
@@ -133,7 +112,6 @@
         <item name="android:topBright">@color/gold</item>
         <item name="android:topDark">@color/gold</item>
     </style>
-
     <style name="UndoBarMessage">
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
@@ -144,7 +122,6 @@
         <item name="android:textAppearance">?android:textAppearanceSmall</item>
         <item name="android:textColor">#000</item>
     </style>
-
     <style name="UndoBarButton">
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">match_parent</item>
@@ -159,7 +136,6 @@
         <item name="android:textColor">#fff</item>
         <item name="android:text">@string/undo</item>
     </style>
-
     <style name="BodyTextTxn">
         <item name="android:textColor">#5f5e5e</item>
         <item name="android:shadowDx">1</item>
@@ -174,7 +150,6 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
     <style name="PopupMenu" parent="android:Widget.Holo.Light.ListPopupWindow">
         <item name="android:background">@color/gold</item>
         <item name="android:textColor">@color/white</item>
@@ -192,7 +167,6 @@
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
     <style name="MyDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
         <item name="android:background">@color/white</item>
     </style>
@@ -206,27 +180,21 @@
         <item name="android:windowNoTitle">true</item>
         <item name="android:backgroundDimEnabled">false</item>
     </style>
-
     <style name="voice_alert_dialog_animation_style">
         <item name="android:windowEnterAnimation">@anim/alert_dialog_anim_from_bottom</item>
         <item name="android:windowExitAnimation">@anim/alert_dialog_anim_from_top</item>
     </style>
-
     <style name="BodyRow">
         <item name="android:background">#00000000</item>
         <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
     </style>
-
-
     <style name="ActionButtonStyle" parent="Widget.AppCompat.ActionButton">
         <item name="android:minWidth">20dip</item>
         <item name="android:maxWidth">24dp</item>
         <item name="android:paddingStart">40dip</item>
         <item name="android:paddingEnd">40dip</item>
     </style>
-
-
     <style name="ActionButtonStyle2" parent="@android:style/Widget.Holo.Light.ActionButton">
         <item name="android:paddingLeft">0dip</item>
         <item name="android:paddingRight">0dip</item>
@@ -234,8 +202,6 @@
         <item name="android:maxWidth">40dp</item>
         <item name="android:width">40dp</item>
     </style>
-
-
     <style name="MyTheme3" parent="ThemeOverlay.AppCompat.Light">
         <item name="colorControlNormal">@android:color/white</item>
         <item name="android:actionButtonStyle">@style/myActionButtonStyle</item>
