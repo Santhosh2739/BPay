@@ -14,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import coreframework.database.CustomSharedPreferences;
 import ycash.wallet.json.pojo.Internationaltopup.TransactionalHistoryForInternationalRecharge;
 
 import com.bookeey.wallet.live.application.CoreApplication;
@@ -131,6 +132,14 @@ public class TransactionHistoryDisplayActivity extends GenericActivity implement
         String json = getIntent().getStringExtra("transaction");
         String typeOfResponse = getIntent().getStringExtra("type");
         TransType type = TransType.valueOf(typeOfResponse);
+        LinearLayout language_table = (LinearLayout) findViewById(R.id.language_table);
+        String selectedLanguage = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.LANGUAGE);
+        if (selectedLanguage.equals("ar")) {
+            language_table.setTextDirection(4);
+        } else {
+            language_table.setTextDirection(3);
+        }
+
         ooredoo_transaction_screen_time_txt = (TextView) findViewById(R.id.ooredoo_transaction_screen_time_txt);
         right0 = (TextView) findViewById(R.id.right0);
         right1 = (TextView) findViewById(R.id.right1);

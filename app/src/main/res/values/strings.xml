@@ -528,7 +528,7 @@ customercare@bookeey.com\nThank you.</string>
     <!--LOAD MONEY-->
     <string name="main_menu_profile_offers_fragment_load_money_str">LOAD MONEY</string>
     <string name="jit_insufficient_bal">Insufficient balance in your wallet</string>
-    <string name="jit_only_one_card_can_be_used_str">\nNote: Only one card can be used with in 7 days</string>
+    <string name="jit_only_one_card_can_be_used_str">Note: Only one card can be used with in 7 days</string>
     <string name="jit_total_amount_str">Total Amount</string>
     <string name="jit_transaction_amount_str">Transaction Amount</string>
     <string name="jit_processing_fee_str">Processing fee</string>
@@ -922,15 +922,15 @@ customercare@bookeey.com\nThank you.</string>
     <string name="tour">Tour</string>
     <string name="transaction_details">Transaction Details</string>
     <!-- MX -->
-    <string name="branch_address">Shuwaikh (Chevrolet),Kuwait</string>
+    <string name="branch_address" translatable="false">Shuwaikh (Chevrolet),Kuwait</string>
     <string name="transaction_amount">Transaction Amount</string>
-    <string name="cust_id">Cust ID</string>
+    <string name="cust_id" translatable="false">Cust ID</string>
     <string name="proceed">Proceed</string>
     <string name="time_l1">Time </string>
     <string name="accept">Accept</string>
     <string name="reject">Reject</string>
     <string name="amount_with_out_star">Amount </string>
-    <string name="cust_mobile_no">Cust Mobile No</string>
+    <string name="cust_mobile_no" translatable="false">Cust Mobile No</string>
     <string name="transaction_id">Transaction ID</string>
     <string name="cancelled_by_merchant">Cancelled by merchant</string>
     <string name="wallet_payment_receipt">Wallet payment receipt  </string>
@@ -956,7 +956,7 @@ customercare@bookeey.com\nThank you.</string>
     <string name="card_name_sample">CARD HOLDER</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="to_use_this_feature">To use this feature,</string>
-    <string name="please_sign_in_or_register">Please Signin or Register</string>
+    <string name="please_sign_in_or_register">Please Sign in or Register</string>
     <string name="invite_friends">Invite Friends</string>
     <!-- Static QR -->
     <string name="confirm_to_pay">Confirm To Pay</string>

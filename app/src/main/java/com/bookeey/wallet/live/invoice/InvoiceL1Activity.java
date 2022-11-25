@@ -138,6 +138,14 @@ public class InvoiceL1Activity extends GenericActivity implements YPCHeadlessCal
         invoice_inv_tpin_linear = (LinearLayout) findViewById(R.id.invoice_inv_tpin_linear);
         invoice_tpin_horizantal_view = (View) findViewById(R.id.invoice_tpin_horizantal_view);
         //invoice discount enhancement
+        LinearLayout language_table = (LinearLayout) findViewById(R.id.language_table);
+        String selectedLanguage = CustomSharedPreferences.getStringData(getApplicationContext(), CustomSharedPreferences.SP_KEY.LANGUAGE);
+        if (selectedLanguage.equals("ar")) {
+            language_table.setTextDirection(4);
+        } else {
+            language_table.setTextDirection(3);
+        }
+
         ooredoo_sendmoney_confirmpayment_offerID_linear = (LinearLayout) findViewById(R.id.ooredoo_sendmoney_confirmpayment_offerID_linear);
         ooredoo_sendmoney_confirmpayment_discount_per_linear = (LinearLayout) findViewById(R.id.ooredoo_sendmoney_confirmpayment_discount_per_linear);
         ooredoo_sendmoney_confirmpayment_discount_amt_linear = (LinearLayout) findViewById(R.id.ooredoo_sendmoney_confirmpayment_discount_amt_linear);

@@ -76,7 +76,8 @@ public class SyncService extends IntentService {
         if (type == -1) {
             //SEND ERROR HERE
             bundle.putString(Intent.EXTRA_TEXT, "INVALID REQUEST TYPE");
-            receiver.send(STATUS_ERROR, bundle);
+            if(receiver != null)
+                receiver.send(STATUS_ERROR, bundle);
             return;
         }
         if (type == TYPE_TRANS_HIST) {

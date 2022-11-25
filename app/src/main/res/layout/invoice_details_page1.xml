@@ -2,6 +2,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
+    android:id="@+id/language_table"
     android:orientation="vertical">
 
     <!--<include
@@ -36,8 +37,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="0.4"
-                android:gravity="left|center"
-                android:paddingLeft="12dp"
+                android:gravity="start|center"
+                android:paddingStart="12dp"
                 android:text="@string/customer_name"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#fff"
@@ -49,8 +50,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_weight="0.6"
-                android:gravity="left|center"
-                android:paddingLeft="12dp"
+                android:gravity="start|center"
+                android:paddingStart="12dp"
                 android:text="@string/customer_number"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#fff" />
@@ -180,11 +181,12 @@
                     android:id="@+id/ooredoo_sendmoney_confirmpayment_mobileno_left0_tv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_weight="0.4"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:gravity="start|center"
                     android:text="@string/invoice_merchant_name"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
 
@@ -205,7 +207,8 @@
                     android:focusableInTouchMode="true"
                     android:focusedByDefault="false"
                     android:gravity="start|center"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/blue"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -229,10 +232,11 @@
                     android:id="@+id/ooredoo_sendmoney_confirmpayment_cust_name_left0_tv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_weight="0.4"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:gravity="start|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/invoice_customer_name"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -253,7 +257,8 @@
                     android:focusableInTouchMode="true"
                     android:focusedByDefault="false"
                     android:gravity="start|center"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/blue"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -278,10 +283,11 @@
                     android:id="@+id/ooredoo_sendmoney_confirmpayment_cust_email_left0_tv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_weight="0.4"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:gravity="start|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/invoice_customer_emailID"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -303,7 +309,8 @@
                     android:focusableInTouchMode="true"
                     android:focusedByDefault="false"
                     android:gravity="start|center"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/blue"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -326,10 +333,11 @@
                     android:id="@+id/ooredoo_sendmoney_confirmpayment_status_left0_tv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_weight="0.4"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:gravity="start|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/invoice_number"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -350,7 +358,8 @@
                     android:focusableInTouchMode="true"
                     android:focusedByDefault="false"
                     android:gravity="start|center"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/blue"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -372,10 +381,11 @@
                     android:id="@+id/ooredoo_sendmoney_confirmpayment_transferamount_left0_tv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_weight="0.4"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:gravity="start|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/invoice_date"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -396,7 +406,8 @@
                     android:focusableInTouchMode="true"
                     android:focusedByDefault="false"
                     android:gravity="start|center"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/blue"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -419,10 +430,11 @@
                     android:id="@+id/ooredoo_sendmoney_confirmpayment_exchangerate_left0_tv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_weight="0.4"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:gravity="start|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/invoice_amount"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -443,7 +455,8 @@
                     android:focusableInTouchMode="true"
                     android:focusedByDefault="false"
                     android:gravity="start|center"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/blue"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -466,10 +479,11 @@
                 <TextView
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_weight="0.4"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:gravity="start|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/invoice_password"
                     android:textColor="@color/red"
                     android:textSize="16sp"
@@ -495,8 +509,8 @@
                     android:hint="@string/invoice_enter_password"
                     android:inputType="textPassword"
                     android:maxLength="10"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="8dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/red"
                     android:textColorHint="@color/red"
                     android:textSize="16sp" />
@@ -523,10 +537,11 @@
                     android:id="@+id/ooredoo_sendmoney_confirmpayment_offerID_left0_tv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_weight="0.4"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:gravity="start|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/invoice_offer_id"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -547,7 +562,8 @@
                     android:focusableInTouchMode="true"
                     android:focusedByDefault="false"
                     android:gravity="start|center"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/blue"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -574,10 +590,11 @@
                     android:id="@+id/ooredoo_sendmoney_confirmpayment_per_left0_tv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_weight="0.4"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:gravity="start|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/invoice_discount_per_amount"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -598,7 +615,8 @@
                     android:focusableInTouchMode="true"
                     android:focusedByDefault="false"
                     android:gravity="start|center"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/blue"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -610,7 +628,6 @@
                 android:background="@color/black"
                 android:visibility="gone"></View>
 
-            //amt
 
             <LinearLayout
                 android:id="@+id/ooredoo_sendmoney_confirmpayment_discount_amt_linear"
@@ -625,10 +642,11 @@
                     android:id="@+id/ooredoo_sendmoney_confirmpayment_discount_amt_left0_tv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_weight="0.4"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:gravity="start|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/invoice_discount_amount"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -649,7 +667,8 @@
                     android:focusableInTouchMode="true"
                     android:focusedByDefault="false"
                     android:gravity="start|center"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/blue"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -660,8 +679,6 @@
                 android:layout_height="0.1dp"
                 android:background="@color/black"
                 android:visibility="gone"></View>
-
-            //total amt
 
             <LinearLayout
                 android:id="@+id/ooredoo_sendmoney_confirmpayment_total_amount_linear"
@@ -676,10 +693,11 @@
                     android:id="@+id/ooredoo_sendmoney_confirmpayment_total_amount_left0_tv"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
+                    android:layout_gravity="start"
                     android:layout_weight="0.4"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:gravity="start|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/invoice_total_amount"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -700,7 +718,8 @@
                     android:focusableInTouchMode="true"
                     android:focusedByDefault="false"
                     android:gravity="start|center"
-                    android:paddingLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:textColor="@color/blue"
                     android:textSize="16sp" />
             </LinearLayout>
@@ -720,14 +739,15 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:orientation="vertical"
-                android:visibility="invisible">
+                android:visibility="gone">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_gravity="left"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:layout_gravity="start"
+                    android:gravity="start|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:text="@string/invoice_description"
                     android:textColor="@color/black"
                     android:textSize="16sp" />
@@ -747,7 +767,7 @@
                     android:lines="5"
                     android:maxLines="5"
                     android:minLines="1"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:paddingTop="7dp"
                     android:paddingBottom="7dp"
                     android:textColor="@color/dark_gray"
@@ -776,13 +796,14 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:orientation="horizontal"
-        android:visibility="invisible">
+        android:visibility="visible">
 
         <Button
             android:id="@+id/invoice_reject_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginRight="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_weight="0.2"
             android:background="@drawable/registration_btn_submit_bg"
             android:text="@string/reject"
@@ -810,7 +831,8 @@
             android:id="@+id/invoice_paynow_btn"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginLeft="10dp"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
             android:layout_weight="0.2"
             android:background="@drawable/registration_btn_submit_bg"
             android:text="@string/invoice_pay_btn"

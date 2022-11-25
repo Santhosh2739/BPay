@@ -54,7 +54,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/current_password_change_pin_screen"
                 android:textColor="#000" />
 
@@ -70,10 +70,10 @@
                 android:id="@+id/changepin_enter_pin_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:gravity="left"
+                android:gravity="start"
                 android:maxLength="10"
                 android:textColor="@color/blue"
                 android:inputType="textPassword"/>
@@ -128,7 +128,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/activation_new_str"
                 android:textColor="#000" />
 
@@ -142,12 +142,12 @@
                 android:id="@+id/changepin_createpwd_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:maxLength="10"
                 android:background="@null"
                 android:textColor="@color/blue"
-                android:gravity="left"
+                android:gravity="start"
                 android:inputType="textPassword" />
         </LinearLayout>
 
@@ -173,7 +173,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:gravity="left"
+                android:gravity="start"
                 android:text="@string/activation_confirm_new_str"
                 android:textColor="#000" />
 
@@ -187,10 +187,10 @@
                 android:id="@+id/changepin_confirm_new_edit"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginStart="5dp"
                 android:layout_weight="1"
                 android:background="@null"
-                android:gravity="left"
+                android:gravity="start"
                 android:textColor="@color/blue"
                 android:maxLength="10"
                 android:inputType="textPassword"/>
@@ -239,11 +239,11 @@
             android:id="@+id/changepin_show_password_checkbox"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="left"
+            android:layout_gravity="start"
             android:layout_weight="0.7"
             android:button="@drawable/custom_radio_button_selector"
-            android:paddingLeft="10dp"
-            android:gravity="left|center"
+            android:paddingStart="10dp"
+            android:gravity="start|center"
             android:text="@string/activation_checkbox"
             android:textColor="@color/blue" />
     </LinearLayout>

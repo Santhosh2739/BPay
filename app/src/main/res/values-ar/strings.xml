@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="spinner_initiation">Select Denomination</string>
+    <string name="spinner_initiation">حدد الفئة</string>
     <string name="title_activity_change_pin">ChangePinActivity</string>
-    <string name="activation_toast_help_text">You have clicked help</string>
+    <string name="activation_toast_help_text">لقد قمت بالضغط على مساعدة</string>
     <string name="activation_toast_newconfirmpin_msg">أدخل تأكيد كلمة السر</string>
     <string name="app_name">BookeeyPay</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_settings">اعدادات</string>
     <drawable name="white">#ffffff</drawable>
-    <string name="customer_name">Name</string>
+    <string name="customer_name">اسم</string>
     <string name="customer_number">663693338</string>
-    <string name="customer_current_balc_amt">KWD 500.000</string>
+    <string name="customer_current_balc_amt">المبلغ</string>
     <string name="mob_validation_welcome">مرحبا بك في</string>
-    <string name="mob_validation_langauge_type">Language Type</string>
+    <string name="mob_validation_langauge_type">نوع اللغة</string>
     <string name="mob_validation_english">English</string>
     <string name="mob_validation_arabic">العربية</string>
     <string name="mob_validation_valid_mobile_number">أدخل رقم الجوال</string>
@@ -35,13 +35,13 @@
     <string name="update">تحديث</string>
     <string name="check_close">أغلق</string>
     <string name="check_update_dialogue_title">تحديث البلاي استور</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="undo">Hide</string>
+    <string name="navigation_drawer_open">افتح درج التنقل</string>
+    <string name="navigation_drawer_close">أغلق درج التنقل</string>
+    <string name="undo">إخفاء</string>
     <string name="pay">ادفع</string>
-    <string name="activation_checkmark_tick">PIN Code has been successfully created</string>
-    <string name="local_radio">Local</string>
-    <string name="international_radio">International</string>
+    <string name="activation_checkmark_tick">تم انشاء الرمز السري بنجاح</string>
+    <string name="local_radio">محلي</string>
+    <string name="international_radio">الشحن الدولي</string>
 
     //Registration success
     <string name="registration_success_title">التسجيل</string>
@@ -67,12 +67,12 @@ customercare@bookeey.com
     <string name="send_money_amount_between_to">إلى</string>
     //end of sendmoney
 
-    <string name="amount">Amount(KD)</string>
-    <string name="ooredoo_splash_screen_english_language_text">Register</string>
+    <string name="amount">المبلغ</string>
+    <string name="ooredoo_splash_screen_english_language_text">تسجيل</string>
     <string name="ooredoo_splash_screen_copyright_text">Copyright 2015 XenonPay</string>
     <string name="result_text"/>
     <string name="register_arabic">تسجيل</string>
-    <string name="ooredoo_splash_screen_taketour_text">take a tour</string>
+    <string name="ooredoo_splash_screen_taketour_text">خذ جولة</string>
     //registration starts
 
     //choose image or take image
@@ -90,12 +90,12 @@ customercare@bookeey.com
     <string name="registration_mobile">رقم الجوال</string>
     <string name="registration_capture_front_text_str">الأمام</string>
     <string name="registration_capture_back_text_str">الخلف</string>
-    <string name="registration_checkmark_tick">Civil ID.JPEG Attached</string>
+    <string name="registration_checkmark_tick">"البطاقة المدنية مرفق JPEG "</string>
     <string name="registration_checkbox">أوافق على الشروط و الأحكام</string>
     <string name="btn_submit">تقديم</string>
     <string name="registration_help">مساعدة</string>
     <string name="view_t_c_str">مشاهدة الشروط و الأحكام</string>
-    <string name="help">Help</string>
+    <string name="help">مساعدة</string>
     <string name="registration_tag">*الرجاء ادخال المعلومات باللغة الانجليزية .</string>
     <string name="registration_alert">يرجى العلم أن صورة البطاقة المدنية أمر إلزامي كجزء من إجراء \"تعرف على عميلك\".</string>
     <string name="registration_alert_ok">موافق</string>
@@ -109,7 +109,7 @@ customercare@bookeey.com
     <string name="Please_enter_civil_id">الرجاء ادخال الرقم المدني</string>
     <string name="Please_enter_confirm_email_id">الرجاء التاكيد علي عنوان البريد الالكتروني </string>
     <string name="maild_should_be_same">يجب المطابقة ما بين البريد الالكتروني و تاكيد البريد الالكتروني </string>
-    <string name="Please_enter_valid_civil_id">Please enter valid civil id</string>
+    <string name="Please_enter_valid_civil_id">الرجاء ادخال بطاقة مدنية صالحة</string>
     <string name="civilform_capturing_msg">الرجاء التقا ط صورة البطاقة المدنية</string>
     <string name="civilform_back_capturing_msg">الرجاء التقا ط صورة من الجهة الاخري للبطاقة المدنية</string>
     <string name="terms_conditions_msg">الرجاء الموافقة علي الشروط و الضوابط</string>
@@ -236,8 +236,8 @@ customercare@bookeey.com
     <string name="mobile_bill_L1_toast_valid_mobile__number">الرجاء ادخال رقم نقال صالح</string>
     <string name="mobile_bill_L1_toast_amount">الرجاء ادخال المبلغ</string>
     <string name="mobile_bill_L1_toast_select_amount">الرجاء اختيار المبلغ</string>
-    <string name="mobile_bill_L1_toast_between">Please enter amount between</string>
-    <string name="mobile_bill_L1_toast_to">to</string>
+    <string name="mobile_bill_L1_toast_between">الرجاء إدخال المبلغ بين</string>
+    <string name="mobile_bill_L1_toast_to">الى</string>
     <string name="mobile_bill_L1_toast_password">الرجاء ادخال رمز سري </string>
 
 
@@ -537,13 +537,13 @@ customercare@bookeey.com
     <!--End of Manage Profile details view-->
     <!--LOAD MONEY-->
     <string name="main_menu_profile_offers_fragment_load_money_str">شحن الاموال</string>
-    <string name="jit_insufficient_bal">Insufficient balance in your wallet</string>
-    <string name="jit_only_one_card_can_be_used_str">\nNote: Only one card can be used with in 7 days</string>
-    <string name="jit_total_amount_str">Total Amount</string>
-    <string name="jit_transaction_amount_str">Transaction Amount</string>
-    <string name="jit_processing_fee_str">Processing fee</string>
+    <string name="jit_insufficient_bal">رصيد غير كافي</string>
+    <string name="jit_only_one_card_can_be_used_str">ملاحظة: يمكن استخدام بطاقة واحدة فقط في 7 أيام</string>
+    <string name="jit_total_amount_str">المبلغ الكلي</string>
+    <string name="jit_transaction_amount_str">مبلغ العملية</string>
+    <string name="jit_processing_fee_str">كلفة المعالجة</string>
     <string name="load_money_your_wallet_balance_str">رصيد المحفظتك</string>
-    <string name="jit_amount_to_be_loaded_str">Amount to be loaded</string>
+    <string name="jit_amount_to_be_loaded_str">المبلغ المراد تعبئته</string>
     <string name="load_money_you_can_load_upto_str">يمكنك شحن ما يصل الى</string>
     <string name="load_money_yoc_can_load_minimum_str">الحد الادنى للشحن</string>
     <string name="load_money_enter_amount_to_load_hint_str">المبلغ</string>
@@ -724,17 +724,17 @@ customercare@bookeey.com </string>
     <string name="bookey_fq31">31. هل استطيع الحصول علي عدة محافظ؟</string>
     <string name="bookey_fa31">ليس من الممكن الحصول علي عدة محافظ. أثناء التسجيل ليس من الممكن استخدام نفس الرقم المدني لتسجيل رقم نقال آخر. إذا كنت بحاجة إلى محافظ متعددة لأفراد الأسرة يمكنك تسجيل أرقام هواتفهم النقالة باستخدام بطاقاتهم المدنية الخاصة بهم.</string>
     <!--help ends-->
-    <string name="catogories_food_bevarage">Food &amp; Beverage</string>
-    <string name="catogories_fashion">Fashion</string>
-    <string name="catogories_retail">Retail</string>
-    <string name="catogories_medicalcare">Medical care</string>
-    <string name="catogories_health_beauty">Health &amp; beauty</string>
-    <string name="catogories_hotels_accomidations">Hotels &amp; accommodations</string>
-    <string name="catogories_transportation">Transportation</string>
-    <string name="catogories_groceries_hypermarkets">Groceries &amp; hypermarkets</string>
-    <string name="catogories_electronics_computers">Electronics &amp; Computers</string>
-    <string name="catogories_games_toys">Games &amp; Toys</string>
-    <string name="catogories_services">Services</string>
+    <string name="catogories_food_bevarage">الأكل والشرب</string>
+    <string name="catogories_fashion">الأزياء والموضة</string>
+    <string name="catogories_retail">بيع التجزئة</string>
+    <string name="catogories_medicalcare">الرعاية الصحية</string>
+    <string name="catogories_health_beauty">الصحة والجمال</string>
+    <string name="catogories_hotels_accomidations">الفنادق</string>
+    <string name="catogories_transportation">مواصلات</string>
+    <string name="catogories_groceries_hypermarkets">سوبر ماركت</string>
+    <string name="catogories_electronics_computers">إلكترونيات وأجهزة كمبيوتر</string>
+    <string name="catogories_games_toys">الألعاب</string>
+    <string name="catogories_services">خدمات</string>
     <string name="facebook_app_id">1830800950491598</string>
     <string name="ok">موافق</string>
     <string name="fingerprint_not_recognized">البصمة غير معترف بها, حاول مرة اخرى</string>
@@ -918,6 +918,22 @@ customercare@bookeey.com </string>
     <string name="verify_biometric_cred">التحقيق من البصمة الالكترونية</string>
     <string name="verify_with_password">التحقق عن طريق الرمز السري</string>
     <string name="enable_biometric_text">تفعيل البصمة الالكترونية</string>
-    <string name="terms_conditions_biometric">By accepting these terms &amp; conditions you are allowed to use biometric features.</string>
-    <string name="faq_close">Close</string>
+    <string name="terms_conditions_biometric">بقبولك هذه الشروط والأحكام ، يُسمح لك باستخدام الميزات البيومترية.</string>
+    <string name="faq_close">اغلق</string>
+    <string name="accept">موافق</string>
+    <string name="amount_with_out_star">المبلغ</string>
+    <string name="cancelled_by_merchant">الغاء من قبل التاجر</string>
+    <string name="card_name_sample">حامل البطاقة</string>
+    <string name="date">التاريخ</string>
+    <string name="no_cards_available_choose_another">لا توجد بطاقات متاحة / الرجاء اختيار بطاقة أخرى</string>
+    <string name="powered_by">مشغل بواسطة</string>
+    <string name="reject">رفض</string>
+    <string name="thank_you_for_using_bookeey_wallet">شكرا لاستخدامك بوكي</string>
+    <string name="time_l1">وقت</string>
+    <string name="total_amount">المبلغ الكلي</string>
+    <string name="total_paymnet">المبلغ الإجمالي</string>
+    <string name="transaction_amount">مبلغ العملية</string>
+    <string name="transaction_details" translatable="false">تفاصيل العملية</string>
+    <string name="transaction_success">العملية ناجحة</string>
+    <string name="wallet_payment_receipt">إيصال دفع المحفظة</string>
 </resources>

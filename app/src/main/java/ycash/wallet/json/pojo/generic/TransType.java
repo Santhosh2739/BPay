@@ -8,13 +8,14 @@ public enum TransType {
     LOADMONEY_CHECK_REQUEST("https://demo.bookeey.com/portal/rechargelimits"),
     NEW_ADDRESS_BASE("https://demo.bookeey.com/"),
 
-
     //    PRODUCTION URLS July 12 2020
-    /*ADDRESS_BASE("https://api.bookeey.com/mno/"),
+/*
+    ADDRESS_BASE("https://api.bookeey.com/mno/"),
     LOADMONEY_REQUEST("https://www.bookeey.com/portal/proceed"),
     LOADMONEY_CHECK_REQUEST("https://www.bookeey.com/portal/rechargelimits"),
     NEW_ADDRESS_BASE("https://www.bookeey.com/"),
 */
+
 
     //--------------------------------------------Merchant URLS START--------------------------------------------------
     MX_ADDRESS_BASE("http://demo.bookeey.com/mno/ooredooServerRequest"),

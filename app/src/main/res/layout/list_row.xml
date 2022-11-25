@@ -3,12 +3,12 @@
     android:layout_width="match_parent"
     android:layout_height="75dp"
     android:orientation="horizontal"
-    android:weightSum="5">
+    android:weightSum="10">
 
     <LinearLayout
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_weight="6"
+        android:layout_weight="10"
         android:orientation="horizontal">
 
         <ImageView
@@ -16,13 +16,13 @@
             android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_gravity="center"
-            android:layout_weight="0.6"
+            android:layout_weight="1"
             android:src="@drawable/mer_exc" />
 
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="4.5"
+            android:layout_weight="8"
             android:orientation="vertical">
 
             <LinearLayout
@@ -57,6 +57,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="3"
+                        android:layout_marginEnd="10dp"
                         android:orientation="vertical">
 
 
@@ -65,7 +66,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:gravity="left"
+                            android:gravity="start"
                             android:text="PLAYSTATIONPLUS KUWAIT"
                             android:textColor="#000000" />
 
@@ -74,14 +75,14 @@
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
                             android:layout_weight="1"
-                            android:gravity="left"
+                            android:gravity="start"
                             android:textColor="#000000" />
 
                         <TextView
                             android:id="@+id/transaction_value"
                             android:layout_width="match_parent"
                             android:layout_height="0dp"
-                            android:gravity="left"
+                            android:gravity="start"
                             android:layout_weight="1" />
                     </LinearLayout>
                 </LinearLayout>
@@ -94,8 +95,8 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_gravity="left"
-            android:layout_weight="0.5"
-            android:gravity="right"
+            android:layout_weight="1"
+            android:gravity="start"
             android:src="@drawable/list_arrow" />
     </LinearLayout>
 

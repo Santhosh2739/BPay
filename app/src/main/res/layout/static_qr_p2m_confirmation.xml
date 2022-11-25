@@ -88,7 +88,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:gravity="start|center"
                     android:layout_weight="0.38"
                     android:paddingLeft="0dp"
                     android:text="@string/txn_mercahnt_name"
@@ -119,6 +119,12 @@
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:orientation="horizontal" />
+
             </LinearLayout>
 
             <View
@@ -151,7 +157,7 @@
                     android:layout_weight="0.38"
                     android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:gravity="start|center"
                     android:text="@string/transaction_id"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -179,6 +185,12 @@
                     android:layout_gravity="center"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:orientation="horizontal" />
+
             </LinearLayout>
 
 
@@ -223,7 +235,7 @@
                     android:layout_weight="0.38"
                     android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_branch_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -251,11 +263,15 @@
                     android:layout_gravity="center"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:orientation="horizontal" />
+
             </LinearLayout>
 
 
-
-            //Offer
 
             <View
                 android:id="@+id/horizontal_offer_des"
@@ -292,7 +308,7 @@
                     android:layout_weight="0.38"
                     android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:gravity="start|center"
                     android:text="Offer"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -320,6 +336,12 @@
                     android:layout_gravity="center"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:orientation="horizontal" />
+
             </LinearLayout>
 
 
@@ -355,7 +377,7 @@
                     android:layout_weight="0.38"
                     android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_amount_due"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -383,6 +405,12 @@
                     android:layout_gravity="center"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:orientation="horizontal" />
+
             </LinearLayout>
 
 
@@ -426,7 +454,7 @@
                     android:layout_weight="0.38"
                     android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:gravity="start|center"
                     android:text="@string/invoice_discount_amount"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -454,11 +482,14 @@
                     android:layout_gravity="center"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:orientation="horizontal" />
+
             </LinearLayout>
 
-
-
-            //Amount paid
 
             <View
                 android:id="@+id/horizontal_discount_amnt_paid_line"
@@ -492,7 +523,7 @@
                     android:layout_weight="0.38"
                     android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:gravity="start|center"
                     android:text="@string/txn_amount"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -520,6 +551,12 @@
                     android:layout_gravity="center"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:orientation="horizontal" />
+
             </LinearLayout>
 
 
@@ -558,7 +595,7 @@
                     android:layout_weight="0.38"
                     android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:gravity="start|center"
                     android:text="After Balance."
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -622,7 +659,7 @@
                     android:layout_weight="0.38"
                     android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:gravity="start|center"
                     android:text="@string/status"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -650,6 +687,12 @@
                     android:layout_gravity="center"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:orientation="horizontal" />
+
             </LinearLayout>
 
 
@@ -688,7 +731,7 @@
                     android:layout_weight="0.38"
                     android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:gravity="start|center"
                     android:text="@string/transaction_time"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -716,6 +759,12 @@
                     android:layout_gravity="center"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.05"
+                    android:orientation="horizontal" />
+
             </LinearLayout>
 
 

@@ -68,23 +68,20 @@
             android:id="@+id/mainmenu_newflow_cancel"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_weight="0.5"
             android:background="@drawable/button_border_new_flow_alert"
             android:text="@string/login_title"
             android:textAllCaps="true"
             android:textColor="@color/blue" />
 
-        <View
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1" />
-
         <Button
             android:id="@+id/mainmenu_newflow_register"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginRight="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginEnd="30dp"
             android:layout_weight="0.5"
             android:background="@drawable/button_border_new_flow_alert"
             android:text="@string/register_newflow"

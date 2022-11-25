@@ -27,7 +27,7 @@
         <LinearLayout
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="left|center"
+            android:layout_gravity="center"
             android:layout_weight="0.7"
             android:orientation="horizontal"
             android:paddingLeft="14dp">
@@ -36,7 +36,7 @@
                 android:id="@+id/goto_tour_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="left"
+                android:layout_marginStart="50dp"
                 android:drawableTop="@drawable/go_tour_img"
                 android:text="@string/login_tour"
                 android:textAllCaps="true"
@@ -49,9 +49,9 @@
             android:id="@+id/language_layout"
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_gravity="right"
+            android:layout_gravity="center"
             android:layout_weight="0.7"
-            android:gravity="top|right|center"
+            android:gravity="center"
             android:orientation="horizontal">
 
             <TextView

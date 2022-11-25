@@ -51,9 +51,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
-                android:text="Status"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
+                android:text="@string/status"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
 
@@ -69,8 +69,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </TableRow>
@@ -84,8 +85,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
                 android:text="@string/loadmoney_success_paymentID_txt"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -102,8 +103,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </TableRow>
@@ -125,8 +127,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
                 android:text="@string/loadmoney_success_post_date_txt"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -143,8 +145,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </TableRow>
@@ -166,8 +169,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
                 android:text="@string/loadmoney_success_result_code_txt"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -184,8 +187,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </TableRow>
@@ -207,8 +211,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
                 android:text="@string/loadmoney_success_transaction_id_txt"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -225,8 +229,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </TableRow>
@@ -249,8 +254,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
                 android:text="@string/loadmoney_success_auth_txt"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -267,8 +272,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </TableRow>
@@ -290,8 +296,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
                 android:text="@string/loadmoney_success_track_id_txt"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -308,8 +314,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </TableRow>
@@ -331,8 +338,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="5dp"
                 android:text="@string/loadmoney_success_ref_no_txt"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
@@ -349,8 +356,9 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
-                android:gravity="left|center"
-                android:paddingLeft="5dp"
+                android:gravity="start|center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
                 android:textColor="@color/black"
                 android:textSize="18sp" />
         </TableRow>

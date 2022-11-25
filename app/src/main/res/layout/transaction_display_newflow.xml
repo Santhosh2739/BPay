@@ -55,7 +55,6 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-
                 <TextView
                     android:id="@+id/ooredoo_transaction_screen_time_txt"
                     android:layout_width="match_parent"
@@ -65,37 +64,35 @@
                     android:gravity="center"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
             </LinearLayout>
 
             <LinearLayout
                 android:id="@+id/receiptername_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginTop="20dp"
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
                 android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
-
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/left6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.38"
-                    android:paddingLeft="0dp"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_receiptentName_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/vertical6"
@@ -108,13 +105,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/right6"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -134,6 +132,7 @@
                 android:id="@+id/number_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -141,21 +140,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
-
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/left0"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
-                    android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_mobilenumber_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/vertical0"
@@ -168,26 +166,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/right0"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
-                    android:layout_gravity="center"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
             <!-- <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="0.1" > -->
-
-
             <View
                 android:id="@+id/horizontal0"
                 android:layout_width="match_parent"
@@ -196,14 +191,12 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@color/black" />
-
             <!--  </LinearLayout> -->
-
-
             <LinearLayout
                 android:id="@+id/txntype_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:visibility="gone">
@@ -212,16 +205,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/txntype_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
-                    android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_tranasaction_type_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -237,13 +231,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/txntype_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -259,12 +254,12 @@
                 android:layout_marginRight="20dp"
                 android:background="@color/black"
                 android:visibility="gone" />
-
             <!--for branch newly added-->
             <LinearLayout
                 android:id="@+id/branch_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal"
                 android:visibility="gone">
@@ -273,16 +268,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/branch_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
-                    android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_branch_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -298,23 +294,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/branch_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
-
-
-
 
             <View
                 android:id="@+id/ecom_mer_name_hor_view"
@@ -325,37 +317,35 @@
                 android:layout_marginRight="20dp"
                 android:background="@color/black"
                 android:visibility="gone" />
-
             <!--end for branch newly added-->
-
-
             <LinearLayout
                 android:id="@+id/ecom_mer_name_linearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginTop="10dp"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:layout_marginEnd="20dp"
+                android:layout_weight="1"
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/ecom_mer_name_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_mercahnt_name"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/ecom_mer_name_vertical1"
@@ -368,20 +358,18 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/ecom_mer_name_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/blue"
-
-                    />
-
+                    android:textColor="@color/blue" />
             </LinearLayout>
 
             <View
@@ -390,18 +378,15 @@
                 android:layout_height="0.1dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:visibility="gone"
                 android:layout_marginRight="20dp"
                 android:background="@color/black"
-                />
-
+                android:visibility="gone" />
             <!--end for branch newly added-->
-
-
             <LinearLayout
                 android:id="@+id/status_linearlayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -409,20 +394,20 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/left1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_status_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/vertical1"
@@ -435,29 +420,24 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/right1"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
-                    android:textColor="@color/blue"
-
-                    />
-
+                    android:textColor="@color/blue" />
             </LinearLayout>
-
             <!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.1" > -->
-
-
             <View
                 android:id="@+id/horizontal1"
                 android:layout_width="match_parent"
@@ -466,17 +446,13 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@color/black" />
-
             <!--    </LinearLayout> -->
-
-
             <!--  </LinearLayout> -->
-
-
             <LinearLayout
                 android:id="@+id/paymentamount_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -484,16 +460,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/left3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.38"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_payment_amount_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -509,26 +486,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/right3"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
             <!--   <LinearLayout
                   android:layout_width="match_parent"
                   android:layout_height="0dp"
                   android:layout_weight="0.1" > -->
-
-
             <View
                 android:id="@+id/horizontal3"
                 android:layout_width="match_parent"
@@ -537,14 +511,12 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@color/black" />
-
             <!--    </LinearLayout> -->
-
-
             <LinearLayout
                 android:id="@+id/processingfee_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -552,16 +524,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/left4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.38"
-                    android:paddingLeft="0dp"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_processingfee_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -577,22 +550,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/right4"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
-
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
-
 
             <View
                 android:id="@+id/ecom_bpoints_view"
@@ -601,34 +571,33 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="gone"
-                android:background="@color/black" />
-
+                android:background="@color/black"
+                android:visibility="gone" />
             <!--    </LinearLayout> -->
-
-
             <LinearLayout
                 android:id="@+id/ecom_bpoints_linear"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/ecom_bpoints_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.38"
-                    android:paddingLeft="0dp"
+                    android:gravity="start|center"
                     android:text="@string/bpoitns_earned"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -644,21 +613,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/ecom_bpoints_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
-
 
             <View
                 android:id="@+id/ecom_bpoints_balance_view"
@@ -667,34 +634,33 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="gone"
-                android:background="@color/black" />
-
+                android:background="@color/black"
+                android:visibility="gone" />
             <!--    </LinearLayout> -->
-
-
             <LinearLayout
                 android:id="@+id/ecom_bpoints_balance_linear"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/ecom_bpoints_balance_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.38"
-                    android:paddingLeft="0dp"
+                    android:gravity="start|center"
                     android:text="@string/bpoints_balance"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -710,33 +676,25 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/ecom_bpoints_balance_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
-
-
-
-
-
             <!--
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="0.1" >
              -->
-
-
             <View
                 android:id="@+id/horizontal4"
                 android:layout_width="match_parent"
@@ -745,13 +703,12 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@color/black" />
-
             <!--   </LinearLayout> -->
-
             <LinearLayout
                 android:id="@+id/total_amount_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -759,17 +716,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/left5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
-                    android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_amount_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -785,58 +742,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/right5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
             <!--   <LinearLayout
                   android:layout_width="match_parent"
                   android:layout_height="0dp"
                   android:layout_weight="0.1" > -->
-
-
             <View
                 android:id="@+id/horizontal5"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:layout_gravity="center"
-                android:visibility="gone"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/walletbalance_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/wallet_balance_left5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
-                    android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_after_balance_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -852,63 +808,60 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/wallet_balance_right5"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
             <!--   <LinearLayout
                   android:layout_width="match_parent"
                   android:layout_height="0dp"
                   android:layout_weight="0.1" > -->
-
-
             <View
                 android:id="@+id/bpoints_horizontal5"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
-                android:visibility="gone"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/bpoints_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
-
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/bpoints_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/bpoitns_earned"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/bpoints"
@@ -921,59 +874,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/bpoints_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
 
-
-
-
             <View
                 android:id="@+id/bpoints_balance_horizontal6"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
-                android:visibility="gone"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/bpoints_balance_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
-
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/bpoints_balance_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/bpoints_balance"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/bpoints_balance"
@@ -986,59 +937,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/bpoints_balance_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
 
-
-
             <View
                 android:id="@+id/bpoints_horizontal6"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
-                android:visibility="gone"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/bpoints_linear6"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
-
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/bpoints_total_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
-
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/bpoints_balance"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/bpoints_total"
@@ -1051,59 +1000,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/bpoints_total_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
 
-
-
             <View
                 android:id="@+id/tv_after_cashback_points_before_view"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
-                android:visibility="gone"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/black" />
-
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/tv_after_cashback_points_before_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
-
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/tv_before_cashback_points_left_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/bpoints_before_redemption"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/tv_cashback_points_before_view"
@@ -1116,58 +1063,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/tv_cashback_points_before_redemption"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
 
-
             <View
                 android:id="@+id/tv_after_cashback_points_after_view"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
-                android:visibility="gone"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/black" />
-
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <LinearLayout
-                android:visibility="gone"
                 android:id="@+id/tv_after_cashback_points_after_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
-
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/tv_after_cashback_points_left_tv"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/bpoints_after_redemption"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/tv_cashback_points_view"
@@ -1180,25 +1126,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/tv_after_cashback_points_redemption"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
-
-
-
-
-
 
             <View
                 android:id="@+id/wallet_balance_horizontal5"
@@ -1213,29 +1153,29 @@
                 android:id="@+id/customer_id_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
-
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/left7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_customerid_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/vertical7"
@@ -1248,20 +1188,19 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/right7"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
 
             <View
                 android:id="@+id/bpoints_balance_horizontal5"
@@ -1269,37 +1208,37 @@
                 android:layout_height="0.1dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
-                android:visibility="gone"
                 android:layout_marginRight="20dp"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/bpoints_balance_linear_dom_recharge_linear"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
-
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/domestic_recharge_bpoints_balance_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/bpoints_balance"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/domestic_recharge_bpoints_balance_view"
@@ -1312,59 +1251,57 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/domestic_recharge_bpoints_balance_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
 
-
-
-
             <View
                 android:id="@+id/prepaid_cards_bpoints_balance_view"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="0.1dp"
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/prepaid_cards_bpoints_balance_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:visibility="gone"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
-
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/prepaid_cards_bpoints_balance_left"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/bpoints_balance"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
-
 
                 <View
                     android:id="@+id/prepaid_cards_bpoints_balance_view7"
@@ -1377,13 +1314,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/prepaid_cards_bpoints_balance_right"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -1403,6 +1341,7 @@
                 android:id="@+id/transactionid_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -1410,16 +1349,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/left2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_txn_id_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -1435,52 +1375,54 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/right2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
 
-
             <View
                 android:id="@+id/horizontal_invoice_bpoints_view"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:layout_gravity="center"
-                android:visibility="gone"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/bpoints_linear_invoice"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/invoice_bpoints_left2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/bpoitns_earned"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -1496,54 +1438,54 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/invoice_bpoints_right2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
 
-
-
-
             <View
                 android:id="@+id/horizontal_invoice_bpoints_balance_view"
                 android:layout_width="match_parent"
                 android:layout_height="0.1dp"
                 android:layout_gravity="center"
-                android:visibility="gone"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/bpoints_balance_linear_invoice"
                 android:layout_width="match_parent"
-                android:visibility="gone"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/invoice_bpoints_balance_left2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/bpoints_balance"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -1559,13 +1501,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/invoice_bpoints_balance_right2"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
@@ -1579,31 +1522,33 @@
                 android:layout_gravity="center"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:visibility="gone"
-                android:background="@color/black" />
+                android:background="@color/black"
+                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/extra_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
-                android:visibility="gone"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:visibility="gone">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/left11"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
-                    android:paddingLeft="0dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_status_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -1619,26 +1564,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/right11"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
             <!--  <LinearLayout
                  android:layout_width="match_parent"
                  android:layout_height="0dp"
                  android:layout_weight="0.1" > -->
-
-
             <!-- <LinearLayout
                  android:layout_width="match_parent"
                  android:layout_height="0dp"
@@ -1680,6 +1622,7 @@
                      android:layout_gravity="center"
                      android:textColor="@color/black"
                      android:background="@null"
+                    android:layout_marginEnd="10dp"
                      android:textAppearance="?android:attr/textAppearanceSmall"/>
 
                  <View
@@ -1704,6 +1647,7 @@
                 android:id="@+id/transactiontime_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -1711,16 +1655,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/left8"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
-                    android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_time_txt"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -1736,26 +1681,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/right8"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
-
             <!--  <LinearLayout
                  android:layout_width="match_parent"
                  android:layout_height="0dp"
                  android:layout_weight="0.1" > -->
-
-
             <View
                 android:id="@+id/horizontal8"
                 android:layout_width="match_parent"
@@ -1769,6 +1711,7 @@
                 android:id="@+id/loadtype_linear"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
                 android:layout_weight="1"
                 android:orientation="horizontal">
 
@@ -1776,16 +1719,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/left9"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.38"
-                    android:paddingLeft="0dp"
                     android:layout_gravity="center"
-                    android:gravity="left|center"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:layout_weight="0.38"
+                    android:gravity="start|center"
                     android:text="@string/txn_history_load_type"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/black" />
@@ -1801,25 +1745,23 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="0.05"
-                    android:orientation="horizontal"></LinearLayout>
+                    android:orientation="horizontal" />
 
                 <TextView
                     android:id="@+id/right9"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:layout_marginEnd="10dp"
                     android:layout_weight="0.4"
                     android:background="@null"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:textColor="@color/blue" />
             </LinearLayout>
-
             <!--  <LinearLayout
                  android:layout_width="match_parent"
                  android:layout_height="0dp"
                  android:layout_weight="0.1" > -->
-
-
             <View
                 android:id="@+id/horizontal9"
                 android:layout_width="match_parent"
@@ -1828,12 +1770,10 @@
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:background="@color/black" />
-
             <!--  <LinearLayout
                  android:layout_width="match_parent"
                  android:layout_height="0dp"
                  android:layout_weight="0.1" > -->
-
             <TextView
                 android:id="@+id/warning_text"
                 android:layout_width="match_parent"
@@ -1847,16 +1787,13 @@
                 android:textColor="#ff0000"
                 android:visibility="gone" />
         </LinearLayout>
-
-
     </ScrollView>
-
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.8"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical" />
 
     <Button
         android:id="@+id/close_button"
@@ -1876,5 +1813,5 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical" />
 </LinearLayout>

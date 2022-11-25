@@ -26,7 +26,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
                 android:gravity="center"
-                android:paddingLeft="10dp"
+                android:paddingStart="10dp"
                 android:text="@string/main_menu_profile_offers_fragment_load_money_str"
                 android:textColor="#ffffff"
                 android:textSize="20sp" />
@@ -37,8 +37,8 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:gravity="left"
-                android:paddingLeft="10dp"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
                 android:text="@string/jit_insufficient_bal"
                 android:textColor="#ffffff"
                 android:textSize="15sp"
@@ -50,8 +50,8 @@
                 android:layout_height="0dp"
                 android:layout_gravity="center_vertical"
                 android:layout_weight="1"
-                android:gravity="left"
-                android:paddingLeft="10dp"
+                android:gravity="center"
+                android:layout_marginTop="15dp"
                 android:text="@string/jit_only_one_card_can_be_used_str"
                 android:textColor="#ffffff"
                 android:textSize="14sp"
@@ -63,7 +63,9 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
-            android:padding="6dp">
+            android:padding="6dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="10dp">
 
             <TableRow
                 android:id="@+id/myTableLayout_transactionAmount"
@@ -84,8 +86,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingLeft="10dp"
+                    android:gravity="start"
+                    android:paddingStart="10dp"
                     android:text="KD"
                     android:textColor="#000000"
                     android:textSize="16sp" />
@@ -111,8 +113,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="right"
-                    android:paddingLeft="10dp"
+                    android:gravity="start"
+                    android:paddingStart="10dp"
                     android:text="KD"
                     android:textColor="#000000"
                     android:textSize="16sp" />
@@ -146,8 +148,8 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:background="#DEDEDE"
-                    android:gravity="right"
-                    android:paddingLeft="10dp"
+                    android:gravity="start"
+                    android:paddingStart="10dp"
                     android:text="KWD"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -160,7 +162,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:text="@string/load_money_your_wallet_balance_str"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -177,9 +179,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
-                    android:text="KWD"
+                    android:gravity="start|center"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"                    android:text="KWD"
                     android:textColor="#000000"
                     android:textSize="18sp" />
             </TableRow>
@@ -209,7 +211,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="left|center"
-                    android:paddingLeft="10dp"
+                    android:paddingStart="10dp"
                     android:text="KWD"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -222,7 +224,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:text="@string/load_money_you_can_load_upto_str"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -239,9 +241,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
-                    android:text="KWD"
+                    android:gravity="start|center"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"                    android:text="KWD"
                     android:textColor="#000000"
                     android:textSize="18sp" />
             </TableRow>
@@ -253,7 +255,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:text="@string/load_money_yoc_can_load_minimum_str"
                     android:textColor="#000000"
                     android:textSize="18sp" />
@@ -270,9 +272,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:gravity="left|center"
-                    android:paddingLeft="10dp"
-                    android:text="KWD"
+                    android:gravity="start|center"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginEnd="15dp"                    android:text="KWD"
                     android:textColor="#000000"
                     android:textSize="18sp" />
             </TableRow>

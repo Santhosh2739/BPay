@@ -36,7 +36,7 @@
                 android:id="@+id/invoice_l2_nameTextooredo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left|center"
+                android:gravity="start|center"
                 android:layout_weight="0.4"
                 android:paddingLeft="12dp"
                 android:text="@string/customer_name"
@@ -48,7 +48,7 @@
                 android:id="@+id/invoice_l2_wallet_id"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="left|center"
+                android:gravity="start|center"
                 android:layout_marginTop="10dp"
                 android:layout_weight="0.6"
                 android:paddingLeft="12dp"
@@ -123,7 +123,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.1"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical" />
 
     <ImageView
         android:id="@+id/invoice_success_status_img"
@@ -183,10 +183,11 @@
                 android:id="@+id/invoice_success_status"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_weight="0.4"
-                android:gravity="left|center"
-                android:paddingLeft="10dp"
+                android:gravity="start|center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/invoice_L2_status"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -204,7 +205,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="0.5"
                 android:gravity="start|center"
-                android:paddingLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:textAllCaps="true"
                 android:textColor="@color/blue"
                 android:textSize="16sp" />
@@ -227,10 +229,11 @@
                 android:id="@+id/ooredoo_sendmoney_confirmpayment_mobileno_left0_tv"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_weight="0.4"
-                android:gravity="left|center"
-                android:paddingLeft="10dp"
+                android:gravity="start|center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/invoice_L2_customer_name"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -248,7 +251,8 @@
                 android:layout_gravity="center"
                 android:layout_weight="0.5"
                 android:gravity="start|center"
-                android:paddingLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/blue"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -270,10 +274,11 @@
                 android:id="@+id/ooredoo_sendmoney_confirmpayment_status_left0_tv"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_weight="0.4"
-                android:gravity="left|center"
-                android:paddingLeft="10dp"
+                android:gravity="start|center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/invoice_L2_invoice_number"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -290,7 +295,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:gravity="start|center"
-                android:paddingLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/blue"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -312,10 +318,11 @@
                 android:id="@+id/ooredoo_sendmoney_confirmpayment_transferamount_left0_tv"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_weight="0.4"
-                android:gravity="left|center"
-                android:paddingLeft="10dp"
+                android:gravity="start|center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/invoice_L2_amount_paid"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -332,7 +339,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:gravity="start|center"
-                android:paddingLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/blue"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -355,10 +363,11 @@
                 android:id="@+id/ooredoo_sendmoney_confirmpayment_bpoints_earned0_tv"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_weight="0.4"
-                android:gravity="left|center"
-                android:paddingLeft="10dp"
+                android:gravity="start|center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/bpoitns_earned"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -375,7 +384,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:gravity="start|center"
-                android:paddingLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/blue"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -398,10 +408,11 @@
                 android:id="@+id/ooredoo_invoice_bpoints_balance_tv"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_gravity="left"
+                android:layout_gravity="start"
                 android:layout_weight="0.4"
-                android:gravity="left|center"
-                android:paddingLeft="10dp"
+                android:gravity="start|center"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:text="@string/bpoints_balance"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
@@ -418,7 +429,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="0.5"
                 android:gravity="start|center"
-                android:paddingLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
                 android:textColor="@color/blue"
                 android:textSize="16sp" />
         </LinearLayout>
@@ -447,7 +459,7 @@
         android:layout_height="0dp"
         android:layout_marginLeft="80dp"
         android:layout_marginRight="80dp"
-        android:layout_weight="0.3"
+        android:layout_weight="0.2"
         android:background="@drawable/registration_btn_submit_bg"
         android:text="@string/invoice_L2_ok_btn"
         android:textAllCaps="true"
@@ -458,17 +470,5 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.8"></LinearLayout>
-
-    <!--<View
-        android:layout_width="match_parent"
-        android:layout_height="0.1dp"
-        android:background="@color/black"></View>-->
-
-    <!-- <include
-         layout="@layout/footer"
-         android:layout_width="match_parent"
-         android:layout_height="0dp"
-         android:layout_weight="0.5" />-->
-
+        android:layout_weight="0.5"></LinearLayout>
 </LinearLayout>
